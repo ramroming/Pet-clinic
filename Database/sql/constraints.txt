@@ -1,0 +1,28 @@
+
+ALTER TABLE `prescriptions` ADD CONSTRAINT `PRESCRIPTIONS_fk2`  FOREIGN KEY (`pet_id`) REFERENCES `treatments`(`pet_id`) ON DELETE CASCADE
+ALTER TABLE `prescriptions` ADD CONSTRAINT `PRESCRIPTIONS_fk1`  FOREIGN KEY (`doctor_id`) REFERENCES `treatments`(`doctor_id`) ON DELETE CASCADE
+ALTER TABLE `prescriptions` ADD CONSTRAINT `PRESCRIPTIONS_fk0`  FOREIGN KEY (`treatment_date`) REFERENCES `treatments`(`date`) ON DELETE CASCADE
+
+ALTER TABLE `adoption_ads` ADD CONSTRAINT arc_adoption_ad CHECK (shelter_id is NULL OR client_id is NULL);
+ALTER TABLE `pets` ADD CONSTRAINT arc_pet CHECK (shelter_id is NULL OR owner_id is NULL);
+ALTER TABLE `users` ADD CONSTRAINT users_subtypes CHECK ((user_type = "client" AND stmem_type is NULL ) or (user_type = "stmem" AND stmem_type is not NULL) );
+
+
+
+SELECT p_staff.first_name as doctorName, p_client.first_name as clientName ,
+pets.name as pet_name, appointments.date, appointment_types.name as app_type, fee_histories.value as fee
+FROM appointments 
+INNER JOIN users u_staff
+ON u_staff.id = appointments.stmem_id
+INNER JOIN users u_client
+ON u_client.id = appointments.client_id
+INNER JOIN personal_info p_staff
+ON u_staff.personal_info_id = p_staff.id
+INNER JOIN personal_info p_client
+ON u_client.personal_info_id = p_client.id
+INNER JOIN pets
+ON pets.id = appointments.pet_id
+INNER JOIN appointment_types
+On appointment_types.id= appointments.appointment_type_id
+INNER JOIN fee_histories
+oN appointments.appointment_type_id = fee_histories.appointment_type_id where YEAR(fee_histories.date) = YEAR(appointments.date)

@@ -1,0 +1,1 @@
+select * FROM training_types

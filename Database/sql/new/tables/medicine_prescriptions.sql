@@ -1,0 +1,1 @@
+select * from medicine_prescriptions

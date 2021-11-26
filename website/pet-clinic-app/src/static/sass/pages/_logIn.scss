@@ -1,0 +1,18 @@
+@use "../abstracts" as *;
+
+.split-screen{
+    width: 40%;
+    display: none;
+    // opacity:0.8;
+
+    @include break-point("medium", "up") {
+        display: block;
+        object-fit: none;
+        object-position: 50% 60%;
+        @include rounded-corners(0, 2.5rem, 2.5rem, 0);
+
+    }
+    filter:brightness(80%);
+    -webkit-filter:brightness(80%);
+}
+

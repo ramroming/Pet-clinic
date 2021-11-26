@@ -1,0 +1,34 @@
+@use "../abstracts" as *;
+
+.button-wrapper {
+    width: 80%;
+}
+.btn-r {
+    @include rounded-corners(.5rem, .5rem, .5rem, .5rem);
+    width: 100%;
+    padding: .5rem;
+    border: white solid 1px;
+    color: white;
+
+    &:hover{
+        opacity:0.8;
+        transition: ease .3s all;
+        -webkit-transition: ease .3s all;
+        -moz-transition: ease .3s all;
+        -ms-transition: ease .3s all;
+        -o-transition: ease .3s all;
+}
+
+    @include break-point("medium","up"){
+        width: 60%;
+        margin: auto;
+        padding: .75rem .5rem;
+    }
+}
+
+.btn-r-dark {
+    background-color: var(--clr-shadow-dark-shadow);
+}
+.btn-r-purple {
+    background-color: var(--clr-primary-mainPurple);
+}

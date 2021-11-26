@@ -1,0 +1,104 @@
+//here we create our sass variables fonts,sizes,screen-sizes..etc
+
+//breakpoints for bootstrap4
+// 0- 575px : phones
+// 576px - 767px : landscape phones
+// 768px - 991px: tablets
+// 992px - 1199px : laptops
+// 1200 >> laptops and desktops
+
+$break-points-min: (
+  "small": "36rem",
+  //landscape phones
+  "medium": "48rem",
+  //tablets
+  "large": "62rem",
+  //laptops
+  "extra-large": "75rem",
+  //desktops
+  "xxL": "100.0625rem" // XXlarge screens,
+);
+$break-points-max: (
+  "extra-small": "35.9375rem",
+  //mobile phones
+  "small": "47.9375rem",
+  //landscape phones
+  "medium": "61.9375rem",
+  //tablets
+  "large": "74.9375rem",
+  //laptops
+  "extra-large": "100rem",
+  //desktops
+);
+
+$fonts-map: (
+
+  "font-1": ('Overpass', sans-serif),
+  "font-2": ('Ubuntu', sans-serif)
+);
+
+// $break-points-min: (
+//   "tablet": "30.0625rem",
+//   "laptop": "48.0625rem",
+//   "desktop": "64.0625rem",
+//   "x-large": "100.0625rem",
+// );
+// $break-points-max: (
+//   "mobile": "30rem",
+//   "tablet": "48rem",
+//   "laptop": "64rem",
+//   "desktop": "100rem",
+// );
+
+// my breakpoints
+// 320px — 480px: Mobile devices
+// 481px — 768px: iPads, Tablets
+// 769px — 1024px: Small screens, laptops
+// 1025px — 1200px: Desktops, large screens
+// 1201px and more —  Extra large screens, TV
+
+// $paddings-margins: ("y-pad", "x-pad", "xy-pad", "y-marg", "x-marg", "xy-marg", "both");
+
+$sizes-map: (
+  "pad-sizes": (
+    0p: 0,
+    4p: .25rem,
+    8p: .5rem,
+    12p: .75rem,
+    16p: 1rem,
+    20p: 1.25rem,
+    24p: 1.5rem,
+    28p: 1.75rem,
+    32p: 2rem,
+    36p: 2.24rem,
+    40p: 2.5rem,
+    44p: 2.75rem,
+    48p: 3rem,
+    64p: 4rem,
+    80p: 5rem
+  ),
+  "font-sizes": (
+    font6:".5rem",
+    font7: "0.625rem",
+    font8: "0.6667rem",
+    font9: "0.75rem",
+    font10: "0.8333rem",
+    font11: "0.9167rem",
+    font12: "1rem",
+    font14: "1.1667rem",
+    font16: "1.3333rem",
+    font18: "1.5rem",
+    font20: "1.6667rem",
+    font22: "1.8333rem",
+    font24: "2rem",
+    font26: "2.1667rem",
+    font28: "2.3333rem",
+    font36: "3rem",
+    font48: "4rem",
+    font72: "6rem",
+  ),
+);
+
+
+// idea for each size i comment what is used for instead of mobile
+//tablet and ...
