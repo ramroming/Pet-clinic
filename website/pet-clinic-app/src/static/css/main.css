@@ -487,6 +487,12 @@ template {
 
 .button-wrapper {
   width: 80%;
+  padding: 1rem 0;
+}
+@media all and (min-width: 48rem) {
+  .button-wrapper {
+    width: 100%;
+  }
 }
 
 .btn-r {
@@ -499,8 +505,10 @@ template {
   padding: 0.5rem;
   border: white solid 1px;
   color: white;
+  text-align: center;
 }
-.btn-r:hover {
+.btn-r:not(.btn-r-outlined):hover {
+  cursor: pointer;
   opacity: 0.8;
   transition: ease 0.3s all;
   -webkit-transition: ease 0.3s all;
@@ -510,8 +518,7 @@ template {
 }
 @media all and (min-width: 48rem) {
   .btn-r {
-    width: 60%;
-    margin: auto;
+    width: 45%;
     padding: 0.75rem 0.5rem;
   }
 }
@@ -524,10 +531,38 @@ template {
   background-color: var(--clr-primary-mainPurple);
 }
 
+.btn-r-outlined {
+  background-color: white;
+  border: 2px solid var(--clr-primary-secondBlue);
+  color: black;
+  cursor: pointer;
+  transition: border-color 0.5s ease;
+  -webkit-transition: border-color 0.5s ease;
+  -moz-transition: border-color 0.5s ease;
+  -ms-transition: border-color 0.5s ease;
+  -o-transition: border-color 0.5s ease;
+}
+.btn-r-outlined:hover {
+  border-color: var(--clr-primary-mainBlue);
+}
+@media all and (min-width: 48rem) {
+  .btn-r-outlined {
+    width: 50%;
+    padding: 0.75rem 0.5rem;
+  }
+}
+
 .input-wrapper {
   width: 80%;
+  margin: auto;
 }
-.input-wrapper input, .input-wrapper textarea {
+.input-wrapper input[type=text],
+.input-wrapper input[type=number],
+.input-wrapper input[type=date],
+.input-wrapper input[type=password],
+.input-wrapper input[type=email],
+.input-wrapper select,
+.input-wrapper textarea {
   width: 100%;
   padding: 0.5rem;
   border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
@@ -540,7 +575,13 @@ template {
   resize: vertical;
 }
 @media all and (min-width: 48rem) {
-  .input-wrapper input, .input-wrapper textarea {
+  .input-wrapper input[type=text],
+.input-wrapper input[type=number],
+.input-wrapper input[type=date],
+.input-wrapper input[type=password],
+.input-wrapper input[type=email],
+.input-wrapper select,
+.input-wrapper textarea {
     width: 50%;
   }
 }
@@ -551,8 +592,29 @@ template {
   }
 }
 
-.w-label {
+.radio-wrapper {
   width: 50%;
+}
+.radio-wrapper input {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+input[type=file] {
+  display: none;
+}
+
+select option:hover {
+  font-size: 20px;
+}
+
+.half-label {
+  width: 50%;
+}
+
+.full-label {
+  width: 100%;
 }
 
 a {
@@ -560,8 +622,14 @@ a {
   color: black;
   text-align: center;
 }
-a :hover {
+a:hover {
   cursor: pointer;
+}
+a:visited {
+  color: white;
+}
+a:active {
+  color: white;
 }
 
 button:hover {
@@ -576,8 +644,21 @@ button:hover {
 
 /*setting the full page size for body and html elements*/
 /* the general design with paddings, margins, main-bgcolors, main-fonts and basic layout */
-body {
+.background-blue, .background-dark-blue {
   background-image: linear-gradient(120deg, var(--clr-shadow-dark-shadow) 50%, var(--clr-primary-mainBlue));
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.background-dark-blue {
+  background-image: linear-gradient(120deg, #0b0b49, #cfb336);
 }
 
 .main-container {
@@ -587,6 +668,7 @@ body {
   padding: 1.5rem 1rem;
   max-width: 56rem;
   margin: auto;
+  width: 100%;
 }
 @media all and (min-width: 48rem) {
   .main-container {
@@ -601,7 +683,7 @@ body {
   -ms-border-radius: 2.5rem 2.5rem 2.5rem 2.5rem;
   -o-border-radius: 2.5rem 2.5rem 2.5rem 2.5rem;
   margin: auto;
-  width: 95%;
+  width: 97%;
   padding: 1rem;
   background-color: white;
 }
@@ -616,23 +698,162 @@ body {
   }
 }
 
-.split-screen {
+.split-screen-signup {
   width: 40%;
   display: none;
+  background-image: linear-gradient(90deg, white, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  position: relative;
+  border-radius: 0 2.5rem 2.5rem 0;
+  -webkit-border-radius: 0 2.5rem 2.5rem 0;
+  -moz-border-radius: 0 2.5rem 2.5rem 0;
+  -ms-border-radius: 0 2.5rem 2.5rem 0;
+  -o-border-radius: 0 2.5rem 2.5rem 0;
+}
+@media all and (min-width: 48rem) {
+  .split-screen-signup {
+    display: block;
+  }
+}
+.split-screen-signup img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  border-radius: 0 2.5rem 2.5rem 0;
+  -webkit-border-radius: 0 2.5rem 2.5rem 0;
+  -moz-border-radius: 0 2.5rem 2.5rem 0;
+  -ms-border-radius: 0 2.5rem 2.5rem 0;
+  -o-border-radius: 0 2.5rem 2.5rem 0;
   filter: brightness(80%);
   -webkit-filter: brightness(80%);
 }
 @media all and (min-width: 48rem) {
-  .split-screen {
-    display: block;
-    -o-object-fit: none;
-       object-fit: none;
+  .split-screen-signup img {
+    -o-object-fit: cover;
+       object-fit: cover;
     -o-object-position: 50% 60%;
        object-position: 50% 60%;
-    border-radius: 0 2.5rem 2.5rem 0;
-    -webkit-border-radius: 0 2.5rem 2.5rem 0;
-    -moz-border-radius: 0 2.5rem 2.5rem 0;
-    -ms-border-radius: 0 2.5rem 2.5rem 0;
-    -o-border-radius: 0 2.5rem 2.5rem 0;
+  }
+}
+
+.split-screen-login {
+  width: 40%;
+  display: none;
+  background-image: linear-gradient(90deg, white, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  position: relative;
+  border-radius: 0 2.5rem 2.5rem 0;
+  -webkit-border-radius: 0 2.5rem 2.5rem 0;
+  -moz-border-radius: 0 2.5rem 2.5rem 0;
+  -ms-border-radius: 0 2.5rem 2.5rem 0;
+  -o-border-radius: 0 2.5rem 2.5rem 0;
+}
+@media all and (min-width: 48rem) {
+  .split-screen-login {
+    display: block;
+  }
+}
+.split-screen-login img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  border-radius: 0 2.5rem 2.5rem 0;
+  -webkit-border-radius: 0 2.5rem 2.5rem 0;
+  -moz-border-radius: 0 2.5rem 2.5rem 0;
+  -ms-border-radius: 0 2.5rem 2.5rem 0;
+  -o-border-radius: 0 2.5rem 2.5rem 0;
+  filter: brightness(80%);
+  -webkit-filter: brightness(80%);
+}
+@media all and (min-width: 48rem) {
+  .split-screen-login img {
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+}
+
+/* HIDE RADIO */
+input.radio-img {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+input.radio-img + img {
+  cursor: pointer;
+}
+
+/* CHECKED STYLES */
+input.radio-img:checked + img {
+  outline: 2px solid var(--clr-shadow-dark-shadow);
+  transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  transition: transform ease 0.5s;
+  -webkit-transition: transform ease 0.5s;
+  -moz-transition: transform ease 0.5s;
+  -ms-transition: transform ease 0.5s;
+  -o-transition: transform ease 0.5s;
+}
+
+.pet-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50% 50% 50% 50%;
+  -webkit-border-radius: 50% 50% 50% 50%;
+  -moz-border-radius: 50% 50% 50% 50%;
+  -ms-border-radius: 50% 50% 50% 50%;
+  -o-border-radius: 50% 50% 50% 50%;
+}
+
+.low-op {
+  opacity: 0.8;
+}
+
+.split-screen-registerpet {
+  width: 40%;
+  display: none;
+  background-image: linear-gradient(90deg, white, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+  position: relative;
+  border-radius: 0 2.5rem 2.5rem 0;
+  -webkit-border-radius: 0 2.5rem 2.5rem 0;
+  -moz-border-radius: 0 2.5rem 2.5rem 0;
+  -ms-border-radius: 0 2.5rem 2.5rem 0;
+  -o-border-radius: 0 2.5rem 2.5rem 0;
+}
+@media all and (min-width: 48rem) {
+  .split-screen-registerpet {
+    display: block;
+  }
+}
+.split-screen-registerpet img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  border-radius: 0 2.5rem 2.5rem 0;
+  -webkit-border-radius: 0 2.5rem 2.5rem 0;
+  -moz-border-radius: 0 2.5rem 2.5rem 0;
+  -ms-border-radius: 0 2.5rem 2.5rem 0;
+  -o-border-radius: 0 2.5rem 2.5rem 0;
+  filter: brightness(80%);
+  -webkit-filter: brightness(80%);
+}
+@media all and (min-width: 48rem) {
+  .split-screen-registerpet img {
+    -o-object-fit: cover;
+       object-fit: cover;
+    -o-object-position: 50% 40%;
+       object-position: 50% 40%;
   }
 }/*# sourceMappingURL=main.css.map */

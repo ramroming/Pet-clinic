@@ -2,6 +2,11 @@
 
 .button-wrapper {
     width: 80%;
+    padding:1rem 0;
+
+    @include break-point("medium","up"){
+        width: 100%;
+    }
 }
 .btn-r {
     @include rounded-corners(.5rem, .5rem, .5rem, .5rem);
@@ -9,8 +14,9 @@
     padding: .5rem;
     border: white solid 1px;
     color: white;
-
-    &:hover{
+    text-align: center;
+    &:not(.btn-r-outlined):hover{
+        cursor: pointer;
         opacity:0.8;
         transition: ease .3s all;
         -webkit-transition: ease .3s all;
@@ -20,8 +26,7 @@
 }
 
     @include break-point("medium","up"){
-        width: 60%;
-        margin: auto;
+        width: 45%;
         padding: .75rem .5rem;
     }
 }
@@ -31,4 +36,22 @@
 }
 .btn-r-purple {
     background-color: var(--clr-primary-mainPurple);
+}
+.btn-r-outlined {
+    background-color: white;
+    border: 2px solid var(--clr-primary-secondBlue);
+    color: black;
+    cursor: pointer;
+    &:hover {
+        border-color: var(--clr-primary-mainBlue);
+    }
+    transition:border-color 0.5s ease;
+    -webkit-transition:border-color 0.5s ease;
+    -moz-transition:border-color 0.5s ease;
+    -ms-transition:border-color 0.5s ease;
+    -o-transition:border-color 0.5s ease;
+    @include break-point("medium","up"){
+        width: 50%;
+        padding: .75rem .5rem;
+    }
 }

@@ -1,8 +1,14 @@
-import Login from "./components/Login";
+import Signup from "./components/Signup";
+import Login from "./components/Login" ;
+import RegisterPet from "./components/RegisterPet";
 
 function App() {
   return (
-    <Login />
+    <>
+    <Signup />
+    {/* <Login /> */}
+    {/* <RegisterPet /> */}
+    </>
   );
 }
 
