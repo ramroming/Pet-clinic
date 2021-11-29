@@ -1,24 +1,16 @@
 import Signup from "./components/Signup";
-import Login from "./components/Login" ;
+import Login from "./components/Login";
 import RegisterPet from "./components/RegisterPet";
+import { Routes, Route, Link } from "react-router-dom";
 
 function App() {
   return (
     <>
-    <Signup />
-    {/* <Login /> */}
-    {/* <RegisterPet /> */}
-    {/* <Login /> */}
-    {/* <RegisterPet /> */}
-    {/* <Login /> */}
-    {/* <RegisterPet /> */}
-    {/* <Login /> */}
-    {/* <RegisterPet /> */}
-    {/* <Login /> */}
-    {/* <RegisterPet /> */}
-    {/* <Login /> */}
-    {/* <RegisterPet /> */}
-    
+      <Routes>
+        <Route path='/login' element={<Login />}></Route>
+        <Route path='/signup' element={<Signup />}></Route>
+        <Route path='/registerpet' element={<RegisterPet />}></Route>
+      </Routes>
     </>
   );
 }
