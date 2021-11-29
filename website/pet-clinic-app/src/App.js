@@ -8,6 +8,17 @@ function App() {
     <Signup />
     {/* <Login /> */}
     {/* <RegisterPet /> */}
+    {/* <Login /> */}
+    {/* <RegisterPet /> */}
+    {/* <Login /> */}
+    {/* <RegisterPet /> */}
+    {/* <Login /> */}
+    {/* <RegisterPet /> */}
+    {/* <Login /> */}
+    {/* <RegisterPet /> */}
+    {/* <Login /> */}
+    {/* <RegisterPet /> */}
+    
     </>
   );
 }
