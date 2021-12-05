@@ -1,57 +1,73 @@
 @use "../abstracts" as *;
 
 .button-wrapper {
-    width: 80%;
-    padding:1rem 0;
+  width: 80%;
+  padding: 1rem 0;
 
-    @include break-point("medium","up"){
-        width: 100%;
-    }
+  @include break-point("medium", "up") {
+    width: 100%;
+  }
 }
 .btn-r {
-    @include rounded-corners(.5rem, .5rem, .5rem, .5rem);
-    width: 100%;
-    padding: .5rem;
-    border: white solid 1px;
-    color: white;
-    text-align: center;
-    &:not(.btn-r-outlined):hover{
-        cursor: pointer;
-        opacity:0.8;
-        transition: ease .3s all;
-        -webkit-transition: ease .3s all;
-        -moz-transition: ease .3s all;
-        -ms-transition: ease .3s all;
-        -o-transition: ease .3s all;
-}
+  @include rounded-corners(0.5rem, 0.5rem, 0.5rem, 0.5rem);
+  width: 100%;
+  padding: 0.5rem;
+  border: white solid 1px;
+  color: white;
+  text-align: center;
+  &:not(.btn-r-outlined):hover {
+    cursor: pointer;
+    opacity: 0.8;
+    transition: ease 0.3s all;
+    -webkit-transition: ease 0.3s all;
+    -moz-transition: ease 0.3s all;
+    -ms-transition: ease 0.3s all;
+    -o-transition: ease 0.3s all;
+  }
 
-    @include break-point("medium","up"){
-        width: 45%;
-        padding: .75rem .5rem;
-    }
+  @include break-point("medium", "up") {
+    width: 45%;
+    padding: 0.75rem 0.5rem;
+  }
 }
 
 .btn-r-dark {
-    background-color: var(--clr-shadow-dark-shadow);
+  background-color: var(--clr-shadow-dark-shadow);
 }
 .btn-r-purple {
-    background-color: var(--clr-primary-mainPurple);
+  background-color: var(--clr-primary-mainPurple);
 }
+
 .btn-r-outlined {
-    background-color: white;
-    border: 2px solid var(--clr-primary-secondBlue);
-    color: black;
-    cursor: pointer;
-    &:hover {
-        border-color: var(--clr-primary-mainBlue);
-    }
-    transition:border-color 0.5s ease;
-    -webkit-transition:border-color 0.5s ease;
-    -moz-transition:border-color 0.5s ease;
-    -ms-transition:border-color 0.5s ease;
-    -o-transition:border-color 0.5s ease;
-    @include break-point("medium","up"){
-        width: 50%;
-        padding: .75rem .5rem;
-    }
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  transition: all 0.5s ease;
+
+  @include break-point("medium", "up") {
+    width: 50%;
+    padding: 0.75rem 0.5rem;
+  }
+}
+.btn-r-outlined-blue {
+  @extend .btn-r-outlined;
+  border: 2px solid var(--clr-primary-secondBlue);
+  &:hover {
+    border-color: var(--clr-primary-mainBlue);
+  }
+}
+.btn-r-outlined-purple {
+  @extend .btn-r-outlined;
+  border: 2px solid  var(--clr-primary-mainPurple);
+  &:hover {
+    // border-color: var(--clr-primary-secondPurple);
+    background-color: var(--clr-primary-mainPurple);
+    color: white
+  }
+}
+.btn-s {
+  @extend .btn-r-outlined-purple;
+  @include rounded-corners(0.5rem, 0.5rem, 0.5rem, 0.5rem);
+  width: 40%;
+  
 }

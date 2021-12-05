@@ -507,7 +507,7 @@ template {
   color: white;
   text-align: center;
 }
-.btn-r:not(.btn-r-outlined):hover {
+.btn-r:not(.btn-r-outlined):not(.btn-r-outlined-purple):not(.btn-s):not(.btn-r-outlined-blue):hover {
   cursor: pointer;
   opacity: 0.8;
   transition: ease 0.3s all;
@@ -531,25 +531,41 @@ template {
   background-color: var(--clr-primary-mainPurple);
 }
 
-.btn-r-outlined {
+.btn-r-outlined, .btn-r-outlined-purple, .btn-s, .btn-r-outlined-blue {
   background-color: white;
-  border: 2px solid var(--clr-primary-secondBlue);
   color: black;
   cursor: pointer;
-  transition: border-color 0.5s ease;
-  -webkit-transition: border-color 0.5s ease;
-  -moz-transition: border-color 0.5s ease;
-  -ms-transition: border-color 0.5s ease;
-  -o-transition: border-color 0.5s ease;
-}
-.btn-r-outlined:hover {
-  border-color: var(--clr-primary-mainBlue);
+  transition: all 0.5s ease;
 }
 @media all and (min-width: 48rem) {
-  .btn-r-outlined {
+  .btn-r-outlined, .btn-r-outlined-purple, .btn-s, .btn-r-outlined-blue {
     width: 50%;
     padding: 0.75rem 0.5rem;
   }
+}
+
+.btn-r-outlined-blue {
+  border: 2px solid var(--clr-primary-secondBlue);
+}
+.btn-r-outlined-blue:hover {
+  border-color: var(--clr-primary-mainBlue);
+}
+
+.btn-r-outlined-purple, .btn-s {
+  border: 2px solid var(--clr-primary-mainPurple);
+}
+.btn-r-outlined-purple:hover, .btn-s:hover {
+  background-color: var(--clr-primary-mainPurple);
+  color: white;
+}
+
+.btn-s {
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -webkit-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -moz-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -ms-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -o-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  width: 40%;
 }
 
 .input-wrapper {
@@ -642,8 +658,103 @@ button:hover {
   }
 }
 
+nav {
+  width: 100%;
+  background-color: white;
+  position: relative;
+  z-index: 2;
+  max-width: 90rem;
+  margin: auto;
+}
+@media all and (min-width: 48rem) {
+  nav .dropdown {
+    display: none;
+  }
+}
+nav .dropdown .droplist {
+  position: absolute;
+  z-index: 3;
+  width: 50%;
+  right: 0;
+  top: 100%;
+  background-color: white;
+  padding-top: 1rem;
+  opacity: 0.9;
+  border-top: none;
+  border-radius: 0 0 0 0.5rem;
+  -webkit-border-radius: 0 0 0 0.5rem;
+  -moz-border-radius: 0 0 0 0.5rem;
+  -ms-border-radius: 0 0 0 0.5rem;
+  -o-border-radius: 0 0 0 0.5rem;
+  box-shadow: 0px -2px 5px 0px rgba(0, 0, 0, 0.43);
+}
+nav .dropdown .droplist-item {
+  color: black;
+  width: 100%;
+  letter-spacing: 1.5px;
+  padding-bottom: 1rem;
+  font-weight: bold;
+}
+nav .nav-items {
+  flex: 2;
+  display: none;
+}
+@media all and (min-width: 48rem) {
+  nav .nav-items {
+    display: flex;
+  }
+}
+nav .nav-items .nav-item {
+  color: black;
+  padding: 0.5rem 0.3rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  border-bottom: solid 1.5px white;
+  transition: all 0.5s ease;
+}
+nav .nav-items .nav-item:hover {
+  border-bottom-color: var(--clr-accent-logoBlue);
+  color: var(--clr-primary-mainBlue);
+}
+nav .full-logo {
+  width: 8.75rem;
+  height: 3.125rem;
+}
+@media all and (min-width: 48rem) {
+  nav .full-logo {
+    max-width: 13.75rem;
+    width: 20%;
+    height: 5.125rem;
+  }
+}
+
+.burger-icon {
+  padding: 1rem;
+  font-size: 1.75rem;
+  opacity: 0.7;
+}
+.burger-icon:hover {
+  cursor: pointer;
+}
+
+.btn-wrapper {
+  flex: 1;
+}
+.btn-wrapper .btn-s {
+  font-weight: bold;
+}
+
+.links-wrapper {
+  flex: 2;
+}
+
 /*setting the full page size for body and html elements*/
 /* the general design with paddings, margins, main-bgcolors, main-fonts and basic layout */
+body {
+  font-family: "Overpass", sans-serif;
+  font-size: 1rem;
+}
+
 .background-blue, .background-dark-blue {
   background-image: linear-gradient(120deg, var(--clr-shadow-dark-shadow) 50%, var(--clr-primary-mainBlue));
   background-repeat: no-repeat;
@@ -662,8 +773,6 @@ button:hover {
 }
 
 .main-container {
-  font-family: "Overpass", sans-serif;
-  font-size: 1rem;
   font-weight: 500;
   padding: 1.5rem 1rem;
   max-width: 56rem;

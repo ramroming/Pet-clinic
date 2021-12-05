@@ -71,7 +71,7 @@ const RegisterPet = () => {
                     <div className="input-wrapper flex-row fjust-between">
                         <label className="half-label">Photo:
                         </label>
-                        <label htmlFor="photo" className="btn-r btn-r-outlined flex-row fjust-between">
+                        <label htmlFor="photo" className="btn-r btn-r-outlined-blue flex-row fjust-between">
                             Press to upload
                             <i class="fas fa-upload"></i>
                         </label>

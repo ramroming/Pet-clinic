@@ -5,7 +5,6 @@ const Login = () => {
         <>
             <div className="background-blue">
                 <div className="main-container flex-row">
-
                     <form className="form-container flex-col gap-16p falign-center" action="/" method="POST">
 
                         <a className="logo-link" href="#">
