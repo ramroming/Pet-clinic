@@ -660,11 +660,11 @@ button:hover {
 }
 
 nav {
+  position: fixed;
+  top: 0;
   width: 100%;
   background-color: white;
-  position: relative;
   z-index: 2;
-  max-width: 90rem;
   margin: auto;
 }
 @media all and (min-width: 48rem) {
@@ -717,14 +717,22 @@ nav .nav-items .nav-item:hover {
   border-bottom-color: var(--clr-accent-logoBlue);
   color: var(--clr-primary-mainBlue);
 }
-nav .full-logo {
+nav .image-link {
+  display: block;
+}
+@media all and (min-width: 48rem) {
+  nav .image-link {
+    width: 20%;
+  }
+}
+nav .image-link .full-logo {
   width: 8.75rem;
   height: 3.125rem;
 }
 @media all and (min-width: 48rem) {
-  nav .full-logo {
+  nav .image-link .full-logo {
     max-width: 13.75rem;
-    width: 20%;
+    width: 100%;
     height: 5.125rem;
   }
 }
@@ -825,14 +833,14 @@ body {
 
 .main-container {
   font-weight: 500;
-  padding: 1.5rem 1rem;
+  padding: 7rem 1rem 3rem 1rem;
   max-width: 56rem;
   margin: auto;
   width: 100%;
 }
 @media all and (min-width: 48rem) {
   .main-container {
-    padding: 3rem;
+    padding: 10rem 3rem 5rem 3rem;
   }
 }
 
@@ -1016,4 +1024,4 @@ input.radio-img:checked + img {
     -o-object-position: 50% 40%;
        object-position: 50% 40%;
   }
-}/*# sourceMappingURL=main.css.map */
+}

@@ -67,17 +67,17 @@ const Footer = () => {
                         <p className="footer-title">Contact</p>
 
                         <div className="flex-row gap-8p">
-                            <i class="fas fa-envelope"></i>
+                            <i className="fas fa-envelope"></i>
                             <p className="content">info@petverse.com</p>
                         </div>
 
                         <div className="flex-row gap-8p">
-                            <i class="fas fa-map-pin"></i>
+                            <i className="fas fa-map-pin"></i>
                             <p className="content">Turkey, Karabük</p>
                         </div>
 
                         <div className="flex-row gap-8p">
-                            <i class="fas fa-phone-alt"></i>
+                            <i className="fas fa-phone-alt"></i>
                             <p className="content">009082764241</p>
                         </div>
                     </div>

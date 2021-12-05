@@ -28,12 +28,12 @@ body {
 
 .main-container {
   font-weight: 500;
-  padding: 1.5rem 1rem;
+  padding: 7rem 1rem 3rem 1rem;
   max-width:56rem;
   margin: auto;
   width: 100%;
   @include break-point("medium", "up") {
-    padding: 3rem; 
+    padding: 10rem 3rem 5rem 3rem;
   }
 }
 .form-container {

@@ -1,11 +1,11 @@
 @use "../abstracts" as *;
 
 nav {
+  position: fixed; 
+  top: 0;
   width: 100%;
   background-color: white;
-  position: relative;
   z-index: 2;
-  max-width: 90rem;
   margin: auto;
 
   .dropdown {
@@ -55,15 +55,22 @@ nav {
     }
   }
 
-  .full-logo {
-    width: 8.75rem;
-    height: 3.125rem;
-    @include break-point("medium", "up") {
-      max-width: 13.75rem;
+  .image-link {
+    display: block;
+    @include break-point('medium', 'up') {
       width: 20%;
-      height: 5.125rem;
+    }
+    .full-logo {
+      width: 8.75rem;
+      height: 3.125rem;
+      @include break-point("medium", "up") {
+        max-width: 13.75rem;
+        width: 100%;
+        height: 5.125rem;
+      }
     }
   }
+  
 }
 
 .burger-icon {
