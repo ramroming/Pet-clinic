@@ -1,0 +1,108 @@
+@use "../../../abstracts" as *;
+
+.slider-container {
+    position: relative;
+
+    @include break-point("medium", "up") {
+        align-items: flex-start;
+    }
+
+    .right,
+    .left {
+        width: 2.2rem;
+        height: 2.2rem;
+        position: absolute;
+        color: var(--clr-primary-mainPurple);
+        transition: ease all 0.3s;
+        filter: hue-rotate(270deg);
+        &:hover {
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+
+        @include break-point("medium", "up") {
+            width: 4rem;
+            height: 4rem;
+        }
+    }
+
+    .right {
+        top: 50%;
+        right: 3%;
+    }
+
+    .left {
+        top: 50%;
+        left: 3%;
+    }
+
+    .slide-content {
+        padding-top: 7rem;
+        padding-bottom: 5rem;
+        text-align: center;
+
+        @include break-point("medium", "up") {
+            padding-left: 9rem;
+        }
+
+        p,
+        h1 {
+            width: 70%;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.46);
+            padding: 1rem;
+        }
+
+        a {
+            color: white;
+        }
+
+        .slider-img {
+            width: 100%;
+            height: 120%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+            object-position: 50% 30%;
+            z-index: -1;
+        }
+
+        .slider-img-mobile {
+            @extend .slider-img;
+
+            @include break-point("medium", "up") {
+                display: none;
+            }
+        }
+
+        .slider-img-desktop {
+            @extend .slider-img;
+            display: none;
+
+            @include break-point("medium", "up") {
+                display: block;
+            }
+        }
+    }
+}
+
+.pag {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+.pag i {
+    color: white;
+    transition: 0.3s all ease;
+
+    &:not(.active):hover {
+        cursor: pointer;
+        color: var(--clr-primary-mainBlue);
+    }
+}
+
+i.active {
+    color: var(--clr-primary-mainPurple);
+    transform: scale(1.4);
+}

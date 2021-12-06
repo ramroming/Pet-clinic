@@ -1,0 +1,51 @@
+@use "../abstracts" as *;
+
+
+// here we can put the main container with tha main parts like header,main,sections,footer..etc
+
+/*setting the full page size for body and html elements*/
+/* the general design with paddings, margins, main-bgcolors, main-fonts and basic layout */
+
+body {
+  @include font($font: "font-1", $size: 1rem);
+  // background-color: var(--clr-shadow-dark-shadow);
+}
+.background-blue {
+  background-image: linear-gradient(120deg, var(--clr-shadow-dark-shadow) 50%, var(--clr-primary-mainBlue));
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  position: relative;
+  z-index: 1;
+}
+.background-dark-blue {
+  @extend .background-blue;
+  background-image: linear-gradient(120deg, rgb(11, 11, 73) , rgb(207, 179, 54));
+}
+
+.main-container {
+  font-weight: 500;
+  padding: 7rem 1rem 3rem 1rem;
+  max-width:56rem;
+  margin: auto;
+  width: 100%;
+  @include break-point("medium", "up") {
+    padding: 10rem 3rem 5rem 3rem;
+  }
+}
+.form-container {
+  @include rounded-corners(2.5rem, 2.5rem, 2.5rem, 2.5rem);
+  margin: auto;
+  width: 97%;
+  padding: 1rem;
+  background-color: rgb(255, 255, 255);
+  @include break-point("medium", "up") {
+    width: 60%;
+    @include rounded-corners(2.5rem, 0, 0, 2.5rem);
+
+  }
+}

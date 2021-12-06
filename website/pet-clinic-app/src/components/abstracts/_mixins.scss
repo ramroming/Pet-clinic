@@ -1,0 +1,278 @@
+@use "sass:list";
+@use "../abstracts/variables" as *;
+
+// colors css properties generator
+@mixin color-gen($color-map) {
+  @each $type, $colors in $color-map {
+    @each $color, $value in $colors {
+      --clr-#{$type}-#{$color}: #{$value};
+    }
+  }
+}
+
+@mixin font($font, $size: 0, $weight: 0) {
+  @if ($size == 0 and $weight == 0) {
+    font-family: map-get($fonts-map, $font);
+  } @else if ($size == 0 and $weight != 0) {
+    font-family: map-get($fonts-map, $font);
+    font-weight: $weight;
+  } @else if ($size != 0 and $weight == 0) {
+    font-family: map-get($fonts-map, $font);
+    font-size: $size;
+  } @else {
+    font: $weight $size map-get($fonts-map, $font);
+  }
+}
+
+//media querries mixinis
+@mixin break-point($size, $range: "") {
+  @if ($range == "up") {
+
+    @if ($size == "extra-small") {
+      @media all and (min-width: map-get($break-points-max, $size)) {
+        @content;
+      }
+    } @else if ($size == "small") {
+      @media all and (min-width: map-get($break-points-min, $size)) {
+        @content;
+      }
+    } @else if ($size == "medium") {
+      @media all and (min-width: map-get($break-points-min, $size)) {
+        @content;
+      }
+    } @else if ($size == "large") {
+      @media all and (min-width: map-get($break-points-min, $size)) {
+        @content;
+      }
+    } @else if ($size == "extra-large") {
+      @media all and (min-width: map-get($break-points-min, $size)) {
+        @content;
+      }
+    } @else if ($size == "xxL") {
+      @media all and (min-width: map-get($break-points-min, $size)) {
+        @content;
+      }
+    }
+  } @else {
+    @if ($size == "extra-small") {
+      @media all and (max-width: map-get($break-points-max, $size)) {
+        @content;
+      }
+    } @else if ($size == "xxL") {
+      @media all and (min-width: map-get($break-points-min, $size)) {
+        @content;
+      }
+    } @else {
+      @media all and (min-width: map-get($break-points-min, $size)) and (max-width: map-get($break-points-max, $size)) {
+        @content;
+      }
+    }
+  }
+}
+
+//grid container generator
+@mixin mygrid-container($grid-gap: 0, $column-num: 0, $row-num: 0, $column-width: auto, $row-height: auto) {
+  display: grid;
+  gap: $grid-gap $grid-gap;
+  $temp-column: null;
+  $temp-row: null;
+
+  @if $column-num != 0 {
+    @for $i from 1 through $column-num {
+      $temp-column: $temp-column $column-width #{if($i !=$column-num, "", "")};
+    }
+    grid-template-columns: $temp-column;
+  }
+  @if $row-num != 0 {
+    @for $i from 1 through $row-num {
+      $temp-row: $temp-row $row-height #{if($i !=$row-num, "", "")};
+    }
+    grid-template-rows: $temp-row;
+  }
+}
+
+//create properties for the grid container
+@mixin mygrid-properties($justify-i: flex-start, $align-i: stretch, $justify-c: flex-start, $align-c: stretch) {
+  justify-items: $justify-i;
+  align-items: $align-i;
+  justify-content: $justify-c;
+  align-content: $align-c;
+}
+
+//grid items' areas generator
+@mixin mygrid-item(
+  $start-row: auto,
+  $start-column: auto,
+  $end-row: auto,
+  $end-column: auto,
+  $justify-s: auto,
+  $align-s: auto
+) {
+  grid-area: list.slash($start-row, $start-column, $end-row, $end-column);
+  justify-self: $justify-s;
+  align-self: $align-s;
+}
+
+//flex container generator
+@mixin myflex-container($direction: row, $gap: 0) {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: $direction;
+  gap: $gap $gap;
+}
+//create properties for the flex container
+@mixin myflex-properties($justify-c: flex-start, $align-c: normal, $align-i: stretch) {
+  justify-content: $justify-c;
+  align-content: $align-c;
+  align-items: $align-i;
+}
+
+//rounded borders mixin
+@mixin rounded-corners($t-left: 50%, $t-right: 50%, $b-right: 50%, $b-left: 50%) {
+  border-radius: $t-left $t-right $b-right $b-left;
+  -webkit-border-radius: $t-left $t-right $b-right $b-left;
+  -moz-border-radius: $t-left $t-right $b-right $b-left;
+  -ms-border-radius: $t-left $t-right $b-right $b-left;
+  -o-border-radius: $t-left $t-right $b-right $b-left;
+}
+//transition translate mixin
+@mixin mytranslate($x-axis, $y-axis) {
+  transform: translate($x-axis, $y-axis);
+  -webkit-transform: translate($x-axis, $y-axis);
+  -moz-transform: translate($x-axis, $y-axis);
+  -ms-transform: translate($x-axis, $y-axis);
+  -o-transform: translate($x-axis, $y-axis);
+}
+
+//centering mixinis
+@mixin xy-center-margin {
+  margin-left: 50%;
+  margin-top: 50%;
+  @include mytranslate(-50%, -50%);
+}
+@mixin x-center-margin {
+  margin-left: 50%;
+  @include mytranslate(-50%, 0%);
+}
+@mixin y-center-margin {
+  margin-top: 50%;
+  @include mytranslate(0%, -50%);
+}
+
+@mixin xy-center-position {
+  left: 50%;
+  top: 50%;
+  @include mytranslate(-50%, -50%);
+}
+@mixin x-center-position {
+  left: 50%;
+  @include mytranslate(-50%, 0%);
+}
+@mixin y-center-position {
+  top: 50%;
+  @include mytranslate(0%, -50%);
+}
+
+// border-box mixin
+
+@mixin my-shadow($right: 0px, $down: 0px, $blur: 5px, $spread: 0px, $color: rgba(0, 0, 0, 1)) {
+  box-shadow: $right $down $blur $spread $color;
+}
+
+// pseudo elements creator
+@mixin pseudo($loc: before, $content: "", $pos: absolute, $top: auto, $right: auto, $bottom: auto, $left: auto) {
+  position: relative;
+
+  &::#{$loc} {
+    content: $content;
+    position: $pos;
+    @if ($top != "auto") {
+      top: $top;
+    }
+    @if ($right != "auto") {
+      right: $right;
+    }
+    @if ($bottom != "auto") {
+      bottom: $bottom;
+    }
+    @if ($left != "auto") {
+      left: $left;
+    }
+    @content;
+  }
+}
+
+//gap generator according to the device
+
+@mixin gap-gen() {
+  @each $size, $value in map-get($sizes-map, "pad-sizes") {
+    .gap-#{$size} {
+      gap: $value;
+    }
+  }
+}
+
+
+
+// creating standard sizes
+// @mixin standard-sizes() {
+//   @each $type, $sizes in $sizes-map {
+//     @each $size, $value in $sizes {
+//       --size-#{$size}: #{$value};
+//     }
+//   }
+// }
+
+// padding and margin mixinis
+
+// @mixin pad($top: 0, $right: 0, $bottom: 0, $left: 0, $all: 0) {
+//   @if ($all == 0) {
+//     padding: var(--size-#{$top}p) var(--size-#{$right}p) var(--size-#{$bottom}p) var(--size-#{$left}p);
+//   } @else {
+//     padding: var(--size-#{$all}p);
+//   }
+// }
+// @mixin marg($top: 0, $right: 0, $bottom: 0, $left: 0, $all: 0) {
+//   @if ($all == 0) {
+//     margin: var(--size-#{$top}p) var(--size-#{$right}p) var(--size-#{$bottom}p) var(--size-#{$left}p);
+//   } @else {
+//     margin: var(--size-#{$all}p);
+//   }
+// }
+
+
+
+// @mixin pad-marg-utility($device:"mobile") {
+
+//   @each $pad-marg in $paddings-margins {
+
+//     @each $size , $value in map-get($sizes-map,$device){
+
+//       @if ($pad-marg == "y-pad"){
+
+//         .#{$pad-marg}-#{$size} {padding: var(--#{$device}-#{$size}) 0;}
+//       } @else if ($pad-marg == "x-pad"){
+
+//         .#{$pad-marg}-#{$size} { padding: 0 var(--#{$device}-#{$size});}
+//       }
+//       @else if ($pad-marg == "xy-pad"){
+
+//         .#{$pad-marg}-#{$size} {padding: var(--#{$device}-#{$size}) var(--#{$device}-#{$size});}
+//       }
+//       @else if ($pad-marg == "x-marg"){
+
+//         .#{$pad-marg}-#{$size} { margin: 0 var(--#{$device}-#{$size});}
+//       }
+//       @else if ($pad-marg == "y-marg"){
+
+//         .#{$pad-marg}-#{$size} {margin: var(--#{$device}-#{$size}) 0;}
+//       }
+//       @else if ($pad-marg == "xy-marg"){
+
+//         .#{$pad-marg}-#{$size} {margin: var(--#{$device}-#{$size}) var(--#{$device}-#{$size});}
+//       }
+
+//     }
+
+//   }
+// }

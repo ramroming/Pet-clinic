@@ -1,0 +1,6 @@
+//here we can put the flex related utility classes
+@use "../abstracts" as *;
+
+.grid {
+  @include mygrid-container($grid-gap:0);
+}
