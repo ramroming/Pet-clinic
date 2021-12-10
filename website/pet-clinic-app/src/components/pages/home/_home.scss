@@ -4,9 +4,9 @@
 .home-container {
     font-weight: 500;
     padding-top: 3.75rem;
-    
+    min-height: 100vh;
     width: 100%;
     @include break-point("medium", "up") {
-      padding: 5.5rem 0rem 5rem 0rem;
+      padding: 5.5rem 0rem 0rem 0rem;
     }
 }

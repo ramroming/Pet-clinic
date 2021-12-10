@@ -697,7 +697,7 @@ nav {
   top: 0;
   width: 100%;
   background-color: white;
-  z-index: 2;
+  z-index: 3;
   margin: auto;
 }
 nav .nav-items {
@@ -1063,27 +1063,25 @@ input.radio-img:checked + img {
 .home-container {
   font-weight: 500;
   padding-top: 3.75rem;
+  min-height: 100vh;
   width: 100%;
 }
 @media all and (min-width: 48rem) {
   .home-container {
-    padding: 5.5rem 0rem 5rem 0rem;
+    padding: 5.5rem 0rem 0rem 0rem;
   }
 }
 
 .slider-container {
   position: relative;
-}
-@media all and (min-width: 48rem) {
-  .slider-container {
-    align-items: flex-start;
-  }
+  height: 40rem;
 }
 .slider-container .right,
 .slider-container .left {
   width: 2.2rem;
   height: 2.2rem;
   position: absolute;
+  z-index: 2;
   color: var(--clr-primary-mainPurple);
   transition: ease all 0.3s;
   filter: hue-rotate(270deg);
@@ -1101,36 +1099,85 @@ input.radio-img:checked + img {
   }
 }
 .slider-container .right {
-  top: 50%;
   right: 3%;
 }
 .slider-container .left {
-  top: 50%;
   left: 3%;
 }
-.slider-container .slide-content {
-  padding-top: 7rem;
+.slider-container .right, .slider-container .left {
+  top: 50%;
+}
+.slider-container .animation-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.slider-container .animation-container .slide-content {
+  align-content: center;
+  padding-top: 12rem;
   padding-bottom: 5rem;
-  text-align: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 @media all and (min-width: 48rem) {
-  .slider-container .slide-content {
-    padding-left: 9rem;
+  .slider-container .animation-container .slide-content {
+    padding-left: 12rem;
+    align-content: flex-start;
   }
 }
-.slider-container .slide-content p,
-.slider-container .slide-content h1 {
-  width: 70%;
+.slider-container .animation-container .slide-content p,
+.slider-container .animation-container .slide-content h1 {
   color: white;
   background-color: rgba(0, 0, 0, 0.46);
   padding: 1rem;
 }
-.slider-container .slide-content a {
-  color: white;
+.slider-container .animation-container .slide-content a,
+.slider-container .animation-container .slide-content p,
+.slider-container .animation-container .slide-content h1 {
+  width: 70%;
 }
-.slider-container .slide-content .slider-img, .slider-container .slide-content .slider-img-desktop, .slider-container .slide-content .slider-img-mobile {
+@media all and (min-width: 48rem) {
+  .slider-container .animation-container .slide-content a,
+.slider-container .animation-container .slide-content p,
+.slider-container .animation-container .slide-content h1 {
+    width: 70%;
+    max-width: 324px;
+  }
+}
+.slider-container .animation-container .slide-content a {
+  color: white;
+  font-size: 1rem;
+}
+@media all and (min-width: 48rem) {
+  .slider-container .animation-container .slide-content a {
+    font-size: 1.5rem;
+  }
+}
+.slider-container .animation-container .slide-content p {
+  font-size: 1rem;
+}
+@media all and (min-width: 48rem) {
+  .slider-container .animation-container .slide-content p {
+    font-size: 1.5rem;
+  }
+}
+.slider-container .animation-container .slide-content h1 {
+  text-align: center;
+  font-size: 1.5rem;
+}
+@media all and (min-width: 48rem) {
+  .slider-container .animation-container .slide-content h1 {
+    font-size: 2rem;
+  }
+}
+.slider-container .animation-container .slide-content .slider-img, .slider-container .animation-container .slide-content .slider-img-desktop, .slider-container .animation-container .slide-content .slider-img-mobile {
   width: 100%;
-  height: 120%;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
@@ -1141,27 +1188,30 @@ input.radio-img:checked + img {
   z-index: -1;
 }
 @media all and (min-width: 48rem) {
-  .slider-container .slide-content .slider-img-mobile {
+  .slider-container .animation-container .slide-content .slider-img-mobile {
     display: none;
   }
 }
-.slider-container .slide-content .slider-img-desktop {
+.slider-container .animation-container .slide-content .slider-img-desktop {
   display: none;
 }
 @media all and (min-width: 48rem) {
-  .slider-container .slide-content .slider-img-desktop {
+  .slider-container .animation-container .slide-content .slider-img-desktop {
     display: block;
   }
 }
 
 .pag {
-  padding-bottom: 1rem;
-  padding-top: 1rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 3rem;
+  z-index: 2;
 }
-
 .pag i {
   color: white;
   transition: 0.3s all ease;
+  z-index: 3;
 }
 .pag i:not(.active):hover {
   cursor: pointer;
