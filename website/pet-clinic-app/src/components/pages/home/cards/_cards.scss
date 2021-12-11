@@ -1,0 +1,62 @@
+@use "../../../abstracts" as *;
+
+.cards-main-container {
+    padding: 2rem 0;
+    text-align: center;
+
+    @include break-point("medium", "up") {
+        flex-direction: row;
+        justify-content: center;
+        padding: 3rem 2rem;
+    }
+
+    .main-header,
+    .card-desc {
+        padding: 0 2rem;
+    }
+
+    .main-header {
+        color: var(--clr-primary-mainBlue);
+        @include font($font: "font-2", $size: 2rem);
+        font-weight: bold;
+
+        @include break-point("medium", "up") {
+            width:100%;
+            padding: 1.5rem 2rem;
+            font-size: 3rem;
+        }
+    }
+
+  
+    // inside the cards
+
+    .card-container {
+        padding: 2rem 0;
+        width: 21rem;
+
+        @include break-point("medium", "up") {
+           width: 25rem;
+        }
+
+        img {
+            width: 40%;
+            max-width: 8rem;
+        }
+        p.card-title {
+            font-size: 1.5rem;
+
+            @include break-point("medium", "up") {
+                font-size: 2rem;
+            }
+        }
+        p.card-desc {
+            color: rgb(140, 139, 139);
+            @include font($font: "font-2", $size: 1rem);
+
+            @include break-point("medium", "up") {
+                font-size: 1.3rem;
+                padding: 0 4rem;
+            }
+        }
+    }
+}
