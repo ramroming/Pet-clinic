@@ -17,3 +17,6 @@
 @use "pages/home/home";
 @use 'pages/home/slider/slider';
 @use 'pages/home/cards/cards';
+@use 'pages/appointment/appointment';
+@use 'pages/appointment/makeAppointment/makeAppointmentSlider';
+@use 'pages/appointment/appointmentSlider/viewAppointmentSlider';

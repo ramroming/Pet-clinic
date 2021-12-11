@@ -5,6 +5,7 @@ import Nav from './components/layout/nav/Nav';
 import Footer from './components/layout/footer/Footer';
 import RegisterPet from "./components/pages/registerpet/RegisterPet";
 import {Routes, Route, Link} from "react-router-dom";
+import Appointment from "./components/pages/appointment/Appointment";
 
 function App() {
     return (
@@ -21,6 +22,8 @@ function App() {
                     element={<Signup/>}></Route>
                 <Route path='/registerpet'
                     element={<RegisterPet/>}></Route>
+                <Route path='/appointment'
+                    element={<Appointment/>}></Route>
             </Routes>
             <Footer/>
         </>
