@@ -73,7 +73,7 @@ const RegisterPet = () => {
                         </label>
                         <label htmlFor="photo" className="btn-r btn-r-outlined-blue flex-row fjust-between">
                             Press to upload
-                            <i class="fas fa-upload"></i>
+                            <i className="fas fa-upload"></i>
                         </label>
                         <input type="file" name="photo" id="photo" accept="image/*"/>
 
