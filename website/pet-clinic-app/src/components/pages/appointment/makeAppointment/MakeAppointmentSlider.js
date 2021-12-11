@@ -3,8 +3,11 @@ import { useState, useRef } from "react/cjs/react.development"
 const MakeAppointmentSlider = () => {
 
   const [appointment, setAppointment] = useState({
-    appointmentType: 'Examination'
+    appointmentType: 'Examination',
+    petName: 'pet'
   })
+
+
   const [slides, setSlides] = useState([true, false, false, false])
 
 
@@ -51,9 +54,11 @@ const MakeAppointmentSlider = () => {
       }
     }
   }
+
+  
   const selectType = (event) => {
     
-    let type = {}
+    let type = ""
     console.log(event.target.nodeName)
     switch (event.target.nodeName) {
       case 'IMG':
@@ -71,10 +76,34 @@ const MakeAppointmentSlider = () => {
     setAppointment((oldAppointment) => {
       return { ...oldAppointment, appointmentType: type }
     })
+  
   }
-  const stop = (event) => {
-    event.stopPropagation()
+
+  //next slide
+  const selectPet = (event) => {
+    
+    let pet = ""
+    console.log(event.target.nodeName)
+    switch (event.target.nodeName) {
+      case 'IMG':
+        pet = event.target.parentNode.children[1].innerHTML //p is the second child
+        break
+      case 'P':
+        pet = event.target.innerHTML
+        break
+      default:
+        pet = event.target.children[1].innerHTML
+        break
+
+    }
+
+    setAppointment((oldAppointment) => {
+      return { ...oldAppointment, petName: pet }
+    })
+
+  
   }
+
 
   return (
     <>
@@ -110,8 +139,37 @@ const MakeAppointmentSlider = () => {
         }
         {
           slides[1] && <>
-            <h1>Next Slide</h1>
-            <div className="flex-row fjust-around button-wrapper">
+            <h1>Select Your Pet:</h1>
+            <div className="appointment-types flex-row fjust-center gap-24p">
+
+            <div className={ appointment.petName === 'Pet 1' ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center" }
+            onClick={(event) => selectPet(event)}>
+              <img src="/media/imgs/cat.png" alt="cat"/>
+              <p>Pet 1</p>
+            </div>
+
+            <div className={ appointment.petName === 'Pet 2' ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center" }
+              onClick={(event) => selectPet(event)}>
+              <img src="/media/imgs/cat.png" alt="cat" />
+              <p>Pet 2</p>
+            </div>
+            
+            <div className={ appointment.petName === 'Pet 3' ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center" }
+              onClick={(event) => selectPet(event)}>
+              <img src="/media/imgs/cat.png" alt="cat" />
+              <p>Pet 3</p>
+            </div>
+
+            <div className={ appointment.petName === 'Pet 4' ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center" }
+              onClick={(event) => selectPet(event)}>
+              <img src="/media/imgs/cat.png" alt="cat" />
+              <p>Pet 4</p>
+            </div>
+           
+
+            </div>
+       
+            <div className="appointment-buttons-wrapper flex-row fjust-around button-wrapper">
               <button id="back" className="btn-rec-purple next"
                 onClick={(event) => moveSlider(event)}>Back</button>
               <button id="next" className="btn-rec-purple next"

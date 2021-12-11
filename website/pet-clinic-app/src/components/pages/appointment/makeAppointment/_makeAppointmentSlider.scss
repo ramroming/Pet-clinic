@@ -1,44 +1,104 @@
-@use '../../../abstracts/' as *;
+@use "../../../abstracts/" as *;
 
 .make-appointment-slider {
   position: absolute;
   top: 20%;
   width: 100%;
   padding: 0 1rem;
+
+
+
+  //styling the first slide
   h1 {
     font-size: 1.25rem;
     color: rgb(216, 216, 216);
     text-align: center;
+
+    @include break-point("medium","up"){
+      font-size: 2rem;
+    }
+  
   }
   .appointment-types {
-
     width: 100%;
+    max-width:35rem;
+    // margin: auto;
+    @include break-point("medium","up"){
+     max-width: none;
+    }
 
     .appointment-type {
-
-      padding: .5rem;
+      padding: 0.5rem;
       width: 8rem;
       border: 2px solid var(--clr-shadow-light-gray);
       @include rounded-corners(1rem, 1rem, 1rem, 1rem);
+      transition: 0.5s ease transform;
+    
+      @include break-point("medium","up"){
+        width: 15%;
+        min-width: 10rem;
+        padding: 3rem 0;
+      }
 
-      &.active { 
+      &.active {
         border-color: var(--clr-primary-mainPurple);
       }
       p {
-        color: white;
+        color: var(--clr-shadow-light-gray);
+
+        @include break-point("medium","up"){
+         font-size:1.5rem;
+        }
       }
       img {
         width: 3rem;
         height: 3rem;
+
+        @include break-point("medium","up"){
+          width: 6rem;
+          height: 6rem;
+        }
       }
-    }
+
+      //hover on each div
+      &:hover{
+        cursor:pointer;
+        transform: scale(1.1);
+      }
+
+
     
+    }
+
+   
   }
+
+   //buttons
+   
+   .appointment-buttons-wrapper{
+
+    @include break-point("medium","up"){
+      justify-content: center;
+      gap: 4rem;
+      padding: 0;
+    }
+  
+
+  }
+
+  .next {
+    width: 40%;
+    margin: auto;
+    max-width: 10rem;
+ 
+
+    @include break-point("medium","up"){
+      width: 30%;
+      margin: 0;
+    }
+
+  }
+
+    
+  
 }
-
-
-.next {
-  width: 40%;
-  margin: auto;
-}
-
