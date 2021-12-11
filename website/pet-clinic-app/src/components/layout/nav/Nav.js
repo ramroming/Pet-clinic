@@ -19,10 +19,10 @@ const Nav = () => {
             <a href="" className="nav-item">Appointment</a>
             <a href="" className="nav-item">Adoption</a>
             <a href="" className="nav-item">About</a>
-            <a href="" className="nav-item">Staff</a>
+            <a href="" className="nav-item">Add pet</a>
           </div>
 
-          <div className="btn-wrapper flex-row fjust-center gap-8p">
+          <div className="btn-wrapper flex-row fjust-start gap-8p">
             <button href="" className="btn-s">Login</button>
             <button href="" className="btn-s">Signup</button>
           </div>

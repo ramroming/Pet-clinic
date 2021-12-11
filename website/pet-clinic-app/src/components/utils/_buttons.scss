@@ -68,7 +68,7 @@
 .btn-s {
   @extend .btn-r-outlined-purple;
   @include rounded-corners(0.5rem, 0.5rem, 0.5rem, 0.5rem);
-  width: 40%;
+  width: 35%;
 }
 .btn-rec {
   padding: 1rem;

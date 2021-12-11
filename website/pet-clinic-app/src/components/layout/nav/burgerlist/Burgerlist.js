@@ -9,7 +9,7 @@ const burgerAnimation = burgerItem
 const Burgerlist = () => {
 
     const [menuTog, setMenuTog] = useState(false)
-    const dropList = ['Login', 'Signup', 'Appointment', 'Adoption', 'About', 'Our Staff']
+    const dropList = ['Login', 'Signup', 'Appointment', 'Adoption', 'About', 'Register pet']
   
     const toggle = () => {
       setMenuTog((menuTog) => {
