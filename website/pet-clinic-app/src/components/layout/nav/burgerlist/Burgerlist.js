@@ -1,4 +1,3 @@
-import react from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { burgerMenu, burgerItem } from "./burgerAnimation"
 import { useState } from "react";

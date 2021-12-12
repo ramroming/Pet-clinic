@@ -2,11 +2,9 @@
 
 .make-appointment-slider {
   position: absolute;
-  top: 20%;
+  top: 10%;
   width: 100%;
   padding: 0 1rem;
-
-
 
   //styling the first slide
   h1 {
@@ -14,16 +12,15 @@
     color: rgb(216, 216, 216);
     text-align: center;
 
-    @include break-point("medium","up"){
+    @include break-point("medium", "up") {
       font-size: 2rem;
     }
-  
   }
   .appointment-types {
     width: 100%;
-    max-width:35rem;
-    @include break-point("medium","up"){
-     max-width: none;
+    max-width: 35rem;
+    @include break-point("medium", "up") {
+      max-width: none;
     }
 
     .appointment-type {
@@ -32,8 +29,8 @@
       border: 2px solid var(--clr-shadow-light-gray);
       @include rounded-corners(1rem, 1rem, 1rem, 1rem);
       transition: 0.5s ease transform;
-    
-      @include break-point("medium","up"){
+
+      @include break-point("medium", "up") {
         width: 15%;
         min-width: 10rem;
         padding: 3rem 0;
@@ -45,60 +42,116 @@
       p {
         color: var(--clr-shadow-light-gray);
 
-        @include break-point("medium","up"){
-         font-size:1.5rem;
+        @include break-point("medium", "up") {
+          font-size: 1.5rem;
         }
       }
       img {
         width: 3rem;
         height: 3rem;
 
-        @include break-point("medium","up"){
+        @include break-point("medium", "up") {
           width: 6rem;
           height: 6rem;
         }
       }
 
       //hover on each div
-      &:hover{
-        cursor:pointer;
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+      }
+    }
+    
+
+    .time {
+      color: white;
+      font-size: 1rem;
+      padding: 0.5rem;
+      border: 2px solid white;
+      @include rounded-corners(0.5rem, 0.5rem, 0.5rem, 0.5rem);
+      transition: all ease 0.5s;
+      @include break-point("medium", "up") {
+        color: white;
+        font-size: 1.5rem;
+        padding: 0.75rem;
+      }
+      &:hover:not(.not-available) {
+        cursor: pointer;
         transform: scale(1.1);
       }
 
+      &.active {
+        border-color: var(--clr-primary-mainPurple);
+      }
 
-    
+      &.not-available {
+        color: grey;
+        border-color: grey;
+        cursor: default;
+      }
     }
-
-   
+    &.date-container {
+      @include break-point("medium", "up") {
+        max-width: 50rem;
+        gap: 2rem;
+      }
+    }
   }
 
-   //buttons
-   
-   .appointment-buttons-wrapper{
+  //buttons
 
-    @include break-point("medium","up"){
+  .appointment-buttons-wrapper {
+    @include break-point("medium", "up") {
       justify-content: center;
       gap: 4rem;
       padding: 0;
     }
-  
-
   }
 
   .next {
     width: 40%;
     margin: auto;
     max-width: 10rem;
- 
 
-    @include break-point("medium","up"){
+    @include break-point("medium", "up") {
       width: 30%;
       margin: 0;
     }
-
   }
-
-    
-  
 }
 
+.date-picker-input {
+  position: relative;
+  img {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.6rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    @include break-point("medium", "up") {
+      top: 0.7rem;
+      left: 0.7rem;
+    }
+  }
+  input {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 10;
+    padding: 0.75rem;
+    font-size: 1rem;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 2px;
+    @include rounded-corners(1rem, 1rem, 1rem, 1rem);
+    border: 2px solid white;
+    transition: all ease 0.3s;
+    &:hover {
+      cursor: pointer;
+      border-color: var(--clr-primary-mainPurple);
+    }
+    @include break-point("medium", "up") {
+      font-size: 1.5rem;
+    }
+  }
+}

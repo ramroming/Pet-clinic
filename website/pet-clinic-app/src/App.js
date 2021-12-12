@@ -4,7 +4,7 @@ import Home from "./components/pages/home/Home";
 import Nav from './components/layout/nav/Nav';
 import Footer from './components/layout/footer/Footer';
 import RegisterPet from "./components/pages/registerpet/RegisterPet";
-import {Routes, Route, Link} from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 import Appointment from "./components/pages/appointment/Appointment";
 
 function App() {

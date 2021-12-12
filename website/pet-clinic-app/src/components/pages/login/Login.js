@@ -1,5 +1,3 @@
-import react from "react";
-
 const Login = () => {
     return (
         <>
@@ -7,7 +5,7 @@ const Login = () => {
                 <div className="main-container flex-row">
                     <form className="form-container flex-col gap-16p falign-center" action="/" method="POST">
 
-                        <a className="logo-link" href="#">
+                        <a className="logo-link" href="/#">
                             <img src="/media/imgs/favicon.png" alt="" className="logo"/>
                         </a>
 
@@ -34,10 +32,10 @@ const Login = () => {
                                 Login
                             </button>
 
-                            <a href="#" className="btn-r btn-r-dark">
+                            <a href="/#" className="btn-r btn-r-dark">
                                 Not a member?
                             </a>
-                            <a href="#" className="btn-r btn-r-purple">
+                            <a href="/#" className="btn-r btn-r-purple">
                                 Forgot your password?</a>
 
                         </div>

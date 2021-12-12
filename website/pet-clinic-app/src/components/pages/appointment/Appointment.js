@@ -1,5 +1,4 @@
-import react from "react";
-import ViewAppointmentSlider from "./appointmentSlider/ViewAppointmentSlider";
+// import ViewAppointmentSlider from "./appointmentSlider/ViewAppointmentSlider";
 import MakeAppointmentSlider from './makeAppointment/MakeAppointmentSlider'
 const Appointment = () => {
   return (

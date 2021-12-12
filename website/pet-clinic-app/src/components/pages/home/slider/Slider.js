@@ -1,5 +1,4 @@
-import react from "react"
-import { useState, useEffect, useRef } from "react"
+import { useState, useRef } from "react"
 
 //Import Animation object from sliderAnimation.js
 import { contentSlider } from "./sliderAnimation"
@@ -22,9 +21,9 @@ const Slider = () => {
   const moveSlider = (event) => {
 
     //if the pressed indicator has right class it means it's right movement otherwise it is left movement
-    if (event.target.className == 'right') {
+    if (event.target.className === 'right') {
       // check whether index is out of array range
-      if (position.current[1] + 1 != slider.length) {
+      if (position.current[1] + 1 !== slider.length) {
         // its a right movement so modify position Ref by making the current index an old index and the new index is the previous new index + 1
         position.current[0] = position.current[1]
         position.current[1] = position.current[1] + 1
@@ -36,7 +35,7 @@ const Slider = () => {
         // Modifying the slider state by calling setSlider(), here for each value in the slider array if the value's index is either old or the new index in the position ref then it should be flipped meaning true->false and false->true
         setSlider(() => {
           return slider.map((value, index) => {
-            return (index === position.current[0] || index == position.current[1]) ? !value : value
+            return (index === position.current[0] || index === position.current[1]) ? !value : value
           })
         })
 
@@ -74,7 +73,7 @@ const Slider = () => {
         // same as right movement idea
         setSlider(() => {
           return slider.map((value, index) => {
-            return (index === position.current[0] || index == position.current[1]) ? !value : value
+            return (index === position.current[0] || index === position.current[1]) ? !value : value
           })
         })
 
@@ -105,7 +104,7 @@ const Slider = () => {
     // we modify the slider state based on the movement
     setSlider(() => {
       return slider.map((value, index) => {
-        return (index === position.current[0] || index == position.current[1]) ? !value : value
+        return (index === position.current[0] || index === position.current[1]) ? !value : value
       })
     })
   }
@@ -114,17 +113,17 @@ const Slider = () => {
   return (
     <>
       <div className="slider-container flex-col gap-16p falign-center">
-        <img src="/media/imgs/right.png" className="right"
+        <img alt ="direction" src="/media/imgs/right.png" className="right"
           onClick={(event) => moveSlider(event)}></img>
-        <img src="/media/imgs/left.png" className="left"
+        <img alt ="direction" src="/media/imgs/left.png" className="left"
           onClick={(event) => moveSlider(event)}></img>
         <div className="pag flex-row gap-8p fjust-center">
 
           {/* we compare each pagintation with the slider array to know whether it is an active pagintation or not so that when can color it differently   */}
-          <i onClick={(event) => pagSlide(event)} className={slider[0] == true ? "fas k0 fa-dot-circle active " : "fas k0 fa-dot-circle"}></i>
-          <i onClick={(event) => pagSlide(event)} className={slider[1] == true ? "fas k1 fa-dot-circle active " : "fas k1 fa-dot-circle"}></i>
-          <i onClick={(event) => pagSlide(event)} className={slider[2] == true ? "fas k2 fa-dot-circle active " : "fas k2 fa-dot-circle"}></i>
-          <i onClick={(event) => pagSlide(event)} className={slider[3] == true ? "fas k3 fa-dot-circle active " : "fas k3 fa-dot-circle"}></i>
+          <i onClick={(event) => pagSlide(event)} className={slider[0] === true ? "fas k0 fa-dot-circle active " : "fas k0 fa-dot-circle"}></i>
+          <i onClick={(event) => pagSlide(event)} className={slider[1] === true ? "fas k1 fa-dot-circle active " : "fas k1 fa-dot-circle"}></i>
+          <i onClick={(event) => pagSlide(event)} className={slider[2] === true ? "fas k2 fa-dot-circle active " : "fas k2 fa-dot-circle"}></i>
+          <i onClick={(event) => pagSlide(event)} className={slider[3] === true ? "fas k3 fa-dot-circle active " : "fas k3 fa-dot-circle"}></i>
         </div>
         <div className="animation-container">
           {/* An element that has an exit animation should be wrapped with Animate presence */}
@@ -139,11 +138,11 @@ const Slider = () => {
               className="slide-content flex-col  gap-24p">
               <h1>Appointments</h1>
               <p>Examination, grooming, check-up and more!</p>
-              <a href="" className="btn-rec-purple">
+              <a href="/#" className="btn-rec-purple">
                 Make an appointment
               </a>
-              <img className="slider-img-desktop" src="/media/imgs/appointment.jpg" alt="app-image" />
-              <img className="slider-img-mobile" src="/media/imgs/vertical-appointment.jpg" alt="app-image" />
+              <img className="slider-img-desktop" src="/media/imgs/appointment.jpg" alt="app" />
+              <img className="slider-img-mobile" src="/media/imgs/vertical-appointment.jpg" alt="app" />
             </motion.div>
             }
           </AnimatePresence>
@@ -158,11 +157,11 @@ const Slider = () => {
                 className="slide-content flex-col  gap-24p">
                 <h1>Adoption</h1>
                 <p>Find pets to adopt or find a home for your pet</p>
-                <a href="" className="btn-rec-purple">
+                <a href="/#" className="btn-rec-purple">
                   Go to adoption posts
                 </a>
-                <img className="slider-img-desktop" src="/media/imgs/shelter.jpg" alt="app-image" />
-                <img className="slider-img-mobile" src="/media/imgs/vertical-shelter.jpg" alt="app-image" />
+                <img className="slider-img-desktop" src="/media/imgs/shelter.jpg" alt="app" />
+                <img className="slider-img-mobile" src="/media/imgs/vertical-shelter.jpg" alt="app" />
               </motion.div>
 
             }
@@ -178,11 +177,11 @@ const Slider = () => {
                 className="slide-content flex-col  gap-24p">
                 <h1>Pet Training</h1>
                 <p>Get your pet trained by our professional trainers</p>
-                <a href="" className="btn-rec-purple">
+                <a href="/#" className="btn-rec-purple">
                   Check trainings
                 </a>
-                <img className="slider-img-desktop" src="/media/imgs/training.jpg" alt="app-image" />
-                <img className="slider-img-mobile" src="/media/imgs/vertical-training.jpg" alt="app-image" />
+                <img className="slider-img-desktop" src="/media/imgs/training.jpg" alt="app" />
+                <img className="slider-img-mobile" src="/media/imgs/vertical-training.jpg" alt="app" />
               </motion.div>
 
             }
@@ -198,11 +197,11 @@ const Slider = () => {
                 className="slide-content flex-col  gap-24p">
                 <h1>Register your pet</h1>
                 <p>Add your pet to our family</p>
-                <a href="" className="btn-rec-purple">
+                <a href="/#" className="btn-rec-purple">
                   Register meow!
                 </a>
-                <img className="slider-img-desktop" src="/media/imgs/registerpet.jpg" alt="app-image" />
-                <img className="slider-img-mobile" src="/media/imgs/vertical-register.jpg" alt="app-image" />
+                <img className="slider-img-desktop" src="/media/imgs/registerpet.jpg" alt="app" />
+                <img className="slider-img-mobile" src="/media/imgs/vertical-register.jpg" alt="app" />
               </motion.div>
 
             }

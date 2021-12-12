@@ -1,4 +1,3 @@
-import react from "react";
 import Slider from "./slider/Slider";
 import Cards from "./cards/Cards";
 

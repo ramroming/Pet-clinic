@@ -1,5 +1,3 @@
-import react from "react";
-
 const RegisterPet = () => {
 
     return (
@@ -8,7 +6,7 @@ const RegisterPet = () => {
 
                 <form className="form-container flex-col gap-16p falign-center" action="/" method="POST">
 
-                    <a className="logo-link" href="#">
+                    <a className="logo-link" href="/#">
                         <img src="/media/imgs/favicon.png" alt="" className="logo"/>
                     </a>
 
@@ -98,7 +96,7 @@ const RegisterPet = () => {
                             Login
                         </button>
 
-                        <a href="#" className="btn-r btn-r-purple">Go to home page</a>
+                        <a href="/#" className="btn-r btn-r-purple">Go to home page</a>
 
                     </div>
                 </form>

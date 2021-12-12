@@ -1,11 +1,9 @@
-import react from "react";
-
 const Signup = () => {
     return (
         <div className="background-blue">
             <div className="main-container flex-row">
                 <form className="form-container flex-col gap-16p falign-center" action="/" method="POST">
-                    <a className="logo-link" href="#">
+                    <a className="logo-link" href="/#">
                         <img src="/media/imgs/favicon.png" alt="" className="logo"/>
                     </a>
 
@@ -66,7 +64,7 @@ const Signup = () => {
                             Sign up
                         </button>
 
-                        <a href="#" className="btn-r btn-r-purple">Already a member?</a>
+                        <a href="/#" className="btn-r btn-r-purple">Already a member?</a>
 
                     </div>
                 </form>
