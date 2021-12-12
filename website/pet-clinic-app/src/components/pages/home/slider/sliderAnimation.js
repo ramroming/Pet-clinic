@@ -12,13 +12,13 @@ const contentSlider = {
   final: {
     x: 0,
     transition: {
-      duration: 0.5
+      duration: 0.8
     }
   },
   exit: {
     x: '-97vw',
     transition: {
-      duration: 0.5
+      duration: 0.8
     }
   },
 

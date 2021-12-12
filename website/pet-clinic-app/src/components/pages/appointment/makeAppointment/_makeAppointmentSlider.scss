@@ -118,6 +118,14 @@
       width: 30%;
       margin: 0;
     }
+
+    .confirm{
+      background-color: var(--clr-primary-mainBlue);
+
+      &:hover{
+        background-color: #0c7172;
+      }
+    }
   }
 }
 

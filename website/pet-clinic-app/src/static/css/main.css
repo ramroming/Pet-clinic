@@ -926,7 +926,16 @@ body {
 }
 
 .react-datepicker__portal {
-  background-color: #56305891 !important;
+  background-color: transparent !important;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  z-index: 2147483647;
 }
 
 .react-datepicker__header {
@@ -1480,6 +1489,12 @@ i.active {
     margin: 0;
   }
 }
+.make-appointment-slider .next .confirm {
+  background-color: var(--clr-primary-mainBlue);
+}
+.make-appointment-slider .next .confirm:hover {
+  background-color: #0c7172;
+}
 
 .date-picker-input {
   position: relative;
@@ -1522,4 +1537,4 @@ i.active {
   .date-picker-input input {
     font-size: 1.5rem;
   }
-}
+}/*# sourceMappingURL=main.css.map */
