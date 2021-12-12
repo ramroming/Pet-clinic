@@ -22,7 +22,6 @@
   .appointment-types {
     width: 100%;
     max-width:35rem;
-    // margin: auto;
     @include break-point("medium","up"){
      max-width: none;
     }
@@ -102,3 +101,4 @@
     
   
 }
+

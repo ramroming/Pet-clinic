@@ -11,6 +11,7 @@
 @use "layout/nav/burgerlist/burgerList";
 @use "layout/footer/footer";
 @use "utils/containers";
+@use 'utils/datepicker/datepicker';
 @use "pages/signup/signup";
 @use "pages/login/login";
 @use "pages/registerpet/registerpet";
@@ -20,3 +21,4 @@
 @use 'pages/appointment/appointment';
 @use 'pages/appointment/makeAppointment/makeAppointmentSlider';
 @use 'pages/appointment/appointmentSlider/viewAppointmentSlider';
+
