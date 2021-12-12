@@ -902,6 +902,55 @@ body {
   }
 }
 
+.react-datepicker-wrapper {
+  display: inline-block;
+  padding: 0;
+  border: 0;
+  width: 100%;
+}
+
+.react-datepicker {
+  font-family: "Overpass", sans-serif;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -webkit-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -moz-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -ms-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -o-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  border: 4px solid var(--clr-primary-mainBlue) !important;
+}
+@media all and (min-width: 48rem) {
+  .react-datepicker {
+    font-size: 1rem !important;
+  }
+}
+
+@media all and (min-width: 48rem) {
+  .react-datepicker__month-container {
+    width: 30rem !important;
+  }
+}
+
+.react-datepicker__portal {
+  background-color: #56305891 !important;
+}
+
+.react-datepicker__header {
+  background-color: var(--clr-primary-mainBlue) !important;
+  border-bottom: 3px solid var(--clr-primary-mainBlue) !important;
+}
+
+.react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header {
+  color: white !important;
+}
+
+.react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
+  margin: 0.167rem 0.9rem !important;
+}
+
+.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range, .react-datepicker__month-text--selected, .react-datepicker__month-text--in-selecting-range, .react-datepicker__month-text--in-range, .react-datepicker__quarter-text--selected, .react-datepicker__quarter-text--in-selecting-range, .react-datepicker__quarter-text--in-range, .react-datepicker__year-text--selected, .react-datepicker__year-text--in-selecting-range, .react-datepicker__year-text--in-range {
+  background-color: var(--clr-primary-mainPurple) !important;
+}
+
 .split-screen-signup {
   width: 40%;
   display: none;
@@ -1289,7 +1338,7 @@ i.active {
 .make-appointment-wrapper {
   position: relative;
   background-image: linear-gradient(120deg, var(--clr-shadow-dark-shadow) 50%, var(--clr-primary-mainBlue));
-  height: 30rem;
+  height: 35rem;
 }
 
 .make-appointment-slider {
@@ -1303,8 +1352,19 @@ i.active {
   color: #d8d8d8;
   text-align: center;
 }
+@media all and (min-width: 48rem) {
+  .make-appointment-slider h1 {
+    font-size: 2rem;
+  }
+}
 .make-appointment-slider .appointment-types {
   width: 100%;
+  max-width: 35rem;
+}
+@media all and (min-width: 48rem) {
+  .make-appointment-slider .appointment-types {
+    max-width: none;
+  }
 }
 .make-appointment-slider .appointment-types .appointment-type {
   padding: 0.5rem;
@@ -1315,19 +1375,55 @@ i.active {
   -moz-border-radius: 1rem 1rem 1rem 1rem;
   -ms-border-radius: 1rem 1rem 1rem 1rem;
   -o-border-radius: 1rem 1rem 1rem 1rem;
+  transition: 0.5s ease transform;
+}
+@media all and (min-width: 48rem) {
+  .make-appointment-slider .appointment-types .appointment-type {
+    width: 15%;
+    min-width: 10rem;
+    padding: 3rem 0;
+  }
 }
 .make-appointment-slider .appointment-types .appointment-type.active {
   border-color: var(--clr-primary-mainPurple);
 }
 .make-appointment-slider .appointment-types .appointment-type p {
-  color: white;
+  color: var(--clr-shadow-light-gray);
+}
+@media all and (min-width: 48rem) {
+  .make-appointment-slider .appointment-types .appointment-type p {
+    font-size: 1.5rem;
+  }
 }
 .make-appointment-slider .appointment-types .appointment-type img {
   width: 3rem;
   height: 3rem;
 }
-
-.next {
+@media all and (min-width: 48rem) {
+  .make-appointment-slider .appointment-types .appointment-type img {
+    width: 6rem;
+    height: 6rem;
+  }
+}
+.make-appointment-slider .appointment-types .appointment-type:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+@media all and (min-width: 48rem) {
+  .make-appointment-slider .appointment-buttons-wrapper {
+    justify-content: center;
+    gap: 4rem;
+    padding: 0;
+  }
+}
+.make-appointment-slider .next {
   width: 40%;
   margin: auto;
+  max-width: 10rem;
 }
+@media all and (min-width: 48rem) {
+  .make-appointment-slider .next {
+    width: 30%;
+    margin: 0;
+  }
+}/*# sourceMappingURL=main.css.map */
