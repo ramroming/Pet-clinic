@@ -113,17 +113,29 @@
     width: 40%;
     margin: auto;
     max-width: 10rem;
-
+    &.disabled {
+      background-color: rgb(122, 124, 124);
+      cursor: default;
+      &:hover {
+        background-color: rgb(122, 124, 124);
+      }
+    }
     @include break-point("medium", "up") {
       width: 30%;
       margin: 0;
     }
+  }
+  .confirm{
+    background-color: var(--clr-primary-mainBlue);
 
-    .confirm{
-      background-color: var(--clr-primary-mainBlue);
-
-      &:hover{
-        background-color: #0c7172;
+    &:hover{
+      background-color: #0c7172;
+    }
+    &.disabled {
+      background-color: rgb(122, 124, 124);
+      cursor: default;
+      &:hover {
+        background-color: rgb(122, 124, 124);
       }
     }
   }
@@ -163,3 +175,4 @@
     }
   }
 }
+

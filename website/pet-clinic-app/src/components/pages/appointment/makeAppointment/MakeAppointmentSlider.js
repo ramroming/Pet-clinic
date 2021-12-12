@@ -2,20 +2,21 @@ import { useState, useRef, useEffect } from "react/cjs/react.development"
 import Datepicker from "../../../utils/datepicker/Datepicker";
 
 //Import Animation object from sliderAnimation.js
-import { contentSlider } from "../../home/slider/sliderAnimation";
-
+import { appointmentSlider } from "../makeAppointment/makeAppointmentAnimation"
+import { contentSlider } from '../../home/slider/sliderAnimation'
 //Import motion for defining entering motion, and AnimatePresence to define exit animation
 import { AnimatePresence, motion } from "framer-motion"
 
 // Assign the imported object to local object sliderMotion
-const sliderMotion = contentSlider
+const sliderMotion = appointmentSlider
+const buttonMotion = contentSlider
 
 const MakeAppointmentSlider = () => {
 
   const [appointment, setAppointment] = useState({
-    appointmentType: 'Examination',
-    petName: 'Pet 1',
-    staffMem: 'Staff 1',
+    appointmentType: '',
+    petName: '',
+    staffMem: '',
     date: new Date("October 01, 1991 00:00:00")
   })
 
@@ -48,9 +49,7 @@ const MakeAppointmentSlider = () => {
         position.current[0] = position.current[1]
         position.current[1] = position.current[1] + 1
 
-        // specify the initial and exit motion based on right movement
-        sliderMotion.initial.x = '97vw'
-        sliderMotion.exit.x = '-97vw'
+
 
         setSlides(() => {
           return slides.map((value, index) => {
@@ -67,9 +66,7 @@ const MakeAppointmentSlider = () => {
         position.current[0] = position.current[1]
         position.current[1] = position.current[1] - 1
 
-        // specify the initial and exit motion based on left movement
-        sliderMotion.initial.x = '-97vw'
-        sliderMotion.exit.x = '97vw'
+
 
         // same as right movement idea
         setSlides(() => {
@@ -133,9 +130,9 @@ const MakeAppointmentSlider = () => {
   }
 
   return (
-    <> 
+    <>
       {/* first slide */}
-      <AnimatePresence>
+      <AnimatePresence >
         {slides[0] &&
           <motion.div
             variants={sliderMotion}
@@ -165,14 +162,18 @@ const MakeAppointmentSlider = () => {
                 <p className='type'>Adoption</p>
               </div>
             </div>
-            <button id="next" className="btn-rec-purple next"
-              onClick={(event) => moveSlider(event)}>Next</button>
+            <button
+              id="next" className={appointment.appointmentType === '' ? "btn-rec-purple next disabled" : "btn-rec-purple next"}
+              onClick={(event) => moveSlider(event)}
+              disabled={appointment.appointmentType === '' ? true : false}>Next
+            </button>
+
           </motion.div>
 
         }
       </AnimatePresence>
       {/* second slide */}
-      <AnimatePresence>
+      <AnimatePresence >
         {
           slides[1] &&
           <motion.div
@@ -213,8 +214,16 @@ const MakeAppointmentSlider = () => {
             <div className="appointment-buttons-wrapper flex-row fjust-around button-wrapper">
               <button id="back" className="btn-rec-purple next"
                 onClick={(event) => moveSlider(event)}>Back</button>
-              <button id="next" className="btn-rec-purple next"
-                onClick={(event) => moveSlider(event)}>Next</button>
+
+
+              <button
+                id="next" className={appointment.petName === '' ? "btn-rec-purple next disabled" : "btn-rec-purple next"}
+                onClick={(event) => moveSlider(event)}
+                disabled={appointment.petName === '' ? true : false}>Next
+              </button>
+
+
+
             </div>
           </motion.div>
 
@@ -222,14 +231,14 @@ const MakeAppointmentSlider = () => {
       </AnimatePresence>
       {/* third slide */}
 
-      <AnimatePresence>
+      <AnimatePresence >
         {
           slides[2] &&
           <motion.div
-          variants={sliderMotion}
-          initial="initial"
-          animate="final"
-          exit='exit'  className="make-appointment-slider flex-col falign-center gap-24p">
+            variants={sliderMotion}
+            initial="initial"
+            animate="final"
+            exit='exit' className="make-appointment-slider flex-col falign-center gap-24p">
             <h1>Select staff:</h1>
             <div className="appointment-types flex-row fjust-center gap-24p">
 
@@ -263,66 +272,74 @@ const MakeAppointmentSlider = () => {
             <div className="appointment-buttons-wrapper flex-row fjust-around button-wrapper">
               <button id="back" className="btn-rec-purple next"
                 onClick={(event) => moveSlider(event)}>Back</button>
-              <button id="next" className="btn-rec-purple next"
-                onClick={(event) => moveSlider(event)}>Next</button>
+
+              <button
+                id="next" className={appointment.staffMem === '' ? "btn-rec-purple next disabled" : "btn-rec-purple next"}
+                onClick={(event) => moveSlider(event)}
+                disabled={appointment.staffMem === '' ? true : false}>Next
+              </button>
+
             </div>
           </motion.div>
 
         }
       </AnimatePresence>
       {/* fourth slide */}
-      <AnimatePresence>
+      <AnimatePresence >
         {
           slides[3] &&
-          <motion.div 
-          variants={sliderMotion}
-          initial="initial"
-          animate="final"
-          exit='exit'  className="make-appointment-slider flex-col falign-center gap-24p">
-            <h1>Select Date:</h1>
-            <div className="appointment-types flex-row fjust-center gap-24p ">
-              <div className="date-picker-input">
-                <img src="/media/imgs/calendar.png" alt="calendar" />
-                <motion.div layout>
-                <Datepicker date={[date, setDate]} appointment={[appointment, setAppointment]} />
-                </motion.div>
-           
+          <>
+            <motion.div
+              variants={sliderMotion}
+              initial="initial"
+              animate="final"
+              exit='exit' className="make-appointment-slider flex-col falign-center gap-24p">
+              <h1>Select Date:</h1>
+              <div className="appointment-types flex-row fjust-center gap-24p ">
+                <div className="date-picker-input">
+                  <img src="/media/imgs/calendar.png" alt="calendar" />
+                  <Datepicker date={[date, setDate]} appointment={[appointment, setAppointment]} />
+                </div>
               </div>
-            </div>
-            <div className="appointment-types flex-row fjust-center gap-16p date-container">
-              <p className="time not-available">09:00 AM</p>
-              <p className={appointment.date.getHours() === 10 ? "time active" : "time"}
-                onClick={(e) => changeDate(e)}
-              >10:00 AM</p>
-              <p className={appointment.date.getHours() === 11 ? "time active" : "time"}
-                onClick={(e) => changeDate(e)}
-              >11:00 AM</p>
-              <p className={appointment.date.getHours() === 12 ? "time active" : "time"}
-                onClick={(e) => changeDate(e)}
-              >12:00 PM</p>
-              <p className={appointment.date.getHours() === 13 ? "time active" : "time"}
-                onClick={(e) => changeDate(e)}
-              >13:00 PM</p>
-              <p className="time not-available">14:00 PM</p>
-              <p className="time not-available">15:00 PM</p>
-              <p className={appointment.date.getHours() === 16 ? "time active" : "time"}
-                onClick={(e) => changeDate(e)}
-              >16:00 PM</p>
-              <p className={appointment.date.getHours() === 17 ? "time active" : "time"}
-                onClick={(e) => changeDate(e)}
-              >17:00 PM</p>
-              <p className={appointment.date.getHours() === 18 ? "time active" : "time"}
-                onClick={(e) => changeDate(e)}
-              >18:00 PM</p>
-            </div>
 
-            <div className="appointment-buttons-wrapper flex-row fjust-around button-wrapper">
-              <button id="back" className="btn-rec-purple next"
-                onClick={(event) => moveSlider(event)}>Back</button>
-              <button id="next" className="btn-rec-purple next confirm"
-                onClick={(event) => moveSlider(event)}>Confirm</button>
-            </div>
-          </motion.div>
+              <div className="appointment-types flex-row fjust-center gap-16p date-container">
+                <p className="time not-available">09:00 AM</p>
+                <p className={appointment.date.getHours() === 10 ? "time active" : "time"}
+                  onClick={(e) => changeDate(e)}
+                >10:00 AM</p>
+                <p className={appointment.date.getHours() === 11 ? "time active" : "time"}
+                  onClick={(e) => changeDate(e)}
+                >11:00 AM</p>
+                <p className={appointment.date.getHours() === 12 ? "time active" : "time"}
+                  onClick={(e) => changeDate(e)}
+                >12:00 PM</p>
+                <p className={appointment.date.getHours() === 13 ? "time active" : "time"}
+                  onClick={(e) => changeDate(e)}
+                >13:00 PM</p>
+                <p className="time not-available">14:00 PM</p>
+                <p className="time not-available">15:00 PM</p>
+                <p className={appointment.date.getHours() === 16 ? "time active" : "time"}
+                  onClick={(e) => changeDate(e)}
+                >16:00 PM</p>
+                <p className={appointment.date.getHours() === 17 ? "time active" : "time"}
+                  onClick={(e) => changeDate(e)}
+                >17:00 PM</p>
+                <p className={appointment.date.getHours() === 18 ? "time active" : "time"}
+                  onClick={(e) => changeDate(e)}
+                >18:00 PM</p>
+              </div>
+
+              <div className="appointment-buttons-wrapper flex-row fjust-around button-wrapper">
+                <button id="back" className="btn-rec-purple next"
+                  onClick={(event) => moveSlider(event)}>Back</button>
+                <button id="next" 
+                className={ appointment.date.getHours() === 0 ? "btn-rec-purple next confirm disabled" : "btn-rec-purple next confirm"}
+                disabled={ appointment.date.getHours() === 0 ? true : false}
+                  onClick={(event) => moveSlider(event)}>Confirm</button>
+              </div>
+            </motion.div>
+
+          </>
 
         }
       </AnimatePresence>

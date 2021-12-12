@@ -19,10 +19,9 @@
 }
 
 .react-datepicker__portal {
-  background-color: transparent!important;
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
+  background-color: rgba($color: #3c1a3da8, $alpha: 0.7);
+  position: fixed !important;
+  width: 100%;
   left: 0;
   top: 0;
   justify-content: center;
