@@ -357,6 +357,7 @@ template {
   --clr-primary-secondBlue: #7fdadb;
   --clr-accent-logoBlue: #46b6c2;
   --clr-neutral-lightGrayishCyan2: #f4fafa;
+  --clr-neutral-lightGrayishBlue: #caf0d8;
   --clr-shadow-light-gray: #c5c5c5;
   --clr-shadow-dark-shadow: #3d3d3d;
   --clr-hovered-hdark-blue: #242860;
@@ -1283,6 +1284,7 @@ input.radio-img:checked + img {
   bottom: 3rem;
   z-index: 2;
 }
+
 .pag i {
   color: white;
   transition: 0.3s all ease;
@@ -1551,3 +1553,90 @@ i.active {
     font-size: 1.5rem;
   }
 }
+
+@media all and (min-width: 48rem) {
+  .view-appointment-animator {
+    justify-content: center;
+    gap: 16px;
+  }
+}
+
+.view-appointment-wrapper {
+  position: relative;
+  padding-bottom: 2rem;
+}
+@media all and (min-width: 48rem) {
+  .view-appointment-wrapper {
+    padding-bottom: 3rem;
+  }
+}
+.view-appointment-wrapper .pag {
+  bottom: 0rem;
+}
+.view-appointment-wrapper .pag i {
+  color: var(--clr-primary-mainBlue);
+}
+.view-appointment-wrapper .pag i:hover {
+  color: var(--clr-primary-mainPurple);
+  cursor: pointer;
+}
+.view-appointment-wrapper .pag span {
+  color: var(--clr-shadow-dark-shadow);
+  font-weight: 600;
+  transition: 0.5s ease color;
+}
+.view-appointment-wrapper .pag span:hover {
+  color: var(--clr-primary-mainPurple);
+  cursor: pointer;
+}
+@media all and (min-width: 48rem) {
+  .view-appointment-wrapper .pag {
+    font-size: 1.2rem;
+  }
+}
+
+.appointment-card {
+  width: 100%;
+  max-width: 23rem;
+  margin: 0 1rem;
+  padding: 0.5rem 2rem;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -webkit-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -moz-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -ms-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -o-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  color: #e8e8e8;
+}
+@media all and (min-width: 48rem) {
+  .appointment-card {
+    width: 35%;
+    max-width: 320px;
+    gap: 24px;
+    margin: 0 0.5rem;
+  }
+}
+.appointment-card.appointment-active {
+  background-color: var(--clr-primary-mainBlue);
+  position: relative;
+}
+.appointment-card.appointment-active p.app-status {
+  color: #6cfe6c;
+}
+.appointment-card.appointment-active a {
+  padding: 0.5rem;
+  position: absolute;
+  right: 0.5rem;
+  bottom: 1rem;
+  font-weight: normal;
+}
+@media all and (min-width: 48rem) {
+  .appointment-card.appointment-active a {
+    width: 30%;
+  }
+}
+.appointment-card.appointment-past {
+  background-color: var(--clr-shadow-dark-shadow);
+}
+.appointment-card.appointment-past p.app-status {
+  color: indianred;
+}/*# sourceMappingURL=main.css.map */

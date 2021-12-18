@@ -1,4 +1,4 @@
-// import ViewAppointmentSlider from "./appointmentSlider/ViewAppointmentSlider";
+import ViewAppointmentSlider from "./appointmentSlider/ViewAppointmentSlider";
 import MakeAppointmentSlider from './makeAppointment/MakeAppointmentSlider'
 const Appointment = () => {
   return (
@@ -7,9 +7,10 @@ const Appointment = () => {
         <div className="make-appointment-wrapper">
           <MakeAppointmentSlider />
         </div>
-        {/* <div className="appointment-slider-wrapper flex-col gap-24p">
+        <div className="view-appointment-wrapper">
           <ViewAppointmentSlider />
-        </div> */}
+        </div>
+
       </div>
     </>
   )

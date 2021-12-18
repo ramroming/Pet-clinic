@@ -3,13 +3,13 @@ import Datepicker from "../../../utils/datepicker/Datepicker";
 
 //Import Animation object from sliderAnimation.js
 import { appointmentSlider } from "../makeAppointment/makeAppointmentAnimation"
-import { contentSlider } from '../../home/slider/sliderAnimation'
+
 //Import motion for defining entering motion, and AnimatePresence to define exit animation
 import { AnimatePresence, motion } from "framer-motion"
 
 // Assign the imported object to local object sliderMotion
 const sliderMotion = appointmentSlider
-const buttonMotion = contentSlider
+
 
 const MakeAppointmentSlider = () => {
 
