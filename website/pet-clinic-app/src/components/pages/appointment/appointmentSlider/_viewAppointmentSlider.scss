@@ -1,49 +1,49 @@
-@use '../../../abstracts/' as *;
+@use "../../../abstracts/" as *;
 
-
-.view-appointment-animator{
-
-    @include break-point("medium","up"){
+.view-appointment-animator {
+    @include break-point("medium", "up") {
         justify-content: center;
-        gap:16px;
+        gap: 16px;
     }
 }
-.view-appointment-wrapper{
-
+.view-appointment-wrapper {
     position: relative;
     padding-bottom: 2rem;
 
-    @include break-point("medium","up"){
+    @include break-point("medium", "up") {
         padding-bottom: 3rem;
     }
 
-    .pag{
+    .pag {
         bottom: 0rem;
 
-        i{
-            color:var(--clr-primary-mainBlue);
+        i {
+            color: var(--clr-primary-mainBlue);
 
-            &:hover{
+            &:hover {
                 color: var(--clr-primary-mainPurple);
-                cursor: pointer;   
+                cursor: pointer;
             }
         }
 
-        span{
+        span {
             color: var(--clr-shadow-dark-shadow);
             font-weight: 600;
             transition: 0.5s ease color;
 
-            &:hover{
+            &:hover {
                 color: var(--clr-primary-mainPurple);
-                cursor: pointer;   
+                cursor: pointer;
             }
         }
 
-        @include break-point("medium","up"){
+        @include break-point("medium", "up") {
             font-size: 1.2rem;
         }
 
-      
+        .active {
+            color: var(--clr-primary-mainPurple);
+            transform: scale(1.2);
+        }
     }
 }

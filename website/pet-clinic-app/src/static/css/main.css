@@ -1594,6 +1594,10 @@ i.active {
     font-size: 1.2rem;
   }
 }
+.view-appointment-wrapper .pag .active {
+  color: var(--clr-primary-mainPurple);
+  transform: scale(1.2);
+}
 
 .appointment-card {
   width: 100%;
