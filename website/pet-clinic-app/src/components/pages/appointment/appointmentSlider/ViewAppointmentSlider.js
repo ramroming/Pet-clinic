@@ -25,6 +25,67 @@ const cardsArray = (function (num) {
   return array
 })(17); //from database
 
+
+const initiatePag = (cardsNumber, refArr) => {
+  const pag = [true]
+  if (refArr.current[3] < 768) {
+    for (let i = 5; i <= cardsNumber; i++) {
+      if ((i - 1) % 4 === 0) {
+        pag.push(false)
+      }
+    }
+  } else {
+    for (let i = 9; i <= cardsNumber; i++) {
+      if ((i - 1) % 8 === 0) {
+        pag.push(false)
+      }
+    }
+
+  }
+
+  return pag
+
+}
+
+const initiateCards = (refArr) => {
+
+  if (refArr.current[3] < 768) {
+
+    if (refArr.current[2] === 0) {
+
+      const cardsGroup = cardsArray.map((obj, index) => {
+        if (index < 4) {
+          refArr.current[2] += 1
+          return <AppointmentCard key={index} card={obj} />
+        } else {
+          return ''
+        }
+
+      })
+      return cardsGroup
+    }
+
+
+  } else {
+    
+    if (refArr.current[2] === 0) {
+
+      const cardsGroup = cardsArray.map((obj, index) => {
+        if (index < 8) {
+          refArr.current[2] += 1
+          return <AppointmentCard key={index} card={obj} />
+        } else {
+          return ''
+        }
+
+      })
+      return cardsGroup
+    }
+   
+  }
+
+}
+
 // const cardsArray = [{
 //   id: 0,
 //   type: "Examination",
@@ -191,67 +252,21 @@ const cardsArray = (function (num) {
 
 
 
-const initiatePag = (cardsNumber) => {
-  const pag = [true]
-  if (window.innerWidth < 768) {
-    for (let i = 5; i <= cardsNumber; i++) {
-      if ((i - 1) % 4 === 0) {
-        pag.push(false)
-      }
-    }
-  } else {
-    for (let i = 9; i <= cardsNumber; i++) {
-      if ((i - 1) % 8 === 0) {
-        pag.push(false)
-      }
-    }
-
-  }
-
-  return pag
-
-}
-
-const initiateCards = (position) => {
-
-  if (window.innerWidth < 768) {
-
-    if (position.current[2] === 0) {
-
-      const cardsGroup = cardsArray.map((obj, index) => {
-        if (index < 4) {
-          position.current[2] += 1
-          return <AppointmentCard key={index} card={obj} />
-        } else {
-          return ''
-        }
-
-      })
-      return cardsGroup
-    }
-
-
-  }
-
-}
-
-
-
 const ViewAppointmentSlider = () => {
 
 
 
-
-
-  const position = useRef([0, 0, 0]);
+  const refArr = useRef([0, 0, 0, window.innerWidth]); // old position, new position, card index, window width
 
   // Global counter J to know at which card we stop for the rendering
   // const cardIndex = useRef(0)
 
 
+
+
   const [slider, setSlider] = useState({
-    pag: initiatePag(cardsArray.length), // length of the cards array from database
-    cards: initiateCards(position)
+    pag: initiatePag(cardsArray.length,refArr), // length of the cards array from database
+    cards: initiateCards(refArr)
   })
 
 
@@ -264,84 +279,114 @@ const ViewAppointmentSlider = () => {
     if (event.target.className === 'fas fa-chevron-right') {
 
       //  check whether index is out of array range
-      if (position.current[1] + 1 !== slider.pag.length) {
-        // its a right movement so modify position Ref by making the current index an old index and the new index is the previous new index + 1
-        position.current[0] = position.current[1]
-        position.current[1] = position.current[1] + 1
+      if (refArr.current[1] + 1 !== slider.pag.length) {
+        // its a right movement so modify refArr Ref by making the current index an old index and the new index is the previous new index + 1
+        refArr.current[0] = refArr.current[1]
+        refArr.current[1] = refArr.current[1] + 1
 
         const cardsGroup = []
 
-        cardsGroup.push(<AppointmentCard key={position.current[2]} card={cardsArray[position.current[2]]} />)
 
-        for (let i = position.current[2] + 1; i <= cardsArray.length; i++) {
-          position.current[2] = position.current[2] + 1
-          if ((position.current[2] % 4) === 0) {
-            break
+
+        cardsGroup.push(<AppointmentCard key={refArr.current[2]} card={cardsArray[refArr.current[2]]} />)
+
+        for (let i = refArr.current[2] + 1; i <= cardsArray.length; i++) {
+          refArr.current[2] = refArr.current[2] + 1
+
+          if (refArr.current[3] < 768) { // for small screens show maximum 4 cards for each pag
+            if ((refArr.current[2] % 4) === 0) {
+              break
+            }
+          } else { // for big screens show maximum 8 cards for each pag
+            if ((refArr.current[2] % 8) === 0) {
+              break
+            }
           }
-          if(i === cardsArray.length) {
+
+          if (i === cardsArray.length) {
             break
           }
           else {
-            cardsGroup.push(<AppointmentCard key={position.current[2]} card={cardsArray[i]} />)
+            cardsGroup.push(<AppointmentCard key={refArr.current[2]} card={cardsArray[i]} />)
 
           }
 
         }
 
+
+
+
         setSlider((oldSlider) => {
 
           return {
             ...oldSlider, pag: slider.pag.map((value, index) => {
-              return (index === position.current[0] || index === position.current[1]) ? !value : value
+              return (index === refArr.current[0] || index === refArr.current[1]) ? !value : value
             }), cards: cardsGroup
           }
         })
       }
 
-      // }
+      
 
     }
 
-   // If the movement is to the left meaning the left indicator is pressed
+    // If the movement is to the left meaning the left indicator is pressed
     else {
 
       // check whether index is out of array range
-      if (position.current[1] - 1 >= 0) {
+      if (refArr.current[1] - 1 >= 0) {
 
-        // its a left movement so modify position Ref by making the current index an old index and the new index is the previous new index - 1
-        position.current[0] = position.current[1]
-        position.current[1] = position.current[1] - 1
+        // its a left movement so modify refArr Ref by making the current index an old index and the new index is the previous new index - 1
+        refArr.current[0] = refArr.current[1]
+        refArr.current[1] = refArr.current[1] - 1
 
         //specify the initial and exit motion based on left movement
         // sliderMotion.initial.x = '-97vw'
         // sliderMotion.exit.x = '97vw'
 
         const cardsGroup = []
-       
 
-        
-        position.current[2] = position.current[2] - (4 + slider.cards.length)
 
-        cardsGroup.push(<AppointmentCard key={position.current[2]} card={cardsArray[position.current[2]]} />)
-        for (let i = position.current[2] + 1; i < cardsArray.length; i++) {
-          console.log(position.current[2])
-          position.current[2] = position.current[2] + 1
-          if ((position.current[2] % 4) === 0) {
-    
-            break
+        if (refArr.current[3] < 768) { // for small screens show maximum 4 cards for each pag
+
+          refArr.current[2] = refArr.current[2] - (4 + slider.cards.length)
+
+          cardsGroup.push(<AppointmentCard key={refArr.current[2]} card={cardsArray[refArr.current[2]]} />)
+          for (let i = refArr.current[2] + 1; i < cardsArray.length; i++) {
+
+            refArr.current[2] = refArr.current[2] + 1
+            if ((refArr.current[2] % 4) === 0) {
+              break
+            }
+            cardsGroup.push(<AppointmentCard key={refArr.current[2]} card={cardsArray[i]} />)
+
           }
-          cardsGroup.push(<AppointmentCard key={position.current[2]} card={cardsArray[i]} />)
+        } else { // for big screens show maximum 8 cards for each pag
+
+          refArr.current[2] = refArr.current[2] - (8 + slider.cards.length)
+
+          cardsGroup.push(<AppointmentCard key={refArr.current[2]} card={cardsArray[refArr.current[2]]} />)
+          for (let i = refArr.current[2] + 1; i < cardsArray.length; i++) {
+
+            refArr.current[2] = refArr.current[2] + 1
+            if ((refArr.current[2] % 8) === 0) {
+              break
+            }
+            cardsGroup.push(<AppointmentCard key={refArr.current[2]} card={cardsArray[i]} />)
+
+          }
 
         }
-      
 
-        
+
+
+
         // same as right movement idea
         setSlider((oldSlider) => {
           return {
             ...oldSlider, pag: slider.pag.map((value, index) => {
-              return (index === position.current[0] || index === position.current[1]) ? !value : value
-            }), cards : cardsGroup
+              return (index === refArr.current[0] || index === refArr.current[1]) ? !value : value
+            }), cards: cardsGroup
           }
         })
 
@@ -354,25 +399,125 @@ const ViewAppointmentSlider = () => {
     // each of the pagintations has a class of k-number like k0 k1 k2 k3 so to know which pagintatin is pressed we find the 'k' index and the char after it is the number of the pagintation that was pressed
     const pagValue = event.target.className[1]
 
-    //to go to the new position we save the previous position in the old position and we make the new position as the number of the pagintation.
-    position.current[0] = position.current[1]
-    position.current[1] = Number(pagValue)
+    //to go to the new refArr we save the previous refArr in the old refArr and we make the new refArr as the number of the pagintation.
+    refArr.current[0] = refArr.current[1]
+    refArr.current[1] = Number(pagValue)
 
-    // we determine the direction of the movement left->right or right->left to know which animation values should be used and this is done by checking the position Ref , if for example position has [x, y] and if y>x then it is a right movement else it is a left movement
-    // sliderMotion.initial.x = position.current[0] <= position.current[1] ? '97vw' : '-97vw'
-    // sliderMotion.exit.x = position.current[0] >= position.current[1] ? '97vw' : '-97vw'
+    // we determine the direction of the movement left->right or right->left to know which animation values should be used and this is done by checking the refArr Ref , if for example refArr has [x, y] and if y>x then it is a right movement else it is a left movement
+    // sliderMotion.initial.x = refArr.current[0] <= refArr.current[1] ? '97vw' : '-97vw'
+    // sliderMotion.exit.x = refArr.current[0] >= refArr.current[1] ? '97vw' : '-97vw'
+
+
+    //fixing the cardsArray after clicking on the numbered pag:
+
+
+    const cardsGroup = []
+    const sub = refArr.current[1] - refArr.current[0] // new - old
+
+    if (refArr.current[3] < 768) { // for small screens show maximum 4 cards for each pag
+      // going right
+      if (sub > 0) {
+        refArr.current[2] = (refArr.current[2] - 4) + (sub * 4 + 1)
+
+        cardsGroup.push(<AppointmentCard key={refArr.current[2] - 1} card={cardsArray[refArr.current[2] - 1]} />)
+
+
+        for (let i = refArr.current[2]; i < cardsArray.length; i++) {
+
+
+          if ((refArr.current[2] % 4) === 0) {
+            break
+          }
+
+          cardsGroup.push(<AppointmentCard key={refArr.current[2]} card={cardsArray[refArr.current[2]]} />)
+
+          refArr.current[2] = refArr.current[2] + 1
+
+        }
+
+
+      }
+      // going left
+      else if (sub < 0) {
+        refArr.current[2] = ((refArr.current[2] - slider.cards.length) - (Math.abs(sub) * 4 + 1)) + 2
+
+
+        cardsGroup.push(<AppointmentCard key={refArr.current[2] - 1} card={cardsArray[refArr.current[2] - 1]} />)
+
+        for (let i = refArr.current[2]; i < cardsArray.length; i++) {
+
+
+          if ((refArr.current[2] % 4) === 0) {
+            break
+          }
+
+          cardsGroup.push(<AppointmentCard key={refArr.current[2]} card={cardsArray[refArr.current[2]]} />)
+
+          refArr.current[2] = refArr.current[2] + 1
+
+        }
+      }
+
+
+    }
+    else { // for big screens show maximum 8 cards for each pag
+
+      // going right
+      if (sub > 0) {
+        refArr.current[2] = (refArr.current[2] - 8) + (sub * 8 + 1)
+
+        cardsGroup.push(<AppointmentCard key={refArr.current[2] - 1} card={cardsArray[refArr.current[2] - 1]} />)
+
+
+        for (let i = refArr.current[2]; i < cardsArray.length; i++) {
+
+
+          if ((refArr.current[2] % 8) === 0) {
+            break
+          }
+
+          cardsGroup.push(<AppointmentCard key={refArr.current[2]} card={cardsArray[refArr.current[2]]} />)
+
+          refArr.current[2] = refArr.current[2] + 1
+
+        }
+
+
+      }
+      // going left
+      else if (sub < 0) {
+        refArr.current[2] = ((refArr.current[2] - slider.cards.length) - (Math.abs(sub) * 8 + 1)) + 2
+
+
+        cardsGroup.push(<AppointmentCard key={refArr.current[2] - 1} card={cardsArray[refArr.current[2] - 1]} />)
+
+        for (let i = refArr.current[2]; i < cardsArray.length; i++) {
+
+
+          if ((refArr.current[2] % 8) === 0) {
+            break
+          }
+
+          cardsGroup.push(<AppointmentCard key={refArr.current[2]} card={cardsArray[refArr.current[2]]} />)
+
+          refArr.current[2] = refArr.current[2] + 1
+
+        }
+      }
+    }
+
 
     // we modify the slider state based on the movement
     setSlider((oldSlider) => {
       return {
         ...oldSlider, pag: slider.pag.map((value, index) => {
-          return (index === position.current[0] || index === position.current[1]) ? !value : value
-        })
+          return (index === refArr.current[0] || index === refArr.current[1]) ? !value : value
+        }), cards: cardsGroup
       }
     })
   }
 
- 
+
 
   return (
     <>
