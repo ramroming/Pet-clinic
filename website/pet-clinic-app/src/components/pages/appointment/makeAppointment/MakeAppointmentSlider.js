@@ -138,7 +138,7 @@ const MakeAppointmentSlider = () => {
             variants={sliderMotion}
             initial='initial'
             animate='final'
-            exit='exit' div className="make-appointment-slider flex-col falign-center gap-24p">
+            exit='exit' className="make-appointment-slider flex-col falign-center gap-24p">
             <h1>What appointment do you want to make for your pet?</h1>
             <div className="appointment-types flex-row gap-24p fjust-center">
               <div className={appointment.appointmentType === 'Examination' ? "appointment-type flex-col gap-8p falign-center active " : "appointment-type flex-col gap-8p falign-center"}

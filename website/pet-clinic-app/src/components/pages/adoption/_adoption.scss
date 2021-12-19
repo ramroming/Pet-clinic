@@ -1,0 +1,44 @@
+@use "../../abstracts/" as *;
+
+.adoption-container{
+    background-image: linear-gradient(120deg, var(--clr-primary-secondBlue) , var(--clr-primary-secondPurple));
+  
+
+    .cards-main-container{
+
+        
+        .card-container{
+           background-color: var(--clr-shadow-gray-shadow);
+           width: 90%!important;
+           max-width: 24rem;
+
+            h2,p{
+                text-align: center;
+                color: white;
+            }
+            
+            p{
+                padding: 0 2rem;
+            }
+
+           @include break-point('medium','up'){
+               max-width: 34rem;
+               padding: 5rem 0;
+               a{
+                   width: 50%;
+               }
+
+               p{
+                font-size:1.2rem;
+               }
+
+              
+           }
+
+        }
+
+      
+    }
+
+    
+}

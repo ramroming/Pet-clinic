@@ -356,10 +356,11 @@ template {
   --clr-primary-secondPurple: #d3b1d1;
   --clr-primary-secondBlue: #7fdadb;
   --clr-accent-logoBlue: #46b6c2;
-  --clr-neutral-lightGrayishCyan2: #f4fafa;
+  --clr-neutral-lightGrayishCyan: #f4fafa;
   --clr-neutral-lightGrayishBlue: #caf0d8;
   --clr-shadow-light-gray: #c5c5c5;
   --clr-shadow-dark-shadow: #3d3d3d;
+  --clr-shadow-gray-shadow: rgba(28, 27, 27, 0.611);
   --clr-hovered-hdark-blue: #242860;
 }
 
@@ -1643,4 +1644,64 @@ i.active {
 }
 .appointment-card.appointment-past p.app-status {
   color: indianred;
+}
+
+.adoption-ads-header {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.316);
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -webkit-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -moz-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -ms-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -o-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+.adoption-ads-header p {
+  padding: 2rem 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--clr-primary-mainBlue);
+}
+
+.filter-container .filter-item {
+  color: #484747;
+}
+.filter-container .filter-item label {
+  text-transform: uppercase;
+}
+.filter-container .filter-item select {
+  width: 12.5rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--clr-shadow-light-gray);
+}
+.filter-container .filter-item select:focus {
+  outline-color: var(--clr-primary-mainPurple);
+}
+
+.adoption-container {
+  background-image: linear-gradient(120deg, var(--clr-primary-secondBlue), var(--clr-primary-secondPurple));
+}
+.adoption-container .cards-main-container .card-container {
+  background-color: var(--clr-shadow-gray-shadow);
+  width: 90% !important;
+  max-width: 24rem;
+}
+.adoption-container .cards-main-container .card-container h2, .adoption-container .cards-main-container .card-container p {
+  text-align: center;
+  color: white;
+}
+.adoption-container .cards-main-container .card-container p {
+  padding: 0 2rem;
+}
+@media all and (min-width: 48rem) {
+  .adoption-container .cards-main-container .card-container {
+    max-width: 34rem;
+    padding: 5rem 0;
+  }
+  .adoption-container .cards-main-container .card-container a {
+    width: 50%;
+  }
+  .adoption-container .cards-main-container .card-container p {
+    font-size: 1.2rem;
+  }
 }/*# sourceMappingURL=main.css.map */

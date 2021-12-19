@@ -2,13 +2,13 @@ import AppointmentCard from "./appointmentCard/AppointmentCard"
 import { useState, useRef } from "react"
 
 // Import Animation object from sliderAnimation.js
-// import { contentSlider } from "./sliderAnimation"
+// import { appointmentSlider } from "../makeAppointment/makeAppointmentAnimation"
 
 // //Import motion for defining entering motion, and AnimatePresence to define exit animation
 // import { AnimatePresence, motion } from "framer-motion"
 
 // Assign the imported object to local object sliderMotion
-// const sliderMotion = contentSlider
+// const sliderMotion = appointmentSlider
 
 const cardsArray = (function (num) {
   const array = []
@@ -524,10 +524,12 @@ const ViewAppointmentSlider = () => {
       <div className=" view-appointment-animator flex-row gap-8p fjust-around">
         {/* Cards */}
         {slider.cards.map((value) => {
+          
           return value
         })}
-
+    
       </div>
+ 
       <div className="pag flex-row gap-8p fjust-center">
         <span><i
           onClick={(event) => {

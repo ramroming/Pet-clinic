@@ -1,4 +1,4 @@
-import React from 'react'
+
 
 // rafce react arrow function
 const Cards = () => {

@@ -7,6 +7,7 @@ const AppointmentCard = (props) => {
             {props.card.status === 'active' &&
 
                 <div className="appointment-card appointment-active flex-col falign-start gap-16p">
+               
 
                     {/* appointment type */}
                     <div className="flex-row">
@@ -44,6 +45,7 @@ const AppointmentCard = (props) => {
             {props.card.status === 'past' &&
 
                 <div className="appointment-card appointment-past flex-col falign-start gap-16p">
+            
 
                     {/* appointment type */}
                     <div className="flex-row">

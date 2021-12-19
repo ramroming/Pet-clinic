@@ -13,12 +13,13 @@ $page-1: (
   ),
   neutral: (
     
-    "lightGrayishCyan2":hsl(189, 41%, 97%),
+    "lightGrayishCyan":hsl(189, 41%, 97%),
     "lightGrayishBlue":#caf0d8,
   ),
   shadow: (
     "light-gray": rgba(197, 197, 197, 1),
     "dark-shadow": rgb(61, 61, 61),
+    "gray-shadow":  rgba(28, 27, 27, 0.611)
   ),
   hovered: (
     "hdark-blue": hsl(236, 45%, 26%)
