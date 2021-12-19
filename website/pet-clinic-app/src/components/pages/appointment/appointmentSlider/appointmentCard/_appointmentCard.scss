@@ -1,50 +1,56 @@
-@use '../../../../abstracts/' as *;
+@use "../../../../abstracts/" as *;
 
-.appointment-card{
+.appointment-card {
+  min-width: 17rem;
+  padding: 1rem 2rem;
+  @include rounded-corners(0.5rem, 0.5rem, 0.5rem, 0.5rem);
+  color: rgb(232, 232, 232);
+
+  @include break-point("medium", "up") {
+    min-width: 20rem;
+    gap: 24px;
+    margin: 0;
     
-    width: 100%;
-    max-width:23rem;
-    margin:0 1rem;
-    padding: 0.5rem 2rem;
-    @include rounded-corners(0.5rem,0.5rem,0.5rem,0.5rem);
-    color:rgb(232, 232, 232);
 
-    @include break-point("medium","up"){
-        width: 35%;
-        max-width: 320px;
-        gap: 24px;
-        margin:0 0.5rem;
+  }
 
-    
+  &.appointment-active {
+    background-color: var(--clr-primary-mainBlue);
+    position: relative;
+
+    p.app-status {
+      color: #6cfe6c;
     }
-   
-    &.appointment-active{
-        background-color: var(--clr-primary-mainBlue);
-        position: relative;
+    a {
+      padding: 0.5rem;
+      position: absolute;
+      right: 0.5rem;
+      bottom: 1rem;
+      font-weight: normal;
 
-        p.app-status{
-            color:#6cfe6c;
-        }
-        a{
-            padding: 0.5rem;
-            position: absolute;
-            right: 0.5rem;
-            bottom: 1rem;
-            font-weight: normal;
-
-            @include break-point("medium","up"){
-                width:30%;
-            }
-        }
+      @include break-point("medium", "up") {
+        width: 30%;
+      }
     }
+  }
 
-    &.appointment-past{
-      background-color: var(--clr-shadow-dark-shadow);
+  &.appointment-past {
+    background-color: var(--clr-shadow-dark-shadow);
+    position: relative;
 
-      p.app-status{
-        color:indianred;
-
+    p.app-status {
+      color: indianred;
     }
+    a{
+      padding: 0.5rem;
+      position: absolute;
+      right: 0.5rem;
+      bottom: 1rem;
+      font-weight: normal;
 
-    }
+      @include break-point("medium","up"){
+          width:30%;
+      }
+  }
+  }
 }
