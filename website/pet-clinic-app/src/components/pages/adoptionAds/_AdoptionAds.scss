@@ -1,0 +1,169 @@
+@use "../../../abstracts/" as *;
+
+
+
+
+.adoption-filter-wrapper{
+    width:90%;
+    margin-top:1rem;
+    max-width: 22rem;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.316);
+    @include rounded-corners(0.5rem,0.5rem,0.5rem,0.5rem);
+
+    @include break-point("medium","up"){
+       width: 90%;
+       max-width: none;
+    
+
+    }
+
+    p{
+        padding: 2rem 0;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--clr-primary-mainBlue);
+
+        @include break-point("medium","up"){
+            font-size: 2rem;
+            padding: 1rem 0;
+     
+         }
+    }
+
+
+
+}
+
+
+.filter-container{
+
+    @include break-point("medium","up"){
+        flex-direction: row;
+        gap: 2rem;
+    }
+ 
+    .filter-item{
+
+        color:rgb(72, 71, 71);
+
+        @include break-point("medium","up"){
+            flex-direction: row;
+            align-items:center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        label{
+      
+            text-transform: uppercase;
+        }
+        
+        select{
+            width: 12.5rem;
+           padding:0.5rem 1rem;
+           border: 2px solid var(--clr-shadow-light-gray);
+           @include rounded-corners(0.5rem,0.5rem,0.5rem,0.5rem);
+
+           &:hover{
+               cursor: pointer;
+           }
+          
+         
+           
+           &:focus{
+              outline-color: var(--clr-primary-mainPurple);
+           }
+
+        }
+
+        .find-pets{
+            width:100%;
+
+            @include break-point("medium","up"){
+               width: 100%;
+               padding: 1rem;
+            }
+
+            &:hover{
+                background-color: whitesmoke;
+                color: var(--clr-primary-mainPurple);
+            }
+
+            
+            
+        }
+    }
+
+
+}
+
+.posts-title{
+
+    width: 90%;
+    font-size: 1.5rem;
+    padding: 1rem 0;
+    color: var(--clr-primary-mainBlue);
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.316);
+    text-align: center;
+
+    @include break-point("medium","up"){
+        font-size: 2rem;
+     }
+
+}
+
+.posts-animated-container{
+    width: 90%;
+    margin: auto;
+    gap:24px;
+}
+
+.adoption-post{
+
+    width: 90%;
+    max-width: 17rem;
+    padding-bottom: 1rem;
+    margin: auto;
+    background-color: var(--clr-shadow-gray-shadow);
+    box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.775);
+    transition: 0.6s ease all;
+
+    &:hover{
+        cursor: pointer;
+        box-shadow: -8px 7px 0px 0px rgb(209, 209, 74);
+        opacity: 0.8;
+    }
+
+    @include break-point("medium","up"){
+        margin: 0;
+        
+    }
+
+    img{
+        width:100%;
+        height: 17rem;
+    }
+    p {
+        text-align: center;
+        color: white;
+        padding: 0 1rem;
+
+
+    }
+
+    .pTitle{
+        height: 36px;
+        overflow: hidden;
+    }
+
+    .btn-rec-blue{
+
+        @include break-point("medium","up"){
+            width: 60%;
+            padding: 1rem;
+         }
+    }
+
+}

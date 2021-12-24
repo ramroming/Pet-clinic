@@ -11,7 +11,7 @@ const appointmentSlider = {
   final: {
     opacity: 1,
     transition: {
-      delay: 0.9,
+      delay: 0.4,
       duration: 0.8
     }
   },

@@ -7,7 +7,7 @@ import Footer from './components/layout/footer/Footer';
 import RegisterPet from "./components/pages/registerpet/RegisterPet";
 import Appointment from "./components/pages/appointment/Appointment";
 import Adoption from "./components/pages/adoption/Adoption";
-import AdoptionAds from "./components/pages/adoption/adoptionAds/AdoptionAds";
+import AdoptionAds from "./components/pages/adoptionAds/AdoptionAds";
 
 function App() {
     return (

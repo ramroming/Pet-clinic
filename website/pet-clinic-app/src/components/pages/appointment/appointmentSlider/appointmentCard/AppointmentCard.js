@@ -25,7 +25,7 @@ const AppointmentCard = (props) => {
 
         {/* appointment id */}
         <div className="flex-row gap-16p">
-          <i className="fas fa-clock"></i>
+          <i className="fas fa-tag"></i>
           <p>{props.card.id}</p>
         </div>
         {/* appointment date */}

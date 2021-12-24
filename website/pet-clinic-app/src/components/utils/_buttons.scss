@@ -100,3 +100,13 @@
     cursor: pointer;
   }
 }
+
+.btn-rec-blue{
+  @extend .btn-rec;
+  background-color: var(--clr-primary-mainBlue);
+  transition: ease 0.5s all;
+  &:hover{
+    background-color:var(--clr-primary-secondBlue);
+    cursor: pointer;
+  }
+}

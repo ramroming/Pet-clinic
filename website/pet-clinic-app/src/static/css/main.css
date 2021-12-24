@@ -575,7 +575,7 @@ h1 {
   width: 35%;
 }
 
-.btn-rec, .btn-rec-purple {
+.btn-rec, .btn-rec-blue, .btn-rec-purple {
   padding: 1rem;
   font-weight: bold;
   border: none;
@@ -584,11 +584,11 @@ h1 {
   text-transform: uppercase;
   box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.748);
 }
-.btn-rec:hover, .btn-rec-purple:hover {
+.btn-rec:hover, .btn-rec-blue:hover, .btn-rec-purple:hover {
   cursor: pointer;
 }
 @media all and (min-width: 48rem) {
-  .btn-rec, .btn-rec-purple {
+  .btn-rec, .btn-rec-blue, .btn-rec-purple {
     width: 30%;
     padding: 1.5rem 1rem;
     font-size: 1.2rem;
@@ -601,6 +601,15 @@ h1 {
 }
 .btn-rec-purple:hover {
   background-color: #905192;
+  cursor: pointer;
+}
+
+.btn-rec-blue {
+  background-color: var(--clr-primary-mainBlue);
+  transition: ease 0.5s all;
+}
+.btn-rec-blue:hover {
+  background-color: var(--clr-primary-secondBlue);
   cursor: pointer;
 }
 
@@ -1670,10 +1679,23 @@ i.active {
 .appointment-card.appointment-past p.app-status {
   color: indianred;
 }
-<<<<<<< HEAD
+.appointment-card.appointment-past a {
+  padding: 0.5rem;
+  position: absolute;
+  right: 0.5rem;
+  bottom: 1rem;
+  font-weight: normal;
+}
+@media all and (min-width: 48rem) {
+  .appointment-card.appointment-past a {
+    width: 30%;
+  }
+}
 
-.adoption-ads-header {
+.adoption-filter-wrapper {
+  width: 90%;
   margin-top: 1rem;
+  max-width: 22rem;
   padding: 1rem;
   background-color: rgba(255, 255, 255, 0.316);
   border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
@@ -1682,15 +1704,41 @@ i.active {
   -ms-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
   -o-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
 }
-.adoption-ads-header p {
+@media all and (min-width: 48rem) {
+  .adoption-filter-wrapper {
+    width: 90%;
+    max-width: none;
+  }
+}
+.adoption-filter-wrapper p {
   padding: 2rem 0;
   font-size: 1.5rem;
   font-weight: bold;
   color: var(--clr-primary-mainBlue);
 }
+@media all and (min-width: 48rem) {
+  .adoption-filter-wrapper p {
+    font-size: 2rem;
+    padding: 1rem 0;
+  }
+}
 
+@media all and (min-width: 48rem) {
+  .filter-container {
+    flex-direction: row;
+    gap: 2rem;
+  }
+}
 .filter-container .filter-item {
   color: #484747;
+}
+@media all and (min-width: 48rem) {
+  .filter-container .filter-item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
 }
 .filter-container .filter-item label {
   text-transform: uppercase;
@@ -1699,13 +1747,95 @@ i.active {
   width: 12.5rem;
   padding: 0.5rem 1rem;
   border: 2px solid var(--clr-shadow-light-gray);
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -webkit-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -moz-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -ms-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -o-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+.filter-container .filter-item select:hover {
+  cursor: pointer;
 }
 .filter-container .filter-item select:focus {
   outline-color: var(--clr-primary-mainPurple);
 }
+.filter-container .filter-item .find-pets {
+  width: 100%;
+}
+@media all and (min-width: 48rem) {
+  .filter-container .filter-item .find-pets {
+    width: 100%;
+    padding: 1rem;
+  }
+}
+.filter-container .filter-item .find-pets:hover {
+  background-color: whitesmoke;
+  color: var(--clr-primary-mainPurple);
+}
+
+.posts-title {
+  width: 90%;
+  font-size: 1.5rem;
+  padding: 1rem 0;
+  color: var(--clr-primary-mainBlue);
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.316);
+  text-align: center;
+}
+@media all and (min-width: 48rem) {
+  .posts-title {
+    font-size: 2rem;
+  }
+}
+
+.posts-animated-container {
+  width: 90%;
+  margin: auto;
+  gap: 24px;
+}
+
+.adoption-post {
+  width: 90%;
+  max-width: 17rem;
+  padding-bottom: 1rem;
+  margin: auto;
+  background-color: var(--clr-shadow-gray-shadow);
+  box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.775);
+  transition: 0.6s ease all;
+}
+.adoption-post:hover {
+  cursor: pointer;
+  box-shadow: -8px 7px 0px 0px #d1d14a;
+  opacity: 0.8;
+}
+@media all and (min-width: 48rem) {
+  .adoption-post {
+    margin: 0;
+  }
+}
+.adoption-post img {
+  width: 100%;
+  height: 17rem;
+}
+.adoption-post p {
+  text-align: center;
+  color: white;
+  padding: 0 1rem;
+}
+.adoption-post .pTitle {
+  height: 36px;
+  overflow: hidden;
+}
+@media all and (min-width: 48rem) {
+  .adoption-post .btn-rec-blue {
+    width: 60%;
+    padding: 1rem;
+  }
+}
 
 .adoption-container {
   background-image: linear-gradient(120deg, var(--clr-primary-secondBlue), var(--clr-primary-secondPurple));
+  padding-bottom: 1rem;
 }
 .adoption-container .cards-main-container .card-container {
   background-color: var(--clr-shadow-gray-shadow);
@@ -1731,17 +1861,3 @@ i.active {
     font-size: 1.2rem;
   }
 }/*# sourceMappingURL=main.css.map */
-=======
-.appointment-card.appointment-past a {
-  padding: 0.5rem;
-  position: absolute;
-  right: 0.5rem;
-  bottom: 1rem;
-  font-weight: normal;
-}
-@media all and (min-width: 48rem) {
-  .appointment-card.appointment-past a {
-    width: 30%;
-  }
-}
->>>>>>> f4bd950381998896365e6c3ce8c68f37bc97b13c
