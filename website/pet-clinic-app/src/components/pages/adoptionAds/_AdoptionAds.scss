@@ -1,4 +1,4 @@
-@use "../../abstracts/" as *;
+@use "./../../abstracts/" as *;
 
 
 
@@ -118,6 +118,9 @@
     width: 90%;
     margin: auto;
     gap:24px;
+    min-height: 80px;
+    position: relative;
+
 }
 
 .adoption-post{
@@ -167,3 +170,11 @@
     }
 
 }
+
+.loaderWrapper {
+  position: absolute;
+  top: 0.5rem;
+  z-index: 2;
+}
+
+
