@@ -11,6 +11,10 @@
 # production
 /build
 
+/src/static/css
+/src/static/MCDatepicker-master
+
+
 # misc
 .DS_Store
 .env.local

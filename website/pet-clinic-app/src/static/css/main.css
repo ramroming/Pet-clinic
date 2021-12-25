@@ -1849,6 +1849,7 @@ i.active {
   gap: 24px;
   min-height: 80px;
   position: relative;
+  padding-bottom: 3rem;
 }
 
 .adoption-post {
@@ -1892,8 +1893,12 @@ i.active {
 
 .loaderWrapper {
   position: absolute;
-  top: 0.5rem;
-  z-index: 2;
+  bottom: -2rem;
+}
+
+.loaderWrapper-top {
+  position: absolute;
+  top: 2rem;
 }
 
 .adoption-container {
@@ -2019,4 +2024,4 @@ i.active {
 }
 .comments-area-wrapper .all-comments-wrapper .single-comment-wrapper i {
   margin-right: 0.5rem;
-}/*# sourceMappingURL=main.css.map */
+}
