@@ -1,155 +1,121 @@
 @use "../../abstracts/" as *;
 
-.adoption-ad-wrapper {
-    background-image: linear-gradient(
-        120deg,
-        rgb(242, 240, 240),
-        var(--clr-primary-secondBlue),
-        var(--clr-primary-secondPurple)
-    );
+
+.adoption-ad-wrapper{
+
+   background-image: linear-gradient(120deg,rgb(228, 224, 224), var(--clr-primary-secondBlue) , var(--clr-primary-secondPurple));
     margin-top: 4rem;
 
     .pet-basic-info-wrapper {
-        display: grid;
-        grid-template-columns: 100%;
-        grid-gap: 2rem;
-        justify-items: center;
 
-        @include break-point("medium", "up") {
-            grid-template-columns: 60% 40%;
-            grid-gap: 1rem;
-        }
+        flex-direction: column-reverse;
 
-        .intro {
-            @include break-point("medium", "up") {
-                grid-column: 2 /2;
-                grid-row: 1 / 2;
+        @include break-point("medium", "up"){
+           flex-direction: row-reverse;
+          }
+
+        .intro{
+
+            @include break-point("medium", "up"){
+              order: 2;
             }
-
+        
             font-weight: bold;
             color: rgb(41, 41, 41);
-
-            .intro-hi {
+        
+            .intro-hi{
                 font-size: 1.5rem;
-                color: var(--clr-primary-mainPurple);
+                color: var(--clr-hovered-hdark-blue);
             }
-
-            .pet-name {
+            
+            .pet-name{
                 font-size: 3rem;
             }
         }
 
-        .pet-info {
+
+        .pet-info{
             background-color: rgba(28, 27, 27, 0.535);
             box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.775);
             padding: 2rem 1rem;
 
-            label {
+            label{
                 color: white;
             }
-            p {
+            p{
                 color: rgb(235, 218, 218);
             }
 
-            @include break-point("medium", "up") {
+            @include break-point("medium", "up"){
+                order: 2;
                 align-self: center;
-                padding: 3rem 1.5rem;
+                padding: 4rem 2rem;
                 gap: 2rem;
-                grid-column: 2 /2;
-                grid-row: 2 / 2;
             }
         }
 
-        .pet-image-container {
-            width: 90%;
-            img {
-                width: 100%;
-                max-width: 30rem;
+        .pet-image-container{
+
+            img{
+                width: 90%;
+                max-width: 20rem;
                 box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.775);
             }
 
-            @include break-point("medium", "up") {
-                grid-row: 1 / span 2;
-            }
         }
+       
     }
+
 }
 
-.pet-story {
 
-    margin: auto;
-    
-    h2 {
-        border-bottom: 3px solid var(--clr-shadow-gray-shadow);
-        font-size: 2rem;
-    }
-    padding: 1rem;
-    width: 70%;
-    @include break-point("medium", "up") {
-        flex-direction: row;
-    }
-    .adopt-story {
-        flex: 1;
-        align-items: center;
-    }
 
-    .training-story {
-        flex: 1;
-        align-items: center;
+.pet-story{
 
-        label {
-            font-weight: bold;
-        }
-    }
+    padding: 0 1rem;
+ 
 }
 
-// commenting area things
 
-.comments-area-wrapper {
+
+
+// commenting area things 
+
+.comments-area-wrapper{
     padding: 1rem 0;
-    margin-bottom: 2rem;
     background-color: var(--clr-shadow-glassy-shadow);
 
-    @include break-point("medium", "up") {
-        flex-direction: row;
-    }
+ .leave-comment-wrapper{
+    padding: 1rem;
+     textarea{
+         padding: 0.5rem;
+         @include rounded-corners(0.5rem,0.5rem,0.5rem,0.5rem);
+         border: 2px solid var(--clr-primary-mainBlue);
+         box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.775);
+         resize: vertical;
 
-    .leave-comment-wrapper {
+     }
+
+     .btn-rec-purple{
+         width:35%;
+         padding: .7rem;
+     }
+ }
+
+ .all-comments-wrapper{
+    padding: 1rem;
+
+    .single-comment-wrapper{
         padding: 1rem;
-        textarea {
-            padding: 0.5rem;
-            @include rounded-corners(0.5rem, 0.5rem, 0.5rem, 0.5rem);
-            border: 2px solid var(--clr-primary-mainBlue);
-            box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.775);
-            resize: vertical;
+        background-color: var(--clr-primary-secondPurple);
+        @include rounded-corners(1rem,0,1rem,0);
+        border: 2px solid rgba(0, 0, 0, 0.775);
+
+        i{
+            margin-right: .5rem;
         }
 
-        @include break-point("medium", "up") {
-            flex: 1;
-        }
-
-        .btn-rec-purple {
-            width: 35%;
-            padding: 0.7rem;
-        }
     }
 
-    .all-comments-wrapper {
-        padding: 1rem;
-
-        @include break-point("medium", "up") {
-            flex: 1;
-        }
-
-        .single-comment-wrapper {
-            padding: 1rem;
-            background-color: var(--clr-primary-secondPurple);
-            @include rounded-corners(1rem, 0, 1rem, 0);
-            border: 2px solid rgba(0, 0, 0, 0.775);
-
-            i {
-                margin-right: 0.5rem;
-            }
-        }
-    }
+ }
 }

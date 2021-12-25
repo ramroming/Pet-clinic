@@ -1926,19 +1926,15 @@ i.active {
 }
 
 .adoption-ad-wrapper {
-  background-image: linear-gradient(120deg, #f2f0f0, var(--clr-primary-secondBlue), var(--clr-primary-secondPurple));
+  background-image: linear-gradient(120deg, #e4e0e0, var(--clr-primary-secondBlue), var(--clr-primary-secondPurple));
   margin-top: 4rem;
 }
 .adoption-ad-wrapper .pet-basic-info-wrapper {
-  display: grid;
-  grid-template-columns: 100%;
-  grid-gap: 2rem;
-  justify-items: center;
+  flex-direction: column-reverse;
 }
 @media all and (min-width: 48rem) {
   .adoption-ad-wrapper .pet-basic-info-wrapper {
-    grid-template-columns: 60% 40%;
-    grid-gap: 1rem;
+    flex-direction: row-reverse;
   }
 }
 .adoption-ad-wrapper .pet-basic-info-wrapper .intro {
@@ -1947,13 +1943,12 @@ i.active {
 }
 @media all and (min-width: 48rem) {
   .adoption-ad-wrapper .pet-basic-info-wrapper .intro {
-    grid-column: 2/2;
-    grid-row: 1/2;
+    order: 2;
   }
 }
 .adoption-ad-wrapper .pet-basic-info-wrapper .intro .intro-hi {
   font-size: 1.5rem;
-  color: var(--clr-primary-mainPurple);
+  color: var(--clr-hovered-hdark-blue);
 }
 .adoption-ad-wrapper .pet-basic-info-wrapper .intro .pet-name {
   font-size: 3rem;
@@ -1971,62 +1966,25 @@ i.active {
 }
 @media all and (min-width: 48rem) {
   .adoption-ad-wrapper .pet-basic-info-wrapper .pet-info {
+    order: 2;
     align-self: center;
-    padding: 3rem 1.5rem;
+    padding: 4rem 2rem;
     gap: 2rem;
-    grid-column: 2/2;
-    grid-row: 2/2;
   }
-}
-.adoption-ad-wrapper .pet-basic-info-wrapper .pet-image-container {
-  width: 90%;
 }
 .adoption-ad-wrapper .pet-basic-info-wrapper .pet-image-container img {
-  width: 100%;
-  max-width: 30rem;
+  width: 90%;
+  max-width: 20rem;
   box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.775);
-}
-@media all and (min-width: 48rem) {
-  .adoption-ad-wrapper .pet-basic-info-wrapper .pet-image-container {
-    grid-row: 1/span 2;
-  }
 }
 
 .pet-story {
-  margin: auto;
-  padding: 1rem;
-  width: 70%;
-}
-.pet-story h2 {
-  border-bottom: 3px solid var(--clr-shadow-gray-shadow);
-  font-size: 2rem;
-}
-@media all and (min-width: 48rem) {
-  .pet-story {
-    flex-direction: row;
-  }
-}
-.pet-story .adopt-story {
-  flex: 1;
-  align-items: center;
-}
-.pet-story .training-story {
-  flex: 1;
-  align-items: center;
-}
-.pet-story .training-story label {
-  font-weight: bold;
+  padding: 0 1rem;
 }
 
 .comments-area-wrapper {
   padding: 1rem 0;
-  margin-bottom: 2rem;
   background-color: var(--clr-shadow-glassy-shadow);
-}
-@media all and (min-width: 48rem) {
-  .comments-area-wrapper {
-    flex-direction: row;
-  }
 }
 .comments-area-wrapper .leave-comment-wrapper {
   padding: 1rem;
@@ -2042,22 +2000,12 @@ i.active {
   box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.775);
   resize: vertical;
 }
-@media all and (min-width: 48rem) {
-  .comments-area-wrapper .leave-comment-wrapper {
-    flex: 1;
-  }
-}
 .comments-area-wrapper .leave-comment-wrapper .btn-rec-purple {
   width: 35%;
   padding: 0.7rem;
 }
 .comments-area-wrapper .all-comments-wrapper {
   padding: 1rem;
-}
-@media all and (min-width: 48rem) {
-  .comments-area-wrapper .all-comments-wrapper {
-    flex: 1;
-  }
 }
 .comments-area-wrapper .all-comments-wrapper .single-comment-wrapper {
   padding: 1rem;
