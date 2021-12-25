@@ -8,6 +8,7 @@ import RegisterPet from "./components/pages/registerpet/RegisterPet";
 import Appointment from "./components/pages/appointment/Appointment";
 import Adoption from "./components/pages/adoption/Adoption";
 import AdoptionAds from "./components/pages/adoptionAds/AdoptionAds";
+import AdoptionAd from "./components/pages/adoptionAd/AdoptionAd";
 
 function App() {
     return (
@@ -30,6 +31,8 @@ function App() {
                     element={<Adoption/>}></Route>
                 <Route path='/adoptionads'
                     element={<AdoptionAds/>}></Route>
+                <Route path='/adoptionad'
+                    element={<AdoptionAd/>}></Route>
             </Routes>
             <Footer/>
         </>
