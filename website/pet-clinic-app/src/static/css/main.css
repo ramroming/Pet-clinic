@@ -1935,6 +1935,7 @@ i.active {
   margin-top: 4rem;
 }
 .adoption-ad-wrapper .pet-basic-info-wrapper {
+  width: 100%;
   flex-direction: column-reverse;
 }
 @media all and (min-width: 48rem) {
@@ -1994,7 +1995,7 @@ i.active {
   transition: ease 0.5s all;
   letter-spacing: 0.2rem;
   padding: 0.6rem;
-  width: 40%;
+  width: 43%;
   bottom: 5%;
   left: 10%;
 }
@@ -2005,8 +2006,8 @@ i.active {
   transform: scale(1.1);
 }
 .adoption-ad-wrapper .pet-basic-info-wrapper .pet-image-container img {
-  max-width: 25rem;
-  width: 90%;
+  width: 18.125rem;
+  height: 22rem;
   box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.775);
 }
 
@@ -2046,6 +2047,7 @@ i.active {
 
 .comments-area-wrapper {
   max-width: 57rem;
+  width: 100%;
   padding: 1rem 0;
   margin-bottom: 2rem;
   background-color: var(--clr-shadow-glassy-shadow);
@@ -2061,8 +2063,11 @@ i.active {
 }
 .comments-area-wrapper .leave-comment-wrapper {
   padding: 1rem;
+  width: 100%;
+  max-width: 18.75rem;
 }
 .comments-area-wrapper .leave-comment-wrapper textarea {
+  width: 100%;
   padding: 0.5rem;
   border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
   -webkit-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
@@ -2100,4 +2105,4 @@ i.active {
 }
 .comments-area-wrapper .all-comments-wrapper .single-comment-wrapper i {
   margin-right: 0.5rem;
-}/*# sourceMappingURL=main.css.map */
+}

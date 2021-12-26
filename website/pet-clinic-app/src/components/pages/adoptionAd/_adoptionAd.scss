@@ -11,6 +11,7 @@
     margin-top: 4rem;
 
     .pet-basic-info-wrapper {
+        width: 100%;
         flex-direction: column-reverse;
 
         @include break-point("medium", "up") {
@@ -65,7 +66,6 @@
         .pet-image-container {
             position: relative;
 
-
             .adopt-btn {
                 position: absolute;
                 text-transform: lowercase;
@@ -74,7 +74,7 @@
                 transition: ease 0.5s all;
                 letter-spacing: 0.2rem;
                 padding: 0.6rem;
-                width: 40%;
+                width: 43%;
                 bottom: 5%;
                 left: 10%;
 
@@ -87,9 +87,12 @@
             }
 
             img {
-                max-width: 25rem;
-                width: 90%;
+                width: 18.125rem;
+                height: 22rem;
                 box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.775);
+              //   @include break-point("medium", "up") {
+              //     flex-direction: row; *****************************************
+              // }
             }
         }
     }
@@ -143,6 +146,7 @@
 
 .comments-area-wrapper {
     max-width: 57rem;
+    width: 100%;
     padding: 1rem 0;
     margin-bottom: 2rem;
     background-color: var(--clr-shadow-glassy-shadow);
@@ -158,7 +162,10 @@
 
     .leave-comment-wrapper {
         padding: 1rem;
+        width: 100%;
+        max-width: 18.75rem;
         textarea {
+             width: 100%;
             padding: 0.5rem;
             @include rounded-corners(0.5rem, 0.5rem, 0.5rem, 0.5rem);
             border: 2px solid var(--clr-primary-mainBlue);
