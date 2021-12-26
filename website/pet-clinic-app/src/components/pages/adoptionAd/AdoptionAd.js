@@ -1,5 +1,6 @@
 
 
+
 const AdoptionAd = () => {
     return (
         <div className=" adoption-ad-wrapper home-container flex-col falign-center gap-24p ">
@@ -7,9 +8,9 @@ const AdoptionAd = () => {
             {/* first main flex item ++ pet intro, info and photo ++ */}
             <div className="pet-basic-info-wrapper flex-col falign-center fjust-center gap-24p">
 
-                {/* second mini flex */}
+                {/* first mini flex */}
 
-                <div className=" flex-col falign-center fjust-center gap-16p">
+                <div className=" wrapper flex-col falign-center fjust-center gap-16p">
 
                     <div className="intro flex-col falign-center fjust-center gap-16p">
                         <p className="intro-hi">hi i'm</p>
@@ -17,7 +18,6 @@ const AdoptionAd = () => {
                         <p className="pet-breed">Domestic Shorthair</p>
                     </div>
 
-                    {/* third mini flex */}
                     <div className="pet-info flex-col gap-16p">
 
                         <div className="flex-row gap-8p">
@@ -45,10 +45,11 @@ const AdoptionAd = () => {
 
                 </div>
 
-                {/* first mini flex */}
+                {/* second mini flex */}
                 <div className="flex-col fjust-center falign-center pet-image-container">
                     <img src="media/imgs/petphoto.jpg" alt='pet'>
                     </img>
+                    <button className="btn-rec adopt-btn">Adopt me!</button>
                 </div>
 
             </div>
@@ -63,7 +64,7 @@ const AdoptionAd = () => {
 
                 <div className="training-story flex-col gap-8p">
 
-                    <h2>My trainings</h2>
+                    <h2>My trainings <i class="fas fa-medal"></i></h2>
 
                     <div className="flex-row gap-8p">
                         <label>Training: </label>
@@ -85,40 +86,40 @@ const AdoptionAd = () => {
 
             </div>
 
-        
-
-            {/* third main flex item ++ check comments and leave a comment ++ */ }
-
-    <div className="comments-area-wrapper flex-col falign-center gap-8p">
 
 
-        {/* wrapper of the comment text area and button to send comment */}
-        <div className="leave-comment-wrapper flex-col falign-center gap-16p">
-            <textarea name="comment" id="comment" cols="30" rows="5" placeholder="feel free to share a comment!"></textarea>
-            <input className="btn-rec-purple" type="submit" />
-        </div>
+            {/* third main flex item ++ check comments and leave a comment ++ */}
+
+            <div className="comments-area-wrapper flex-col falign-center gap-8p">
 
 
-        {/*wrapper of all the comments, I'm guessing we'll use pagination again :') */}
-        <div className="all-comments-wrapper flex-col gap-8p">
+                {/* wrapper of the comment text area and button to send comment */}
+                <div className="leave-comment-wrapper flex-col falign-center gap-16p">
+                    <textarea name="comment" id="comment" cols="30" rows="5" placeholder="feel free to share a comment!"></textarea>
+                    <input className="btn-rec-purple" type="submit" />
+                </div>
 
 
-            {/* each single comment wrapper */}
-            <div className="single-comment-wrapper flex-col gap-8p">
+                {/*wrapper of all the comments, I'm guessing we'll use pagination again :') */}
+                <div className="all-comments-wrapper flex-col falign-center gap-8p">
 
-                {/* the username */}
-                <div><i className="fas fa-user"></i>Maria</div>
-                {/* user's comment */}
-                <p>so cute! does mimo require any pet supplies or are they offered by you? </p>
+
+                    {/* each single comment wrapper */}
+                    <div className="single-comment-wrapper flex-col gap-8p">
+
+                        {/* the username */}
+                        <div><i className="fas fa-user"></i>Maria</div>
+                        {/* user's comment */}
+                        <p>so cute! does mimo require any pet supplies or are they offered by you? </p>
+
+                    </div>
+
+                </div>
 
             </div>
 
+
         </div>
-
-    </div>
-
-
-    </div>
     )
 }
 
