@@ -90,9 +90,10 @@
                 width: 18.125rem;
                 height: 22rem;
                 box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.775);
-              //   @include break-point("medium", "up") {
-              //     flex-direction: row; *****************************************
-              // }
+                @include break-point("medium", "up") {
+                 width: 22rem;
+                 height: 25rem;
+              }
             }
         }
     }
@@ -115,6 +116,7 @@
     .training-story {
         flex: 1;
         align-items: center;
+        padding: 0 1rem;
     }
 
     .adopt-story {
@@ -147,7 +149,7 @@
 .comments-area-wrapper {
     max-width: 57rem;
     width: 100%;
-    padding: 1rem 0;
+    padding: 1rem;
     margin-bottom: 2rem;
     background-color: var(--clr-shadow-glassy-shadow);
 

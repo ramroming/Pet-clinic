@@ -2010,6 +2010,12 @@ i.active {
   height: 22rem;
   box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.775);
 }
+@media all and (min-width: 48rem) {
+  .adoption-ad-wrapper .pet-basic-info-wrapper .pet-image-container img {
+    width: 22rem;
+    height: 25rem;
+  }
+}
 
 .pet-story {
   margin: auto;
@@ -2027,6 +2033,7 @@ i.active {
 .pet-story .training-story {
   flex: 1;
   align-items: center;
+  padding: 0 1rem;
 }
 .pet-story .adopt-story p {
   max-width: 25rem;
@@ -2048,7 +2055,7 @@ i.active {
 .comments-area-wrapper {
   max-width: 57rem;
   width: 100%;
-  padding: 1rem 0;
+  padding: 1rem;
   margin-bottom: 2rem;
   background-color: var(--clr-shadow-glassy-shadow);
 }
@@ -2105,4 +2112,4 @@ i.active {
 }
 .comments-area-wrapper .all-comments-wrapper .single-comment-wrapper i {
   margin-right: 0.5rem;
-}
+}/*# sourceMappingURL=main.css.map */
