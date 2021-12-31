@@ -1,0 +1,30 @@
+@use '../../abstracts/' as *;
+
+.myprofile-wrapper {
+  background-color: whitesmoke;
+  padding: 5rem 1rem 0 1rem;
+  @include break-point("medium", "up") {
+    padding: 9rem 1.5rem 0 1.5rem;
+  }
+}
+.myprofile-container {
+  @include break-point("medium", "up") {
+    justify-content: space-evenly;
+  }
+  .bio-container {
+    width: 100%;
+    height: fit-content;
+    padding-bottom: 1rem;
+    @include break-point("medium", "up") {
+      padding-left: 4%;
+    }
+    .avatar-photo {
+      width: 3rem;
+      height: 3rem;
+      @include rounded-corners();
+      
+    }
+  }
+
+}
+

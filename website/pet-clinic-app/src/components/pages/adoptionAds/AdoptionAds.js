@@ -1,7 +1,6 @@
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { adoptionMotion } from '../adoptionAds/adoptionMotion'
-import { useRef } from "react/cjs/react.development"
 
 
 

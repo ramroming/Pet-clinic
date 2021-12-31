@@ -1,0 +1,116 @@
+@use '../../../../abstracts/' as *;
+
+.profile-data {
+  width: 100%;
+  padding-bottom: 2rem;
+  @include break-point('medium', 'up'){
+    margin-left: 1rem;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 0;
+  }
+  
+
+  .change-pic {
+    width: 100%;
+    @include break-point('medium', 'up'){
+      align-content: center;
+      width: fit-content;
+    }
+    p {
+      text-align: center;
+    }
+    img {
+      width: 12.5rem;
+      height: 12.5rem;
+      @include rounded-corners();
+    }
+    .change-pic-wrapper {
+      position: relative;
+      button {
+        position: absolute;
+        bottom: 1rem;
+        left: 2rem;
+        background-color: var(--clr-primary-mainPurple);
+        color: white;
+        transition: ease 0.5s all;
+        padding: 0.4rem;
+        @include break-point('medium', 'up'){
+          width: 45%;
+        }
+        &:hover {
+          cursor: pointer;
+          color: white;
+          background-color: var(--clr-primary-mainBlue);
+        }
+        i {
+          padding-right: 0.25rem;
+        }
+      }
+      .change-pic-list {
+        background-color: var(--clr-shadow-dark-shadow);
+        @include rounded-corners(0.25rem, 0.25rem, 0.25rem, 0.25rem);
+        border: 1px solid lightgray;
+        width: 12.25rem;
+        color: white;
+        position: absolute;
+        bottom: -4rem;
+        left: 0rem;
+        padding: 1rem;
+        
+
+        label {
+          
+          i {
+            padding-left: 0.4rem;
+          }
+        }
+        a {
+          text-align: left;
+        }
+        label, a {
+          transition: ease 0.5s all;
+          &:hover {
+            cursor: pointer;
+            color: var(--clr-primary-secondBlue);
+          }
+        }
+      }
+    }
+
+  }
+  .inputs-wrapper {
+    
+
+    @include break-point('medium', 'up'){
+      width: 90%;
+    }
+
+  
+
+    .input-wrapper {
+      max-width: 40rem;
+      @include break-point('medium', 'up'){
+        width: 100%;
+      }
+      label {
+        display: inline-block;
+        width: 100%;
+        @include break-point('medium', 'up'){
+          width: 35%;
+        }
+      }
+    }
+  }
+  
+  .btn-r {
+    width: 60% ;
+    padding: 1rem 0;
+    margin: auto;
+    @include break-point('medium', 'up'){
+      max-width: 17.5rem;
+      margin-top: 1rem;
+    }
+  }
+}

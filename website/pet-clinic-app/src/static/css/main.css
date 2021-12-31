@@ -539,6 +539,10 @@ h1 {
   background-color: var(--clr-primary-mainPurple);
 }
 
+.btn-r-blue {
+  background-color: var(--clr-primary-mainBlue);
+}
+
 .btn-r-outlined, .btn-r-outlined-purple, .btn-s, .btn-r-outlined-blue {
   background-color: white;
   color: black;
@@ -2092,8 +2096,9 @@ i.active {
   }
 }
 .comments-area-wrapper .leave-comment-wrapper .btn-rec-purple {
-  width: 30%;
-  padding: 0.7rem;
+  width: 40%;
+  padding: 1rem;
+  text-align: center;
 }
 .comments-area-wrapper .all-comments-wrapper {
   padding: 1rem;
@@ -2112,4 +2117,245 @@ i.active {
 }
 .comments-area-wrapper .all-comments-wrapper .single-comment-wrapper i {
   margin-right: 0.5rem;
-}/*# sourceMappingURL=main.css.map */
+}
+
+.profile-menu {
+  border: 1px solid grey;
+  width: 100%;
+  border-radius: 0rem 0.5rem 0.5rem 0rem;
+  -webkit-border-radius: 0rem 0.5rem 0.5rem 0rem;
+  -moz-border-radius: 0rem 0.5rem 0.5rem 0rem;
+  -ms-border-radius: 0rem 0.5rem 0.5rem 0rem;
+  -o-border-radius: 0rem 0.5rem 0.5rem 0rem;
+}
+@media all and (min-width: 48rem) {
+  .profile-menu {
+    width: 24%;
+    max-width: 20rem;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    margin-top: 1rem;
+  }
+}
+.profile-menu .profile-option {
+  color: black;
+  text-align: left;
+  padding: 1rem 0.75rem;
+  border-left: 4px grey solid;
+  border-bottom: 1px solid #555252;
+  transition: all ease 0.5s;
+}
+.profile-menu .profile-option:last-child {
+  border-bottom: 0;
+}
+.profile-menu .profile-option:hover {
+  cursor: pointer;
+  border-left-color: var(--clr-primary-mainBlue);
+}
+.profile-menu .profile-option.selected {
+  border-left-color: var(--clr-primary-mainPurple);
+}
+
+h4 {
+  border-bottom: solid 1px grey;
+  padding-bottom: 0.5rem;
+}
+@media all and (min-width: 48rem) {
+  h4 {
+    font-size: 1.5rem;
+  }
+}
+
+.profile-animation-wrapper {
+  width: 100%;
+}
+@media all and (min-width: 48rem) {
+  .profile-animation-wrapper {
+    width: 68%;
+  }
+}
+
+.profile-data {
+  width: 100%;
+  padding-bottom: 2rem;
+}
+@media all and (min-width: 48rem) {
+  .profile-data {
+    margin-left: 1rem;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 0;
+  }
+}
+.profile-data .change-pic {
+  width: 100%;
+}
+@media all and (min-width: 48rem) {
+  .profile-data .change-pic {
+    align-content: center;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}
+.profile-data .change-pic p {
+  text-align: center;
+}
+.profile-data .change-pic img {
+  width: 12.5rem;
+  height: 12.5rem;
+  border-radius: 50% 50% 50% 50%;
+  -webkit-border-radius: 50% 50% 50% 50%;
+  -moz-border-radius: 50% 50% 50% 50%;
+  -ms-border-radius: 50% 50% 50% 50%;
+  -o-border-radius: 50% 50% 50% 50%;
+}
+.profile-data .change-pic .change-pic-wrapper {
+  position: relative;
+}
+.profile-data .change-pic .change-pic-wrapper button {
+  position: absolute;
+  bottom: 1rem;
+  left: 2rem;
+  background-color: var(--clr-primary-mainPurple);
+  color: white;
+  transition: ease 0.5s all;
+  padding: 0.4rem;
+}
+@media all and (min-width: 48rem) {
+  .profile-data .change-pic .change-pic-wrapper button {
+    width: 45%;
+  }
+}
+.profile-data .change-pic .change-pic-wrapper button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: var(--clr-primary-mainBlue);
+}
+.profile-data .change-pic .change-pic-wrapper button i {
+  padding-right: 0.25rem;
+}
+.profile-data .change-pic .change-pic-wrapper .change-pic-list {
+  background-color: var(--clr-shadow-dark-shadow);
+  border-radius: 0.25rem 0.25rem 0.25rem 0.25rem;
+  -webkit-border-radius: 0.25rem 0.25rem 0.25rem 0.25rem;
+  -moz-border-radius: 0.25rem 0.25rem 0.25rem 0.25rem;
+  -ms-border-radius: 0.25rem 0.25rem 0.25rem 0.25rem;
+  -o-border-radius: 0.25rem 0.25rem 0.25rem 0.25rem;
+  border: 1px solid lightgray;
+  width: 12.25rem;
+  color: white;
+  position: absolute;
+  bottom: -4rem;
+  left: 0rem;
+  padding: 1rem;
+}
+.profile-data .change-pic .change-pic-wrapper .change-pic-list label i {
+  padding-left: 0.4rem;
+}
+.profile-data .change-pic .change-pic-wrapper .change-pic-list a {
+  text-align: left;
+}
+.profile-data .change-pic .change-pic-wrapper .change-pic-list label, .profile-data .change-pic .change-pic-wrapper .change-pic-list a {
+  transition: ease 0.5s all;
+}
+.profile-data .change-pic .change-pic-wrapper .change-pic-list label:hover, .profile-data .change-pic .change-pic-wrapper .change-pic-list a:hover {
+  cursor: pointer;
+  color: var(--clr-primary-secondBlue);
+}
+@media all and (min-width: 48rem) {
+  .profile-data .inputs-wrapper {
+    width: 90%;
+  }
+}
+.profile-data .inputs-wrapper .input-wrapper {
+  max-width: 40rem;
+}
+@media all and (min-width: 48rem) {
+  .profile-data .inputs-wrapper .input-wrapper {
+    width: 100%;
+  }
+}
+.profile-data .inputs-wrapper .input-wrapper label {
+  display: inline-block;
+  width: 100%;
+}
+@media all and (min-width: 48rem) {
+  .profile-data .inputs-wrapper .input-wrapper label {
+    width: 35%;
+  }
+}
+.profile-data .btn-r {
+  width: 60%;
+  padding: 1rem 0;
+  margin: auto;
+}
+@media all and (min-width: 48rem) {
+  .profile-data .btn-r {
+    max-width: 17.5rem;
+    margin-top: 1rem;
+  }
+}
+
+.account-data {
+  flex-direction: column;
+  align-content: center;
+}
+.account-data .inputs-wrapper {
+  width: 100%;
+  max-width: 22rem;
+}
+@media all and (min-width: 48rem) {
+  .account-data .inputs-wrapper {
+    margin: auto;
+    max-width: 30rem;
+  }
+}
+@media all and (min-width: 48rem) {
+  .account-data label {
+    max-width: 8rem;
+  }
+}
+.account-data .change-pass {
+  max-width: 10rem;
+  padding: 0.5rem;
+}
+
+.myprofile-wrapper {
+  background-color: whitesmoke;
+  padding: 5rem 1rem 0 1rem;
+}
+@media all and (min-width: 48rem) {
+  .myprofile-wrapper {
+    padding: 9rem 1.5rem 0 1.5rem;
+  }
+}
+
+@media all and (min-width: 48rem) {
+  .myprofile-container {
+    justify-content: space-evenly;
+  }
+}
+.myprofile-container .bio-container {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding-bottom: 1rem;
+}
+@media all and (min-width: 48rem) {
+  .myprofile-container .bio-container {
+    padding-left: 4%;
+  }
+}
+.myprofile-container .bio-container .avatar-photo {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50% 50% 50% 50%;
+  -webkit-border-radius: 50% 50% 50% 50%;
+  -moz-border-radius: 50% 50% 50% 50%;
+  -ms-border-radius: 50% 50% 50% 50%;
+  -o-border-radius: 50% 50% 50% 50%;
+}

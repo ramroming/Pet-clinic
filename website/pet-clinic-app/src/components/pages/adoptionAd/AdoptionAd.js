@@ -64,7 +64,7 @@ const AdoptionAd = () => {
 
                 <div className="training-story flex-col gap-8p">
 
-                    <h2>My trainings <i class="fas fa-medal"></i></h2>
+                    <h2>My trainings <i className="fas fa-medal"></i></h2>
 
                     <div className="flex-row gap-8p">
                         <label>Training: </label>

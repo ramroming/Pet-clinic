@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react/cjs/react.development"
+import { useState, useRef, useEffect } from "react"
 import Datepicker from "../../../utils/datepicker/Datepicker";
 
 //Import Animation object from sliderAnimation.js

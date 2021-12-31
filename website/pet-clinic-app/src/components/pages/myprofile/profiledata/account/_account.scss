@@ -1,0 +1,25 @@
+@use '../../../../abstracts/' as *;
+
+// using the same css styling of the personalinfo.scss with some modifications
+.account-data {
+  flex-direction: column;
+  align-content: center;
+  .inputs-wrapper {
+    width: 100%;
+    max-width: 22rem;
+    @include break-point('medium', 'up') {
+      margin: auto;
+      max-width: 30rem;
+
+    }
+  }
+  label {
+    @include break-point('medium', 'up') {
+      max-width: 8rem;
+    }
+  }
+  .change-pass {
+    max-width: 10rem;
+    padding: 0.5rem;
+  }
+}
