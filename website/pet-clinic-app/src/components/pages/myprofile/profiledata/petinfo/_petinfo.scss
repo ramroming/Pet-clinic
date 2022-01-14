@@ -1,1 +1,157 @@
-@use '../../../../abstracts/' as *;
+@use "../../../../abstracts/" as *;
+
+.pet-info {
+  @include break-point("medium", "up") {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+.manage-pet-header {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.create-pet-btn {
+  width: 100%;
+  align-self: flex-start;
+  @include break-point("medium", "up") {
+    width: 24%;
+    padding: 0.5rem 0;
+  }
+}
+
+.manage-pets-container {
+  position: relative;
+  width: 100%;
+  @include break-point("medium", "up") {
+    align-content: flex-start;
+  }
+}
+.pet-card-form {
+  width: 100%;
+  @include break-point("medium", "up") {
+  }
+  .manage-pet-card {
+    width: 100%;
+    margin: auto;
+    position: relative;
+    @include break-point("medium", "up") {
+      // width: 40%;
+      width: 100%;
+      height: 20rem;
+      margin: 0;
+    }
+    img {
+      max-width: 22rem;
+      width: 100%;
+      height: 100%;
+      min-width: 250px;
+      min-height: 21.2rem;
+      margin: auto;
+      display: block;
+      @include break-point("medium", "up") {
+        min-width: auto;
+        min-height: auto;
+      }
+    }
+    .edit-pet-btn,
+    .remove-pet-btn {
+      padding: 0.5rem 0;
+      box-shadow: none;
+      width: 10rem;
+      left: 50%;
+      transform: translateX(-50%);
+      @include break-point("medium", "up") {
+        width: 100%;
+      }
+    }
+    .edit-pet-btn {
+      position: absolute;
+      top: 75%;
+      background-color: var(--clr-primary-mainBlueTrans);
+      transition: ease 0.5s all;
+      @include break-point("medium", "up") {
+        top: 73%;
+        width: 10rem;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &:hover {
+        background-color: var(--clr-primary-secondBlue);
+        cursor: pointer;
+      }
+    }
+    .remove-pet-btn {
+      position: absolute;
+      bottom: 8px;
+      background-color: var(--clr-shadow-dark-shadow-trans);
+      transition: ease 0.5s all;
+      @include break-point("medium", "up") {
+        bottom: .25rem;
+        width: 10rem;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &:hover {
+        background-color: rgb(99, 59, 59);
+        cursor: pointer;
+      }
+    }
+  }
+  .edit-side-form {
+    padding-top: 1.5rem;
+    margin: 0;
+    margin: auto;
+    // display: none;
+    @include break-point("medium", "up") {
+      flex-direction: column;
+      width: 57%;
+      padding-top: 3rem;
+    }
+    label {
+      @include break-point("medium", "up") {
+        width: 40% !important;
+      }
+    }
+    .gender-label {
+      @include break-point("medium", "up") {
+        width: 24% !important;
+      }
+    }
+    .gender-input-wrapper {
+      margin: auto;
+      width: 80%;
+      gap: 3px;
+      justify-content: center;
+      @include break-point("medium", "up") {
+        justify-content: start;
+        gap: 8px;
+        margin: 0;
+        gap: 0;
+        justify-content: space-between;
+        width: 100%;
+      }
+      .half-label {
+        width: 40%;
+      }
+    }
+    .upload-pet {
+      width: 80%;
+      @include break-point("medium", "up") {
+        width: 100%;
+      }
+      .btn-r-outlined-blue {
+        width: 100% !important;
+        @include break-point("medium", "up") {
+          width: 50% !important;
+        }
+      }
+    }
+  }
+}
+.pets-loader {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
