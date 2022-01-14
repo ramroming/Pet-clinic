@@ -5,6 +5,7 @@ $page-1: (
   primary: (
   "mainPurple":#a364a5, //
   "mainBlue": #119b9d, //
+  "mainBlueTrans": rgba(17, 155, 157, 0.6), //
   "secondPurple": #d3b1d1,// 
   "secondBlue": #7fdadb //
   ),
@@ -19,6 +20,7 @@ $page-1: (
   shadow: (
     "light-gray": rgba(197, 197, 197, 1),
     "dark-shadow": rgb(61, 61, 61),
+    "dark-shadow-trans": rgba(61, 61, 61, 0.6),
     "gray-shadow":  rgba(28, 27, 27, 0.611),
     "glassy-shadow": rgba(255, 255, 255, 0.316)
   ),
