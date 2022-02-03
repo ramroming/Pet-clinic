@@ -367,6 +367,10 @@ template {
   --clr-hovered-hdark-blue: #242860;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .logo {
   width: 5rem;
   height: 5rem;
@@ -1994,6 +1998,14 @@ i.active {
   background-image: linear-gradient(120deg, #e4e0e0, var(--clr-primary-secondBlue), var(--clr-primary-secondPurple));
   margin-top: 4rem;
 }
+.adoption-ad-wrapper .review-header {
+  width: 100%;
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 1rem 1rem;
+  background-color: var(--clr-shadow-gray-shadow);
+  color: white;
+}
 .adoption-ad-wrapper .pet-basic-info-wrapper {
   width: 100%;
   flex-direction: column-reverse;
@@ -2592,4 +2604,72 @@ h4 {
   -moz-border-radius: 50% 50% 50% 50%;
   -ms-border-radius: 50% 50% 50% 50%;
   -o-border-radius: 50% 50% 50% 50%;
+}
+
+.post-pet-container {
+  background-image: linear-gradient(120deg, var(--clr-primary-secondBlue), var(--clr-primary-secondPurple));
+  padding: 6rem 0 3rem 0;
+}
+@media all and (min-width: 48rem) {
+  .post-pet-container {
+    padding-top: 8rem;
+  }
+}
+
+.post-pet-dark-container {
+  color: white;
+  padding: 2rem 1rem;
+  width: 90%;
+  margin: auto;
+  background-color: var(--clr-shadow-gray-shadow);
+}
+.post-pet-dark-container p {
+  text-align: center;
+}
+@media all and (min-width: 48rem) {
+  .post-pet-dark-container .select-pet {
+    font-size: 1.5rem;
+  }
+}
+
+.post-pets-container {
+  width: 100%;
+}
+@media all and (min-width: 48rem) {
+  .post-pets-container {
+    flex-direction: row;
+    justify-content: center;
+    gap: 3rem;
+  }
+}
+
+.pet-to-post {
+  border: solid 3px white;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 1rem;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -webkit-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -moz-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -ms-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -o-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  transition: all ease 0.5s;
+}
+.pet-to-post:hover {
+  border-color: var(--clr-primary-secondBlue);
+}
+.pet-to-post img {
+  width: 100%;
+  max-width: 11rem;
+  height: 10rem;
+}
+.pet-to-post button {
+  width: 80%;
+  padding: 0.5rem;
+}
+@media all and (min-width: 48rem) {
+  .pet-to-post button {
+    font-size: 1rem;
+  }
 }

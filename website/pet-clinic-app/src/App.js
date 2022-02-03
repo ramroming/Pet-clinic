@@ -10,7 +10,8 @@ import Adoption from "./components/pages/adoption/Adoption";
 import AdoptionAds from "./components/pages/adoptionAds/AdoptionAds";
 import AdoptionAd from "./components/pages/adoptionAd/AdoptionAd";
 import Myprofile from "./components/pages/myprofile/Myprofile";
-
+import PostAd from "./components/pages/postAd/PostAd";
+import PostReview from "./components/pages/postpreview/PostReview";
 function App() {
   return (
     <>
@@ -36,6 +37,10 @@ function App() {
           element={<AdoptionAd />}></Route>
         <Route path='/myprofile'
           element={<Myprofile />}> </Route>
+        <Route path='/postad'
+          element={<PostAd />}> </Route>
+        <Route path='/postreview'
+          element={<PostReview />}> </Route>
       </Routes>
       <Footer />
     </>
