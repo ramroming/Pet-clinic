@@ -11,7 +11,7 @@ import AdoptionAds from "./components/pages/adoptionAds/AdoptionAds";
 import AdoptionAd from "./components/pages/adoptionAd/AdoptionAd";
 import Myprofile from "./components/pages/myprofile/Myprofile";
 import PostAd from "./components/pages/postAd/PostAd";
-import PostReview from "./components/pages/postpreview/PostReview";
+import PostPreview from "./components/pages/postpreview/PostPreview";
 function App() {
   return (
     <>
@@ -40,7 +40,7 @@ function App() {
         <Route path='/postad'
           element={<PostAd />}> </Route>
         <Route path='/postreview'
-          element={<PostReview />}> </Route>
+          element={<PostPreview />}> </Route>
       </Routes>
       <Footer />
     </>

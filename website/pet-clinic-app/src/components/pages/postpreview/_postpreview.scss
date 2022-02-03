@@ -1,0 +1,67 @@
+@use '../../abstracts/' as *;
+
+.post-review-header{
+    width: 90%;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 1rem 1rem;  
+    // background-color: var(--clr-shadow-gray-shadow);
+     background-image: linear-gradient(
+        10deg,
+        var(--clr-primary-mainPurple),
+        var(--clr-primary-mainBlue)
+    );
+    color: white;
+    @include rounded-corners(1rem, 1rem, 1rem, 1rem);
+    box-shadow: 5px 10px var(--clr-shadow-dark-shadow);
+    max-width: 790px;
+}
+
+.post-review-header-small{
+    width:90%;
+    background-color: var(--clr-shadow-glassy-shadow);
+    text-align:center;
+    padding: 1rem 1rem;
+    max-width: 790px;
+
+    @include break-point("medium", "up") {
+        font-size: 1.2rem;
+    }
+}
+
+.link{
+    text-decoration: underline;
+    color: var(--clr-primary-mainPurple);
+}
+
+
+.pet-story{
+    margin-bottom: 2rem;
+}
+.story-textarea{
+
+       width: 90%;
+       height: 150px;
+       padding: 1rem;
+       margin-bottom:1rem;
+       color: var(--clr-shadow-light-gray);
+       overflow: auto;
+       @include rounded-corners(0.5rem, 0.5rem, 0.5rem, 0.5rem);
+       border: 2px solid var(--clr-primary-mainBlue);
+       box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.775);
+
+       @include break-point("medium", "up") {
+           padding: 1rem 2rem;
+           width: 300px;
+           font-size: 1.1rem;
+       }
+}
+
+.adopt-story{
+    .btn-rec-purple{
+        @include break-point("medium", "up") {
+           width: 50%;
+           padding: 1.1rem;
+        }
+    }
+}

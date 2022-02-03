@@ -2,7 +2,14 @@ const PostReview = () => {
   return (
     <div className=" adoption-ad-wrapper home-container flex-col falign-center gap-24p ">
 
-        <p className="review-header">Review how people would see your adoption ad</p>
+        <p className="post-review-header">This is a preview of how your adoption post would be viewed by others</p>
+
+        <p className="post-review-header-small">
+            The info here is retrieved from your pet's profile,
+           you can edit the info from<a className="link" href="#/"> here </a>:).<br/>
+           feel free to provide more details in the pet's story box!
+        </p>
+
         {/* first main flex item ++ pet intro, info and photo ++ */}
         <div className="pet-basic-info-wrapper flex-col falign-center fjust-center gap-24p">
 
@@ -56,7 +63,9 @@ const PostReview = () => {
 
             <div className="adopt-story flex-col">
                 <h2>My story</h2>
-                <p>Looking for a cute, energetic little kitten? Come meet me and see if I'm the one for you! I know I'm super adorable and playful but I also require a lot of time, energy, and attention. Maybe I could go home with another kitten friend? We do great in pairs and then you get double the love!</p>
+                <textarea className="story-textarea">sample:
+                Looking for a cute, energetic little kitten? Come meet me and see if I'm the one for you!...</textarea>
+                <input className="btn-rec-purple" type="submit" />
             </div>
 
             <div className="training-story flex-col gap-8p">
