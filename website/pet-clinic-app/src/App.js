@@ -12,6 +12,7 @@ import AdoptionAd from "./components/pages/adoptionAd/AdoptionAd";
 import Myprofile from "./components/pages/myprofile/Myprofile";
 import PostAd from "./components/pages/postAd/PostAd";
 import PostPreview from "./components/pages/postpreview/PostPreview";
+import Stafflist from "./components/pages/stafflist/Stafflist";
 function App() {
   return (
     <>
@@ -39,8 +40,10 @@ function App() {
           element={<Myprofile />}> </Route>
         <Route path='/postad'
           element={<PostAd />}> </Route>
-        <Route path='/postreview'
+        <Route path='/postpreview'
           element={<PostPreview />}> </Route>
+        <Route path='/stafflist'
+          element={<Stafflist />}> </Route>
       </Routes>
       <Footer />
     </>

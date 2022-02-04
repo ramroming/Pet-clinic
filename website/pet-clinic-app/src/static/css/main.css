@@ -2734,4 +2734,46 @@ h4 {
     width: 50%;
     padding: 1.1rem;
   }
+}
+
+.staff-container {
+  background-image: linear-gradient(120deg, var(--clr-shadow-gray-shadow), var(--clr-hovered-hdark-blue));
+}
+.staff-container .staff-list-header {
+  margin: 2rem 0;
+  padding: 1rem 0.5rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: white;
+  background-color: var(--clr-shadow-glassy-shadow);
+}
+.staff-container .staff-list-header span {
+  font-size: 1.4rem;
+}
+.staff-container .staff-memebr-card {
+  background-color: var(--clr-shadow-gray-shadow);
+  padding: 1rem;
+  width: 100%;
+  color: white;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -webkit-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -moz-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -ms-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -o-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+.staff-container .staff-memebr-card p {
+  font-size: 1.2rem;
+  padding: 1rem;
+}
+.staff-container .staff-memebr-card .member-photo-container {
+  width: 100px;
+}
+.staff-container .staff-memebr-card .member-photo-container img {
+  width: 100%;
+}
+.staff-container .staff-memebr-card .rating {
+  padding: 1rem 0;
+}
+.staff-container .staff-memebr-card .rating .checked {
+  color: yellow;
 }/*# sourceMappingURL=main.css.map */
