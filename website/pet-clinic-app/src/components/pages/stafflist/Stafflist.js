@@ -13,10 +13,12 @@ const Stafflist = () => {
             {/* first flex */}
             <div className="staff-list-header flex-col falign-center gap-16p">
                 <p>don't hesitate to rate our team,<br/>
-                    we would love to hear you!</p>
+                    We would love to hear you!</p>
             </div>
 
             <div className="staff-members flex-col falign-center gap-16p">
+                <Staffcard/>
+                <Staffcard/>
                 <Staffcard/>
                 <Staffcard/>
 
