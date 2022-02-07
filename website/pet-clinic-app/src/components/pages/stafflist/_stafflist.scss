@@ -3,8 +3,24 @@
 .staff-container {
     background-image: linear-gradient(120deg, var(--clr-shadow-gray-shadow), var(--clr-hovered-hdark-blue));
 
+
+    
+ 
+    .staff-members{
+      
+        @include break-point("medium", "up"){
+            flex-direction: row;
+            justify-content: center;
+            width: 100%;
+        }
+    }
+        
+
+
     .staff-list-header {
         margin: 2rem 0;
+        width:80%;
+        max-width: 350px;
         padding: 1rem 0.5rem;
         text-align: center;
         font-size: 1.1rem;
@@ -12,6 +28,7 @@
         background-color: var(--clr-shadow-glassy-shadow);
         span {
             font-size: 1.4rem;
+            color: #fad9f7;
         }
     
     }
@@ -19,40 +36,55 @@
     .staff-memebr-card{
 
         background-color: var(--clr-shadow-gray-shadow);
-        padding: 1rem;
+        padding: 1rem 2rem;
         width: 100%;
         color: white;
 
-        p{
-            font-size: 1.2rem;
-            padding: 1rem;
-        }
+     
         @include rounded-corners(.5rem,.5rem,.5rem,.5rem);
+
+        @include break-point("medium", "up"){
+            width: auto;
+        }
         .member-photo-container{
 
             width: 100px;
+            background-color: var(--clr-shadow-glassy-shadow);
+            @include rounded-corners();
             
             img{
                 width: 100%;
+                @include rounded-corners();
             }
         }
 
+        p.memeber-name{
+            font-size: 1.2rem;
+            padding: .5rem;
+        }
+        // rating from database
         .rating{
-
-            padding: 1rem 0;
+            font-size:.8rem;
+           
+            .star{
+                margin-right: .2rem;
+                color: #c5c5c5;
+            }
+            padding:.5rem 0;
             .checked{
-                color: #ffff00;
+                color: #ffd900;
             }
         }
+
+        // rating by users
+        .each-star{
+            margin-right: .3rem;
+            cursor: pointer;
+         
+        }
+
     }
   
-    .each-star{
-        margin-right: .3rem;
-        cursor: pointer;
-        &:hover{
-            color:#ffff00
-        }
-    }
 
     
 

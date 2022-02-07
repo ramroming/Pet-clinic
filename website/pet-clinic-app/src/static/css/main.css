@@ -2739,8 +2739,17 @@ h4 {
 .staff-container {
   background-image: linear-gradient(120deg, var(--clr-shadow-gray-shadow), var(--clr-hovered-hdark-blue));
 }
+@media all and (min-width: 48rem) {
+  .staff-container .staff-members {
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+}
 .staff-container .staff-list-header {
   margin: 2rem 0;
+  width: 80%;
+  max-width: 350px;
   padding: 1rem 0.5rem;
   text-align: center;
   font-size: 1.1rem;
@@ -2749,10 +2758,11 @@ h4 {
 }
 .staff-container .staff-list-header span {
   font-size: 1.4rem;
+  color: #fad9f7;
 }
 .staff-container .staff-memebr-card {
   background-color: var(--clr-shadow-gray-shadow);
-  padding: 1rem;
+  padding: 1rem 2rem;
   width: 100%;
   color: white;
   border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
@@ -2761,26 +2771,44 @@ h4 {
   -ms-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
   -o-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
 }
-.staff-container .staff-memebr-card p {
-  font-size: 1.2rem;
-  padding: 1rem;
+@media all and (min-width: 48rem) {
+  .staff-container .staff-memebr-card {
+    width: auto;
+  }
 }
 .staff-container .staff-memebr-card .member-photo-container {
   width: 100px;
+  background-color: var(--clr-shadow-glassy-shadow);
+  border-radius: 50% 50% 50% 50%;
+  -webkit-border-radius: 50% 50% 50% 50%;
+  -moz-border-radius: 50% 50% 50% 50%;
+  -ms-border-radius: 50% 50% 50% 50%;
+  -o-border-radius: 50% 50% 50% 50%;
 }
 .staff-container .staff-memebr-card .member-photo-container img {
   width: 100%;
+  border-radius: 50% 50% 50% 50%;
+  -webkit-border-radius: 50% 50% 50% 50%;
+  -moz-border-radius: 50% 50% 50% 50%;
+  -ms-border-radius: 50% 50% 50% 50%;
+  -o-border-radius: 50% 50% 50% 50%;
+}
+.staff-container .staff-memebr-card p.memeber-name {
+  font-size: 1.2rem;
+  padding: 0.5rem;
 }
 .staff-container .staff-memebr-card .rating {
-  padding: 1rem 0;
+  font-size: 0.8rem;
+  padding: 0.5rem 0;
+}
+.staff-container .staff-memebr-card .rating .star {
+  margin-right: 0.2rem;
+  color: #c5c5c5;
 }
 .staff-container .staff-memebr-card .rating .checked {
-  color: #ffff00;
+  color: #ffd900;
 }
-.staff-container .each-star {
+.staff-container .staff-memebr-card .each-star {
   margin-right: 0.3rem;
   cursor: pointer;
-}
-.staff-container .each-star:hover {
-  color: #ffff00;
 }/*# sourceMappingURL=main.css.map */

@@ -2,14 +2,14 @@ import { FaStar } from "react-icons/fa"
 import { useState } from 'react'
 
 const colors = {
-    yellow:"#ffff00",
-    gray:"#c5c5c5"
+    yellow: "#a364a5",
+    gray: "#c5c5c5"
 }
 
 
 const Stafflist = () => {
 
-  
+
     const stars = Array(5).fill(0)
     const [currentValue, setCurrentValue] = useState(0)
     const [hoverValue, setHoverValue] = useState(undefined)
@@ -28,43 +28,51 @@ const Stafflist = () => {
     return (
 
         // main flex container
-        <div className="staff-container home-container flex-col falign-center gap-24p">
+        <div className="staff-container home-container flex-col falign-center gap-16p">
             {/* first flex */}
             <div className="staff-list-header flex-col falign-center gap-16p">
                 <span>Our staff members:</span>
-                <p>don't hesitate to rate our staff<br />
+                <p>don't hesitate to rate us,<br />
                     we would love to hear you!</p>
             </div>
 
             {/* second flex */}
-            <div className="staff-members flex-col falign-center gap-24p">
-                <div className="staff-memebr-card flex-col falign-center gap-16">
-                    {/* first mini-flex item */}
-                    <p>Mehmet Kamil</p>
-                    <div className="member-photo-container">
-                        <img src="media/imgs/staff.png" alt="staff-member-photo" />
+            <div className="staff-members flex-col falign-center gap-16p">
+                <div className="staff-memebr-card flex-col falign-center">
+
+                    {/* first item */}
+                    <div className="member-info flex-col falign-center">
+
+                        <div className="member-photo-container">
+                            <img src="media/imgs/staff.png" alt="staff-member-photo" />
+                        </div>
+
+                        <p className="memeber-name">Mehmet Kamil</p>
+
+                        <div className="rating">
+                            <span class="star fa fa-star checked"></span>
+                            <span class="star fa fa-star checked"></span>
+                            <span class="star fa fa-star checked"></span>
+                            <span class="star fa fa-star"></span>
+                            <span class="star fa fa-star"></span>
+                        </div>
+
                     </div>
-                    {/* second mini-flex item */}
-                    {/* <div className="rating">
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                    </div> */}
-                    {/* third mini-flex item */}
-                    <div className="flex-col falign-center">
+
+
+                    {/* second item */}
+                    <div className="flex-col falign-center stars">
                         <h4>Your Rating:</h4>
-                        <div className="stars">
+                        <div>
                             {stars.map((_, index) => {
                                 return (
                                     <FaStar
                                         key={index}
                                         size={24}
                                         className="each-star"
-                                        color ={(hoverValue || currentValue) > index ? colors.yellow : colors.gray}
+                                        color={(hoverValue || currentValue) > index ? colors.yellow : colors.gray}
                                         onClick={() => handleClick(index + 1)}
-                                        onMouseOver={()=> handleMouseOver(index +1)}
+                                        onMouseOver={() => handleMouseOver(index + 1)}
                                         onMouseLeave={handleMouseLeave}
                                     />
 
@@ -75,6 +83,50 @@ const Stafflist = () => {
                 </div>
 
 
+                {/* second card for example */}
+
+                <div className="staff-memebr-card flex-col falign-center">
+
+                    {/* first item */}
+                    <div className="member-info flex-col falign-center">
+
+                        <div className="member-photo-container">
+                            <img src="media/imgs/staff.png" alt="staff-member-photo" />
+                        </div>
+
+                        <p className="memeber-name">Mehmet Kamil</p>
+
+                        <div className="rating">
+                            <span class="star fa fa-star checked"></span>
+                            <span class="star fa fa-star checked"></span>
+                            <span class="star fa fa-star checked"></span>
+                            <span class="star fa fa-star"></span>
+                            <span class="star fa fa-star"></span>
+                        </div>
+
+                    </div>
+
+                    {/* second item */}
+                    <div className="flex-col falign-center stars">
+                        <h4>Your Rating:</h4>
+                        <div>
+                            {stars.map((_, index) => {
+                                return (
+                                    <FaStar
+                                        key={index}
+                                        size={24}
+                                        className="each-star"
+                                        color={(hoverValue || currentValue) > index ? colors.yellow : colors.gray}
+                                        onClick={() => handleClick(index + 1)}
+                                        onMouseOver={() => handleMouseOver(index + 1)}
+                                        onMouseLeave={handleMouseLeave}
+                                    />
+
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
