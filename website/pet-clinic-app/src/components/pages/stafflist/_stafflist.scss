@@ -41,11 +41,18 @@
 
             padding: 1rem 0;
             .checked{
-                color: yellow;
+                color: #ffff00;
             }
         }
     }
   
+    .each-star{
+        margin-right: .3rem;
+        cursor: pointer;
+        &:hover{
+            color:#ffff00
+        }
+    }
 
     
 

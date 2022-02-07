@@ -2775,5 +2775,12 @@ h4 {
   padding: 1rem 0;
 }
 .staff-container .staff-memebr-card .rating .checked {
-  color: yellow;
+  color: #ffff00;
+}
+.staff-container .each-star {
+  margin-right: 0.3rem;
+  cursor: pointer;
+}
+.staff-container .each-star:hover {
+  color: #ffff00;
 }/*# sourceMappingURL=main.css.map */
