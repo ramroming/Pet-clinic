@@ -2749,16 +2749,17 @@ h4 {
 .staff-container .staff-list-header {
   margin: 2rem 0;
   width: 80%;
-  max-width: 350px;
+  max-width: 500px;
   padding: 1rem 0.5rem;
   text-align: center;
   font-size: 1.1rem;
   color: white;
   background-color: var(--clr-shadow-glassy-shadow);
 }
-.staff-container .staff-list-header span {
-  font-size: 1.4rem;
-  color: #fad9f7;
+@media all and (min-width: 48rem) {
+  .staff-container .staff-list-header {
+    font-size: 1.5rem;
+  }
 }
 .staff-container .staff-member-card {
   background-color: var(--clr-shadow-gray-shadow);
