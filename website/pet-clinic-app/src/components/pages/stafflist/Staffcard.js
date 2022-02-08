@@ -9,7 +9,7 @@ const colors = {
 
 
 
-const Staffcard = () => {
+const Staffcard = (props) => {
 
 
     const stars = Array(5).fill(0)
@@ -37,14 +37,25 @@ const Staffcard = () => {
                     <img src="media/imgs/staff.png" alt="staff-member-photo" />
                 </div>
 
-                <p className="member-name">Mehmet Kamil</p>
+                <p className="member-name">{props.name}</p>
 
                 <div className="rating">
-                    <span class="star fa fa-star checked"></span>
-                    <span class="star fa fa-star checked"></span>
-                    <span class="star fa fa-star checked"></span>
-                    <span class="star fa fa-star"></span>
-                    <span class="star fa fa-star"></span>
+                    <span className=
+                        {`star fa fa-star ${props.rating >= 1 ? 'checked' : ''}`}>
+                    </span>
+                    <span className=
+                        {`star fa fa-star ${props.rating >= 2 ? 'checked' : ''}`}>
+
+                    </span>
+                    <span className=
+                        {`star fa fa-star ${props.rating >= 3 ? 'checked' : ''}`}>
+                    </span>
+                    <span className=
+                        {`star fa fa-star ${props.rating >= 4 ? 'checked' : ''}`}>
+                    </span>
+                    <span className=
+                        {`star fa fa-star ${props.rating >= 5 ? 'checked' : ''}`}>
+                    </span>
                 </div>
 
             </div>
@@ -73,7 +84,7 @@ const Staffcard = () => {
             </div>
         </div>
 
-        
+
 
     )
 
