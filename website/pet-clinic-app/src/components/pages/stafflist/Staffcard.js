@@ -2,6 +2,7 @@
 import { FaStar } from "react-icons/fa"
 import { useState } from 'react'
 
+
 const colors = {
     yellow: "#a364a5",
     gray: "#c5c5c5"
@@ -9,7 +10,7 @@ const colors = {
 
 
 
-const Staffcard = () => {
+const Staffcard = (props) => {
 
 
     const stars = Array(5).fill(0)
@@ -28,52 +29,63 @@ const Staffcard = () => {
         setHoverValue(undefined)
     }
     return (
-        <div className="staff-member-card flex-col falign-center">
+            <div className="staff-member-card flex-col falign-center">
 
-            {/* first item */}
-            <div className="member-info flex-col falign-center">
+                {/* first item */}
+                <div className="member-info flex-col falign-center">
 
-                <div className="member-photo-container">
-                    <img src="media/imgs/staff.png" alt="staff-member-photo" />
+                    <div className="member-photo-container">
+                        <img src="media/imgs/staff.png" alt="staff-member-photo" />
+                    </div>
+
+                    <p className="member-name">{props.name}</p>
+
+                    <div className="rating">
+                        <span className=
+                            {`star fa fa-star ${props.rating >= 1 ? 'checked' : ''}`}>
+                        </span>
+                        <span className=
+                            {`star fa fa-star ${props.rating >= 2 ? 'checked' : ''}`}>
+
+                        </span>
+                        <span className=
+                            {`star fa fa-star ${props.rating >= 3 ? 'checked' : ''}`}>
+                        </span>
+                        <span className=
+                            {`star fa fa-star ${props.rating >= 4 ? 'checked' : ''}`}>
+                        </span>
+                        <span className=
+                            {`star fa fa-star ${props.rating >= 5 ? 'checked' : ''}`}>
+                        </span>
+                    </div>
+
                 </div>
 
-                <p className="member-name">Mehmet Kamil</p>
 
-                <div className="rating">
-                    <span class="star fa fa-star checked"></span>
-                    <span class="star fa fa-star checked"></span>
-                    <span class="star fa fa-star checked"></span>
-                    <span class="star fa fa-star"></span>
-                    <span class="star fa fa-star"></span>
+                {/* second item */}
+                <div className="flex-col falign-center stars">
+                    <h4>Your Rating:</h4>
+                    <div>
+                        {stars.map((_, index) => {
+                            return (
+                                <FaStar
+                                    key={index}
+                                    size={24}
+                                    className="each-star"
+                                    color={(hoverValue || currentValue) > index ? colors.yellow : colors.gray}
+                                    onClick={() => handleClick(index + 1)}
+                                    onMouseOver={() => handleMouseOver(index + 1)}
+                                    onMouseLeave={handleMouseLeave}
+                                />
+
+                            )
+                        })}
+                    </div>
+
                 </div>
-
             </div>
-
-
-            {/* second item */}
-            <div className="flex-col falign-center stars">
-                <h4>Your Rating:</h4>
-                <div>
-                    {stars.map((_, index) => {
-                        return (
-                            <FaStar
-                                key={index}
-                                size={24}
-                                className="each-star"
-                                color={(hoverValue || currentValue) > index ? colors.yellow : colors.gray}
-                                onClick={() => handleClick(index + 1)}
-                                onMouseOver={() => handleMouseOver(index + 1)}
-                                onMouseLeave={handleMouseLeave}
-                            />
-
-                        )
-                    })}
-                </div>
-
-            </div>
-        </div>
-
         
+
 
     )
 
