@@ -1,10 +1,13 @@
 const express = require('express')
 const { 
   signup,
-  readUsers,
-  readUserById,
-  login 
+  myProfile,
+  login,
+  logout,
+  logoutAll,
 } = require('../controllers/UserController')
+const auth = require('../middleware/auth')
+
 const usersRouter = new express.Router()
 
 // create a new user endpoint
@@ -12,10 +15,14 @@ usersRouter.post('/users', signup)
 
 usersRouter.post('/users/login', login)
 
-// read all users data with personal info endpoint
-usersRouter.get('/users', readUsers)
 
-// get  users data and personal data by id endpoint
-usersRouter.get('/users/:id', readUserById)
+// get my profile data
+usersRouter.get('/users/me', auth, myProfile)
+
+// logout user
+usersRouter.get('/users/logout', auth, logout)
+
+// logout from all devices
+usersRouter.get('/users/logoutall', auth, logoutAll)
 
 module.exports = usersRouter

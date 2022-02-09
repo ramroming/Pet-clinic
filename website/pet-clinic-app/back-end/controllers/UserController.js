@@ -2,10 +2,10 @@ const bcrypt = require('bcrypt')
 const mysql = require('mysql2/promise')
 const connData = require('../database/pet-clinic-db')
 const myValidator = require('../utils/dataValidator')
-const { findUserByCredentials } = require('../utils/operationValidator')
+const { findUserByCredentials, generateAuthToken } = require('../utils/authOperations')
 
 const signup = async (req, res) => {
-  const { first_name, last_name, address, phone_number, user_name, email, password, user_type, stmem_type } = req.body
+  const { first_name, last_name, address, phone_number, username, email, password, user_type, stmem_type } = req.body
 
 
 
@@ -45,12 +45,13 @@ const signup = async (req, res) => {
 
 
       // inserting data into personal_info table
-      const [user1, fields1] = await conn.execute('INSERT INTO personal_info (first_name, last_name, address, phone_number) VALUES (?, ?, ?, ?)', [
+      const [personal_info, fields1] = await conn.execute('INSERT INTO personal_info (first_name, last_name, address, phone_number) VALUES (?, ?, ?, ?)', [
         first_name ? first_name : null,
         last_name ? last_name : null,
         address ? address : null,
         phone_number ? phone_number : null])
-      personalInfoId = user1.insertId
+      personalInfoId = personal_info.insertId
+
       // inserting photo should be done here
 
 
@@ -59,18 +60,37 @@ const signup = async (req, res) => {
 
 
       // inserting data into users table all clients by default
-      const [user2, fields2] = await conn.execute('INSERT INTO users (username, email, password, user_type, stmem_type, personal_info_id) VALUES (?, ?, ?, ?, ?, ?)', [
-        user_name ? user_name : null,
+      const [user, fields2] = await conn.execute('INSERT INTO users (username, email, password, user_type, stmem_type, personal_info_id) VALUES (?, ?, ?, ?, ?, ?)', [
+        username ? username : null,
         email ? email : null,
         password ? hashedPassword : null,
         user_type ? user_type : 'client',
         stmem_type ? stmem_type : null,
-        user1.insertId
+        personalInfoId
       ])
-      userID = user2.insertId
+      userID = user.insertId
 
       await conn.end()
-      res.status(201).send()
+
+      // creating the JWT 
+      const token = await generateAuthToken(userID)
+
+      // if storing token to the database failed
+      if (!token) {
+        return res.status(500).send({ error: 'Couldnt save token to the database' })
+      }
+
+      // data to send back when signup
+      const userData = {
+        id: userID,
+        username: username ? username : null,
+        email: email ? email : null,
+        user_type: user_type ? user_type : 'client',
+        stmem_type: stmem_type ? stmem_type : null,
+        personal_info_id: personalInfoId
+      }
+
+      res.status(201).send({ token, userData })
     } catch (e) {
       // incase of an error empty remove any inserted rows
       if (personalInfoId) {
@@ -98,7 +118,12 @@ const login = async (req, res) => {
 
     try {
       const user = await findUserByCredentials(conn, req.body.username, req.body.password)
-      res.status(200).send(user)
+      const token = await generateAuthToken(user.id)
+      // if saving token to database failed
+      if (!token) {
+        return res.status(500).send({error: 'couldnt save token to database' })
+      }
+      res.status(200).send({ user, token})
     } catch (e) {
       await conn.end()
       res.status(400).send(e.message)
@@ -111,54 +136,46 @@ const login = async (req, res) => {
   }
 }
 
-const readUsers = async (req, res) => {
-  try {
-    const conn = await mysql.createConnection(connData)
 
-    const [users, fields] = await conn.execute('SELECT * FROM users INNER JOIN personal_info ON users.personal_info_id = personal_info.id')
-
-    if (!users) {
-      await conn.end()
-      return res.status(404).send()
-    }
-
-    await conn.end()
-    res.status(200).send(users)
-
-  } catch (e) {
-    await conn.end()
-    res.status(500).send({ error: e.message })
-  }
-
+// read user's profile
+const myProfile = async (req, res) => {
+  res.send(req.user)
 }
 
-const readUserById = async (req, res) => {
-  const userId = req.params.id
+// logout user
+const logout = async (req, res) => {
   try {
     const conn = await mysql.createConnection(connData)
-
-    const [users, fields] = await conn.execute('SELECT * FROM users INNER JOIN personal_info ON users.personal_info_id=personal_info.id WHERE users.id=?', [userId])
-
-    if (!users.length) {
-      await conn.end()
-      return res.status(404).send({ error: 'User not found!!' })
-    }
+    await conn.execute('DELETE FROM user_tokens WHERE token = ? AND user_id = ?', [req.token, req.user.id])
     await conn.end()
-    res.status(200).send(users[0])
-
+    res.status(200).send()
+    // if the connection to database failed
   } catch (e) {
     await conn.end()
-    res.status(500).send({ error: e.message })
+    res.status(500).send({error: 'failed to connect to database'})
   }
 }
 
+// logout from all devices
+const logoutAll = async (req, res) => {
+  try {
+    const conn = await mysql.createConnection(connData)
+    await conn.execute('DELETE FROM user_tokens WHERE user_id = ?', [req.user.id])
+    await conn.end()
+    res.status(200).send()
 
+  } catch (e) {
+    await conn.end()
+    res.status(500).send( {error: 'db error while clearing the tokens table' } )
+  }
+}
 
 
 
 module.exports = {
   signup,
-  readUsers,
-  readUserById,
-  login
+  myProfile,
+  login,
+  logout,
+  logoutAll,
 }
