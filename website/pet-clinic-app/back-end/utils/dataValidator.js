@@ -14,6 +14,8 @@ const myValidator = {
     return validator.isEmail(email)
   },
   isGoodPassword(password) {
+    if (!password)
+      return true
     return validator.isStrongPassword(password)
   }
 }

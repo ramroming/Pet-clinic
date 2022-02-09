@@ -17,4 +17,6 @@ app.use(express.json())
 // Using the Routers
 app.use(usersRouter)
 
-app.listen(PORT)
+app.listen(PORT, () => {
+  console.log('Connected successfully to PORT ', PORT)
+})
