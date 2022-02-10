@@ -2,10 +2,10 @@
 const express = require('express')
 
 // requiring the connection
-const conn = require('./database/pet-clinic-db')
+const conn = require('./src/database/pet-clinic-db')
 
 // requiring the routers
-const usersRouter = require('./endpoints/users')
+const usersRouter = require('./src/endpoints/users')
 
 const app = express()
 
