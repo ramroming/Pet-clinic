@@ -35,7 +35,7 @@ const Staffcard = (props) => {
                 <div className="member-info flex-col falign-center">
 
                     <div className="member-photo-container">
-                        <img src="media/imgs/staff.png" alt="staff-member-photo" />
+                        <img src="media/imgs/staff.png" alt="staff-member" />
                     </div>
 
                     <p className="member-name">{props.name}</p>

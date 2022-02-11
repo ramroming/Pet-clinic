@@ -17,7 +17,24 @@ const myValidator = {
     if (!password)
       return true
     return validator.isStrongPassword(password)
+  },
+  isLongPassword(password) {
+    return password.length > 128
+  },
+  isLongUsername(username) {
+    return username.length > 20
+  },
+  isLongFirstName(firstName) {
+    return firstName.length > 20
+  },
+  isLongLastName(lastName) {
+    return lastName.length > 20
+  },
+  isLongAddress(address) {
+    return address.length > 200
   }
+
+
 }
 
 module.exports = myValidator

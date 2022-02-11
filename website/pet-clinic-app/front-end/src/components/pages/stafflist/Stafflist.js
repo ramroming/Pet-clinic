@@ -2,15 +2,8 @@ import Staffcard from "./Staffcard";
 import { useState, useEffect } from "react";
 
 
-//Import Animation objects
-import { item } from "./Fading"
 
-//Import motion for defining entering motion, and AnimatePresence to define exit animation
-import { motion } from "framer-motion"
 
-// Assign the imported object to local object sliderMotion
-
-const itemMotion = item
 
 const serverFetch = () => {
 

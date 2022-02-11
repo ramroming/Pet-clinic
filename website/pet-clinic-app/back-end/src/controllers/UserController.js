@@ -16,34 +16,11 @@ const signup = async (req, res) => {
 
   try {
 
+    
     // establishing the connection
     const conn = await mysql.createConnection(connData)
 
     try {
-
-      // validating data
-      if (!myValidator.isValidEmail(email))
-        throw new Error('invalid Email Address!!')
-
-      if (phone_number) {
-        if (!myValidator.isPhoneNumber(phone_number))
-          throw new Error('invalid Phone Number!!')
-      }
-
-      if (user_type) {
-        if (!myValidator.isUserType(user_type))
-          throw new Error('invalid User Type!!')
-      }
-
-      if (stmem_type) {
-        if (!myValidator.isStmemType(stmem_type))
-          throw new Error('invalid Staff Memeber type!!')
-      }
-
-      if (!myValidator.isGoodPassword(password))
-        throw new Error('Weak Password!!')
-
-
       // inserting data into personal_info table
       const [personal_info, fields1] = await conn.execute('INSERT INTO personal_info (first_name, last_name, address, phone_number) VALUES (?, ?, ?, ?)', [
         first_name ? first_name : null,

@@ -115,3 +115,12 @@
 
 
 }
+
+.disabled {
+  cursor: default !important;
+  color: rgb(145, 141, 141);
+  background-color: rgb(163, 157, 157) !important;
+  transition: none !important;
+  opacity: 1 !important;
+
+}

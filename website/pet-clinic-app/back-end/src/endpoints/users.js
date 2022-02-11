@@ -7,13 +7,14 @@ const {
   logoutAll,
 } = require('../controllers/UserController')
 const auth = require('../middleware/auth')
+const validationMiddleware = require('../middleware/validationMiddleware')
 
 const usersRouter = new express.Router()
 
 // create a new user endpoint
-usersRouter.post('/users', signup)
+usersRouter.post('/users', validationMiddleware.signup, signup)
 
-usersRouter.post('/users/login', login)
+usersRouter.post('/users/login', validationMiddleware.login, login)
 
 
 // get my profile data
