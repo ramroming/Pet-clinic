@@ -1,0 +1,42 @@
+@use "../../abstracts/" as *;
+
+.error-msg {
+  width: fit-content;
+  max-width: 300px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: rgb(255, 255, 255);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  border: var(--clr-primary-mainPurple) solid 1px;
+  z-index: 1;
+  left: 1%;
+  top: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+  @include break-point("medium", "up") {
+    top: 0;
+    left: 102%;
+    position: absolute;
+    margin: 0;
+  }
+}
+
+.error-msg::after {
+  content: "";
+
+  @include break-point("medium", "up") {
+    position: absolute;
+    bottom: 100%; /* At the top of the tooltip */
+    left: 10%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+    top: 50%;
+    left: -5px;
+    margin-top: -5px;
+    border-width: 5px;
+    border-color: transparent black transparent transparent;
+  }
+}

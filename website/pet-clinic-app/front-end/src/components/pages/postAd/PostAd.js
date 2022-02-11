@@ -32,7 +32,6 @@ const PostAd = () => {
     pets: []
   })
 
-  const [editToggler, setEditToggler] = useState(-1)
 
 
   useEffect(() => {

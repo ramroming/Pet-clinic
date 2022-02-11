@@ -13,6 +13,7 @@
 @use "layout/footer/footer";
 @use "utils/containers";
 @use 'utils/datepicker/datepicker';
+@use 'utils/formErrorMsg/inputError';
 @use "pages/signup/signup";
 @use "pages/login/login";
 @use "pages/registerpet/registerpet";

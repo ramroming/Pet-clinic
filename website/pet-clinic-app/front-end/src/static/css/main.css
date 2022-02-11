@@ -627,6 +627,7 @@ h1 {
 .input-wrapper {
   width: 80%;
   margin: auto;
+  position: relative;
 }
 .input-wrapper input[type=text],
 .input-wrapper input[type=number],
@@ -1103,6 +1104,53 @@ body {
 .react-datepicker__year-text--in-selecting-range,
 .react-datepicker__year-text--in-range {
   background-color: var(--clr-primary-mainPurple) !important;
+}
+
+.error-msg {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 300px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  border: var(--clr-primary-mainPurple) solid 1px;
+  z-index: 1;
+  left: 1%;
+  top: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}
+@media all and (min-width: 48rem) {
+  .error-msg {
+    top: 0;
+    left: 102%;
+    position: absolute;
+    margin: 0;
+  }
+}
+
+.error-msg::after {
+  content: "";
+}
+@media all and (min-width: 48rem) {
+  .error-msg::after {
+    position: absolute;
+    bottom: 100%;
+    /* At the top of the tooltip */
+    left: 10%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+    top: 50%;
+    left: -5px;
+    margin-top: -5px;
+    border-width: 5px;
+    border-color: transparent black transparent transparent;
+  }
 }
 
 .split-screen-signup {
