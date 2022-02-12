@@ -1,5 +1,4 @@
 import DeletePostModal from "./DeletePostModal"
-import EditPostStatusModal from "./EditPostStatusModal"
 import { useState } from 'react'
 
 const MyAdoptionPosts = () => {
@@ -49,13 +48,13 @@ const MyAdoptionPosts = () => {
                 </div>
 
                 {/* fifth column */}
-                <div className="flex-col fgap-16p">
+                {/* <div className="flex-col fgap-16p">
                     <p className="table-header">Status</p>
                     <EditPostStatusModal />
                     <a className="margin-bottom status-modal" href="/#">Active <i className="fa-regular fa-pen-to-square"></i></a>
                     <a className="margin-bottom status-modal" href="/#">Closed <i className="fa-regular fa-pen-to-square"></i></a>
                     <a className="margin-bottom status-modal" href="/#">Closed <i className="fa-regular fa-pen-to-square"></i></a>
-                </div>
+                </div> */}
 
 
 

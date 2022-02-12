@@ -1,7 +1,17 @@
 
+import DeletePostModal from "../myadoptionposts/DeletePostModal"
+import { useState } from 'react'
 
 const MyAdoptionPosts = () => {
+
+    const [openModal, setOpenModal] = useState(false)
+
     return (
+
+        <>
+        <div className="flex-col falign-center fjust-center ">
+        {openModal && <DeletePostModal closeModal={setOpenModal} />}
+        </div>
         <div className="my-great-table falign-center fjust-center flex-row fgap-16p">
             {/* first column */}
             <div className="flex-col fgap-16p ">
@@ -30,7 +40,9 @@ const MyAdoptionPosts = () => {
              {/* fourth column */}
              <div className="flex-col fgap-16p ">
                 <p className="table-header">Delete</p>
-                <a className="margin-bottom" href="/#"><i className="fa-regular fa-trash-can"></i></a>
+                <a className="margin-bottom" 
+                onClick={() => { setOpenModal(true) }}
+                ><i className="fa-regular fa-trash-can"></i></a>
                 <a className="margin-bottom" href="/#"><i className="fa-regular fa-trash-can"></i></a>
                 <a className="margin-bottom" href="/#"><i className="fa-regular fa-trash-can"></i></a>
             </div>
@@ -46,6 +58,8 @@ const MyAdoptionPosts = () => {
 
 
         </div>
+        </>
+        
     )
 }
 

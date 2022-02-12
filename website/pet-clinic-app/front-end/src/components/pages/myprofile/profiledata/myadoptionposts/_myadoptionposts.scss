@@ -41,7 +41,7 @@
     text-align: center;
     width: 310px;
     height: 120px;
-
+    box-shadow: 5px 10px 10px rgb(131, 131, 131);
     @include break-point('medium', 'up'){
         width: 400px;
         height:120px;

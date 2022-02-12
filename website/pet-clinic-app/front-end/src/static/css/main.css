@@ -2907,6 +2907,7 @@ h4 {
   text-align: center;
   width: 310px;
   height: 120px;
+  box-shadow: 5px 10px 10px #838383;
 }
 @media all and (min-width: 48rem) {
   .modal-background {
