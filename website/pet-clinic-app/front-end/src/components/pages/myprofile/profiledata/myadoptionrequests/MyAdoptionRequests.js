@@ -1,10 +1,12 @@
 
 import DeletePostModal from "../myadoptionposts/DeletePostModal"
 import { useState } from 'react'
+import EditAdoptionStatus from "./EditAdoptionStatus"
 
 const MyAdoptionPosts = () => {
 
     const [openModal, setOpenModal] = useState(false)
+    const [openStatusModal, setOpenStatusModal] = useState(false)
 
     return (
 
@@ -12,6 +14,11 @@ const MyAdoptionPosts = () => {
         <div className="flex-col falign-center fjust-center ">
         {openModal && <DeletePostModal closeModal={setOpenModal} />}
         </div>
+
+        <div className="flex-col falign-center fjust-center ">
+        {openStatusModal && <EditAdoptionStatus closeModal={setOpenStatusModal} />}
+        </div>
+
         <div className="my-great-table falign-center fjust-center flex-row fgap-16p">
             {/* first column */}
             <div className="flex-col fgap-16p ">
@@ -50,7 +57,8 @@ const MyAdoptionPosts = () => {
              {/* fifth column */}
              <div className="flex-col fgap-16p">
                 <p className="table-header">Status</p>
-                <a className="margin-bottom" href="/#">Accepted <i className="fa-regular fa-pen-to-square"></i></a>
+                <a className="margin-bottom" 
+                onClick={() => {setOpenStatusModal(true)}}>Accepted <i className="fa-regular fa-pen-to-square"></i></a>
                 <a className="margin-bottom" href="/#">Rejected <i className="fa-regular fa-pen-to-square"></i></a>
                 <a className="margin-bottom" href="/#">in-review <i className="fa-regular fa-pen-to-square"></i></a>
             </div>
