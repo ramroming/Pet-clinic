@@ -32,3 +32,49 @@
 .margin-bottom{
     margin-bottom: .5rem;
 }
+
+
+// for the modal
+.modal-background{
+    background-color: var(--clr-shadow-glassy-shadow);
+    position: relative;
+    text-align: center;
+    width: 310px;
+    height: 120px;
+
+    @include break-point('medium', 'up'){
+        width: 400px;
+        height:120px;
+    }
+
+}
+
+.modal-container{
+
+
+    .btn-rec-purple{
+        padding: .5rem;
+        width: 100px;
+        margin-right: 1rem;
+    }
+
+    .x-close{
+        position: absolute;
+        top:5px;
+        left: 5px;
+        text-align: left;
+        font-size: .5rem;
+        @include break-point("medium", "up") {
+            top:5px;
+            left: 10px;
+            font-size: 1rem;
+        }
+        
+    }
+}
+
+.modal-title{
+    padding: 1rem;
+    font-size: 1.1rem;
+}
+

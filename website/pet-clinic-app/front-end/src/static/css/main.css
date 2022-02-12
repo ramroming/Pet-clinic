@@ -2899,4 +2899,43 @@ h4 {
 
 .margin-bottom {
   margin-bottom: 0.5rem;
+}
+
+.modal-background {
+  background-color: var(--clr-shadow-glassy-shadow);
+  position: relative;
+  text-align: center;
+  width: 310px;
+  height: 120px;
+}
+@media all and (min-width: 48rem) {
+  .modal-background {
+    width: 400px;
+    height: 120px;
+  }
+}
+
+.modal-container .btn-rec-purple {
+  padding: 0.5rem;
+  width: 100px;
+  margin-right: 1rem;
+}
+.modal-container .x-close {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  text-align: left;
+  font-size: 0.5rem;
+}
+@media all and (min-width: 48rem) {
+  .modal-container .x-close {
+    top: 5px;
+    left: 10px;
+    font-size: 1rem;
+  }
+}
+
+.modal-title {
+  padding: 1rem;
+  font-size: 1.1rem;
 }/*# sourceMappingURL=main.css.map */
