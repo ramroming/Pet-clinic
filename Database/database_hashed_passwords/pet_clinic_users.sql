@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: pet_clinic
 -- ------------------------------------------------------
--- Server version	8.0.27
+-- Server version	8.0.28
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,10 +32,12 @@ CREATE TABLE `users` (
   `status` tinyint(1) DEFAULT NULL,
   `stmem_type` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`),
   KEY `USERS_fk0` (`personal_info_id`),
   CONSTRAINT `USERS_fk0` FOREIGN KEY (`personal_info_id`) REFERENCES `personal_info` (`id`) ON DELETE CASCADE,
   CONSTRAINT `users_subtypes` CHECK ((((`user_type` = _utf8mb4'client') and (`stmem_type` is null)) or ((`user_type` = _utf8mb4'stmem') and (`stmem_type` is not null))))
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +46,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (2,'rami94','ramisaad@gmail.com','eefi123','client',1,1,NULL),(3,'reem98','reemhalbouni@hotmail.com','33fffi38vvj','stmem',2,1,'vet'),(4,'ilhamiMorak','ilhamiMorak@gmail.com','eei324jjei','client',3,1,NULL),(5,'bashobesh','bashar@outlook.com','3iffj3i1i','stmem',4,1,'trainer'),(6,'wisomiso','wisam@hotmail.com','riirgrii32i','stmem',5,1,'groomer'),(7,'kylo','kyle@hotmail.com','1298kui','client',6,1,NULL),(8,'marie','marie@halima.com','mmtre4','stmem',7,1,'groomer'),(9,'moso','mos@gmail.com','mm29981','stmem',8,1,'vet');
+INSERT INTO `users` VALUES (2,'rami94','ramisaad@gmail.com','$2a$08$YaLBerT.4aYt4xCBpYNY9uoMKmHTzi/ekzn3J33QKsdmDN8bhbeyC','client',1,1,NULL),(3,'reem98','reemhalbouni@hotmail.com','$2a$08$0TO/pBvRCjHud6YH4jwx.uiuj2Q13KQI1EwqkpJONCBe5zuFf.cfS','stmem',2,1,'vet'),(4,'ilhamiMorak','ilhamiMorak@gmail.com','$2a$08$SLa9cToW17Ra/9MdipJKaeAuKktqJ7PAhZlAIQs/P/CCV/cMWjsyu','client',3,1,NULL),(5,'bashobesh','bashar@outlook.com','$2a$08$mmEAlAHblh782QQTYVspnOeh22bR5X2M328lQFnG6EHKPCHj5PxVK','stmem',4,1,'trainer'),(6,'wisomiso','wisam@hotmail.com','$2a$08$yyAy0dBCaIwU1TaFBxaNTOKJZp07a4VS.xEQzmMVLGlmp4cwC/4Xa','stmem',5,1,'groomer'),(7,'kylo','kyle@hotmail.com','$2a$08$UXhoT4tFfbjZiddpHn7cNuza1vaEOr95RJAchUTJXKMNYK48n7Cq.','client',6,1,NULL),(8,'marie','marie@halima.com','$2a$08$lDvMe0LyBdQMQ2RGJv2YfOja.ZSB0QDijZaVnTAWsjaqVTyn3kUA2','stmem',7,1,'groomer'),(9,'moso','mos@gmail.com','$2a$08$ttaBmhGT0YBzgqiFK00QLuip9hoXF5z6GZDDfNF63gDAsjtaw0FYS','stmem',8,1,'vet');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-07 13:02:30
+-- Dump completed on 2022-02-15 22:48:48

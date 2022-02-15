@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: pet_clinic
 -- ------------------------------------------------------
--- Server version	8.0.27
+-- Server version	8.0.28
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,30 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `color_records`
+-- Table structure for table `colors`
 --
 
-DROP TABLE IF EXISTS `color_records`;
+DROP TABLE IF EXISTS `colors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `color_records` (
-  `pet_id` int NOT NULL,
-  `color_id` int NOT NULL,
-  PRIMARY KEY (`pet_id`,`color_id`),
-  KEY `COLOR_RECORDS_fk1` (`color_id`),
-  CONSTRAINT `COLOR_RECORDS_fk0` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`),
-  CONSTRAINT `COLOR_RECORDS_fk1` FOREIGN KEY (`color_id`) REFERENCES `colors` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `colors` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `color_records`
+-- Dumping data for table `colors`
 --
 
-LOCK TABLES `color_records` WRITE;
-/*!40000 ALTER TABLE `color_records` DISABLE KEYS */;
-INSERT INTO `color_records` VALUES (1,1),(1,2),(2,3),(3,5);
-/*!40000 ALTER TABLE `color_records` ENABLE KEYS */;
+LOCK TABLES `colors` WRITE;
+/*!40000 ALTER TABLE `colors` DISABLE KEYS */;
+INSERT INTO `colors` VALUES (1,'red'),(2,'blue'),(3,'green'),(4,'yellow'),(5,'black'),(6,'white'),(7,'grey'),(8,'brown'),(9,'orange'),(10,'purple'),(11,'pink'),(12,'beige'),(13,'silver'),(14,'golden');
+/*!40000 ALTER TABLE `colors` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-07 13:02:31
+-- Dump completed on 2022-02-15 22:48:49

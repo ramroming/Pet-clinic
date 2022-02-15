@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: pet_clinic
 -- ------------------------------------------------------
--- Server version	8.0.27
+-- Server version	8.0.28
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,31 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `personal_info`
+-- Table structure for table `user_tokens`
 --
 
-DROP TABLE IF EXISTS `personal_info`;
+DROP TABLE IF EXISTS `user_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `personal_info` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(150) NOT NULL,
-  `last_name` varchar(150) NOT NULL,
-  `address` varchar(150) NOT NULL,
-  `phone_number` varchar(150) DEFAULT NULL,
-  `photo` mediumblob,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `user_tokens` (
+  `token` varchar(700) NOT NULL,
+  `user_id` int NOT NULL,
+  UNIQUE KEY `token` (`token`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `personal_info`
+-- Dumping data for table `user_tokens`
 --
 
-LOCK TABLES `personal_info` WRITE;
-/*!40000 ALTER TABLE `personal_info` DISABLE KEYS */;
-INSERT INTO `personal_info` VALUES (1,'rami','saad al deen','karabuk ','23423433',NULL),(2,'reem','alhalbouni','karabuk','3244432',NULL),(3,'Ilhami ','M.Orak','karabuk','1233212',NULL),(4,'bashar','alhalbouni','karabuk','3833299',NULL),(5,'wisam','saad al deen','karabuk','38289329',NULL),(6,'kyle','Milo','karabuk','19382374',NULL),(7,'Maria','Halimah','karabuk','1239872',NULL),(8,'Mostafa','Mehmet','karabuk','1298652',NULL);
-/*!40000 ALTER TABLE `personal_info` ENABLE KEYS */;
+LOCK TABLES `user_tokens` WRITE;
+/*!40000 ALTER TABLE `user_tokens` DISABLE KEYS */;
+INSERT INTO `user_tokens` VALUES ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjo4LCJpYXQiOjE2NDQ5NTQzMzMsImV4cCI6MTY0NTU1OTEzM30.xIhFlWH2_jYXT7iF0yNg9-zrdqbqtNFLIPd6AoKj5q0',8),('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjo5LCJpYXQiOjE2NDQ5NTQ0MDQsImV4cCI6MTY0NTU1OTIwNH0.D_S_QgTExXEDrMOqKbivNZQ3FIxYVBIHTs13SVCqYrY',9);
+/*!40000 ALTER TABLE `user_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-07 13:02:31
+-- Dump completed on 2022-02-15 22:48:49

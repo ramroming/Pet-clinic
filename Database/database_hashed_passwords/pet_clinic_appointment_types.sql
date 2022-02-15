@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: pet_clinic
 -- ------------------------------------------------------
--- Server version	8.0.27
+-- Server version	8.0.28
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,27 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `colors`
+-- Table structure for table `appointment_types`
 --
 
-DROP TABLE IF EXISTS `colors`;
+DROP TABLE IF EXISTS `appointment_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `colors` (
+CREATE TABLE `appointment_types` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(150) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `colors`
+-- Dumping data for table `appointment_types`
 --
 
-LOCK TABLES `colors` WRITE;
-/*!40000 ALTER TABLE `colors` DISABLE KEYS */;
-INSERT INTO `colors` VALUES (1,'red'),(2,'blue'),(3,'green'),(4,'yellow'),(5,'black'),(6,'white'),(7,'grey'),(8,'brown'),(9,'orange'),(10,'purple'),(11,'pink'),(12,'beige'),(13,'silver'),(14,'golden');
-/*!40000 ALTER TABLE `colors` ENABLE KEYS */;
+LOCK TABLES `appointment_types` WRITE;
+/*!40000 ALTER TABLE `appointment_types` DISABLE KEYS */;
+INSERT INTO `appointment_types` VALUES (1,'Examination'),(2,'Training'),(3,'Grooming'),(4,'Adoption');
+/*!40000 ALTER TABLE `appointment_types` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-07 13:02:30
+-- Dump completed on 2022-02-15 22:48:48

@@ -1,345 +1,91 @@
-import { useEffect, useReducer } from "react"
-import validator from 'validator'
+import { useEffect } from "react"
 import InputError from "../../utils/formErrorMsg/InputError"
-
-const signupReducer = (state, action) => {
-  switch (action.type) {
-    case 'enterValue': {
-      return {
-        ...state,
-        [action.field]: {
-          ...state[action.field],
-          value: action.value
-        }
-      }
-    }
-    // when focus on phone input is out
-    case 'blurPhone': {
-      const isPhone = validator.isMobilePhone(state.phone_number.value)
-      if (!state.phone_number.value || isPhone) {
-        return {
-          ...state,
-          phone_number: {
-            ...state.phone_number,
-            errorMsg: ''
-          }
-        }
-      }
-      if (!isPhone) {
-        return {
-          ...state,
-          phone_number: {
-            ...state.phone_number,
-            errorMsg: 'Invalid Phone number'
-          }
-        }
-      }
-      break;
+import useFetch from "../../utils/hooks/fetch-hook"
+import useForm from "../../utils/hooks/form-hook"
+import {
+  useWhatChanged,
+} from '@simbathesailor/use-what-changed';
 
 
-    }
-    // when focus on email input is out
-    case 'blurEmail': {
-      const isEmail = validator.isEmail(state.email.value)
-      if (!state.email.value || isEmail) {
-        return {
-          ...state,
-          email: {
-            ...state.email,
-            errorMsg: ''
-          }
-        }
-      }
-      if (!isEmail) {
-        return {
-          ...state,
-          email: {
-            ...state.email,
-            errorMsg: 'Invalid Email Address'
-          }
-
-        }
-      }
-      break;
-
-    }
-    case 'blurPassword': {
-
-      // empty password field
-      if (!state.password.value)
-        return {
-          ...state,
-          password: {
-            ...state.password,
-            errorMsg: ''
-          }
-        }
-      const isStrong = validator.isStrongPassword(state.password.value)
-
-      // strong password
-      if (isStrong) {
-
-        // strong but empty re_password
-        if (!state.re_password.value)
-          return {
-            ...state,
-            password: {
-              ...state.password,
-              errorMsg: ''
-            },
-            re_password: {
-              ...state.re_password,
-              errorMsg: ''
-            }
-          }
-
-        // strong but dosen't match repassword
-        if (state.password.value !== state.re_password.value)
-          return {
-            ...state,
-            password: {
-              ...state.password,
-              errorMsg: ''
-            },
-            re_password: {
-              ...state.re_password,
-              errorMsg: 'password not matched!!'
-            }
-          }
-
-        // strong and match
-        return {
-          ...state,
-          password: {
-            ...state.password,
-            errorMsg: ''
-          },
-          re_password: {
-            ...state.re_password,
-            errorMsg: ''
-          }
-        }
-      }
-
-      // weak and empty repassword
-      if (!state.re_password.value) 
-        return {
-          ...state,
-          password: {
-            ...state.password,
-            errorMsg: 'minlength:8, must include uppercase, numbers and special chars'
-          },
-          re_password: {
-            ...state.re_password,
-            errorMsg: ''
-          }
-        }
-      // weak and no match
-      if (state.password.value !== state.re_password.value)
-          return {
-            ...state,
-            password: {
-              ...state.password,
-              errorMsg: 'minlength:8, must include uppercase, numbers and special chars'
-            },
-            re_password: {
-              ...state.re_password,
-              errorMsg: 'password not matched!!'
-            }
-          }
-      // weak and match
-      return {
-        ...state,
-        password: {
-          ...state.password,
-          errorMsg: 'minlength:8, must include uppercase, numbers and special chars'
-        },
-        re_password: {
-          ...state.re_password,
-          errorMsg: ''
-        }
-      } 
-    }
-    case 'blurRePassword': {
-      const isMatch = state.password.value === state.re_password.value
-      if (!state.re_password.value)
-        return {
-          ...state,
-          re_password: {
-            ...state.re_password,
-            errorMsg: ''
-          }
-        }
-
-      if (!isMatch) 
-        return {
-          ...state,
-          re_password: {
-            ...state.re_password,
-            errorMsg: 'password not matched!!'
-          }
-          
-        }
-      return {
-        ...state,
-        re_password: {
-          ...state.re_password,
-          errorMsg: ''
-        }
-      }
-
-    }
-
-    // validating when the signup is pressed
-    case 'validate': {
-      
-      if (state.isLoading)
-        return state
-
-      // incase of missing mandatory inputs
-      if(!state.first_name.value || !state.last_name.value || !state.username.value || !state.email.value || !state.address.value || !state.password.value || !state.re_password.value)
-        return {
-          ...state,
-          missingInput: true
-        }
-
-      // incase of errors in the form
-      if (state.username.errorMsg || state.email.errorMsg || state.password.errorMsg || state.re_password.errorMsg || state.phone_number.errorMsg)
-        return state
-
-      
-      return {
-        ...state,
-        isLoading: true,
-        missingInput: false
-      }
-
-    }
-
-    // when fetching data is faild
-    case 'failure': {
-      return {
-        ...state,
-        responseError: action.error,
-        isLoading: false
-      }
-    }
-
-    // when fetching data is succeded 
-    case 'success': {
-      return {
-        ...state,
-        responseError: '',
-        isLoading: false
-      }
-    }
-    
-    
-    default:
-      break
-  }
-}
 const initialState = {
   first_name: {
     value: '',
-    errorMsg: '' 
+    errorMsg: ''
   },
   last_name: {
     value: '',
-    errorMsg: '' 
+    errorMsg: ''
   },
   username: {
     value: '',
-    errorMsg: '' 
+    errorMsg: ''
   },
   phone_number: {
     value: '',
-    errorMsg: '' 
+    errorMsg: ''
   },
   address: {
     value: '',
-    errorMsg: '' 
+    errorMsg: ''
   },
   email: {
     value: '',
-    errorMsg: '' 
+    errorMsg: ''
   },
   password: {
     value: '',
-    errorMsg: '' 
+    errorMsg: ''
   },
   re_password: {
     value: '',
-    errorMsg: '' 
+    errorMsg: ''
   },
+  dataToSend: {},
   isLoading: false,
   missingInput: false,
-  responseError: false
+  responseError: '',
+  responseData: {}
+
 }
 
 const Signup = () => {
 
-  const [state, dispatch] = useReducer(signupReducer, initialState)
-  const {
-    first_name,
-    last_name,
-    username,
-    phone_number,
-    address,
-    email,
-    password,
-    re_password,
-    isLoading,
-    missingInput,
-    responseError,
-  } = state
+  // using the form-hook
+  const [state, dispatch] = useForm(initialState)
 
+  // using the fetch hook
+  const sendRequest = useFetch(dispatch)
+  
 
   
 
 
+
+
   const submitForm = async (event) => {
     event.preventDefault()
-    dispatch({ type: 'validate' }) 
+    dispatch({ type: 'validate' })
   }
+  useWhatChanged([state.dataToSend, state.isLoading, sendRequest])
+
   useEffect(() => {
-    const sendRequest = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/users', {
-        method: 'POST',
-        headers: {
+
+
+    // wrapper function to enable us to use async functions inside useEffect
+    const fetchUser = async () => {
+      const data = await sendRequest(
+        'http://localhost:5000/users',
+        'POST', JSON.stringify(state.dataToSend),
+        {
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          first_name: first_name.value,
-          last_name: last_name.value,
-          username: username.value,
-          phone_number: phone_number.value,
-          address: address.value,
-          email: email.value,
-          password: password.value
         })
-      })
-        const parsedData = await response.json()
-
-        // in case of any error code 
-        if (!response.ok) {
-          throw new Error(parsedData.error)
-        }
-        console.log(parsedData)
-        dispatch({ type: 'success' })
-      } catch (e) {
-        console.log(e.message)
-        dispatch({ type: 'failure', error: e.message})
-      }
-      
-
-
+      return data
     }
-    if (isLoading) {
-      sendRequest()
+
+    if (state.isLoading) {
+      fetchUser()
     }
-  }, [isLoading, first_name, last_name, username, phone_number, address, email, password])
+  }, [state.dataToSend, state.isLoading, sendRequest])
 
   return (
     <div className="background-blue">
@@ -366,7 +112,7 @@ const Signup = () => {
             <label className="half-label" htmlFor="username">Username:*
             </label>
             <input type="text" name="username" id="username" onChange={(e) => { dispatch({ type: 'enterValue', field: 'username', value: e.currentTarget.value }) }} />
-            {username.errorMsg && <InputError class='error-msg' msg={username.errorMsg} />}
+            {state.username.errorMsg && <InputError class='error-msg' msg={state.username.errorMsg} />}
           </div>
 
 
@@ -378,7 +124,7 @@ const Signup = () => {
               onChange={(e) => { dispatch({ type: 'enterValue', field: 'phone_number', value: e.currentTarget.value }) }}
               onBlur={() => { dispatch({ type: 'blurPhone' }) }} />
 
-            {phone_number.errorMsg && <InputError class='error-msg' msg={phone_number.errorMsg} />}
+            {state.phone_number.errorMsg && <InputError class='error-msg' msg={state.phone_number.errorMsg} />}
           </div>
 
 
@@ -396,7 +142,7 @@ const Signup = () => {
               onChange={(e) => { dispatch({ type: 'enterValue', field: 'email', value: e.currentTarget.value }) }}
               onBlur={() => { dispatch({ type: 'blurEmail' }) }}
             />
-            {email.errorMsg && <InputError class='error-msg' msg={email.errorMsg} />}
+            {state.email.errorMsg && <InputError class='error-msg' msg={state.email.errorMsg} />}
 
           </div>
 
@@ -407,7 +153,7 @@ const Signup = () => {
               onChange={(e) => { dispatch({ type: 'enterValue', field: 'password', value: e.currentTarget.value }) }}
               onBlur={() => { dispatch({ type: 'blurPassword' }) }}
             />
-            {password.errorMsg && <InputError class='error-msg' msg={password.errorMsg} />}
+            {state.password.errorMsg && <InputError class='error-msg' msg={state.password.errorMsg} />}
           </div>
 
           <div className="input-wrapper flex-row fjust-between">
@@ -417,16 +163,16 @@ const Signup = () => {
               onChange={(e) => { dispatch({ type: 'enterValue', field: 're_password', value: e.currentTarget.value }) }}
               onBlur={() => { dispatch({ type: 'blurRePassword' }) }}
             />
-            {re_password.errorMsg && <InputError class='error-msg' msg={re_password.errorMsg} />}
+            {state.re_password.errorMsg && <InputError class='error-msg' msg={state.re_password.errorMsg} />}
           </div>
 
-          {missingInput && <p style={{color: 'red'}}>Please Fill mandatory fields *</p> }
-          {responseError && <p style={{color: 'red'}}>{responseError}</p> }
+          {state.missingInput && <p style={{ color: 'red', textAlign: 'center', width: '70%', margin: 'auto' }}>Please Fill mandatory fields *</p>}
+          {state.responseError && <p style={{ color: 'red', textAlign: 'center', width: '70%', margin: 'auto' }}>{state.responseError}</p>}
 
           <div className="button-wrapper flex-row gap-8p fjust-center">
 
-          
-            <button type="submit" className={isLoading ? "btn-r btn-r-dark disabled"  : "btn-r btn-r-dark" }disabled={isLoading}>
+
+            <button type="submit" className={state.isLoading ? "btn-r btn-r-dark disabled" : "btn-r btn-r-dark"} disabled={state.isLoading}>
               Sign up
             </button>
 

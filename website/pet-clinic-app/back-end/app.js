@@ -19,11 +19,17 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept ,Authorization')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE' )
-  setTimeout(() => next(), 4000);
+  next()
 })
+
 
 // Using the Routers
 app.use(usersRouter)
+
+// not found url
+app.use('/*', (req, res) => {
+  res.send('404 Endpoint not found!!')
+})
 
 app.listen(PORT, () => {
   console.log('Connected successfully to PORT ', PORT)

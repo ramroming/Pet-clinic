@@ -26,4 +26,8 @@ usersRouter.get('/users/logout', auth, logout)
 // logout from all devices
 usersRouter.get('/users/logoutall', auth, logoutAll)
 
+usersRouter.get('/users/*', (req, res) => {
+  res.send('404 User endpoint not found!!')
+})
+
 module.exports = usersRouter

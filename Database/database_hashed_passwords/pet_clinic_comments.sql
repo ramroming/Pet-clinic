@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: pet_clinic
 -- ------------------------------------------------------
--- Server version	8.0.27
+-- Server version	8.0.28
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,30 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `fee_histories`
+-- Table structure for table `comments`
 --
 
-DROP TABLE IF EXISTS `fee_histories`;
+DROP TABLE IF EXISTS `comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `fee_histories` (
+CREATE TABLE `comments` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `date` datetime NOT NULL,
-  `appointment_type_id` int NOT NULL,
-  `value` float NOT NULL,
-  PRIMARY KEY (`date`,`appointment_type_id`),
-  KEY `FEE_HISTORIES_fk0` (`appointment_type_id`),
-  CONSTRAINT `FEE_HISTORIES_fk0` FOREIGN KEY (`appointment_type_id`) REFERENCES `appointment_types` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `text` varchar(150) NOT NULL,
+  `adoption_ad_id` int NOT NULL,
+  `client_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `COMMENTS_fk0` (`adoption_ad_id`),
+  KEY `COMMENTS_fk1` (`client_id`),
+  CONSTRAINT `COMMENTS_fk0` FOREIGN KEY (`adoption_ad_id`) REFERENCES `adoption_ads` (`id`),
+  CONSTRAINT `COMMENTS_fk1` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `fee_histories`
+-- Dumping data for table `comments`
 --
 
-LOCK TABLES `fee_histories` WRITE;
-/*!40000 ALTER TABLE `fee_histories` DISABLE KEYS */;
-INSERT INTO `fee_histories` VALUES ('2019-01-01 00:00:00',1,100),('2019-01-01 00:00:00',2,300),('2019-01-01 00:00:00',3,50),('2019-01-01 00:00:00',4,0),('2021-01-01 00:00:00',1,150),('2021-01-01 00:00:00',2,350),('2021-01-01 00:00:00',3,75);
-/*!40000 ALTER TABLE `fee_histories` ENABLE KEYS */;
+LOCK TABLES `comments` WRITE;
+/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+INSERT INTO `comments` VALUES (1,'2020-02-08 00:00:00','does this pet bite ? ',1,4),(2,'2020-02-09 00:00:00','is this cat friendly ? ',2,4);
+/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-07 13:02:31
+-- Dump completed on 2022-02-15 22:48:49
