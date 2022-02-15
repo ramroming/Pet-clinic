@@ -15,6 +15,12 @@ const ProfileMenu = (props) => {
       <p  
       onClick ={ () => selecting(3)}
       className={ selection === 3 ? "profile-option selected" :"profile-option"}>Manage Pets</p>
+         <p  
+      onClick ={ () => selecting(4)}
+      className={ selection === 4 ? "profile-option selected" :"profile-option"}>My Adoption posts</p>
+      <p  
+      onClick ={ () => selecting(5)}
+      className={ selection === 5? "profile-option selected" :"profile-option"}>My Adoption Requests</p>
     </div>
   )
   

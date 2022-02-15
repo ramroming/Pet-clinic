@@ -1,7 +1,8 @@
 import Account from "./account/Account"
 import PersonalInfo from "./personalinfo/PersonalInfo"
 import PetInfo from "./petinfo/PetInfo"
-
+import MyAdoptionPosts from './myadoptionposts/MyAdoptionPosts'
+import MyAdoptionRequests from './myadoptionrequests/MyAdoptionRequests'
 const ProfileData = (props) => {
   // which menu is selected
   const selection = props.stateData
@@ -34,6 +35,22 @@ const ProfileData = (props) => {
         <>
           <h4>Pets Management</h4>
           <PetInfo />
+        </>
+      }
+       {
+        selection === 4 &&
+
+        <>
+          <h4>Adoption Posts Management</h4>
+          <MyAdoptionPosts />
+        </>
+      }
+       {
+        selection === 5 &&
+
+        <>
+          <h4>Adoption Requests Management</h4>
+          <MyAdoptionRequests/>
         </>
       }
     </div>
