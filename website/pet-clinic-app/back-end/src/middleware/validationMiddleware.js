@@ -5,38 +5,38 @@ const signup = (req, res, next) => {
 
   // validating data
   if (myValidator.isLongUsername(username))
-    return res.status(400).send('long username !!')
+    return res.status(400).send({error: 'long username !!'})
     
   if (myValidator.isLongFirstName(first_name))
-    return res.status(400).send('long first name !!')
+    return res.status(400).send({error: 'long first name !!'})
 
   if (myValidator.isLongLastName(last_name))
-    return res.status(400).send('long last name !!')
+    return res.status(400).send({error:'long last name !!' })
 
   if (myValidator.isLongAddress(address))
-    return res.status(400).send('long address  !!')
+    return res.status(400).send({error:'long address  !!' })
 
   if (!myValidator.isValidEmail(email))
-    return res.status(400).send('invalid Email Address!!')
+    return res.status(400).send({error: 'invalid Email Address!!'})
 
   if (phone_number) {
     if (!myValidator.isPhoneNumber(phone_number))
-      return res.status(400).send('invalid Phone Number!!')
+      return res.status(400).send({error: 'invalid Phone Number!!'})
   }
 
   if (user_type) {
     if (!myValidator.isUserType(user_type))
-      return res.status(400).send('invalid User Type!!')
+      return res.status(400).send({error: 'invalid User Type!!'})
 
   }
 
   if (stmem_type) {
     if (!myValidator.isStmemType(stmem_type))
-    return res.status(400).send('invalid Staff Memeber type!!')
+    return res.status(400).send({error: 'invalid Staff Memeber type!!'})
   }
 
   if (!myValidator.isGoodPassword(password))
-    return res.status(400).send('Weak Password!!')
+    return res.status(400).send({error: 'Weak Password!!'})
 
   next()
 }
@@ -46,10 +46,10 @@ const login = (req, res, next) => {
 
   // validating data
   if (myValidator.isLongUsername(username))
-    return res.status(400).send('long username !!')
+    return res.status(400).send({error: 'long username !!'})
 
   if (myValidator.isLongPassword(password))
-    return res.status(400).send('long password !!')
+    return res.status(400).send({error: 'long password !!'})
   next()
 }
 

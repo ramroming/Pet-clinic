@@ -103,7 +103,7 @@ const login = async (req, res) => {
       res.status(200).send({ user, token})
     } catch (e) {
       await conn.end()
-      res.status(400).send(e.message)
+      res.status(400).send({error: e.message})
     }
     
   }

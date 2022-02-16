@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: pet_clinic
 -- ------------------------------------------------------
--- Server version	8.0.27
+-- Server version	8.0.28
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,27 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `training_types`
+-- Table structure for table `vaccines`
 --
 
-DROP TABLE IF EXISTS `training_types`;
+DROP TABLE IF EXISTS `vaccines`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `training_types` (
+CREATE TABLE `vaccines` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(150) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `training_types`
+-- Dumping data for table `vaccines`
 --
 
-LOCK TABLES `training_types` WRITE;
-/*!40000 ALTER TABLE `training_types` DISABLE KEYS */;
-INSERT INTO `training_types` VALUES (1,'Positive Reinforcement'),(2,'Clicker Training'),(3,'Alpha Dog'),(4,'litter training'),(5,'Staying calm'),(6,'Playing with toys');
-/*!40000 ALTER TABLE `training_types` ENABLE KEYS */;
+LOCK TABLES `vaccines` WRITE;
+/*!40000 ALTER TABLE `vaccines` DISABLE KEYS */;
+INSERT INTO `vaccines` VALUES (1,'canine parvovirus'),(2,'distemper'),(3,'canine hepatitis'),(4,'rabies '),(5,'FVR'),(6,'FCV'),(7,'FPV');
+/*!40000 ALTER TABLE `vaccines` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-07 13:02:30
+-- Dump completed on 2022-02-15 22:48:50
