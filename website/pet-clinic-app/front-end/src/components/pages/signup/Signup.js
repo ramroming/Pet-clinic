@@ -130,7 +130,7 @@ const Signup = () => {
 
 
           <div className="input-wrapper flex-row fjust-between">
-            <label className="half-label" htmlFor="address">Address:
+            <label className="half-label" htmlFor="address">Address:*
             </label>
             <textarea name="address" id="address" cols="30" rows="4" onChange={(e) => { dispatch({ type: 'enterValue', field: 'address', value: e.currentTarget.value }) }}></textarea>
           </div>
