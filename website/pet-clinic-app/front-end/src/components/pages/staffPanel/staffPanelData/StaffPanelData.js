@@ -1,7 +1,7 @@
 import Account from "../../myprofile/profiledata/account/Account"
 import PersonalInfo from "../../myprofile/profiledata/personalinfo/PersonalInfo"
 import AppointmentManagement from "./appointmentmanagement/AppointmentManagement"
-
+import AdoptionManagement from "./adoptionmanagement/AdoptionManagement"
 const StaffPanelData = (props) => {
   // which menu is selected
   const selection = props.stateData
@@ -41,7 +41,7 @@ const StaffPanelData = (props) => {
 
         <>
           <h4>Adoption Management</h4>
- 
+          <AdoptionManagement/>
         </>
       }
         {

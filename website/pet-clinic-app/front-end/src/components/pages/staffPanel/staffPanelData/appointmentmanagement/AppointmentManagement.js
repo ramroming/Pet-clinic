@@ -1,8 +1,8 @@
 
 
-// import DeletePostModal from "../myadoptionposts/DeletePostModal"
+import DeletePostModal from "../../../myprofile/profiledata/myadoptionposts/DeletePostModal"
 import { useState } from 'react'
-// import EditAdoptionStatus from "./EditAdoptionStatus"
+import EditAppointmentStatus from "./EditAppointmentStatus"
 
 const AppointmentManagement = () => {
 
@@ -13,11 +13,11 @@ const AppointmentManagement = () => {
 
         <>
         <div className="flex-col falign-center fjust-center ">
-        {/* {openModal && <DeletePostModal closeModal={setOpenModal} />} */}
+        {openModal && <DeletePostModal closeModal={setOpenModal} />}
         </div>
 
         <div className="flex-col falign-center fjust-center ">
-        {/* {openStatusModal && <EditAdoptionStatus closeModal={setOpenStatusModal} />} */}
+        {openStatusModal && <EditAppointmentStatus closeModal={setOpenStatusModal} />}
         </div>
 
         <div className="my-great-table falign-center fjust-center flex-row fgap-16p">
