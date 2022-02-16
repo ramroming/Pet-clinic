@@ -2941,4 +2941,14 @@ h4 {
 .modal-title {
   padding: 1rem;
   font-size: 1.1rem;
+
 }
+.staff-panel-wrapper {
+  background-image: linear-gradient(120deg, whitesmoke, rgba(255, 255, 0, 0.24));
+  padding: 5rem 1rem 0 1rem;
+}
+@media all and (min-width: 48rem) {
+  .staff-panel-wrapper {
+    padding: 9rem 1.5rem 0 1.5rem;
+  }
+}/*# sourceMappingURL=main.css.map */

@@ -15,6 +15,7 @@ import PostAd from "./components/pages/postAd/PostAd";
 import PostPreview from "./components/pages/postpreview/PostPreview";
 import Stafflist from "./components/pages/stafflist/Stafflist";
 import { authContext } from "./components/shared/context/auth-context";
+import StaffPanel from "./components/pages/staffPanel/StaffPanel";
 
 function App() {
 
@@ -54,6 +55,8 @@ function App() {
         element={<PostPreview />}> </Route>
       <Route path='/stafflist'
         element={<Stafflist />}> </Route>
+      <Route path='/staffpanel'
+        element={<StaffPanel />}> </Route>
       <Route path='*'
         element={<Navigate to='/' />}> </Route>
     </Routes>
