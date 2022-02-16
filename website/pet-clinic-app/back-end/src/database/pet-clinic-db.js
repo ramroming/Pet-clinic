@@ -1,7 +1,7 @@
 connData = {
   host: 'localhost', 
   user: 'root',
-  password: 'petApp12345!',
+  password: 'Timsp1290',
   database: 'pet_clinic'
 }
 
