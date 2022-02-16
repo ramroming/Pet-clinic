@@ -59,7 +59,7 @@ const Stafflist = () => {
             <div 
                 className="staff-members flex-col falign-center gap-16p">
                 {membersArr.members.map((member) => {
-                    return <Staffcard  name={member.name} rating={member.rating}/>
+                    return <Staffcard  name={member.name} rating={member.rating} key={member.id}/>
                             
                 })}
 
