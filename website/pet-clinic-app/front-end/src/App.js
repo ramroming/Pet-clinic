@@ -13,6 +13,7 @@ import Myprofile from "./components/pages/myprofile/Myprofile";
 import PostAd from "./components/pages/postAd/PostAd";
 import PostPreview from "./components/pages/postpreview/PostPreview";
 import Stafflist from "./components/pages/stafflist/Stafflist";
+import StaffPanel from "./components/pages/staffPanel/StaffPanel";
 
 function App() {
   return (
@@ -45,6 +46,8 @@ function App() {
           element={<PostPreview />}> </Route>
         <Route path='/stafflist'
           element={<Stafflist />}> </Route>
+        <Route path='/staffpanel'
+          element={<StaffPanel />}> </Route>
       </Routes>
       <Footer />
     </>
