@@ -2874,11 +2874,13 @@ h4 {
   padding: 1rem;
   text-align: center;
 }
-.my-great-table a {
+.my-great-table button, .my-great-table a {
   color: var(--clr-primary-mainBlue);
   text-decoration: underline;
+  background-color: transparent;
+  border: none;
 }
-.my-great-table a:hover {
+.my-great-table button:hover, .my-great-table a:hover {
   color: white;
   transition: all ease-in-out 0.3s;
 }
@@ -2939,4 +2941,4 @@ h4 {
 .modal-title {
   padding: 1rem;
   font-size: 1.1rem;
-}/*# sourceMappingURL=main.css.map */
+}

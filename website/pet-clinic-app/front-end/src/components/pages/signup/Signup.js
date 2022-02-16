@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import InputError from "../../utils/formErrorMsg/InputError"
-import useFetch from "../../utils/hooks/fetch-hook"
-import useForm from "../../utils/hooks/form-hook"
+import useFetch from "../../shared/hooks/fetch-hook"
+import useForm from "../../shared/hooks/form-hook"
 import {
   useWhatChanged,
 } from '@simbathesailor/use-what-changed';

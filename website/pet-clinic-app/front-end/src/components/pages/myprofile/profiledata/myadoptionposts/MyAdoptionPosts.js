@@ -33,9 +33,9 @@ const MyAdoptionPosts = () => {
                 {/* third column */}
                 <div className="flex-col fgap-16p ">
                     <p className="table-header">Delete post</p>
-                    <a className="margin-bottom delete-modal"
+                    <button className="margin-bottom delete-modal"
                         onClick={() => { setOpenModal(true) }}
-                    ><i className="fa-regular fa-trash-can"></i></a>
+                    ><i className="fa-regular fa-trash-can"></i></button>
                     <a className="margin-bottom delete-modal" href="/#"><i className="fa-regular fa-trash-can"></i></a>
                     <a className="margin-bottom delete-modal" href="/#"><i className="fa-regular fa-trash-can"></i></a>
                 </div>

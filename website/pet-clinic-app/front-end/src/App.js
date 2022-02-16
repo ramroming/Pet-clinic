@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useState, useCallback } from "react";
 import Signup from "./components/pages/signup/Signup";
 import Login from "./components/pages/login/Login";
 import Home from "./components/pages/home/Home";
@@ -13,40 +14,74 @@ import Myprofile from "./components/pages/myprofile/Myprofile";
 import PostAd from "./components/pages/postAd/PostAd";
 import PostPreview from "./components/pages/postpreview/PostPreview";
 import Stafflist from "./components/pages/stafflist/Stafflist";
+import { authContext } from "./components/shared/context/auth-context";
 
 function App() {
+
+  // creating the states that will be sent via the context
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  const login = useCallback(() => {
+    setIsLoggedIn(true)
+  }, [])
+
+  const logout = useCallback(() => {
+    setIsLoggedIn(false)
+  }, [])
+
+  // creating auth and nonauth routes
+  const routes = isLoggedIn ? (
+    <Routes>
+      <Route path='/' exact
+        element={<Home />}></Route>
+      <Route path='/home'
+        element={<Home />}></Route>
+      <Route path='/registerpet'
+        element={<RegisterPet />}></Route>
+      <Route path='/appointment'
+        element={<Appointment />}></Route>
+      <Route path='/adoption'
+        element={<Adoption />}></Route>
+      <Route path='/adoptionads'
+        element={<AdoptionAds />}></Route>
+      <Route path='/adoptionad'
+        element={<AdoptionAd />}></Route>
+      <Route path='/myprofile'
+        element={<Myprofile />}> </Route>
+      <Route path='/postad'
+        element={<PostAd />}> </Route>
+      <Route path='/postpreview'
+        element={<PostPreview />}> </Route>
+      <Route path='/stafflist'
+        element={<Stafflist />}> </Route>
+      <Route path='*'
+        element={<Navigate to='/' />}> </Route>
+    </Routes>
+  ) : (
+    <Routes>
+      <Route path='/' exact
+        element={<Home />}></Route>
+      <Route path='/home'
+        element={<Home />}></Route>
+      <Route path='/login'
+        element={<Login />}></Route>
+      <Route path='/signup'
+        element={<Signup />}></Route>
+      <Route path='/stafflist'
+        element={<Stafflist />}> </Route>
+      <Route path='*' 
+        element={<Navigate to='/login' />}></Route>
+    </Routes>
+  )
   return (
     <>
-      <Nav />
-      <Routes>
-        <Route path='/' exact
-          element={<Home />}></Route>
-        <Route path='/home'
-          element={<Home />}></Route>
-        <Route path='/login'
-          element={<Login />}></Route>
-        <Route path='/signup'
-          element={<Signup />}></Route>
-        <Route path='/registerpet'
-          element={<RegisterPet />}></Route>
-        <Route path='/appointment'
-          element={<Appointment />}></Route>
-        <Route path='/adoption'
-          element={<Adoption />}></Route>
-        <Route path='/adoptionads'
-          element={<AdoptionAds />}></Route>
-        <Route path='/adoptionad'
-          element={<AdoptionAd />}></Route>
-        <Route path='/myprofile'
-          element={<Myprofile />}> </Route>
-        <Route path='/postad'
-          element={<PostAd />}> </Route>
-        <Route path='/postpreview'
-          element={<PostPreview />}> </Route>
-        <Route path='/stafflist'
-          element={<Stafflist />}> </Route>
-      </Routes>
-      <Footer />
+      {/* wrapping all the components with our authcontext so that we can pass the data to the interested components when ever isloggedin changes all the components will be able to receive the change */}
+      <authContext.Provider value={{ isLoggedIn, login, logout }}>
+        <Nav />
+        {routes}
+        <Footer />
+      </authContext.Provider>
+
     </>
   );
 }
