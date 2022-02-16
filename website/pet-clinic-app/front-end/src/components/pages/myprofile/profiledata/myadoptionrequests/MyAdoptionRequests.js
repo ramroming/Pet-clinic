@@ -47,9 +47,9 @@ const MyAdoptionPosts = () => {
              {/* fourth column */}
              <div className="flex-col fgap-16p ">
                 <p className="table-header">Delete</p>
-                <a className="margin-bottom" 
+                <button className="margin-bottom" 
                 onClick={() => { setOpenModal(true) }}
-                ><i className="fa-regular fa-trash-can"></i></a>
+                ><i className="fa-regular fa-trash-can"></i></button>
                 <a className="margin-bottom" href="/#"><i className="fa-regular fa-trash-can"></i></a>
                 <a className="margin-bottom" href="/#"><i className="fa-regular fa-trash-can"></i></a>
             </div>
@@ -57,8 +57,8 @@ const MyAdoptionPosts = () => {
              {/* fifth column */}
              <div className="flex-col fgap-16p">
                 <p className="table-header">Status</p>
-                <a className="margin-bottom" 
-                onClick={() => {setOpenStatusModal(true)}}>Accepted <i className="fa-regular fa-pen-to-square"></i></a>
+                <button className="margin-bottom" 
+                onClick={() => {setOpenStatusModal(true)}}>Accepted <i className="fa-regular fa-pen-to-square"></i></button>
                 <a className="margin-bottom" href="/#">Rejected <i className="fa-regular fa-pen-to-square"></i></a>
                 <a className="margin-bottom" href="/#">in-review <i className="fa-regular fa-pen-to-square"></i></a>
             </div>
