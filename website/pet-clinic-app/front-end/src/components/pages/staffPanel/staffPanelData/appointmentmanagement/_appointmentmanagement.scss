@@ -1,15 +1,9 @@
 @use '../../../../abstracts/' as *;
 
 
-.small-table-header{
-    background-color: var(--clr-shadow-glassy-shadow);
-    color: black;
-    @include rounded-corners(.5rem,.5rem,.5rem,.5rem);
-    text-align: center;
-    padding: 1rem;
-    width: 120px;
-    // margin: 1rem;
-}
+
+
+
 
 .search-bar-container{
     padding: 1rem;
@@ -40,15 +34,3 @@
 }
 
 
-
-.my-table{
-    padding: 1rem;
-    background-color: var(--clr-shadow-glassy-shadow);
-    @include rounded-corners(.5rem,.5rem,.5rem,.5rem);
-    border: 1px solid var(--clr-primary-mainPurple);
-    text-align:center;
-}
-
-Td,Tr,Th{
-    padding: 1rem 0;
-}

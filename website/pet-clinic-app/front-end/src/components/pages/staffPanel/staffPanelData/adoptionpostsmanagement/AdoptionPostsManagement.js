@@ -2,13 +2,13 @@ import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { useState } from 'react'
 import DeletePostModal from "../../../myprofile/profiledata/myadoptionposts/DeletePostModal"
-import EditAppointmentStatus from "../appointmentmanagement/EditAppointmentStatus"
+// import EditAdoptionStatus from  "../../../myprofile/profiledata/myadoptionrequests/EditAdoptionStatus"
 import { Link } from 'react-router-dom'
 
 const AdoptionPostsManagement = () => {
 
     const [openModal, setOpenModal] = useState(false)
-    const [openStatusModal, setOpenStatusModal] = useState(false)
+    // const [openStatusModal, setOpenStatusModal] = useState(false)
 
 
   return (
@@ -17,9 +17,9 @@ const AdoptionPostsManagement = () => {
         {openModal && <DeletePostModal closeModal={setOpenModal} />}
         </div>
 
-        <div className="flex-col falign-center fjust-center ">
-        {openStatusModal && <EditAppointmentStatus closeModal={setOpenStatusModal} />}
-        </div>
+        {/* <div className="flex-col falign-center fjust-center ">
+        {openStatusModal && <EditAdoptionStatus closeModal={setOpenStatusModal} />}
+        </div> */}
 
         <Table className="my-table">
          <Thead>
@@ -33,16 +33,14 @@ const AdoptionPostsManagement = () => {
            <Th>
              Delete
            </Th>
-           <Th>
-             Edit
-           </Th>
+          
          </Tr>
        </Thead>
        <Tbody>
         
             <Tr>
             <Td>
-            <Link to='/adoptionad'>
+            <Link className="my-great-button" to='/adoptionad'>
                 Click here to view
             </Link>
             </Td>
@@ -54,10 +52,43 @@ const AdoptionPostsManagement = () => {
             onClick={() => { setOpenModal(true) }}
             ><i className="fa-regular fa-trash-can"></i></button>
             </Td>
+          
+          </Tr>
+
+
+          <Tr>
+            <Td>
+            <Link className="my-great-button" to='/adoptionad'>
+                Click here to view
+            </Link>
+            </Td>
+            <Td>
+            2022/02/17 11:00 PM
+            </Td>
             <Td>
             <button className="my-great-button margin-bottom" 
-            onClick={() => {setOpenStatusModal(true)}}>Active <i className="fa-regular fa-pen-to-square"></i></button>
+            onClick={() => { setOpenModal(true) }}
+            ><i className="fa-regular fa-trash-can"></i></button>
             </Td>
+           
+          </Tr>
+
+
+          <Tr>
+            <Td>
+            <Link className="my-great-button" to='/adoptionad'>
+                Click here to view
+            </Link>
+            </Td>
+            <Td>
+            2022/02/17 11:00 PM
+            </Td>
+            <Td>
+            <button className="my-great-button margin-bottom" 
+            onClick={() => { setOpenModal(true) }}
+            ><i className="fa-regular fa-trash-can"></i></button>
+            </Td>
+         
           </Tr>
        
      </Tbody>

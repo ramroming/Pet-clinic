@@ -1,60 +1,118 @@
 import DeletePostModal from "./DeletePostModal"
 import { useState } from 'react'
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import { Link } from 'react-router-dom'
 
 const MyAdoptionPosts = () => {
 
     const [openModal, setOpenModal] = useState(false)
+   
 
-    return (
-
-        <>
-        <div className="flex-col falign-center fjust-center ">
+  return (
+    <div>
+         <div className="flex-col falign-center fjust-center ">
         {openModal && <DeletePostModal closeModal={setOpenModal} />}
-
         </div>
+
+
+        <Table className="my-table">
+         <Thead>
+         <Tr>
+           <Th>
+             Post
+           </Th>
+           <Th>
+             Created At
+           </Th>
+           <Th>
+             Edit
+           </Th>
+           <Th>
+             Delete
+           </Th>
+          
+         </Tr>
+       </Thead>
+       <Tbody>
+        
+            <Tr>
+            <Td>
+            <Link className="my-great-button" to='/adoptionad'>
+                Click here to view
+            </Link>
+            </Td>
+            <Td>
+            2022/02/17 11:00 PM
+            </Td>
+            <Td>
+            <Link className="my-great-button" to='/postpreview'>
+                Click here to edit
+            </Link>
+            </Td>
+            <Td>
+            <button className="my-great-button margin-bottom" 
+            onClick={() => { setOpenModal(true) }}
+            ><i className="fa-regular fa-trash-can"></i></button>
+            </Td>
+          
+          </Tr>
+
+
+          <Tr>
+            <Td>
+            <Link className="my-great-button" to='/adoptionad'>
+                Click here to view
+            </Link>
+            </Td>
+            <Td>
+            2022/02/17 11:00 PM
+            </Td>
+            <Td>
+            <Link className="my-great-button" to='/postpreview'>
+                Click here to edit
+            </Link>
+            </Td>
+            <Td>
+            <button className="my-great-button margin-bottom" 
+            onClick={() => { setOpenModal(true) }}
+            ><i className="fa-regular fa-trash-can"></i></button>
+            </Td>
            
-            <div className="my-great-table falign-center fjust-center flex-row gap-16p">
+          </Tr>
 
 
-                {/* first column */}
-                <div className="flex-col gap-16p ">
-                    <p className="table-header">View post</p>
-                    <a className="margin-bottom" href="/#">click here to view</a>
-                    <a className="margin-bottom" href="/#">click here to view</a>
-                    <a className="margin-bottom" href="/#">click here to view</a>
-                </div>
-                {/* second column */}
-                <div className="flex-col gap-16p ">
-                    <p className="table-header">Created At</p>
-                    <p className="margin-bottom">13-4-2022 15:00 PM</p>
-                    <p className="margin-bottom">13-4-2022 15:00 PM</p>
-                    <p className="margin-bottom">13-4-2022 15:00 PM</p>
-                </div>
-                {/* third column */}
-                <div className="flex-col gap-16p ">
-                    <p className="table-header">Delete post</p>
-                    <button className="margin-bottom  my-great-button delete-modal"
-                        onClick={() => { setOpenModal(true) }}
-                    ><i className="fa-regular fa-trash-can"></i></button>
-                    <button className="my-great-button margin-bottom delete-modal"><i className="fa-regular fa-trash-can"></i></button>
-                    <button className="my-great-button margin-bottom delete-modal" ><i className="fa-regular fa-trash-can"></i></button>
-                </div>
-                {/* fourth column */}
-                <div className="flex-col gap-16p">
-                    <p className="table-header">Edit Post</p>
-                    <button className="my-great-button margin-bottom" ><i className="fa-regular fa-pen-to-square"></i></button>
-                    <button className="my-great-button margin-bottom" ><i className="fa-regular fa-pen-to-square"></i></button>
-                    <button className="my-great-button margin-bottom" ><i className="fa-regular fa-pen-to-square"></i></button>
-                </div>
-
-              
+          <Tr>
+            <Td>
+            <Link className="my-great-button" to='/adoptionad'>
+                Click here to view
+            </Link>
+            </Td>
+            <Td>
+            2022/02/17 11:00 PM
+            </Td>
+            <Td>
+            <Link className="my-great-button" to='/postpreview'>
+                Click here to edit
+            </Link>
+            </Td>
+            <Td>
+            <button className="my-great-button margin-bottom" 
+            onClick={() => { setOpenModal(true) }}
+            ><i className="fa-regular fa-trash-can"></i></button>
+            </Td>
+         
+          </Tr>
+       
+     </Tbody>
 
 
+        
+      </Table>
 
-            </div>
-        </>
+    </div>
 
-    )
+  )
 }
 
 export default MyAdoptionPosts

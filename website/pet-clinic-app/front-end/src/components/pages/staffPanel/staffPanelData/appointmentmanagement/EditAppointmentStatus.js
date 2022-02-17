@@ -10,8 +10,8 @@ const EditAppointmentStatus = ({ closeModal }) => {
                     onClick={() => closeModal(false)}>
                     <i className="fa-solid fa-xmark"></i></button></div>
                 <div className="modal-title flex-col gap-16p">
-                    Update Appoitment Status:
-                    <p>if the client has paid, set appointment to active</p>
+                    Update Appointment Status:
+                    <p>if the client has paid, activate the appointment</p>
                 </div>
                 <div className="flex-row gap-16p fjust-between">
                     <button className="btn-rec-purple">Activate</button>

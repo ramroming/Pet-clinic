@@ -1,23 +1,19 @@
-import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
-import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
-import DeletePostModal from "../../../myprofile/profiledata/myadoptionposts/DeletePostModal"
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { useState } from 'react'
-import EditAppointmentStatus from "./EditAppointmentStatus"
+import DeletePostModal from "../../../myprofile/profiledata/myadoptionposts/DeletePostModal"
+import EditAppointmentStatus from  "./EditAppointmentStatus"
+import { Link } from 'react-router-dom'
 
 const AppointmentManagement = () => {
 
     const [openModal, setOpenModal] = useState(false)
     const [openStatusModal, setOpenStatusModal] = useState(false)
 
-    return (
 
-        <>
-        <div className="search-bar-container flex-row fjust-center falign-center gap-16p">
-        <label>Search and find:</label>
-        <input className="search-bar" type="text" />
-        </div>
-        
-        <div className="flex-col falign-center fjust-center ">
+  return (
+    <div>
+         <div className="flex-col falign-center fjust-center ">
         {openModal && <DeletePostModal closeModal={setOpenModal} />}
         </div>
 
@@ -25,58 +21,118 @@ const AppointmentManagement = () => {
         {openStatusModal && <EditAppointmentStatus closeModal={setOpenStatusModal} />}
         </div>
 
-
-        <div className="my-great-table falign-center fjust-center flex-row gap-16p">
-            {/* first column */}
-            <div className="flex-col gap-16p ">
-                <p className="small-table-header">Date-time</p>
-              <p className="margin-bottom">2022/10/11 13:30PM</p>
-            </div>
-            {/* second column */}
-            <div className="flex-col gap-16p ">
-                <p className="small-table-header">Pet id</p>
-                <p className="margin-bottom">1233</p>
-            </div>
+        <Table className="my-table">
+         <Thead>
+         <Tr>
+           <Th>
+             ID
+           </Th>
+           <Th>
+             Date and Time
+           </Th>
+           <Th>
+             Pet Name
+           </Th>
+           <Th>
+             Owner Name
+           </Th>
+           <Th>
+             Delete
+           </Th>
+           <Th>
+             Status
+           </Th>
+          
+         </Tr>
+       </Thead>
+       <Tbody>
         
-            {/* third column */}
-            <div className="flex-col gap-16p">
-                <p className="small-table-header">pet name</p>
-                <p className="margin-bottom">Mimo</p>
+            <Tr>
+            <Td>
+              1394
+            </Td>
+            <Td>
+            2022/02/17 11:00 PM
+            </Td>
+            <Td>
+            Mimo
+            </Td>
+            <Td>
+            Mehmet Kaya
+            </Td>
+            <Td>
+            <button className="my-great-button margin-bottom" 
+            onClick={() => {setOpenStatusModal(true)}}>Active <i className="fa-regular fa-pen-to-square"></i></button>
+            </Td>
+            <Td>
+            <button className="my-great-button margin-bottom" 
+            onClick={() => { setOpenModal(true) }}
+            ><i className="fa-regular fa-trash-can"></i></button>
+            </Td>
+          
+          </Tr>
 
-            </div>
-
-            {/* fourth column */}
-            <div className="flex-col gap-16p">
-                <p className="table-header">owner name</p>
-                <p className="margin-bottom">Yasin kaya</p>
-
-            </div>
-
-             {/* fifth column */}
-             <div className="flex-col gap-16p ">
-                <p className="table-header">Delete</p>
-                <button className="my-great-button margin-bottom" 
-                onClick={() => { setOpenModal(true) }}
-                ><i className="fa-regular fa-trash-can"></i></button>
-               
-              
-            </div>
-
-             {/* fifth column */}
-             <div className="flex-col gap-16p">
-                <p className="table-header">Status</p>
-                <button className="my-great-button margin-bottom" 
-                onClick={() => {setOpenStatusModal(true)}}>Active <i className="fa-regular fa-pen-to-square"></i></button>
-              
-               
-            </div>
+          <Tr>
+            <Td>
+              1394
+            </Td>
+            <Td>
+            2022/02/17 11:00 PM
+            </Td>
+            <Td>
+            Mimo
+            </Td>
+            <Td>
+            Mehmet Kaya
+            </Td>
+            <Td>
+            <button className="my-great-button margin-bottom" 
+            onClick={() => {setOpenStatusModal(true)}}>Active <i className="fa-regular fa-pen-to-square"></i></button>
+            </Td>
+            <Td>
+            <button className="my-great-button margin-bottom" 
+            onClick={() => { setOpenModal(true) }}
+            ><i className="fa-regular fa-trash-can"></i></button>
+            </Td>
+          
+          </Tr>
 
 
+          <Tr>
+            <Td>
+              1394
+            </Td>
+            <Td>
+            2022/02/17 11:00 PM
+            </Td>
+            <Td>
+            Mimo
+            </Td>
+            <Td>
+            Mehmet Kaya
+            </Td>
+            <Td>
+            <button className="my-great-button margin-bottom" 
+            onClick={() => {setOpenStatusModal(true)}}>Not Active<i className="fa-regular fa-pen-to-square"></i></button>
+            </Td>
+            <Td>
+            <button className="my-great-button margin-bottom" 
+            onClick={() => { setOpenModal(true) }}
+            ><i className="fa-regular fa-trash-can"></i></button>
+            </Td>
+          
+          </Tr>
 
-        </div>
-        </>
+       
+     </Tbody>
+
+
         
-    )
+      </Table>
+
+    </div>
+
+  )
 }
 
 export default AppointmentManagement
