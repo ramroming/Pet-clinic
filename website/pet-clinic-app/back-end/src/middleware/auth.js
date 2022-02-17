@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken')
 const mysql = require('mysql2/promise')
 const connData = require('../database/pet-clinic-db')
 const auth = async (req, res, next) => {
+  // if (req.method === 'OPTIONS') 
+  //   return next()
   try {
     // checking the token comming from the client's browser if valid or not
     const token = req.header('Authorization').replace('Bearer ', '')

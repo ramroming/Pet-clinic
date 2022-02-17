@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import useFetch from "../../shared/hooks/fetch-hook";
 import useForm from "../../shared/hooks/form-hook";
+import { authContext } from "../../shared/context/auth-context";
 
 const initialState = {
   username: {
@@ -31,21 +32,37 @@ const Login = () => {
   // use the fetch hook
   const sendRequest = useFetch(dispatch)
 
+  const auth = useContext(authContext)
 
+  // useWhatChanged([state.isLoading, state.dataToSend, sendRequest, auth, state.responseData])
+
+  // if we have async operation inside use effect we have to wrap the operation with an async function inside the useeffect and then we should call the same function again inside the useEffect without using await
   useEffect(() => {
 
     const fetchUser = async () => {
-      await sendRequest(
-        'http://localhost:5000/users/login',
-        'POST',
-       JSON.stringify(state.dataToSend),
-       {
-        'Content-Type': 'application/json'
-      })
+      try {
+        await sendRequest(
+          'http://localhost:5000/users/login',
+          'POST',
+         JSON.stringify(state.dataToSend),
+         {
+          'Content-Type': 'application/json'
+        })        
+      } catch (e) {
+
+      }
+      
     }
+    // isLoading changes from false to true if the validation process  passed successfully 
     if (state.isLoading)
       fetchUser()
   }, [state.isLoading, state.dataToSend, sendRequest])
+
+  // after data been fetched if we have a token inside the data that means the login was successfull so we login
+  useEffect(() => {
+    if (state.responseData.token)
+    auth.login(state.responseData.user.id, state.responseData.token)
+  }, [state.responseData, auth])
     return (
         <>
             <div className="background-blue">

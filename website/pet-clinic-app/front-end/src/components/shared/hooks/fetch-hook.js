@@ -4,8 +4,8 @@
 
 import { useCallback } from "react"
 
-
 const useFetch = (dispatch) => {
+
 
   const sendRequest = useCallback(async (
     url,
@@ -27,9 +27,12 @@ const useFetch = (dispatch) => {
         throw new Error(parsedData.error)
       }
       dispatch({ type: 'success', data: parsedData })
-
+      
     } catch (e) {
       dispatch({ type: 'failure', error: e.message})
+
+      // here we throw the error again to make the component that using the hook knows that there was an error
+      throw e
     }
     
     

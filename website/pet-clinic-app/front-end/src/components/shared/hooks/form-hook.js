@@ -262,7 +262,7 @@ const fromReducer = (state, action) => {
       ...state,
       responseError: '',
       isLoading: false,
-      responseDate: action.data
+      responseData: action.data
     }
   }
     
