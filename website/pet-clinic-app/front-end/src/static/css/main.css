@@ -2046,12 +2046,24 @@ i.active {
   width: 90% !important;
   max-width: 24rem;
 }
-.adoption-container .cards-main-container .card-container h2, .adoption-container .cards-main-container .card-container p {
+.adoption-container .cards-main-container .card-container h2,
+.adoption-container .cards-main-container .card-container p {
   text-align: center;
   color: white;
 }
 .adoption-container .cards-main-container .card-container p {
   padding: 0 2rem;
+}
+.adoption-container .cards-main-container .card-container a {
+  color: white;
+  display: block;
+  padding: 1rem;
+}
+.adoption-container .cards-main-container .card-container a:visited {
+  color: white;
+}
+.adoption-container .cards-main-container .card-container div {
+  padding: 0;
 }
 @media all and (min-width: 48rem) {
   .adoption-container .cards-main-container .card-container {
@@ -2059,7 +2071,16 @@ i.active {
     padding: 5rem 0;
   }
   .adoption-container .cards-main-container .card-container a {
+    width: 100%;
+    color: white !important;
+    padding: 24px 16px;
+  }
+  .adoption-container .cards-main-container .card-container a:visited {
+    color: white !important;
+  }
+  .adoption-container .cards-main-container .card-container div {
     width: 50%;
+    padding: 0 !important;
   }
   .adoption-container .cards-main-container .card-container p {
     font-size: 1.2rem;

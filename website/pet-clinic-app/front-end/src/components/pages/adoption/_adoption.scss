@@ -1,45 +1,56 @@
 @use "../../abstracts/" as *;
 
-.adoption-container{
-    background-image: linear-gradient(120deg, var(--clr-primary-secondBlue) , var(--clr-primary-secondPurple));
-    padding-bottom: 1rem;
-  
+.adoption-container {
+  background-image: linear-gradient(120deg, var(--clr-primary-secondBlue), var(--clr-primary-secondPurple));
+  padding-bottom: 1rem;
 
-    .cards-main-container{
+  .cards-main-container {
+    .card-container {
+      background-color: var(--clr-shadow-gray-shadow);
+      width: 90% !important;
+      max-width: 24rem;
 
-        
-        .card-container{
-           background-color: var(--clr-shadow-gray-shadow);
-           width: 90%!important;
-           max-width: 24rem;
+      h2,
+      p {
+        text-align: center;
+        color: white;
+      }
 
-            h2,p{
-                text-align: center;
-                color: white;
-            }
-            
-            p{
-                padding: 0 2rem;
-            }
+      p {
+        padding: 0 2rem;
+      }
+      a {
+        color: white;
+        display: block;
+        padding: 1rem;
+        &:visited {
+          color: white;
+        }
+      }
+      div {
+        padding: 0;
+      }
 
-           @include break-point('medium','up'){
-               max-width: 34rem;
-               padding: 5rem 0;
-               a{
-                   width: 50%;
-               }
-
-               p{
-                font-size:1.2rem;
-               }
-
-              
-           }
-
+      @include break-point("medium", "up") {
+        max-width: 34rem;
+        padding: 5rem 0;
+        a {
+          width: 100%;
+          color: white !important;
+          padding: 24px 16px;
+          &:visited {
+            color: white !important;
+          }
+        }
+        div {
+          width: 50%;
+          padding: 0 !important;
         }
 
-      
+        p {
+          font-size: 1.2rem;
+        }
+      }
     }
-
-    
+  }
 }
