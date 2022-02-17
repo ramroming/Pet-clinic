@@ -30,15 +30,12 @@ const Adoption = () => {
                     <h2>Want a home for a pet?</h2>
                     <img src="/media/imgs/pets.png" alt="hearts" />
                     <p>Do you have a pet that needs a home? post an ad in our website and reach out to people who are looking for pets to adopt and love!</p>
-                    <motion.a
-                        variants={itemMotion}
-                        className="btn-rec-purple">Post An Ad
-                    </motion.a>
-                    {/* <motion.div
+                    
+                    <motion.div
                     className="btn-rec-purple"
                     variants={itemMotion}>
-                      <Link to='postad' >Post An Ad</Link>
-                    </motion.div> */}
+                      <Link to='/postad' >Post An Ad</Link>
+                    </motion.div>
                 </motion.div>
 
                 <motion.div
@@ -47,8 +44,12 @@ const Adoption = () => {
                     <h2>Searching for a pet?</h2>
                     <img src="/media/imgs/home-for-pet.png" alt="hearts" />
                     <p>Adopting a pet is a win-win, for you and the pet. So, what are you waiting for? check the ads posted by our shelter and other people for pets looking to be adopted!</p>
-                    <motion.a
-                        variants={itemMotion} className="btn-rec-purple">View Ads</motion.a>
+  
+                    <motion.div
+                    className="btn-rec-purple"
+                    variants={itemMotion}>
+                      <Link to='/adoptionads' >View Ads</Link>
+                    </motion.div>
                 </motion.div>
 
 

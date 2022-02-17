@@ -12,8 +12,8 @@
 # production
 /build
 
-/src/static/css/main.css
-/src/static/MCDatepicker-master
+front-end/src/static/css/main.css
+front-end/src/static/MCDatepicker-master
 
 
 # misc

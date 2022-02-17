@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { adoptionMotion } from "../../../adoptionAds/adoptionMotion"
+import { Link } from 'react-router-dom'
 
 const itemMotion = adoptionMotion
 
@@ -49,9 +50,12 @@ const PetInfo = () => {
   }, [])
   return (
     <div className="profile-data pet-info flex-col falign-center gap-24p">
-      <button type="button" className="create-pet-btn btn-rec-purple">
+      {/* <button type="button" className="create-pet-btn btn-rec-purple">
         Add a pet +
-      </button>
+      </button> */}
+      <Link to='/registerpet' className="create-pet-btn btn-rec-purple">
+        Add a pet +
+      </Link>
       <p className='manage-pet-header'>Manage your current pets</p>
       <div className="manage-pets-container flex-col gap-12p">
         <AnimatePresence exitBeforeEnter>
