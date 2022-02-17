@@ -1,6 +1,7 @@
 import Account from "../../myprofile/profiledata/account/Account"
 import PersonalInfo from "../../myprofile/profiledata/personalinfo/PersonalInfo"
 import AppointmentManagement from "./appointmentmanagement/AppointmentManagement"
+import AdoptionManagement from "./adoptionmanagement/AdoptionManagement"
 
 const StaffPanelData = (props) => {
   // which menu is selected
@@ -41,27 +42,20 @@ const StaffPanelData = (props) => {
 
         <>
           <h4>Adoption Management</h4>
- 
+          <AdoptionManagement/>
         </>
       }
-        {
-        selection === 5 &&
-
-        <>
-          <h4>Registration</h4>
- 
-        </>
-      }
-        {
+       
+        {/* {
         selection === 6 &&
 
         <>
           <h4>Check-in Client</h4>
  
         </>
-      }
+      } */}
         {
-        selection === 7 &&
+        selection === 5 &&
 
         <>
           <h4>Pet treatment history</h4>
@@ -69,7 +63,7 @@ const StaffPanelData = (props) => {
         </>
       }
         {
-        selection === 8 &&
+        selection === 6 &&
 
         <>
           <h4>Pet training history</h4>

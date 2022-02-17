@@ -20,18 +20,15 @@ const StaffPanelMenu = (props) => {
          <p  
         onClick ={ () => selecting(4)}
         className={ selection === 4 ? "profile-option selected" :"profile-option"}>Manage Adoption requests</p>
+        {/* <p  
+        onClick ={ () => selecting(6)}
+        className={ selection === 6 ? "profile-option selected" :"profile-option"}>Check-in Client</p> */}
         <p  
         onClick ={ () => selecting(5)}
-        className={ selection === 5 ? "profile-option selected" :"profile-option"}>Registration</p>
+        className={ selection === 5 ? "profile-option selected" :"profile-option"}>Pet treatment history</p>
         <p  
         onClick ={ () => selecting(6)}
-        className={ selection === 6 ? "profile-option selected" :"profile-option"}>Check-in Client</p>
-        <p  
-        onClick ={ () => selecting(7)}
-        className={ selection === 7 ? "profile-option selected" :"profile-option"}>Pet treatment history</p>
-        <p  
-        onClick ={ () => selecting(8)}
-        className={ selection === 8 ? "profile-option selected" :"profile-option"}>Pet training history</p>
+        className={ selection === 6 ? "profile-option selected" :"profile-option"}>Pet training history</p>
         
       </div>
     )

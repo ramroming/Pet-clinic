@@ -7,17 +7,17 @@
     padding: 1rem;
     text-align: center;
 
-    button, a {
+    .my-great-button,a{
         color: var(--clr-primary-mainBlue);
         text-decoration: underline;
         background-color: transparent;
         border: none;
-        
         &:hover{
             color:white;
             transition: all ease-in-out .3s;
         }
     }
+
 }
 
 .table-header{
@@ -27,7 +27,7 @@
     text-align: center;
     padding: 1rem;
     width: 130px;
-    margin: 1rem;
+
 
 }
 
