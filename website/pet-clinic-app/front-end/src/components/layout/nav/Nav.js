@@ -1,33 +1,70 @@
 import Burgerlist from "./burgerlist/Burgerlist";
-
-
-
+import { useContext } from "react";
+import { authContext } from "../../shared/context/auth-context";
+import { Link, NavLink } from "react-router-dom";
 
 const Nav = () => {
 
-
+  const auth = useContext(authContext)
   return (
     <>
       <nav className="flex-row fjust-between">
-        <a className='image-link' href="/#"><img className='full-logo' src="/media/imgs/fulllogo.jpg" alt="" /></a>
+        <Link to='/' className="image-link"><img className='full-logo' src="/media/imgs/fulllogo.jpg" alt="" /></Link>
 
         <div className="nav-items flex-row fjust-around falign-center">
           <div className="links-wrapper flex-row fjust-around ">
-            <a href="/#" className="nav-item">Home</a>
-            <a href="/#" className="nav-item">Appointment</a>
-            <a href="/#" className="nav-item">Adoption</a>
-            <a href="/#" className="nav-item">About</a>
-            <a href="/#" className="nav-item">Add pet</a>
+            <NavLink
+              to='/'
+              className={({ isActive }) =>
+                isActive ? 'nav-item active-link' : 'nav-item'
+              }>Home</NavLink>
+            <NavLink
+              to='/appointment'
+              className={({ isActive }) =>
+                isActive ? 'nav-item active-link' : 'nav-item'
+              }
+            >Appointment</NavLink>
+            <NavLink
+              to='/adoption'
+              className={({ isActive }) =>
+                isActive ? 'nav-item active-link' : 'nav-item'
+              }
+            >Adoption</NavLink>
+            <NavLink
+              to='/about'
+              className={({ isActive }) =>
+                isActive ? 'nav-item active-link' : 'nav-item'
+              }
+            >About</NavLink>
+            <NavLink
+              to='/registerpet'
+              className={({ isActive }) =>
+                isActive ? 'nav-item active-link' : 'nav-item'
+              }
+            >Add pet</NavLink>
+            
           </div>
 
           <div className="btn-wrapper flex-row fjust-start gap-8p">
-            <button href="/#" className="btn-s">Login</button>
-            <button href="/#" className="btn-s">Signup</button>
+            {auth.isLoggedIn && 
+            <Link
+            className="btn-s" 
+            to='/myprofile'>My profile</Link>}
+            {auth.isLoggedIn && <button  className="btn-s">Logout</button>}
+            {!auth.isLoggedIn && 
+            <Link
+            className="btn-s" 
+            to='/login'>Login</Link>}
+            {!auth.isLoggedIn && 
+            <Link
+            className="btn-s" 
+            to='/signup'>Signup</Link>}
+            
           </div>
         </div>
-        
+
         <Burgerlist />
-        
+
       </nav>
     </>
   )

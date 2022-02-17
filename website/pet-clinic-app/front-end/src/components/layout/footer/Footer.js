@@ -21,9 +21,9 @@ const Footer = () => {
 
             <div className="social flex-row gap-16p  ">
 
-              <a href="/#"><i className="my-social fab fa-facebook"></i></a>
-              <a href="/#"><i className="my-social fab fa-instagram"></i></a>
-              <a href="/#"><i className="my-social fab fa-twitter"></i></a>
+              <a href="https://wwww.facebook.com" target='_blank' rel="noreferrer nofollow"><i className="my-social fab fa-facebook"></i></a>
+              <a href="https:///www.instagram.com" target='_blank' rel="noreferrer nofollow"><i className="my-social fab fa-instagram"></i></a>
+              <a href="https://www.twitter.com" target='_blank' rel="noreferrer nofollow"><i className="my-social fab fa-twitter"></i></a>
 
             </div>
           </div>

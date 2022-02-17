@@ -24,11 +24,19 @@ nav {
       letter-spacing: 2px;
       border-bottom: solid 1.5px white;
       transition: all 0.5s ease;
-      &:hover {
+      &:visited {
+        color: black;
+      }
+      &:hover:not(.active-link) {
         border-bottom-color: var(--clr-accent-logoBlue);
         color: var(--clr-primary-mainBlue);
       }
+      &.active-link {
+        border-bottom-color: var(--clr-primary-secondPurple);
+        color: var(--clr-primary-mainPurple);
+      }
     }
+
   }
 
   .image-link {

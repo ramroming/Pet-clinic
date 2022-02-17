@@ -1,10 +1,13 @@
 import { useState, useRef } from "react"
+import { Link } from "react-router-dom"
 
 //Import Animation object from sliderAnimation.js
 import { contentSlider } from "./sliderAnimation"
 
 //Import motion for defining entering motion, and AnimatePresence to define exit animation
 import { AnimatePresence, motion } from "framer-motion"
+
+
 
 // Assign the imported object to local object sliderMotion
 const sliderMotion = contentSlider
@@ -138,9 +141,8 @@ const Slider = () => {
               className="slide-content flex-col  gap-24p">
               <h1>Appointments</h1>
               <p>Examination, grooming, check-up and more!</p>
-              <a href="/#" className="btn-rec-purple">
-                Make an appointment
-              </a>
+              
+              <Link to='/appointment' className="btn-rec-purple">Make an appointment</Link>
               <img className="slider-img-desktop" src="/media/imgs/appointment.jpg" alt="app" />
               <img className="slider-img-mobile" src="/media/imgs/vertical-appointment.jpg" alt="app" />
             </motion.div>
@@ -157,9 +159,8 @@ const Slider = () => {
                 className="slide-content flex-col  gap-24p">
                 <h1>Adoption</h1>
                 <p>Find pets to adopt or find a home for your pet</p>
-                <a href="/#" className="btn-rec-purple">
-                  Go to adoption posts
-                </a>
+                
+                <Link to='/adoptionads' className="btn-rec-purple">Go to adoption posts</Link>
                 <img className="slider-img-desktop" src="/media/imgs/shelter.jpg" alt="app" />
                 <img className="slider-img-mobile" src="/media/imgs/vertical-shelter.jpg" alt="app" />
               </motion.div>
@@ -177,9 +178,8 @@ const Slider = () => {
                 className="slide-content flex-col  gap-24p">
                 <h1>Pet Training</h1>
                 <p>Get your pet trained by our professional trainers</p>
-                <a href="/#" className="btn-rec-purple">
-                  Check trainings
-                </a>
+                
+                <Link to='/trainings' className="btn-rec-purple">Check trainings</Link>
                 <img className="slider-img-desktop" src="/media/imgs/training.jpg" alt="app" />
                 <img className="slider-img-mobile" src="/media/imgs/vertical-training.jpg" alt="app" />
               </motion.div>
@@ -197,9 +197,9 @@ const Slider = () => {
                 className="slide-content flex-col  gap-24p">
                 <h1>Register your pet</h1>
                 <p>Add your pet to our family</p>
-                <a href="/#" className="btn-rec-purple">
-                  Register meow!
-                </a>
+                
+                <Link to='/registerpet' className="btn-rec-purple">Register meow!</Link>
+                
                 <img className="slider-img-desktop" src="/media/imgs/registerpet.jpg" alt="app" />
                 <img className="slider-img-mobile" src="/media/imgs/vertical-register.jpg" alt="app" />
               </motion.div>

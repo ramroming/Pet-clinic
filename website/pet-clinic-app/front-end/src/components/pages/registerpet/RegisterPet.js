@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const RegisterPet = () => {
 
     return (
@@ -6,9 +7,12 @@ const RegisterPet = () => {
 
                 <form className="form-container flex-col gap-16p falign-center" action="/" method="POST">
 
-                    <a className="logo-link" href="/#">
+                        
+                    <Link 
+                      to='/'
+                      className='logo-link'>
                         <img src="/media/imgs/favicon.png" alt="" className="logo"/>
-                    </a>
+                    </Link>
 
                     <div className="input-wrapper flex-col gap-8p">
 
@@ -93,10 +97,12 @@ const RegisterPet = () => {
                     <div className="button-wrapper flex-row gap-8p fjust-center">
 
                         <button type="submit" className="btn-r btn-r-dark">
-                            Login
+                            Register Pet
                         </button>
 
-                        <a href="/#" className="btn-r btn-r-purple">Go to home page</a>
+                        <Link 
+                          to="/" 
+                          className="btn-r btn-r-purple">Go to home page</Link>
 
                     </div>
                 </form>

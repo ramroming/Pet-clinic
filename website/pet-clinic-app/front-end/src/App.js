@@ -16,11 +16,12 @@ import PostPreview from "./components/pages/postpreview/PostPreview";
 import Stafflist from "./components/pages/stafflist/Stafflist";
 import { authContext } from "./components/shared/context/auth-context";
 import StaffPanel from "./components/pages/staffPanel/StaffPanel";
+import ScrollToTop from "./components/utils/ScrollToTop";
 
 function App() {
 
   // creating the states that will be sent via the context
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
 
   const login = useCallback(() => {
     setIsLoggedIn(true)
@@ -81,7 +82,9 @@ function App() {
       {/* wrapping all the components with our authcontext so that we can pass the data to the interested components when ever isloggedin changes all the components will be able to receive the change */}
       <authContext.Provider value={{ isLoggedIn, login, logout }}>
         <Nav />
-        {routes}
+        <ScrollToTop>
+          {routes}
+        </ScrollToTop>
         <Footer />
       </authContext.Provider>
 

@@ -6,6 +6,8 @@ import { container, item } from "./AnimationFade"
 //Import motion for defining entering motion, and AnimatePresence to define exit animation
 import { motion } from "framer-motion"
 
+import { Link } from "react-router-dom"
+
 // Assign the imported object to local object sliderMotion
 const containerMotion = container
 const itemMotion = item
@@ -32,6 +34,11 @@ const Adoption = () => {
                         variants={itemMotion}
                         className="btn-rec-purple">Post An Ad
                     </motion.a>
+                    {/* <motion.div
+                    className="btn-rec-purple"
+                    variants={itemMotion}>
+                      <Link to='postad' >Post An Ad</Link>
+                    </motion.div> */}
                 </motion.div>
 
                 <motion.div

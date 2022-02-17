@@ -521,6 +521,9 @@ h1 {
   color: white;
   text-align: center;
 }
+.btn-r:visited {
+  color: white;
+}
 .btn-r:not(.btn-r-outlined):not(.btn-r-outlined-purple):not(.btn-s):not(.btn-r-outlined-blue):hover {
   cursor: pointer;
   opacity: 0.8;
@@ -554,6 +557,9 @@ h1 {
   color: black;
   cursor: pointer;
   transition: all 0.5s ease;
+}
+.btn-r-outlined:visited, .btn-r-outlined-purple:visited, .btn-s:visited, .btn-r-outlined-blue:visited {
+  color: black;
 }
 @media all and (min-width: 48rem) {
   .btn-r-outlined, .btn-r-outlined-purple, .btn-s, .btn-r-outlined-blue {
@@ -857,9 +863,16 @@ nav .nav-items .nav-item {
   border-bottom: solid 1.5px white;
   transition: all 0.5s ease;
 }
-nav .nav-items .nav-item:hover {
+nav .nav-items .nav-item:visited {
+  color: black;
+}
+nav .nav-items .nav-item:hover:not(.active-link) {
   border-bottom-color: var(--clr-accent-logoBlue);
   color: var(--clr-primary-mainBlue);
+}
+nav .nav-items .nav-item.active-link {
+  border-bottom-color: var(--clr-primary-secondPurple);
+  color: var(--clr-primary-mainPurple);
 }
 nav .image-link {
   display: block;
@@ -914,6 +927,9 @@ nav .image-link .full-logo {
   -ms-border-radius: 0 0 0 0.5rem;
   -o-border-radius: 0 0 0 0.5rem;
   box-shadow: 0px -2px 5px 0px rgba(0, 0, 0, 0.43);
+}
+.dropdown .droplist div {
+  padding-bottom: 1rem;
 }
 .dropdown .droplist-item {
   color: black;
@@ -2941,8 +2957,8 @@ h4 {
 .modal-title {
   padding: 1rem;
   font-size: 1.1rem;
-
 }
+
 .staff-panel-wrapper {
   background-image: linear-gradient(120deg, whitesmoke, rgba(255, 255, 0, 0.24));
   padding: 5rem 1rem 0 1rem;
@@ -2951,4 +2967,4 @@ h4 {
   .staff-panel-wrapper {
     padding: 9rem 1.5rem 0 1.5rem;
   }
-}/*# sourceMappingURL=main.css.map */
+}
