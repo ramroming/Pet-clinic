@@ -2906,35 +2906,6 @@ h4 {
   cursor: pointer;
 }
 
-.my-great-table {
-  background-image: linear-gradient(90deg, var(--clr-primary-secondPurple), var(--clr-neutral-lightGrayishCyan));
-  padding: 1rem;
-  text-align: center;
-}
-.my-great-table .my-great-button, .my-great-table a {
-  color: var(--clr-primary-mainBlue);
-  text-decoration: underline;
-  background-color: transparent;
-  border: none;
-}
-.my-great-table .my-great-button:hover, .my-great-table a:hover {
-  color: white;
-  transition: all ease-in-out 0.3s;
-}
-
-.table-header {
-  background-color: var(--clr-shadow-glassy-shadow);
-  color: black;
-  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
-  -webkit-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
-  -moz-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
-  -ms-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
-  -o-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
-  text-align: center;
-  padding: 1rem;
-  width: 130px;
-}
-
 .margin-bottom {
   margin-bottom: 0.5rem;
 }
@@ -2989,19 +2960,6 @@ h4 {
   }
 }
 
-.small-table-header {
-  background-color: var(--clr-shadow-glassy-shadow);
-  color: black;
-  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
-  -webkit-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
-  -moz-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
-  -ms-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
-  -o-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
-  text-align: center;
-  padding: 1rem;
-  width: 120px;
-}
-
 .search-bar-container {
   padding: 1rem;
 }
@@ -3022,3 +2980,34 @@ h4 {
   width: 120px;
   margin-right: 1rem;
 }
+
+.my-table {
+  padding: 1rem;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -webkit-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -moz-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -ms-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -o-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  border: 1px solid var(--clr-primary-mainPurple);
+  text-align: center;
+  background-image: linear-gradient(90deg, var(--clr-primary-secondPurple), var(--clr-neutral-lightGrayishCyan));
+}
+
+Td, Tr, Th {
+  padding: 1rem 0;
+}
+
+.my-great-button {
+  color: var(--clr-primary-mainBlue);
+  text-decoration: underline;
+  background-color: transparent;
+  border: none;
+}
+.my-great-button:hover {
+  color: white;
+  transition: all ease-in-out 0.3s;
+}
+
+a.my-great-button {
+  color: var(--clr-primary-mainBlue);
+}/*# sourceMappingURL=main.css.map */
