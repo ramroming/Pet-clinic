@@ -3,7 +3,7 @@ import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { useState } from 'react'
 import DeletePostModal from "../../../myprofile/profiledata/myadoptionposts/DeletePostModal"
 import EditAppointmentStatus from  "./EditAppointmentStatus"
-import { Link } from 'react-router-dom'
+
 
 const AppointmentManagement = () => {
 
@@ -31,6 +31,12 @@ const AppointmentManagement = () => {
              Date and Time
            </Th>
            <Th>
+            Vet
+           </Th>
+           <Th>
+             Ap-Type
+           </Th>
+           <Th>
              Pet Name
            </Th>
            <Th>
@@ -55,6 +61,12 @@ const AppointmentManagement = () => {
             2022/02/17 11:00 PM
             </Td>
             <Td>
+            Yara Halimeh
+            </Td>
+            <Td>
+            Training
+            </Td>
+            <Td>
             Mimo
             </Td>
             <Td>
@@ -80,6 +92,12 @@ const AppointmentManagement = () => {
             2022/02/17 11:00 PM
             </Td>
             <Td>
+            Yara Halimeh
+            </Td>
+            <Td>
+            Training
+            </Td>
+            <Td>
             Mimo
             </Td>
             <Td>
@@ -104,6 +122,12 @@ const AppointmentManagement = () => {
             </Td>
             <Td>
             2022/02/17 11:00 PM
+            </Td>
+            <Td>
+            Yara Halimeh
+            </Td>
+            <Td>
+            Training
             </Td>
             <Td>
             Mimo
