@@ -1,5 +1,5 @@
-
-
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import DeletePostModal from "../../../myprofile/profiledata/myadoptionposts/DeletePostModal"
 import { useState } from 'react'
 import EditAppointmentStatus from "./EditAppointmentStatus"

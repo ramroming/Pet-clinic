@@ -3000,4 +3000,20 @@ h4 {
   padding: 0.5rem;
   width: 120px;
   margin-right: 1rem;
+}
+
+.my-table {
+  padding: 1rem;
+  background-color: var(--clr-shadow-glassy-shadow);
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -webkit-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -moz-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -ms-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  -o-border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  border: 1px solid var(--clr-primary-mainPurple);
+  text-align: center;
+}
+
+Td, Tr, Th {
+  padding: 1rem 0;
 }/*# sourceMappingURL=main.css.map */
