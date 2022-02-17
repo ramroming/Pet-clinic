@@ -11,6 +11,11 @@ const AdoptionManagement = () => {
     return (
 
         <>
+         <div className="search-bar-container flex-row fjust-center falign-center gap-16p">
+        <label>Search and find:</label>
+        <input className="search-bar" type="text" />
+        </div>
+        
         <div className="flex-col falign-center fjust-center ">
         {openModal && <DeletePostModal closeModal={setOpenModal} />}
         </div>
@@ -19,16 +24,16 @@ const AdoptionManagement = () => {
         {openStatusModal && <EditAdoptionStatus closeModal={setOpenStatusModal} />}
         </div>
 
-        <div className="my-great-table falign-center fjust-center flex-row fgap-16p">
+        <div className="my-great-table falign-center fjust-center flex-row gap-16p">
             {/* first column */}
-            <div className="flex-col fgap-16p ">
+            <div className="flex-col gap-16p ">
                 <p className="table-header">Requesting</p>
                 <a className="margin-bottom"href="/#">click here to view</a>
                 <a className="margin-bottom"href="/#">click here to view</a>
                 <a className="margin-bottom"href="/#">click here to view</a>
             </div>
             {/* second column */}
-            <div className="flex-col fgap-16p ">
+            <div className="flex-col gap-16p ">
                 <p className="table-header">pet name</p>
                 <p className="margin-bottom">Mimo</p>
                 <p className="margin-bottom">Mimo</p>
@@ -36,7 +41,7 @@ const AdoptionManagement = () => {
             </div>
         
             {/* third column */}
-            <div className="flex-col fgap-16p">
+            <div className="flex-col gap-16p">
                 <p className="table-header">Client name</p>
                 <p className="margin-bottom">Mehmet Ali</p>
                 <p className="margin-bottom">Mehmet Ali</p>
@@ -45,7 +50,7 @@ const AdoptionManagement = () => {
             </div>
 
              {/* fourth column */}
-             <div className="flex-col fgap-16p ">
+             <div className="flex-col gap-16p ">
                 <p className="table-header">Delete</p>
                 <button className="my-great-button margin-bottom" 
                 onClick={() => { setOpenModal(true) }}
@@ -55,7 +60,7 @@ const AdoptionManagement = () => {
             </div>
 
              {/* fifth column */}
-             <div className="flex-col fgap-16p">
+             <div className="flex-col gap-16p">
                 <p className="table-header">Status</p>
                 <button className="my-great-button margin-bottom" 
                 onClick={() => {setOpenStatusModal(true)}}>Accepted <i className="fa-regular fa-pen-to-square"></i></button>
