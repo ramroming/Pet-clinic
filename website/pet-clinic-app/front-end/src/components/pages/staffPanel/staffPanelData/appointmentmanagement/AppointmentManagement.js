@@ -42,7 +42,7 @@ const AppointmentManagement = () => {
              {/* fourth column */}
              <div className="flex-col fgap-16p ">
                 <p className="table-header">Delete</p>
-                <button className="margin-bottom" 
+                <button className="my-great-button margin-bottom" 
                 onClick={() => { setOpenModal(true) }}
                 ><i className="fa-regular fa-trash-can"></i></button>
                
@@ -52,7 +52,7 @@ const AppointmentManagement = () => {
              {/* fifth column */}
              <div className="flex-col fgap-16p">
                 <p className="table-header">Status</p>
-                <button className="margin-bottom" 
+                <button className="my-greaat-button margin-bottom" 
                 onClick={() => {setOpenStatusModal(true)}}>Active <i className="fa-regular fa-pen-to-square"></i></button>
               
                

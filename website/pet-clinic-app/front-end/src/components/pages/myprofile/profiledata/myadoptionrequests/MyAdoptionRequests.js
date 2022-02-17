@@ -47,20 +47,20 @@ const MyAdoptionPosts = () => {
              {/* fourth column */}
              <div className="flex-col fgap-16p ">
                 <p className="table-header">Delete</p>
-                <button className="margin-bottom" 
+                <button className="my-great-button margin-bottom" 
                 onClick={() => { setOpenModal(true) }}
                 ><i className="fa-regular fa-trash-can"></i></button>
-                <a className="margin-bottom" href="/#"><i className="fa-regular fa-trash-can"></i></a>
-                <a className="margin-bottom" href="/#"><i className="fa-regular fa-trash-can"></i></a>
+                <a className="my-great-button margin-bottom" href="/#"><i className="fa-regular fa-trash-can"></i></a>
+                <a className="my-great-button margin-bottom" href="/#"><i className="fa-regular fa-trash-can"></i></a>
             </div>
 
              {/* fifth column */}
              <div className="flex-col fgap-16p">
                 <p className="table-header">Status</p>
-                <button className="margin-bottom" 
+                <button className="my-great-button margin-bottom" 
                 onClick={() => {setOpenStatusModal(true)}}>Accepted <i className="fa-regular fa-pen-to-square"></i></button>
-                <a className="margin-bottom" href="/#">Rejected <i className="fa-regular fa-pen-to-square"></i></a>
-                <a className="margin-bottom" href="/#">in-review <i className="fa-regular fa-pen-to-square"></i></a>
+                <button className="my-great-button margin-bottom" href="/#">Rejected <i className="fa-regular fa-pen-to-square"></i></button>
+                <button className="my-great-button margin-bottom" href="/#">in-review <i className="fa-regular fa-pen-to-square"></i></button>
             </div>
 
 

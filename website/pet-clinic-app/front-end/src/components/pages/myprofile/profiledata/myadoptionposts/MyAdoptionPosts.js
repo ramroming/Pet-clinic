@@ -33,18 +33,18 @@ const MyAdoptionPosts = () => {
                 {/* third column */}
                 <div className="flex-col fgap-16p ">
                     <p className="table-header">Delete post</p>
-                    <button className="margin-bottom delete-modal"
+                    <button className="margin-bottom  my-great-button delete-modal"
                         onClick={() => { setOpenModal(true) }}
                     ><i className="fa-regular fa-trash-can"></i></button>
-                    <a className="margin-bottom delete-modal" href="/#"><i className="fa-regular fa-trash-can"></i></a>
-                    <a className="margin-bottom delete-modal" href="/#"><i className="fa-regular fa-trash-can"></i></a>
+                    <button className="my-great-button margin-bottom delete-modal" href="/#"><i className="fa-regular fa-trash-can"></i></button>
+                    <button className="margin-bottom delete-modal" href="/#"><i className="fa-regular fa-trash-can"></i></button>
                 </div>
                 {/* fourth column */}
                 <div className="flex-col fgap-16p">
                     <p className="table-header">Edit Post</p>
-                    <a className="margin-bottom" href="/#"><i className="fa-regular fa-pen-to-square"></i></a>
-                    <a className="margin-bottom" href="/#"><i className="fa-regular fa-pen-to-square"></i></a>
-                    <a className="margin-bottom" href="/#"><i className="fa-regular fa-pen-to-square"></i></a>
+                    <button className="my-great-button margin-bottom" href="/#"><i className="fa-regular fa-pen-to-square"></i></button>
+                    <button className="my-great-button margin-bottom" href="/#"><i className="fa-regular fa-pen-to-square"></i></button>
+                    <button className="my-great-button margin-bottom" href="/#"><i className="fa-regular fa-pen-to-square"></i></button>
                 </div>
 
                 {/* fifth column */}

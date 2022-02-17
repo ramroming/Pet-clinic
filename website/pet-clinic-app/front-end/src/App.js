@@ -20,7 +20,7 @@ import StaffPanel from "./components/pages/staffPanel/StaffPanel";
 function App() {
 
   // creating the states that will be sent via the context
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
 
   const login = useCallback(() => {
     setIsLoggedIn(true)

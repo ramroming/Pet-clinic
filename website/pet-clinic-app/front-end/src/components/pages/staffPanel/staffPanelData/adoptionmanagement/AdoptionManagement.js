@@ -23,9 +23,9 @@ const AdoptionManagement = () => {
             {/* first column */}
             <div className="flex-col fgap-16p ">
                 <p className="table-header">Requesting</p>
-                <button  className="margin-bottom"href="/#">click here to view</button>
-                <button  className="margin-bottom"href="/#">click here to view</button>
-                <button  className="margin-bottom"href="/#">click here to view</button>
+                <a className="margin-bottom"href="/#">click here to view</a>
+                <a className="margin-bottom"href="/#">click here to view</a>
+                <a className="margin-bottom"href="/#">click here to view</a>
             </div>
             {/* second column */}
             <div className="flex-col fgap-16p ">
@@ -47,19 +47,20 @@ const AdoptionManagement = () => {
              {/* fourth column */}
              <div className="flex-col fgap-16p ">
                 <p className="table-header">Delete</p>
-                <a className="margin-bottom" 
+                <button className="my-great-button margin-bottom" 
                 onClick={() => { setOpenModal(true) }}
-                ><i className="fa-regular fa-trash-can"></i></a>
-                <a className="margin-bottom" href="/#"><i className="fa-regular fa-trash-can"></i></a>
-                <a className="margin-bottom" href="/#"><i className="fa-regular fa-trash-can"></i></a>
+                ><i className="fa-regular fa-trash-can"></i></button>
+                <button className="my-great-button margin-bottom" href="/#"><i className="fa-regular fa-trash-can"></i></button>
+                <button className="my-great-button margin-bottom" href="/#"><i className="fa-regular fa-trash-can"></i></button>
             </div>
 
              {/* fifth column */}
              <div className="flex-col fgap-16p">
                 <p className="table-header">Status</p>
-                <button className="margin-bottom" 
+                <button className="my-great-button margin-bottom" 
                 onClick={() => {setOpenStatusModal(true)}}>Accepted <i className="fa-regular fa-pen-to-square"></i></button>
-                <button className="margin-bottom" href="/#">Rejected <i className="fa-regular fa-pen-to-square"></i></button>
+                <button className="my-great-button margin-bottom" href="/#">Rejected <i className="fa-regular fa-pen-to-square"></i></button>
+                <button className="my-great-button margin-bottom" href="/#">Rejected <i className="fa-regular fa-pen-to-square"></i></button>
                 
             </div>
 
