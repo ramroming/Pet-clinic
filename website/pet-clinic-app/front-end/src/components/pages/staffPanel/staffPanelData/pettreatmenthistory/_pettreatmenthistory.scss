@@ -1,0 +1,30 @@
+@use '../../../../abstracts/' as *;
+
+
+
+// for the modal
+.update-modal-background{
+    background-color: var(--clr-shadow-glassy-shadow);
+    position: relative;
+    text-align: center;
+    width: 310px;
+    height: 200px;
+    box-shadow: 5px 10px 10px rgb(131, 131, 131);
+    margin-bottom: 1rem;
+    @include break-point('medium', 'up'){
+        width: 400px;
+        height:260px;
+    }
+
+    button{
+        margin-top: .5rem;
+    }
+}
+
+.update-style{
+    text-align: center;
+
+    input{
+        width: 50%;
+    }
+}

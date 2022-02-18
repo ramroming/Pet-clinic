@@ -4,6 +4,9 @@ import AppointmentManagement from "./appointmentmanagement/AppointmentManagement
 import AdoptionManagement from "./adoptionmanagement/AdoptionManagement"
 import AdoptionPostsManagement from "./adoptionpostsmanagement/AdoptionPostsManagement"
 import Registration from "./registration/Registration"
+import PetTreatmentHistory from "./pettreatmenthistory/PetTreatmentHistory"
+import PetTrainingHistory from "./pettraininghistory/PetTrainingHistory"
+
 
 const StaffPanelData = (props) => {
   // which menu is selected
@@ -61,7 +64,7 @@ const StaffPanelData = (props) => {
 
         <>
           <h4>Pet Treatment history</h4>
- 
+          <PetTreatmentHistory/>
         </>
       }
         {
@@ -69,7 +72,7 @@ const StaffPanelData = (props) => {
 
         <>
           <h4>Pet Training history</h4>
-
+          <PetTrainingHistory/>
         </>
       }
         {
