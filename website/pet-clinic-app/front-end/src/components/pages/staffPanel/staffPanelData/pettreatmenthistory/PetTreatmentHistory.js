@@ -3,11 +3,13 @@ import { useState } from 'react'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import UpdateTreatment from './UpdateTreatment';
+import AddPetTreatment from './AddPetTreatment';
 
 const PetTreatmentHistory = () => {
 
     const [treatmentHistory, setTreatmentHistory] = useState(false)
     const [openModal, setOpenModal] = useState(false)
+    const [addTreatment, setAddTreatment] = useState(false)
 
     return (
         <>
@@ -21,12 +23,25 @@ const PetTreatmentHistory = () => {
                         }}>
                         find
                     </button>
+                    {treatmentHistory && 
+                        <button className="btn-sm"
+                        onClick={() => {
+                            setAddTreatment(true)
+                        }}>
+                            Add treatment
+                        </button>
+                    }
                 </div>
 
                 {
                     openModal &&
                     <UpdateTreatment setOpenModal={setOpenModal}/>
 
+                }
+
+                {
+                    addTreatment && 
+                    <AddPetTreatment setAddTreatment={setAddTreatment}/>
                 }
 
                 {

@@ -2,23 +2,26 @@
 
 
 
-// // for the modal
-// .update-training-modal-background{
-//     background-color: var(--clr-shadow-glassy-shadow);
-//     position: relative;
-//     text-align: center;
-//     width: 310px;
-//     height: 200px;
-//     box-shadow: 5px 10px 10px rgb(131, 131, 131);
-//     margin-bottom: 1rem;
-//     @include break-point('medium', 'up'){
-//         width: 400px;
-//         height:260px;
-//     }
+// for the modal
+.add-training-modal-background{
+    background-color: var(--clr-shadow-glassy-shadow);
+    position: relative;
+    text-align: center;
+    width: 310px;
+    height: 200px;
+    box-shadow: 5px 10px 10px rgb(131, 131, 131);
+    margin-bottom: 1rem;
+    @include break-point('medium', 'up'){
+        width: 400px;
+        height:220px;
+    }
 
-//     button{
-//         margin-top: .5rem;
-//     }
+    button{
+        margin: .5rem 0;
+     }
+}
+
+//    
 // }
 
 // .update-style{

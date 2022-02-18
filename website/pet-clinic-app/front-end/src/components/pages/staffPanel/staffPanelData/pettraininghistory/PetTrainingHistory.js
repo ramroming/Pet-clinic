@@ -2,12 +2,14 @@
 import { useState } from 'react'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import AddPetTraining from './AddPetTraining';
 import UpdateTraining from './UpdateTraining';
 
 const PetTrainingHistory = () => {
 
     const [trainingHistory, setTrainingHistory] = useState(false)
     const [openModal, setOpenModal] = useState(false)
+    const [addTraining, setAddTraining] = useState(false)
 
     return (
         <>
@@ -21,12 +23,26 @@ const PetTrainingHistory = () => {
                         }}>
                         find
                     </button>
+
+                    {trainingHistory &&
+                        <button className="btn-sm"
+                            onClick={() => {
+                                setAddTraining(true)
+                            }}>
+                            Add new training
+                        </button>
+                    }
                 </div>
 
                 {
                     openModal &&
-                    <UpdateTraining setOpenModal={setOpenModal}/>
+                    <UpdateTraining setOpenModal={setOpenModal} />
 
+                }
+
+                {
+                    addTraining &&
+                    <AddPetTraining setAddTraining={setAddTraining}/>
                 }
 
                 {
@@ -55,7 +71,7 @@ const PetTrainingHistory = () => {
                                 <Th>
                                     History
                                 </Th>
-                               
+
 
                             </Tr>
                         </Thead>
