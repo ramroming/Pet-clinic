@@ -5,7 +5,9 @@ const express = require('express')
 const conn = require('./src/database/pet-clinic-db')
 
 // requiring the routers
-const usersRouter = require('./src/endpoints/users')
+const usersRouter = require('./src/routers/users')
+const petsRouter = require('./src/routers/pets')
+
 
 const app = express()
 
@@ -25,6 +27,7 @@ app.use((req, res, next) => {
 
 // Using the Routers
 app.use(usersRouter)
+app.use(petsRouter)
 
 // not found url
 app.use('/*', (req, res) => {

@@ -121,31 +121,35 @@ const myProfile = async (req, res) => {
 
 // logout user
 const logout = async (req, res) => {
-  try {
-    const conn = await mysql.createConnection(connData)
-    await conn.execute('DELETE FROM user_tokens WHERE token = ? AND user_id = ?', [req.token, req.user.id])
-    await conn.end()
-    res.status(200).send()
-    // if the connection to database failed
-  } catch (e) {
-    await conn.end()
-    res.status(500).send({error: 'failed to connect to database'})
-  }
+  res.status(200).send()
 }
+// // logout user
+// const logout = async (req, res) => {
+//   try {
+//     const conn = await mysql.createConnection(connData)
+//     await conn.execute('DELETE FROM user_tokens WHERE token = ? AND user_id = ?', [req.token, req.user.id])
+//     await conn.end()
+//     res.status(200).send()
+//     // if the connection to database failed
+//   } catch (e) {
+//     await conn.end()
+//     res.status(500).send({error: 'failed to connect to database'})
+//   }
+// }
 
-// logout from all devices
-const logoutAll = async (req, res) => {
-  try {
-    const conn = await mysql.createConnection(connData)
-    await conn.execute('DELETE FROM user_tokens WHERE user_id = ?', [req.user.id])
-    await conn.end()
-    res.status(200).send()
+// // logout from all devices
+// const logoutAll = async (req, res) => {
+//   try {
+//     const conn = await mysql.createConnection(connData)
+//     await conn.execute('DELETE FROM user_tokens WHERE user_id = ?', [req.user.id])
+//     await conn.end()
+//     res.status(200).send()
 
-  } catch (e) {
-    await conn.end()
-    res.status(500).send( {error: 'db error while clearing the tokens table' } )
-  }
-}
+//   } catch (e) {
+//     await conn.end()
+//     res.status(500).send( {error: 'db error while clearing the tokens table' } )
+//   }
+// }
 
 
 
@@ -154,5 +158,4 @@ module.exports = {
   myProfile,
   login,
   logout,
-  logoutAll,
 }

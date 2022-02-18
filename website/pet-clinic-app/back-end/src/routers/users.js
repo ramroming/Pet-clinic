@@ -4,7 +4,6 @@ const {
   myProfile,
   login,
   logout,
-  logoutAll,
 } = require('../controllers/UserController')
 const auth = require('../middleware/auth')
 const validationMiddleware = require('../middleware/validationMiddleware')
@@ -23,10 +22,8 @@ usersRouter.get('/users/me', auth, myProfile)
 // logout user
 usersRouter.get('/users/logout', auth, logout)
 
-// logout from all devices
-usersRouter.get('/users/logoutall', auth, logoutAll)
 
-usersRouter.get('/users/*', (req, res) => {
+usersRouter.use('/users/*', (req, res) => {
   res.send('404 User endpoint not found!!')
 })
 
