@@ -1,10 +1,10 @@
-import { useEffect } from "react"
+import { useEffect, useContext } from "react"
 import InputError from "../../utils/formErrorMsg/InputError"
 import useFetch from "../../shared/hooks/fetch-hook"
 import useForm from "../../shared/hooks/form-hook"
-import {
-  useWhatChanged,
-} from '@simbathesailor/use-what-changed';
+import { authContext } from "../../shared/context/auth-context"
+
+
 
 
 const initialState = {
@@ -57,7 +57,8 @@ const Signup = () => {
   const sendRequest = useFetch(dispatch)
   
 
-  
+  const auth = useContext(authContext)
+
 
 
 
@@ -66,26 +67,37 @@ const Signup = () => {
     event.preventDefault()
     dispatch({ type: 'validate' })
   }
-  useWhatChanged([state.dataToSend, state.isLoading, sendRequest])
 
+  // if we have async operation inside use effect we have to wrap the operation with an async function inside the useeffect and then we should call the same function again inside the useEffect without using await
   useEffect(() => {
 
 
     // wrapper function to enable us to use async functions inside useEffect
     const fetchUser = async () => {
-      const data = await sendRequest(
-        'http://localhost:5000/users',
-        'POST', JSON.stringify(state.dataToSend),
-        {
-          'Content-Type': 'application/json'
-        })
-      return data
+      try {
+        await sendRequest(
+          'http://localhost:5000/users',
+          'POST', JSON.stringify(state.dataToSend),
+          {
+            'Content-Type': 'application/json'
+          })
+      } catch (e) {
+
+      }
+      
     }
 
+    // isLoading changes from false to true if the validation process  passed successfully 
     if (state.isLoading) {
       fetchUser()
     }
-  }, [state.dataToSend, state.isLoading, sendRequest])
+  }, [state.dataToSend, state.isLoading, sendRequest, auth])
+
+  // after data been fetched if we have a token inside the data that means the login was successfull so we login
+  useEffect(() => {
+    if (state.responseData.token)
+      auth.login(state.responseData.userData.id, state.responseData.token)
+  }, [state.responseData, auth])
 
   return (
     <div className="background-blue">
