@@ -21,13 +21,13 @@ const auth = async (req, res, next) => {
       }
 
        
-      const [user_token, fields2] = await conn.execute('SELECT * FROM user_tokens WHERE token = ? AND user_id = ? ', [token, data.payload])
+      // const [user_token, fields2] = await conn.execute('SELECT * FROM user_tokens WHERE token = ? AND user_id = ? ', [token, data.payload])
 
-      // if the user exists in the database but their token was removed from the user_tokens table due to logout 
-      if (!user_token.length) {
-        await conn.end()
-        return res.status(401).send({error: 'please Authanticate'})
-      }
+      // // if the user exists in the database but their token was removed from the user_tokens table due to logout 
+      // if (!user_token.length) {
+      //   await conn.end()
+      //   return res.status(401).send({error: 'please Authanticate'})
+      // }
       req.user = users[0]
       req.token = token
 

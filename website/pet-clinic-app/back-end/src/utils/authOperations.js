@@ -23,18 +23,20 @@ const findUserByCredentials = async (conn, username, password) => {
 // creating a JWT
 const generateAuthToken = async (payload) => {
   const token = jwt.sign({ payload }, 'petappr&r', { expiresIn: '7 days' })
-  try {
-    const conn = await mysql.createConnection(connData)
-    const [tokens, fields] = await conn.execute('INSERT INTO user_tokens (token, user_id) VALUES (?, ?)', [token, payload])
+  return token
 
-    await conn.end()
-    return token
+  // try {
+  //   const conn = await mysql.createConnection(connData)
+  //   const [tokens, fields] = await conn.execute('INSERT INTO user_tokens (token, user_id) VALUES (?, ?)', [token, payload])
 
-    // incase of failure in storing token in the database
-  } catch (e) {
-    await conn.end()
-    return undefined
-  }
+  //   await conn.end()
+  //   return token
+
+  //   // incase of failure in storing token in the database
+  // } catch (e) {
+  //   await conn.end()
+  //   return undefined
+  // }
 
 }
 
