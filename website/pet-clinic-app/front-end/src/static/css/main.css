@@ -2991,6 +2991,7 @@ h4 {
   border: 1px solid var(--clr-primary-mainPurple);
   text-align: center;
   background-image: linear-gradient(90deg, var(--clr-primary-secondPurple), var(--clr-neutral-lightGrayishCyan));
+  table-layout: fixed;
 }
 
 Td, Tr, Th {

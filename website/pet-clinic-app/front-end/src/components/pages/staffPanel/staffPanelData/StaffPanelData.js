@@ -3,6 +3,7 @@ import PersonalInfo from "../../myprofile/profiledata/personalinfo/PersonalInfo"
 import AppointmentManagement from "./appointmentmanagement/AppointmentManagement"
 import AdoptionManagement from "./adoptionmanagement/AdoptionManagement"
 import AdoptionPostsManagement from "./adoptionpostsmanagement/AdoptionPostsManagement"
+import Registration from "./registration/Registration"
 
 const StaffPanelData = (props) => {
   // which menu is selected
@@ -69,6 +70,14 @@ const StaffPanelData = (props) => {
         <>
           <h4>Pet Training history</h4>
 
+        </>
+      }
+        {
+        selection === 8 &&
+
+        <>
+          <h4>Registration</h4>
+          <Registration/>
         </>
       }
    
