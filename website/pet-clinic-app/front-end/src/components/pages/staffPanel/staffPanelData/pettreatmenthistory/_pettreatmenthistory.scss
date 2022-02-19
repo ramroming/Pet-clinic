@@ -7,14 +7,13 @@
     background-color: var(--clr-shadow-glassy-shadow);
     position: relative;
     text-align: center;
-    width: 310px;
-    height: 200px;
+    width: 90%;
+    max-width: 400px;
+    min-width: 250px;
+    padding: 1rem;
     box-shadow: 5px 10px 10px rgb(131, 131, 131);
     margin-bottom: 1rem;
-    @include break-point('medium', 'up'){
-        width: 400px;
-        height:260px;
-    }
+
 
     button{
         margin-top: .5rem;
@@ -26,22 +25,27 @@
     background-color: var(--clr-shadow-glassy-shadow);
     position: relative;
     text-align: center;
-    width: 310px;
-    height: 200px;
+    width: 90%;
+    max-width: 400px;
+    min-width: 270px;
+    padding: 1rem;
     box-shadow: 5px 10px 10px rgb(131, 131, 131);
     margin-bottom: 1rem;
-    @include break-point('medium', 'up'){
-        width: 400px;
-        height:300px;
-    }
 
-    button{
+
+}
+
+
+.add-treatment-button-container{
+    width: 100%;
+    button {
         margin-top: .5rem;
     }
 }
 
 .update-style{
     text-align: center;
+    width: 100%;
 
     input{
         width: 50%;

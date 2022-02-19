@@ -15,28 +15,28 @@ const UpdatetTeatment = ({setOpenModal}) => {
                 <form className="flex-col falign-center fjust-center
                  gap-16p">
                   {/* first input */}
-                <div className="update-style flex-row fjust-around falign-center gap-16p">
+                <div className="update-style flex-row fjust-between falign-center gap-16p">
                 <label>
                     case:
                   </label>
                   <input type="text" />
                 </div>
                 {/* second input */}
-                <div className="update-style flex-row fjust-around falign-center gap-16p">
+                <div className="update-style flex-row fjust-between  falign-center gap-16p">
                 <label>
                     prescription:
                   </label>
                   <input type="text" />
                 </div>
                 {/* third input */}
-                <div className="update-style flex-row fjust-around falign-center gap-16p">
+                <div className="update-style flex-row fjust-between  falign-center gap-16p">
                 <label>
                     dose:
                   </label>
                   <input type="text" />
                 </div>
                 {/* fourth input */}
-                <div className="update-style flex-row fjust-around falign-center gap-16p">
+                <div className="update-style flex-row fjust-between falign-center gap-16p">
                 <label>
                     medicine:
                   </label>
@@ -44,7 +44,7 @@ const UpdatetTeatment = ({setOpenModal}) => {
                 </div>
                 
                 </form>
-                <div className="flex-row fgap-24p fjust-between">
+                <div className="add-treatment-button-container flex-row gap-24p fjust-center">
                     <button className="btn-rec-purple">Update</button>
                 </div>
             </div>

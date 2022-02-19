@@ -14,7 +14,7 @@ const UpdatetTeatment = ({setOpenModal}) => {
                    <p>if the training is completed set it to done</p>
                 </div>
                 
-                <div className="flex-row fgap-24p fjust-between">
+                <div className="add-treatment-button-container flex-row gap-24p fjust-center">
                     <button className="btn-rec-purple">Done!</button>
                     <button className="btn-rec-purple">Delete</button>
                 </div>

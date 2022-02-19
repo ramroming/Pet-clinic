@@ -6,7 +6,7 @@ import AdoptionPostsManagement from "./adoptionpostsmanagement/AdoptionPostsMana
 import Registration from "./registration/Registration"
 import PetTreatmentHistory from "./pettreatmenthistory/PetTreatmentHistory"
 import PetTrainingHistory from "./pettraininghistory/PetTrainingHistory"
-
+import ManageUsers from "./manageusers/ManageUsers"
 
 const StaffPanelData = (props) => {
   // which menu is selected
@@ -34,7 +34,7 @@ const StaffPanelData = (props) => {
           <Account />
         </>
       }
-        {
+      {
         selection === 3 &&
 
         <>
@@ -42,48 +42,72 @@ const StaffPanelData = (props) => {
           <AppointmentManagement />
         </>
       }
-        {
+      {
         selection === 4 &&
 
         <>
           <h4>Adoption Request Management</h4>
-          <AdoptionManagement/>
+          <AdoptionManagement />
         </>
       }
-       
-        {
+
+      {
         selection === 5 &&
 
         <>
           <h4>Adoption Posts Managment</h4>
-          <AdoptionPostsManagement/>
+          <AdoptionPostsManagement />
         </>
       }
-        {
+      {
         selection === 6 &&
 
         <>
           <h4>Pet Treatment history</h4>
-          <PetTreatmentHistory/>
+          <PetTreatmentHistory />
         </>
       }
-        {
+      {
         selection === 7 &&
 
         <>
           <h4>Pet Training history</h4>
-          <PetTrainingHistory/>
+          <PetTrainingHistory />
         </>
       }
-        {
+      {
         selection === 8 &&
 
         <>
           <h4>Registration</h4>
-          <Registration/>
+          <Registration />
         </>
       }
-   
+      {
+        selection === 9 &&
+
+        <>
+          <h4>Manage Users</h4>
+          <ManageUsers />
+        </>
+      }
+      {
+        selection === 10 &&
+
+        <>
+          <h4>Manage Pets</h4>
+
+        </>
+      }
+      {
+        selection === 11 &&
+
+        <>
+          <h4>Manage Profits</h4>
+
+        </>
+      }
+
     </div>
   )
 }

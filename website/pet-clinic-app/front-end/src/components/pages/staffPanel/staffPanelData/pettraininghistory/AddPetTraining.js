@@ -35,7 +35,7 @@ const AddPetTraining = ({setAddTraining}) => {
                 </div>
                
                 </form>
-                <div className="flex-row fgap-24p fjust-between">
+                <div className="add-treatment-button-container flex-row gap-24p fjust-center">
                     <button className="btn-rec-purple">Add</button>
                 </div>
             </div>

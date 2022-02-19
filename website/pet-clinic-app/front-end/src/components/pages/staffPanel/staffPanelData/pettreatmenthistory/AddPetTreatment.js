@@ -17,35 +17,35 @@ const AddPetTreatment = ({setAddTreatment}) => {
                 <form className="flex-col falign-center fjust-center
                  gap-16p">
                   {/* first input */}
-                <div className="update-style flex-row fjust-around falign-center gap-16p">
+                <div className="update-style flex-row fjust-between falign-center gap-16p">
                 <label>
                     Staff Member:
                   </label>
                   <input type="text" />
                 </div>
                 {/* second input */}
-                <div className="update-style flex-row fjust-around falign-center gap-16p">
+                <div className="update-style flex-row fjust-between falign-center gap-16p">
                 <label>
                     case:
                   </label>
                   <input type="text" />
                 </div>
                 {/* third input */}
-                <div className="update-style flex-row fjust-around falign-center gap-16p">
+                <div className="update-style flex-row fjust-between falign-center gap-16p">
                 <label>
                     prescription:
                   </label>
                   <input type="text" />
                 </div>
                 {/* fourth input */}
-                <div className="update-style flex-row fjust-around falign-center gap-16p">
+                <div className="update-style flex-row fjust-between falign-center gap-16p">
                 <label>
                     vaccine:
                   </label>
                   <input type="text" />
                 </div>
                 {/* fifth input */}
-                <div className="update-style flex-row fjust-around falign-center gap-16p">
+                <div className="update-style flex-row fjust-between falign-center gap-16p">
                 <label>
                     Medicine:
                   </label>
@@ -53,7 +53,7 @@ const AddPetTreatment = ({setAddTreatment}) => {
                 </div>
                 
                 </form>
-                <div className="flex-row fgap-24p fjust-between">
+                <div className="add-treatment-button-container flex-row gap-24p fjust-center">
                     <button className="btn-rec-purple">Add</button>
                 </div>
             </div>
