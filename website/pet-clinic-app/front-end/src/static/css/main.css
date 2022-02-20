@@ -3085,4 +3085,15 @@ a.my-great-button {
 
 .radio-types {
   min-width: 230px;
+}
+
+.my-adoption-link {
+  color: var(--clr-primary-mainBlue);
+  text-decoration: underline;
+}
+.my-adoption-link:visited {
+  color: var(--clr-primary-mainBlue);
+}
+.my-adoption-link:hover {
+  color: white;
 }/*# sourceMappingURL=main.css.map */

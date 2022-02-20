@@ -1,0 +1,13 @@
+@use '../../../../abstracts/' as *;
+
+.my-adoption-link{
+    color: var(--clr-primary-mainBlue);
+    text-decoration: underline;
+
+    &:visited{
+        color: var(--clr-primary-mainBlue);
+    }
+    &:hover{
+        color: white;
+    }
+}

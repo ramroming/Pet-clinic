@@ -8,6 +8,7 @@ import PetTreatmentHistory from "./pettreatmenthistory/PetTreatmentHistory"
 import PetTrainingHistory from "./pettraininghistory/PetTrainingHistory"
 import ManageUsers from "./manageusers/ManageUsers"
 import ManagePets from './managepets/ManagePets'
+import ManageProfits from "./manageProfits/ManageProfits"
 
 const StaffPanelData = (props) => {
   // which menu is selected
@@ -105,6 +106,7 @@ const StaffPanelData = (props) => {
 
         <>
           <h4>Manage Profits</h4>
+          <ManageProfits/>
 
         </>
       }

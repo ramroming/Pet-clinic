@@ -21,6 +21,7 @@ const AdoptionPostsManagement = () => {
         {openStatusModal && <EditAdoptionStatus closeModal={setOpenStatusModal} />}
         </div> */}
 
+
         <Table className="my-table">
          <Thead>
          <Tr>
