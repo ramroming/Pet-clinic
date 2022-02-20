@@ -3,10 +3,10 @@ import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { useState } from 'react'
 import DeletePostModal from "../../../myprofile/profiledata/myadoptionposts/DeletePostModal"
-import EditUser from './EditUser'
+import EditPet from './EditPet'
 
 
-const ManageUsers = () => {
+const ManagePets = () => {
 
     //state for handling the delete modal
     const [openModal, setOpenModal] = useState(false) 
@@ -22,7 +22,7 @@ const ManageUsers = () => {
             </div>
 
             <div className="flex-col falign-center fjust-center ">
-        {openEditModal && <EditUser setOpenEditModal={setOpenEditModal} />}
+        {openEditModal && <EditPet setOpenEditModal={setOpenEditModal} />}
         </div>
 
             <Table className="my-table">
@@ -32,19 +32,19 @@ const ManageUsers = () => {
                             ID
                         </Th>
                         <Th>
-                            Username
+                            Name
                         </Th>
                         <Th>
-                            first name
+                            Owner
                         </Th>
                         <Th>
-                            Last name
+                            Type
                         </Th>
                         <Th>
-                            email
+                            Gender
                         </Th>
                         <Th>
-                            Role
+                            Breed
                         </Th>
                         <Th>
                             Edit
@@ -64,19 +64,19 @@ const ManageUsers = () => {
                             1394
                         </Td>
                         <Td>
-                            front-end
+                            mimo
                         </Td>
                         <Td>
-                            Reem
+                            Reem Alhalbouni
                         </Td>
                         <Td>
-                            Alhalbouni
+                            cat
                         </Td>
                         <Td>
-                            frontend@hotmail.com
+                            female
                         </Td>
                         <Td>
-                            Admin
+                            British longhair
                         </Td>
                         <Td>
 
@@ -96,7 +96,7 @@ const ManageUsers = () => {
 
                     </Tr>
 
-                   
+                    {/* second user  */}
                    
 
 
@@ -112,4 +112,4 @@ const ManageUsers = () => {
     )
 }
 
-export default ManageUsers
+export default ManagePets

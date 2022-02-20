@@ -45,19 +45,32 @@ const EditUser = ({setOpenEditModal}) => {
                     <div className="input-wrapper flex-col gap-8p">
                         <label className="half-label" htmlFor="gender">Role:
                         </label>
-                        <div className="input-wrapper flex-row fjust-around">
+                        <div className="input-wrapper radio-types flex-row fjust-center falign-center ">
                             <div className="flex-row radio-wrapper fjust-center gap-8p">
                                 <input type="radio" name="role" id="client" value="client"/>
                                 <label htmlFor="client">Client</label>
                             </div>
                             <div className="flex-row radio-wrapper fjust-center gap-8p">
-                                <input type="radio" name="role" id="stmem" value="stmem"/>
-                                <label htmlFor="stmem">stmem</label>
+                                <input type="radio" name="role" id="admin" value="admin"/>
+                                <label htmlFor="admin">Admin</label>
+                            </div>
+                            <div className="flex-row radio-wrapper fjust-center gap-8p">
+                                <input type="radio" name="role" id="groomer" value="groomer"/>
+                                <label htmlFor="groomer">Groomer</label>
+                            </div>
+                            <div className="flex-row radio-wrapper fjust-center gap-8p">
+                                <input type="radio" name="role" id="vet" value="vet"/>
+                                <label htmlFor="vet">Vet</label>
+                            </div>
+                            <div className="flex-row radio-wrapper fjust-center gap-8p">
+                                <input type="radio" name="role" id="trainer" value="trainer"/>
+                                <label htmlFor="trainer">Trainer</label>
                             </div>
                             <div className="flex-row radio-wrapper fjust-center gap-8p">
                                 <input type="radio" name="role" id="receptionist" value="receptionist"/>
                                 <label htmlFor="receptionist">Receptionist</label>
                             </div>
+                         
                         </div>
 
 

@@ -1,6 +1,16 @@
 @use "../../abstracts" as *;
 
 
+
+//input in input wrapper for the sp edit user & edit pet
+.radio-wrapper{
+    input{
+        transition: .5s ease all;
+        &:hover{
+            cursor:pointer;
+        }
+    }
+}
 /* HIDE RADIO */
 input.radio-img { 
     position: absolute;
