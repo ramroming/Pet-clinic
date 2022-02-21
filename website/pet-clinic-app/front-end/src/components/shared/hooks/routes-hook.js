@@ -12,12 +12,14 @@ import PostAd from "./../..//pages/postAd/PostAd";
 import PostPreview from "./../..//pages/postpreview/PostPreview";
 import Stafflist from "./../..//pages/stafflist/Stafflist";
 import StaffPanel from "./../..//pages/staffPanel/StaffPanel";
+import About from "./../..//pages/about/About";
 
-// A hook that contains the routing logic and it useses the authed user state to determine whether the user is allowed to navigate to private Routes
+
+// A hook that contains the routing logic and it uses the authed user state to determine whether the user is allowed to navigate to private Routes
 const useRoutes = (authedUser) => {
   if (authedUser === true)
 
-  // Private Routes
+    // Private Routes
     return (
       <Routes>
         <Route path='/'
@@ -42,6 +44,8 @@ const useRoutes = (authedUser) => {
           element={<PostPreview />}> </Route>
         <Route path='stafflist'
           element={<Stafflist />}> </Route>
+        <Route path='about'
+          element={<About />}> </Route>
         <Route path='staffpanel'
           element={<StaffPanel />}> </Route>
         <Route path='*'
@@ -50,7 +54,7 @@ const useRoutes = (authedUser) => {
     )
   if (authedUser === false)
 
-  // Public Routes
+    // Public Routes
     return (
       <Routes>
         <Route path='/' exact
@@ -63,6 +67,8 @@ const useRoutes = (authedUser) => {
           element={<Signup />}></Route>
         <Route path='stafflist'
           element={<Stafflist />}> </Route>
+        <Route path='about'
+          element={<About />}> </Route>
         <Route path='*'
           element={<Navigate to='/login' />}></Route>
       </Routes>
