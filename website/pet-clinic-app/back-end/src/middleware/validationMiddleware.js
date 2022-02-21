@@ -67,6 +67,8 @@ const registerPet = async (req, res, next) => {
   // checking birth_date validity 
   if (!myValidator.isValidBirthDate(birth_date))
     return res.status(400).send({ error: 'invalid birthdate value or format hint: only YYYY-MM-DD format is allowed'})
+  if (!myValidator.isValidPetType(pet_type))
+    return res.status(400).send({ error: 'invalid pet_type '})
 
   try {
     const result = await myValidator.isValidBreed(breed_name, pet_type)
