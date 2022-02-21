@@ -1,11 +1,26 @@
 const validator = require('validator')
+const connData = require('../database/pet-clinic-db')
+const mysql = require('mysql2/promise')
 
 const myValidator = {
+
+  
+  // shared validation
+  isLongData(data) {
+    return data.length > 20
+  },
+  isTooLong(data) {
+    return data.length > 200
+  },
+
+
+  // user related validations
   isUserType(type) {
     return  !(type !== 'client' && type !=='stmem')
   },
   isStmemType(stmem_type) {
-    return !(stmem_type !== 'trainer' && stmem_type !== 'groomer' && stmem_type !== 'vet')
+    
+    return (['trainer', 'groomer', 'vet', 'receptionist', 'admin'].includes(stmem_type))
   },
   isPhoneNumber(phone_number) {
     return validator.isMobilePhone(phone_number)
@@ -21,18 +36,42 @@ const myValidator = {
   isLongPassword(password) {
     return password.length > 128
   },
-  isLongUsername(username) {
-    return username.length > 20
+
+
+  // pet related validations
+  isValidGender(gender) {
+    return (gender === 'male' || gender === 'female')
   },
-  isLongFirstName(firstName) {
-    return firstName.length > 20
+  // check if the the date is a valid date and is in the past
+  isValidBirthDate(date) {
+    return (validator.isDate(date, { format: 'YYYY-MM-DD', strictMode: true, delimiters: ['-']}) && (new Date(date) < new Date()))
   },
-  isLongLastName(lastName) {
-    return lastName.length > 20
+  isValidPetType(pet_type) {
+    return (['cat', 'bird', 'dog'].includes(pet_type))
   },
-  isLongAddress(address) {
-    return address.length > 200
-  }
+
+  async isValidBreed(breed_name, pet_type) {
+    try {
+      const conn = await mysql.createConnection(connData)
+      const [rows, fields] = await conn.execute('SELECT * FROM breeds WHERE name = ? AND type_name = ?', [breed_name, pet_type])
+      await conn.end()
+
+      // if the pet_type and the breeds are invalid 
+      if (!rows.length)
+        return false
+      
+      
+      // if the pet_type and the breeds are valid 
+      return true
+
+    }  catch(e) {
+      throw e
+    }
+  },
+
+
+
+
 
 
 }

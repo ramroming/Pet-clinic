@@ -62,7 +62,6 @@ const Signup = () => {
 
 
 
-
   const submitForm = async (event) => {
     event.preventDefault()
     dispatch({ type: 'validate' })
@@ -97,6 +96,7 @@ const Signup = () => {
   useEffect(() => {
     if (state.responseData.token)
       auth.login(state.responseData.userData.id, state.responseData.token)
+    
   }, [state.responseData, auth])
 
   return (

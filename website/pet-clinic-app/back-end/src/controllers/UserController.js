@@ -108,7 +108,6 @@ const login = async (req, res) => {
     
   }
   catch (e) {
-    await conn.end()
     res.status(500).send({ error: e.message })
   }
 }

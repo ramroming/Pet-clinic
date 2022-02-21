@@ -3,17 +3,17 @@ const myValidator = require('../utils/dataValidator')
 const signup = (req, res, next) => {
   const { first_name, last_name, address, phone_number, username, email, password, user_type, stmem_type } = req.body
 
-  // validating data
-  if (myValidator.isLongUsername(username))
+  // validating data for signing up
+  if (myValidator.isLongData(username))
     return res.status(400).send({error: 'long username !!'})
     
-  if (myValidator.isLongFirstName(first_name))
+  if (myValidator.isLongData(first_name))
     return res.status(400).send({error: 'long first name !!'})
 
-  if (myValidator.isLongLastName(last_name))
+  if (myValidator.isLongData(last_name))
     return res.status(400).send({error:'long last name !!' })
 
-  if (myValidator.isLongAddress(address))
+  if (myValidator.isTooLong(address))
     return res.status(400).send({error:'long address  !!' })
 
   if (!myValidator.isValidEmail(email))
@@ -44,8 +44,8 @@ const signup = (req, res, next) => {
 const login = (req, res, next) => {
   const {username, password} = req.body
 
-  // validating data
-  if (myValidator.isLongUsername(username))
+  // validating data for loging in
+  if (myValidator.isLongData(username))
     return res.status(400).send({error: 'long username !!'})
 
   if (myValidator.isLongPassword(password))
@@ -53,7 +53,35 @@ const login = (req, res, next) => {
   next()
 }
 
+const registerPet = async (req, res, next) => {
+  const { gender, birth_date, name, breed_name, pet_type, breed } = req.body
+
+  // checking long values
+  if (myValidator.isLongData(gender) || myValidator.isLongData(birth_date) || myValidator.isLongData(name) || myValidator.isLongData(breed_name))
+    return res.status(400).send({ error: 'Long Data!! ' })
+
+  // checking gender's validity
+  if (!myValidator.isValidGender(gender)) 
+    return res.status(400).send({ error: 'invalid gender value ' })
+
+  // checking birth_date validity 
+  if (!myValidator.isValidBirthDate(birth_date))
+    return res.status(400).send({ error: 'invalid birthdate value or format hint: only YYYY-MM-DD format is allowed'})
+
+  try {
+    const result = await myValidator.isValidBreed(breed_name, pet_type)
+    if (!result)
+      return res.status(400).send({ error: 'invalid breed or pet_type ' })
+  } catch (e) {
+    
+    return res.status(500).send({ error: e.message })
+  }
+
+  next()
+}
+
 module.exports = {
   signup,
-  login
+  login,
+  registerPet
 }

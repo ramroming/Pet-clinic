@@ -21,6 +21,7 @@ const useAuth = () => {
      const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 7)
      setTokenExpirationDate(tokenExpirationDate)
      localStorage.setItem('userData', JSON.stringify({ uid, token, expiration: tokenExpirationDate.toISOString() }))
+   
    }, [])
  
    const logout = useCallback(async () => {
@@ -51,7 +52,7 @@ const useAuth = () => {
      }
    }, [login])
  
-   // Auto Logout: 
+   // setting the timer for auto logout: 
    useEffect(() => {
      if (token && tokenExpirationDate) {
        const remainingTime = tokenExpirationDate.getTime() - new Date().getTime()

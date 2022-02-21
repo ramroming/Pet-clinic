@@ -10,7 +10,6 @@ const getPetsBreeds = async (req, res) => {
     conn.end()
     res.send(rows)
   } catch (e) {
-    conn.end()
     res.status(500).send({ error: e.message})
   }
 }
