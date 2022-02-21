@@ -1255,6 +1255,13 @@ body {
   }
 }
 
+.radio-wrapper input {
+  transition: 0.5s ease all;
+}
+.radio-wrapper input:hover {
+  cursor: pointer;
+}
+
 /* HIDE RADIO */
 input.radio-img {
   position: absolute;
@@ -2693,6 +2700,10 @@ h4 {
   -o-border-radius: 50% 50% 50% 50%;
 }
 
+.profile-menu {
+  margin-bottom: 2rem;
+}
+
 .post-pet-container {
   background-image: linear-gradient(120deg, var(--clr-primary-secondBlue), var(--clr-primary-secondPurple));
   padding: 6rem 0 3rem 0;
@@ -2915,21 +2926,22 @@ h4 {
   position: relative;
   text-align: center;
   margin-bottom: 1rem;
-  width: 310px;
-  height: 120px;
+  width: 90%;
+  max-width: 400px;
+  min-width: 250px;
+  padding: 1rem;
   box-shadow: 5px 10px 10px #838383;
 }
-@media all and (min-width: 48rem) {
-  .modal-background {
-    width: 400px;
-    height: 120px;
-  }
-}
 
+.modal-container {
+  width: 100%;
+}
+.modal-container .edit-modal-buttons-container {
+  width: 100%;
+}
 .modal-container .btn-rec-purple {
   padding: 0.5rem;
-  width: 100px;
-  margin-right: 1rem;
+  width: 35%;
 }
 .modal-container .x-close {
   position: absolute;
@@ -3019,16 +3031,12 @@ a.my-great-button {
   background-color: var(--clr-shadow-glassy-shadow);
   position: relative;
   text-align: center;
-  width: 310px;
-  height: 200px;
+  width: 90%;
+  max-width: 400px;
+  min-width: 250px;
+  padding: 1rem;
   box-shadow: 5px 10px 10px #838383;
   margin-bottom: 1rem;
-}
-@media all and (min-width: 48rem) {
-  .update-modal-background {
-    width: 400px;
-    height: 260px;
-  }
 }
 .update-modal-background button {
   margin-top: 0.5rem;
@@ -3038,23 +3046,24 @@ a.my-great-button {
   background-color: var(--clr-shadow-glassy-shadow);
   position: relative;
   text-align: center;
-  width: 310px;
-  height: 200px;
+  width: 90%;
+  max-width: 400px;
+  min-width: 270px;
+  padding: 1rem;
   box-shadow: 5px 10px 10px #838383;
   margin-bottom: 1rem;
 }
-@media all and (min-width: 48rem) {
-  .add-modal-background {
-    width: 400px;
-    height: 300px;
-  }
+
+.add-treatment-button-container {
+  width: 100%;
 }
-.add-modal-background button {
+.add-treatment-button-container button {
   margin-top: 0.5rem;
 }
 
 .update-style {
   text-align: center;
+  width: 100%;
 }
 .update-style input {
   width: 50%;
@@ -3064,17 +3073,27 @@ a.my-great-button {
   background-color: var(--clr-shadow-glassy-shadow);
   position: relative;
   text-align: center;
-  width: 310px;
-  height: 200px;
+  width: 90%;
+  max-width: 400px;
+  min-width: 270px;
   box-shadow: 5px 10px 10px #838383;
   margin-bottom: 1rem;
 }
-@media all and (min-width: 48rem) {
-  .add-training-modal-background {
-    width: 400px;
-    height: 220px;
-  }
-}
 .add-training-modal-background button {
-  margin: 0.5rem 0;
+  margin: 1rem 0;
 }
+
+.radio-types {
+  min-width: 230px;
+}
+
+.my-adoption-link {
+  color: var(--clr-primary-mainBlue);
+  text-decoration: underline;
+}
+.my-adoption-link:visited {
+  color: var(--clr-primary-mainBlue);
+}
+.my-adoption-link:hover {
+  color: white;
+}/*# sourceMappingURL=main.css.map */

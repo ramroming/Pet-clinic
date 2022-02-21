@@ -13,23 +13,29 @@
     position: relative;
     text-align: center;
     margin-bottom: 1rem;
-    width: 310px;
-    height: 120px;
+    // width: 310px;
+    // height: 120px;
+    width: 90%;
+    max-width:400px;
+    min-width: 250px;
+    padding: 1rem;
     box-shadow: 5px 10px 10px rgb(131, 131, 131);
-    @include break-point('medium', 'up'){
-        width: 400px;
-        height:120px;
-    }
+
 
 }
 
 .modal-container{
 
-   
+    width: 100%;
+
+    .edit-modal-buttons-container{
+        width: 100%;
+    }
+  
     .btn-rec-purple{
         padding: .5rem;
-        width: 100px;
-        margin-right: 1rem;
+       width: 35%;
+      
     }
 
     .x-close{

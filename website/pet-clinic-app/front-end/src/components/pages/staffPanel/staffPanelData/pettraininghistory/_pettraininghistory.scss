@@ -7,17 +7,14 @@
     background-color: var(--clr-shadow-glassy-shadow);
     position: relative;
     text-align: center;
-    width: 310px;
-    height: 200px;
+    width: 90%;
+    max-width: 400px;
+    min-width: 270px;
     box-shadow: 5px 10px 10px rgb(131, 131, 131);
     margin-bottom: 1rem;
-    @include break-point('medium', 'up'){
-        width: 400px;
-        height:220px;
-    }
 
     button{
-        margin: .5rem 0;
+        margin: 1rem 0;
      }
 }
 

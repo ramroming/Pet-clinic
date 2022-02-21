@@ -9,7 +9,7 @@ const DeletePostModal = ({ closeModal }) => {
                 <div className="modal-title">
                     Are you sure you want to delete?
                 </div>
-                <div className="flex-row fgap-24p fjust-between">
+                <div className="flex-row edit-modal-buttons-container gap-24p fjust-center">
                     <button className="btn-rec-purple">Yes</button>
                     <button onClick={() => closeModal(false)}
                         className="btn-rec-purple">No</button>

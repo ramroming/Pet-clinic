@@ -13,7 +13,7 @@ const PetTrainingHistory = () => {
 
     return (
         <>
-            <div className="flex-row falign-center fjust-center">
+            <div className="flex-col falign-center fjust-center">
                 <div className="search-bar-container flex-row fjust-center falign-center gap-16p">
                     <label>Enter pet's id:</label>
                     <input className="search-bar" type="text" />
