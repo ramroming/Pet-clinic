@@ -19,11 +19,11 @@ const About = () => {
             className="about-container home-container flex-col falign-center fjust-center
     ">
 
-
-            {/* title */}
-            <p className="show-case-title">
+            <motion.p 
+             variants={itemMotion}
+             className="show-case-title">
                 What is <span>PetVerse?</span>
-            </p>
+            </motion.p>
 
 
             <motion.div
@@ -34,7 +34,11 @@ const About = () => {
 
 
 
+
                 <div className="about-containers flex-col falign-center fjust-center gap-16p">
+
+                    {/* title */}
+
 
                     {/* photo */}
                     <div className="about-image-container flex-col fjust-center falign-center">

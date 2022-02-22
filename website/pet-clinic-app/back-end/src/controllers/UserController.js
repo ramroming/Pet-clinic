@@ -163,7 +163,7 @@ const registerPet = async (req, res) => {
       res.status(201).send(petData)
     } catch (e) {
       conn.end()
-      return res.status.send({ error: e.message })
+      return res.status(400).send({ error: e.message })
     }
 
   } catch (e) {
