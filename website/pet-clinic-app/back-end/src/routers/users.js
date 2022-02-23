@@ -6,12 +6,11 @@ const {
   login,
   logout,
   registerPet,
-  uploadPetImage
 } = require('../controllers/UserController')
 
 // middlewares
 const auth = require('../middleware/auth')
-const upload_pet_image = require('../middleware/uploadPetImage')
+const formDataMiddleWare = require('../middleware/formData')
 const validationMiddleware = require('../middleware/validationMiddleware')
 
 const usersRouter = new express.Router()
@@ -28,10 +27,9 @@ usersRouter.get('/users/me', auth, myProfile)
 // logout user
 usersRouter.get('/users/logout', auth, logout)
 
-// to register a new pet for the user there is a two step process first create a pet without a photo and send back the newly created pet id, the second step is sending another request to post the pet's image this one will be multi-part/form type header
-usersRouter.post('/users/me/pets', auth, validationMiddleware.registerPet,  registerPet)
+// to register a new pet for the user we are going to send form-data instead of application-json data and to parse this data we are using multer to create the formDataMiddleWare, we use the single function to tell that there is a file with the data called photo
 
-usersRouter.post('/users/me/pets/image/:pet_id', auth, upload_pet_image.single('pet_image'), uploadPetImage, (error, req, res, next) => {
+usersRouter.post('/users/me/pets/', auth, formDataMiddleWare.single('photo'), validationMiddleware.registerPet, registerPet, (error, req, res, next) => {
   res.status(400).send({ error: error.message })
 })
 

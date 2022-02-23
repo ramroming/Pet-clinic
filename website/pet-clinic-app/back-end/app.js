@@ -1,6 +1,7 @@
 // requiring express
 const express = require('express')
 
+const cors = require('cors')
 // requiring the connection
 const conn = require('./src/database/pet-clinic-db')
 
@@ -17,12 +18,8 @@ const PORT = 5000
 app.use(express.json())
 
 // this will fix the CORS Error
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept ,Authorization')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE' )
-  next()
-})
+app.use(cors())
+
 
 
 // Using the Routers

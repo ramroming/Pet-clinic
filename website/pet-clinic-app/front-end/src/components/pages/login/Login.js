@@ -1,6 +1,6 @@
 import { useEffect, useContext } from "react";
 import useFetch from "../../shared/hooks/fetch-hook";
-import useForm from "../../shared/hooks/form-hook";
+import useLoginForm from "../../shared/hooks/login-form-hook";
 import { authContext } from "../../shared/context/auth-context";
 
 const initialState = {
@@ -22,12 +22,12 @@ const Login = () => {
 
   const submitForm = (event) => {
     event.preventDefault()
-    dispatch({ type: 'validateLogin' })
+    dispatch({ type: 'validate' })
   }
 
 
   // use the form hook
-  const [state, dispatch] = useForm(initialState)
+  const [state, dispatch] = useLoginForm(initialState)
 
   // use the fetch hook
   const sendRequest = useFetch(dispatch)
@@ -41,22 +41,24 @@ const Login = () => {
 
     const fetchUser = async () => {
       try {
-        await sendRequest(
+        const parsedData = await sendRequest(
           'http://localhost:5000/users/login',
           'POST',
          JSON.stringify(state.dataToSend),
          {
           'Content-Type': 'application/json'
-        })        
+        })  
+        if (parsedData)
+          dispatch({ type: 'success', data: parsedData})      
       } catch (e) {
-
+        dispatch({ type: 'failure', error: e.message })
       }
       
     }
     // isLoading changes from false to true if the validation process  passed successfully 
     if (state.isLoading)
       fetchUser()
-  }, [state.isLoading, state.dataToSend, sendRequest])
+  }, [state.isLoading, state.dataToSend, sendRequest, dispatch])
 
   // after data been fetched if we have a token inside the data that means the login was successfull so we login
   useEffect(() => {

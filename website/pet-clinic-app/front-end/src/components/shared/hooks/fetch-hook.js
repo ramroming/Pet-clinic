@@ -4,14 +4,16 @@
 
 import { useCallback } from "react"
 
-const useFetch = (dispatch) => {
+const useFetch = () => {
 
 
   const sendRequest = useCallback(async (
     url,
     method = 'GET',
     body = null,
-    headers = {}
+    headers = {},
+
+
   ) => {
     try {
       // 'Content-Type': 'application/json'
@@ -22,23 +24,19 @@ const useFetch = (dispatch) => {
     })
       const parsedData = await response.json()
   
-      // in case of any error code 
       if (!response.ok) {
         throw new Error(parsedData.error)
       }
-      dispatch({ type: 'success', data: parsedData })
+      return parsedData
       
     } catch (e) {
-      dispatch({ type: 'failure', error: e.message})
-
-      // here we throw the error again to make the component that using the hook knows that there was an error
       throw e
     }
     
     
   
   
-  }, [dispatch]) 
+  }, []) 
   return sendRequest
 }
 export default useFetch

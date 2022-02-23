@@ -1,5 +1,6 @@
 const multer = require('multer')
-const upload_pet_image = multer({
+// this middleware will automatically parse the multipart/form-data requests and will allow us to reach req.body and req.file , also it can validate the files comming with the request
+const formDataMiddleWare = multer({
   limits: {
     // file size is limited to 10MB
     fileSize: 10000000 
@@ -11,4 +12,4 @@ const upload_pet_image = multer({
     cb(undefined, true)
   }
 })
-module.exports = upload_pet_image
+module.exports = formDataMiddleWare

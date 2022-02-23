@@ -1,7 +1,7 @@
 import { useEffect, useContext } from "react"
 import InputError from "../../utils/formErrorMsg/InputError"
 import useFetch from "../../shared/hooks/fetch-hook"
-import useForm from "../../shared/hooks/form-hook"
+import useSignupForm from "../../shared/hooks/signup-form-hook"
 import { authContext } from "../../shared/context/auth-context"
 
 
@@ -51,10 +51,10 @@ const initialState = {
 const Signup = () => {
 
   // using the form-hook
-  const [state, dispatch] = useForm(initialState)
+  const [state, dispatch] = useSignupForm(initialState)
 
   // using the fetch hook
-  const sendRequest = useFetch(dispatch)
+  const sendRequest = useFetch()
   
 
   const auth = useContext(authContext)
@@ -74,14 +74,16 @@ const Signup = () => {
     // wrapper function to enable us to use async functions inside useEffect
     const fetchUser = async () => {
       try {
-        await sendRequest(
+        const parsedData = await sendRequest(
           'http://localhost:5000/users',
           'POST', JSON.stringify(state.dataToSend),
           {
             'Content-Type': 'application/json'
           })
+        if (parsedData)
+          dispatch({ type: 'success', data: parsedData})
       } catch (e) {
-
+        dispatch({ type: 'failure', error: e.message})
       }
       
     }
@@ -90,7 +92,7 @@ const Signup = () => {
     if (state.isLoading) {
       fetchUser()
     }
-  }, [state.dataToSend, state.isLoading, sendRequest, auth])
+  }, [state.dataToSend, state.isLoading, sendRequest, auth, dispatch])
 
   // after data been fetched if we have a token inside the data that means the login was successfull so we login
   useEffect(() => {

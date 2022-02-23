@@ -1,0 +1,10 @@
+@use "../../abstracts/" as *;
+.photo-info-wrapper {
+  img {
+    width: 70px;
+    height: 70px;
+    @include rounded-corners();
+  }
+  p {
+  }
+}

@@ -1177,6 +1177,15 @@ body {
   }
 }
 
+.photo-info-wrapper img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50% 50% 50% 50%;
+  -webkit-border-radius: 50% 50% 50% 50%;
+  -moz-border-radius: 50% 50% 50% 50%;
+  -ms-border-radius: 50% 50% 50% 50%;
+  -o-border-radius: 50% 50% 50% 50%;
+}
 .split-screen-signup {
   width: 40%;
   display: none;
@@ -3143,4 +3152,4 @@ a.my-great-button {
   .about-us-intro {
     flex-direction: row;
   }
-}/*# sourceMappingURL=main.css.map */
+}

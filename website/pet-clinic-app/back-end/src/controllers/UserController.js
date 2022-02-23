@@ -140,13 +140,18 @@ const registerPet = async (req, res) => {
         conn.end()
         return res.status(403).send({ error: 'Max pet per user reached!' })
       }
-      const { name, gender, birth_date, breed_name, photo } = req.body
+      const { name, gender, birth_date, breed_name } = req.body
+  
+
+
+      const photo = req.file ? await sharp(req.file.buffer).resize({ width: 350, height: 350}).png().toBuffer() : null
+      
       const [rows2, fields2] = await conn.execute('INSERT INTO pets (name, gender, birth_date, breed_name, photo, owner_id) VALUES (?, ?, ?, ?, ?, ?)', [
         name ? name : null,
         gender ? gender : null,
         birth_date ? birth_date : null,
         breed_name ? breed_name : null,
-        photo ? photo : null,
+        photo,
         req.user.id
       ])
 
@@ -156,7 +161,6 @@ const registerPet = async (req, res) => {
         name: name ? name : null,
         gender: gender ? gender : null,
         birth_date: birth_date ? birth_date : null,
-        photo: photo ? photo : null,
         owner_id: req.user.id
       }
 
@@ -171,35 +175,6 @@ const registerPet = async (req, res) => {
   }
 }
 
-const uploadPetImage = async (req, res) => {
-  const pet_image = req.file.buffer
-  const pet_id = req.params.pet_id
-  const ownerId = req.user.id
-  if (!pet_id || isNaN(pet_id) || pet_id < 0)
-    return res.status(400).send({ error: 'Bad URL!' })
-
-  // testing connection to databse
-  try {
-    const conn = await mysql.createConnection(connData)
-
-    // this try is to check database violations when changing the photo of a pet
-    try {
-      const resizedImage = await sharp(pet_image).resize({ width: 350, height: 350}).png().toBuffer()
-
-      const [result] = await conn.execute('UPDATE pets SET photo=? WHERE id=? AND owner_id = ?', [resizedImage, pet_id, ownerId])
-      conn.end()
-      if(result.affectedRows === 0)
-        return res.status(404).send()
-      
-      res.send()
-    } catch (e) {
-      conn.end()
-      res.status(400).send({ error: e.message })
-    }
-  } catch (e) {
-    res.status(500).send({ error: e.message })
-  }
-}
 
 
 module.exports = {
@@ -208,5 +183,4 @@ module.exports = {
   login,
   logout,
   registerPet,
-  uploadPetImage
 }

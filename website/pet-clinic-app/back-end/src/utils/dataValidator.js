@@ -7,7 +7,7 @@ const myValidator = {
   
   // shared validation
   isLongData(data) {
-    return data.length > 20
+    return data.length > 40
   },
   isTooLong(data) {
     return data.length > 200
@@ -44,7 +44,7 @@ const myValidator = {
   },
   // check if the the date is a valid date and is in the past
   isValidBirthDate(date) {
-    return (validator.isDate(date, { format: 'YYYY-MM-DD', strictMode: true, delimiters: ['-']}) && (new Date(date) < new Date()))
+    return (validator.isDate(date, { format: 'YYYY-MM-DD', strictMode: true, delimiters: ['-']}) && (new Date(date) <= new Date()))
   },
   isValidPetType(pet_type) {
     return (['cat', 'bird', 'dog'].includes(pet_type))

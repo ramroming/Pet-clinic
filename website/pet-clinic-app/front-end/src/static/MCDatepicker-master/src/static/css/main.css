@@ -805,7 +805,7 @@ These come with default styling from the browser so we must to redefine them her
   text-align: center;
   border-radius: 5px;
   font-weight: 300;
-  width: calc(100% / 7);
+  width: 14.2857142857%;
 }
 .mc-date--active {
   cursor: pointer;
@@ -857,7 +857,7 @@ These come with default styling from the browser so we must to redefine them her
   text-align: center;
   padding: 0.5em 0;
   color: var(--mc-weekday-foreground);
-  width: calc(100% / 7);
+  width: 14.2857142857%;
 }
 
 .mc-month-year__preview {
@@ -958,4 +958,4 @@ These come with default styling from the browser so we must to redefine them her
   position: absolute;
   top: 0;
   width: 1px;
-}/*# sourceMappingURL=main.css.map */
+}

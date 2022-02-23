@@ -54,7 +54,7 @@ const login = (req, res, next) => {
 }
 
 const registerPet = async (req, res, next) => {
-  const { gender, birth_date, name, breed_name, pet_type, breed } = req.body
+  const { gender, birth_date, name, breed_name, pet_type } = req.body
 
   // checking long values
   if (myValidator.isLongData(gender) || myValidator.isLongData(birth_date) || myValidator.isLongData(name) || myValidator.isLongData(breed_name))
