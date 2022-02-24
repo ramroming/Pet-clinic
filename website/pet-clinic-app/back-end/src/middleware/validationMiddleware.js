@@ -1,5 +1,6 @@
 const myValidator = require('../utils/dataValidator')
 
+// Client Related
 const signup = (req, res, next) => {
   const { first_name, last_name, address, phone_number, username, email, password, user_type, stmem_type } = req.body
 
@@ -82,8 +83,31 @@ const registerPet = async (req, res, next) => {
   next()
 }
 
+//  Making Appointment Related
+
+const getStaff =  (req, res, next) => {
+  if (!req.query.stmem_type)
+    return res.status(400).send({ error: 'Bad URL!!'})
+  if (!myValidator.isStmemType(req.query.stmem_type))
+    return res.status(400).send({ error: 'Bad URL params!!'})
+  next()
+} 
+
+const appointmentsTimes = (req, res, next) => {
+  if (!req.query.stmem_id || !req.query.date)
+    return res.status(400).send({ error: 'Bad URL!!'})
+  if (!myValidator.isValidId(req.query.stmem_id))
+    return res.status(400).send({ error: 'Bad URL!!'})
+  if (!myValidator.isValidAppointmentDate(req.query.date))
+    return res.status(400).send({ error: 'Bad URL!!'})
+
+
+  next()
+}
 module.exports = {
   signup,
   login,
-  registerPet
+  registerPet,
+  getStaff,
+  appointmentsTimes
 }

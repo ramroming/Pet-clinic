@@ -8,6 +8,8 @@ const conn = require('./src/database/pet-clinic-db')
 // requiring the routers
 const usersRouter = require('./src/routers/users')
 const petsRouter = require('./src/routers/pets')
+const staffmemRouter = require('./src/routers/staffmem')
+const appointmentRouter = require('./src/routers/appointment')
 
 
 const app = express()
@@ -25,6 +27,8 @@ app.use(cors())
 // Using the Routers
 app.use(usersRouter)
 app.use(petsRouter)
+app.use(staffmemRouter)
+app.use(appointmentRouter)
 
 // not found url
 app.use('/*', (req, res) => {

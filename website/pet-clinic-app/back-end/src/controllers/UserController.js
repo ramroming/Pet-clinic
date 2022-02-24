@@ -175,6 +175,16 @@ const registerPet = async (req, res) => {
   }
 }
 
+const getPets = async (req, res) => {
+  try {
+    const conn = await mysql.createConnection(connData)
+    const [pets] = await conn.execute('SELECT * FROM pets WHERE owner_id = ?', [req.user.id])
+    await conn.end()
+    res.send(pets)
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
 
 
 module.exports = {
@@ -183,4 +193,5 @@ module.exports = {
   login,
   logout,
   registerPet,
+  getPets
 }

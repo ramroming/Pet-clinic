@@ -6,6 +6,7 @@ const {
   login,
   logout,
   registerPet,
+  getPets
 } = require('../controllers/UserController')
 
 // middlewares
@@ -32,6 +33,9 @@ usersRouter.get('/users/logout', auth, logout)
 usersRouter.post('/users/me/pets/', auth, formDataMiddleWare.single('photo'), validationMiddleware.registerPet, registerPet, (error, req, res, next) => {
   res.status(400).send({ error: error.message })
 })
+
+// get the pets of the user
+usersRouter.get('/users/me/pets/', auth, getPets)
 
 usersRouter.use('/users/*', (req, res) => {
   res.send('404 User endpoint not found!!')

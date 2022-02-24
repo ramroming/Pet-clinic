@@ -12,6 +12,9 @@ const myValidator = {
   isTooLong(data) {
     return data.length > 200
   },
+  isValidId(id) {
+    return !(isNaN(id) || id <= 0)
+  },
 
 
   // user related validations
@@ -69,8 +72,15 @@ const myValidator = {
     }
   },
 
+  // Appointment related validations
 
+  isValidAppointmentType(appointment_type) {
+    return (['Examination', 'Training', 'Grooming', 'Adoption'].includes(appointment_type))
+  },
+  isValidAppointmentDate(date) {
 
+    return (validator.isDate(date, { format: 'YYYY-MM-DD', strictMode: true, delimiters: ['-']}) && (new Date(date).setHours(20) >= new Date()))
+  }
 
 
 
