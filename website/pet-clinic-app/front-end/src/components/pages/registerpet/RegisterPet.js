@@ -10,8 +10,10 @@ import { authContext } from "../../shared/context/auth-context";
 
 // this data will be used in the form's date input
 const today = new Date()
+console.log(today)
 const maxDate = dateFormat(today, 'isoDate')
 const minDate = dateFormat(today.setMonth(today.getMonth() - 30 * 12), 'isoDate')
+
 
 
 // intial data for the form reducer
