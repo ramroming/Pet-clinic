@@ -1,0 +1,79 @@
+@use "../../abstracts" as *;
+
+.profile-menu {
+  border: 1px solid grey;
+  width: 100%;
+  @include rounded-corners(0rem, 0.5rem, 0.5rem, 0rem);
+  @include break-point("medium", "up") {
+    width: 24%;
+    max-width: 20rem;
+    height: fit-content;
+    margin-top: 1rem;
+  }
+
+  .profile-option {
+    color: black;
+    text-align: left;
+    padding: 1rem .75rem;
+    border-left: 4px grey solid;
+    border-bottom: 1px solid rgb(85, 82, 82);
+    transition: all ease 0.5s;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+    &:hover {
+      cursor: pointer;
+      border-left-color: var(--clr-primary-mainBlue);
+    }
+    &.selected {
+      border-left-color: var(--clr-primary-mainPurple);
+    }
+  }
+}
+.myprofile-wrapper {
+  background-color: whitesmoke;
+  padding: 5rem 1rem 0 1rem ;
+  @include break-point("medium", "up") {
+    padding: 9rem 1.5rem 0 1.5rem !important;
+  }
+}
+.myprofile-container {
+  @include break-point("medium", "up") {
+    justify-content: space-evenly;
+  }
+  .bio-container {
+    width: 100%;
+    height: fit-content;
+    padding-bottom: 1rem;
+    @include break-point("medium", "up") {
+      padding-left: 4%;
+    }
+    .avatar-photo {
+      width: 3rem;
+      height: 3rem;
+      @include rounded-corners();
+      
+    }
+  }
+
+}
+
+.profile-menu{
+  margin-bottom: 2rem;
+}
+
+h4 {
+  border-bottom: solid 1px grey;
+  padding-bottom: 0.5rem;
+  @include break-point("medium", "up") {
+    font-size: 1.5rem;
+  }
+
+}
+.profile-animation-wrapper {
+  width: 100%;
+  @include break-point("medium", "up") {
+    width: 68%;
+  }
+}

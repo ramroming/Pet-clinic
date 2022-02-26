@@ -11,6 +11,7 @@
 @use "layout/nav/nav";
 @use "layout/nav/burgerlist/burgerList";
 @use "layout/footer/footer";
+@use "layout/profile_side_nav/sidenav";
 @use "utils/containers";
 @use 'utils/datepicker/datepicker';
 @use 'utils/formErrorMsg/inputError';
@@ -28,17 +29,24 @@
 @use 'pages/adoptionAds/AdoptionAds';
 @use 'pages/adoption/adoption';
 @use 'pages/adoptionAd/adoptionAd';
-@use 'pages/myprofile/profilemenu/profilemenu';
-@use 'pages/myprofile/profiledata/profiledata';
-@use 'pages/myprofile/profiledata/personalinfo/personalinfo';
-@use 'pages/myprofile/profiledata/petinfo/petinfo';
-@use 'pages/myprofile/profiledata/account/account';
-@use 'pages/myprofile/myprofile';
+// @use 'pages/myprofile/profilemenu/profilemenu';
+// @use 'pages/myprofile/profiledata/profiledata';
+// @use 'pages/myprofile/profiledata/personalinfo/personalinfo';
+// @use 'pages/myprofile/profiledata/petinfo/petinfo';
+// @use 'pages/myprofile/profiledata/account/account';
+// @use 'pages/myprofile/profiledata/myadoptionposts/myadoptionposts.scss';
+// @use 'pages/myprofile/profiledata/myadoptionrequests/myadoptionrequests.scss';
+// @use 'pages/myprofile/myprofile';
+
+@use 'pages/profile/account/account';
+@use 'pages/profile/myadoptionposts/myadoptionposts';
+@use 'pages/profile/myadoptionrequests/myadoptionrequests';
+@use 'pages/profile/personalinfo/personalinfo';
+@use 'pages/profile/petinfo/petinfo';
+
 @use 'pages/postAd/postad';
 @use 'pages/postpreview/postpreview';
 @use 'pages/stafflist/stafflist';
-@use 'pages/myprofile/profiledata/myadoptionposts/myadoptionposts.scss';
-@use 'pages/myprofile/profiledata/myadoptionrequests/myadoptionrequests.scss';
 @use 'pages/staffPanel/staffPanel';
 @use 'pages/staffPanel/staffPanelData/appointmentmanagement/appointmentmanagement';
 @use 'pages/staffPanel/staffPanelData/adoptionmanagement/adoptionmanagement';

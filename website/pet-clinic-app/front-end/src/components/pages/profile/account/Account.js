@@ -8,7 +8,9 @@ const Account = () => {
     })
   }
   return (
-    <form className="profile-data account-data flex-col gap-24p">
+    <>
+      <h4>Account Management</h4>
+      <form className="profile-data account-data flex-col gap-24p">
 
       <div className="inputs-wrapper flex-col gap-16p">
         <div className="input-wrapper">
@@ -40,6 +42,8 @@ const Account = () => {
       </div>
 
     </form>
+    </>
+    
   )
 }
 
