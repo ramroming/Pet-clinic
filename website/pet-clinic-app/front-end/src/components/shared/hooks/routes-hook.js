@@ -11,7 +11,6 @@ import AdoptionAd from "./../..//pages/adoptionAd/AdoptionAd";
 import PostAd from "./../..//pages/postAd/PostAd";
 import PostPreview from "./../..//pages/postpreview/PostPreview";
 import Stafflist from "./../..//pages/stafflist/Stafflist";
-import StaffPanel from "./../..//pages/staffPanel/StaffPanel";
 import About from "./../..//pages/about/About";
 import SideNav from "../../layout/profile_side_nav/SideNav";
 import Account from "../../pages/profile/account/Account";
@@ -19,6 +18,16 @@ import MyAdoptionPosts from "../../pages/profile/myadoptionposts/MyAdoptionPosts
 import MyAdoptionRequests from "../../pages/profile/myadoptionrequests/MyAdoptionRequests";
 import PersonalInfo from "../../pages/profile/personalinfo/PersonalInfo";
 import PetInfo from "../../pages/profile/petinfo/PetInfo";
+import StaffPanelSideNav from "../../layout/staffpanel_side_nav/StaffPanelSideNav";
+import AppointmentManagement from '../../pages/staffPanel/appointmentmanagement/AppointmentManagement';
+import AdoptionManagement from '../../pages/staffPanel/adoptionmanagement/AdoptionManagement';
+import AdoptionPostsManagement from '../../pages/staffPanel/adoptionpostsmanagement/AdoptionPostsManagement';
+import PetTreatmentHistory from '../../pages/staffPanel/pettreatmenthistory/PetTreatmentHistory';
+import PetTrainingHistory from '../../pages/staffPanel/pettraininghistory/PetTrainingHistory';
+import Registration from '../../pages/staffPanel/registration/Registration'
+import ManageUsers from '../../pages/staffPanel/manageusers/ManageUsers'
+import ManagePets from '../../pages/staffPanel/managepets/ManagePets'
+import ManageProfits from '../../pages/staffPanel/manageProfits/ManageProfits'
 
 // A hook that contains the routing logic and it uses the authed user state to determine whether the user is allowed to navigate to private Routes
 const useRoutes = (authedUser) => {
@@ -41,22 +50,67 @@ const useRoutes = (authedUser) => {
           element={<AdoptionAds />}></Route>
         <Route path='adoptionad'
           element={<AdoptionAd />}></Route>
+
+        {/* user panel routing */}
         <Route path='myprofile' element={<SideNav />}>
           <Route index
             element={<Navigate to='/' />}></Route>
           <Route path='mypersonalinfo'
-            element={ <PersonalInfo /> }></Route>
+            element={<PersonalInfo />}></Route>
           <Route path='account'
-            element={ <Account /> }></Route>
+            element={<Account />}></Route>
           <Route path='myadoptionposts'
-            element={ <MyAdoptionPosts /> }></Route>
+            element={<MyAdoptionPosts />}></Route>
           <Route path='myadoptionrequests'
-            element={ <MyAdoptionRequests /> }></Route>
+            element={<MyAdoptionRequests />}></Route>
           <Route path='petinfo'
-            element={ <PetInfo /> }></Route>
+            element={<PetInfo />}></Route>
           <Route path='*'
             element={<Navigate to='/' />}> </Route>
         </Route>
+
+        {/* staff panel routing */}
+        <Route path='staffpanel'
+          element={<StaffPanelSideNav />}>
+          <Route index
+            element={<Navigate to='/' />}></Route>
+          <Route path='mypersonalinfo'
+            element={<PersonalInfo />}></Route>
+          <Route path='account'
+            element={<Account />}></Route>
+
+          <Route path='manageappointments'
+            element={<AppointmentManagement />}></Route>
+
+          <Route path='adoptionrequests'
+            element={<AdoptionManagement/>}></Route>
+
+          <Route path='adoptionposts'
+            element={<AdoptionPostsManagement/>}></Route>
+
+          <Route path='pettreatmenthistory'
+            element={<PetTreatmentHistory />}></Route>
+
+          <Route path='pettraininghistory'
+            element={<PetTrainingHistory />}></Route>
+
+          <Route path='registration'
+            element={<Registration />}></Route>
+
+          <Route path='manageusers'
+            element={<ManageUsers />}></Route>
+
+          <Route path='managepets'
+            element={<ManagePets />}></Route>
+
+          <Route path='manageprofits'
+            element={<ManageProfits />}></Route>
+
+          <Route path='*'
+            element={<Navigate to='/' />}> </Route>
+
+        </Route>
+
         <Route path='postad'
           element={<PostAd />}> </Route>
         <Route path='postpreview'
@@ -65,8 +119,6 @@ const useRoutes = (authedUser) => {
           element={<Stafflist />}> </Route>
         <Route path='about'
           element={<About />}> </Route>
-        <Route path='staffpanel'
-          element={<StaffPanel />}> </Route>
         <Route path='*'
           element={<Navigate to='/' />}> </Route>
       </Routes>

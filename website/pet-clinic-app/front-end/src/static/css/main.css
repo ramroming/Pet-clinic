@@ -1097,6 +1097,16 @@ h4 {
   }
 }
 
+.staff-panel-wrapper {
+  background-image: linear-gradient(120deg, whitesmoke, white);
+  padding: 5rem 1rem 0 1rem;
+}
+@media all and (min-width: 48rem) {
+  .staff-panel-wrapper {
+    padding: 9rem 1.5rem 0 1.5rem;
+  }
+}
+
 /*setting the full page size for body and html elements*/
 /* the general design with paddings, margins, main-bgcolors, main-fonts and basic layout */
 body {
@@ -2970,16 +2980,6 @@ i.active {
 .staff-container .staff-member-card .each-star {
   margin-right: 0.3rem;
   cursor: pointer;
-}
-
-.staff-panel-wrapper {
-  background-image: linear-gradient(120deg, whitesmoke, white);
-  padding: 5rem 1rem 0 1rem;
-}
-@media all and (min-width: 48rem) {
-  .staff-panel-wrapper {
-    padding: 9rem 1.5rem 0 1.5rem;
-  }
 }
 
 .search-bar-container {

@@ -1,9 +1,7 @@
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { useState } from 'react'
-import DeletePostModal from "../../../profile/myadoptionposts/DeletePostModal"
-
-// import DeletePostModal from "../../../myprofile/profiledata/myadoptionposts/DeletePostModal"
+import DeletePostModal from "../../profile/myadoptionposts/DeletePostModal"
 import EditAppointmentStatus from  "./EditAppointmentStatus"
 
 
@@ -14,6 +12,8 @@ const AppointmentManagement = () => {
 
 
   return (
+    <>
+    <h4>Appointment Management</h4>
     <div>
          <div className="flex-col falign-center fjust-center ">
         {openModal && <DeletePostModal closeModal={setOpenModal} />}
@@ -157,6 +157,7 @@ const AppointmentManagement = () => {
       </Table>
 
     </div>
+    </>
 
   )
 }

@@ -2,51 +2,51 @@
 import { useState } from 'react'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
-import AddPetTraining from './AddPetTraining';
-import UpdateTraining from './UpdateTraining';
+import UpdateTreatment from './UpdateTreatment';
+import AddPetTreatment from './AddPetTreatment';
 
-const PetTrainingHistory = () => {
+const PetTreatmentHistory = () => {
 
-    const [trainingHistory, setTrainingHistory] = useState(false)
+    const [treatmentHistory, setTreatmentHistory] = useState(false)
     const [openModal, setOpenModal] = useState(false)
-    const [addTraining, setAddTraining] = useState(false)
+    const [addTreatment, setAddTreatment] = useState(false)
 
     return (
         <>
+            <h4>Pet Treatment History</h4>
             <div className="flex-col falign-center fjust-center">
                 <div className="search-bar-container flex-row fjust-center falign-center gap-16p">
                     <label>Enter pet's id:</label>
                     <input className="search-bar" type="text" />
                     <button className="btn-sm"
                         onClick={() => {
-                            setTrainingHistory(true)
+                            setTreatmentHistory(true)
                         }}>
                         find
                     </button>
-
-                    {trainingHistory &&
+                    {treatmentHistory &&
                         <button className="btn-sm"
                             onClick={() => {
-                                setAddTraining(true)
+                                setAddTreatment(true)
                             }}>
-                            Add new training
+                            Add treatment
                         </button>
                     }
                 </div>
 
                 {
                     openModal &&
-                    <UpdateTraining setOpenModal={setOpenModal} />
+                    <UpdateTreatment setOpenModal={setOpenModal} />
 
                 }
 
                 {
-                    addTraining &&
-                    <AddPetTraining setAddTraining={setAddTraining}/>
+                    addTreatment &&
+                    <AddPetTreatment setAddTreatment={setAddTreatment} />
                 }
 
                 {
-                    trainingHistory &&
+                    treatmentHistory &&
                     <Table className="my-table">
                         <Thead>
                             <Tr>
@@ -60,18 +60,20 @@ const PetTrainingHistory = () => {
                                     owner
                                 </Th>
                                 <Th>
-                                    start date
+                                    date
                                 </Th>
                                 <Th>
-                                    Training type
+                                    staff member
                                 </Th>
                                 <Th>
-                                    Trained by
+                                    case
+                                </Th>
+                                <Th>
+                                    vaccine
                                 </Th>
                                 <Th>
                                     History
                                 </Th>
-
 
                             </Tr>
                         </Thead>
@@ -91,10 +93,13 @@ const PetTrainingHistory = () => {
                                     2021/0/2/18 1:07 PM
                                 </Td>
                                 <Td>
-                                    Catch
+                                    Rami Sadettin
                                 </Td>
                                 <Td>
-                                    Yasin Ahmet
+                                    check up
+                                </Td>
+                                <Td>
+                                    none
                                 </Td>
                                 <Td>
                                     <button className="btn-sm"
@@ -122,4 +127,4 @@ const PetTrainingHistory = () => {
     )
 }
 
-export default PetTrainingHistory
+export default PetTreatmentHistory
