@@ -5,6 +5,8 @@ const sharp = require('sharp')
 const connData = require('../database/pet-clinic-db')
 const myValidator = require('../utils/dataValidator')
 const { findUserByCredentials, generateAuthToken } = require('../utils/authOperations')
+const { getAvailableTimes, convertToTurkishDate } = require('../utils/timeOperations')
+const { MAX_ACTIVE_APPOINTMENTS, MAX_APPOINTMENTS_PER_DAY} = require('../utils/petclinicrules')
 
 const signup = async (req, res) => {
   const { first_name, last_name, address, phone_number, username, email, password, user_type, stmem_type } = req.body
@@ -186,6 +188,53 @@ const getPets = async (req, res) => {
   }
 }
 
+const createAppointment = async (req, res) => {
+  const {  stmem_id, pet_id, date, hour } = req.body
+  const clientId = req.user.id
+  try {
+    const conn = await mysql.createConnection(connData)
+
+    // check how many active appointments does a client have in total
+    const [activeAppointments] = await conn.execute('SELECT * FROM appointments WHERE   client_id = ? AND status=1', [clientId])
+    conn.end()
+
+    // if they reached their max
+    if (activeAppointments.length && activeAppointments.length >= MAX_ACTIVE_APPOINTMENTS)
+      return res.status(400).send({ error: `Oops!! Looks like you have reached MAX ${MAX_ACTIVE_APPOINTMENTS} current active appointments at this clinic, in order to make an appointment you should cancel one of your active appointments and try again`})
+    console.log(activeAppointments)
+    // more than one appointment in a day
+    if (activeAppointments){
+      const appointmentsInDay = activeAppointments.filter((appointment) => {
+        // getting date from database and convert it to turkish time and then zero its time
+        const filterDate = convertToTurkishDate(appointment.date, true)
+        const userDate = convertToTurkishDate(new Date(date), true)
+
+        return filterDate.getTime() === userDate.getTime()
+      })
+      if (appointmentsInDay.length >= MAX_APPOINTMENTS_PER_DAY)
+        return res.status(400).send({ error: `Oops!! Looks like you already have ${MAX_APPOINTMENTS_PER_DAY} appointment at the date you specified, you can select another date or cancel the appointment at the date you specified`})
+    }
+      
+
+    // selected time was taken
+    const availableTimes = await getAvailableTimes(stmem_id, date)
+    if (!availableTimes.includes(parseInt(hour)))
+      return res.status(400).send({ error: 'It looks like that the time you specified got taken please try a different time' })
+
+    // inserting the appointment data to the database
+    const conn2 = await mysql.createConnection(connData)
+    const dateToInsert = `${date} ${hour}:00:00`
+    await conn2.execute('INSERT INTO appointments (date, client_id, stmem_id, status, appointment_type_id, pet_id) VALUES (?, ?, ?, ?, ?, ?)', [dateToInsert, req.user.id, stmem_id, 1, req.appointmentTypeId, pet_id])
+
+    res.status(201).send()
+
+  } catch (e) {
+    if (e.errno === 1062)
+      return res.status(400).send({ error: 'appointment is not available at the date and time specified ' })
+    res.status(500).send({ error: e.message })
+  }
+}
+
 
 module.exports = {
   signup,
@@ -193,5 +242,6 @@ module.exports = {
   login,
   logout,
   registerPet,
-  getPets
+  getPets,
+  createAppointment
 }

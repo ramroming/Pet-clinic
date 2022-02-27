@@ -1,5 +1,5 @@
-import Account from "../../myprofile/profiledata/account/Account"
-import PersonalInfo from "../../myprofile/profiledata/personalinfo/PersonalInfo"
+// import Account from "../../myprofile/profiledata/account/Account"
+// import PersonalInfo from "../../myprofile/profiledata/personalinfo/PersonalInfo"
 import AppointmentManagement from "./appointmentmanagement/AppointmentManagement"
 import AdoptionManagement from "./adoptionmanagement/AdoptionManagement"
 import AdoptionPostsManagement from "./adoptionpostsmanagement/AdoptionPostsManagement"
@@ -21,7 +21,7 @@ const StaffPanelData = (props) => {
     <div className="profile-animation-wrapper">
 
 
-      {
+      {/* {
         selection === 1 &&
         <>
           <h4>Public Profile</h4>
@@ -35,7 +35,7 @@ const StaffPanelData = (props) => {
           <h4>Account Management</h4>
           <Account />
         </>
-      }
+      } */}
       {
         selection === 3 &&
 

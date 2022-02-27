@@ -1,8 +1,9 @@
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { useState } from 'react'
-import DeletePostModal from "../../../myprofile/profiledata/myadoptionposts/DeletePostModal"
-import EditAdoptionStatus from "../../../myprofile/profiledata/myadoptionrequests/EditAdoptionStatus"
+import DeletePostModal from "../../../profile/myadoptionposts/DeletePostModal"
+import EditAdoptionStatus from "../../../profile/myadoptionrequests/EditAdoptionStatus"
+// import DeletePostModal from "../../../myprofile/profiledata/myadoptionposts/DeletePostModal"
 import { Link } from 'react-router-dom'
 
 const AdoptionManagement = () => {

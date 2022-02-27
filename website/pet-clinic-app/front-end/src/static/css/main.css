@@ -999,6 +999,104 @@ nav .image-link .full-logo {
   color: var(--clr-accent-logoBlue);
 }
 
+.profile-menu {
+  border: 1px solid grey;
+  width: 100%;
+  border-radius: 0rem 0.5rem 0.5rem 0rem;
+  -webkit-border-radius: 0rem 0.5rem 0.5rem 0rem;
+  -moz-border-radius: 0rem 0.5rem 0.5rem 0rem;
+  -ms-border-radius: 0rem 0.5rem 0.5rem 0rem;
+  -o-border-radius: 0rem 0.5rem 0.5rem 0rem;
+}
+@media all and (min-width: 48rem) {
+  .profile-menu {
+    width: 24%;
+    max-width: 20rem;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    margin-top: 1rem;
+  }
+}
+.profile-menu .profile-option {
+  color: black;
+  text-align: left;
+  padding: 1rem 0.75rem;
+  border-left: 4px grey solid;
+  border-bottom: 1px solid #555252;
+  transition: all ease 0.5s;
+}
+.profile-menu .profile-option:last-child {
+  border-bottom: 0;
+}
+.profile-menu .profile-option:hover {
+  cursor: pointer;
+  border-left-color: var(--clr-primary-mainBlue);
+}
+.profile-menu .profile-option.selected {
+  border-left-color: var(--clr-primary-mainPurple);
+}
+
+.myprofile-wrapper {
+  background-color: whitesmoke;
+  padding: 5rem 1rem 0 1rem;
+}
+@media all and (min-width: 48rem) {
+  .myprofile-wrapper {
+    padding: 9rem 1.5rem 0 1.5rem !important;
+  }
+}
+
+@media all and (min-width: 48rem) {
+  .myprofile-container {
+    justify-content: space-evenly;
+  }
+}
+.myprofile-container .bio-container {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding-bottom: 1rem;
+}
+@media all and (min-width: 48rem) {
+  .myprofile-container .bio-container {
+    padding-left: 4%;
+  }
+}
+.myprofile-container .bio-container .avatar-photo {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50% 50% 50% 50%;
+  -webkit-border-radius: 50% 50% 50% 50%;
+  -moz-border-radius: 50% 50% 50% 50%;
+  -ms-border-radius: 50% 50% 50% 50%;
+  -o-border-radius: 50% 50% 50% 50%;
+}
+
+.profile-menu {
+  margin-bottom: 2rem;
+}
+
+h4 {
+  border-bottom: solid 1px grey;
+  padding-bottom: 0.5rem;
+}
+@media all and (min-width: 48rem) {
+  h4 {
+    font-size: 1.5rem;
+  }
+}
+
+.profile-animation-wrapper {
+  width: 100%;
+}
+@media all and (min-width: 48rem) {
+  .profile-animation-wrapper {
+    width: 68%;
+  }
+}
+
 /*setting the full page size for body and html elements*/
 /* the general design with paddings, margins, main-bgcolors, main-fonts and basic layout */
 body {
@@ -2290,61 +2388,74 @@ i.active {
   margin-right: 0.5rem;
 }
 
-.profile-menu {
-  border: 1px solid grey;
+.account-data {
+  flex-direction: column;
+  align-content: center;
+}
+.account-data .inputs-wrapper {
   width: 100%;
-  border-radius: 0rem 0.5rem 0.5rem 0rem;
-  -webkit-border-radius: 0rem 0.5rem 0.5rem 0rem;
-  -moz-border-radius: 0rem 0.5rem 0.5rem 0rem;
-  -ms-border-radius: 0rem 0.5rem 0.5rem 0rem;
-  -o-border-radius: 0rem 0.5rem 0.5rem 0rem;
+  max-width: 22rem;
 }
 @media all and (min-width: 48rem) {
-  .profile-menu {
-    width: 24%;
-    max-width: 20rem;
-    height: -webkit-fit-content;
-    height: -moz-fit-content;
-    height: fit-content;
-    margin-top: 1rem;
+  .account-data .inputs-wrapper {
+    margin: auto;
+    max-width: 30rem;
   }
 }
-.profile-menu .profile-option {
-  color: black;
+@media all and (min-width: 48rem) {
+  .account-data label {
+    max-width: 8rem;
+  }
+}
+.account-data .change-pass {
+  max-width: 10rem;
+  padding: 0.5rem;
+}
+
+.margin-bottom {
+  margin-bottom: 0.5rem;
+}
+
+.modal-background {
+  background-color: var(--clr-shadow-glassy-shadow);
+  position: relative;
+  text-align: center;
+  margin-bottom: 1rem;
+  width: 90%;
+  max-width: 400px;
+  min-width: 250px;
+  padding: 1rem;
+  box-shadow: 5px 10px 10px #838383;
+}
+
+.modal-container {
+  width: 100%;
+}
+.modal-container .edit-modal-buttons-container {
+  width: 100%;
+}
+.modal-container .btn-rec-purple {
+  padding: 0.5rem;
+  width: 35%;
+}
+.modal-container .x-close {
+  position: absolute;
+  top: 5px;
+  left: 5px;
   text-align: left;
-  padding: 1rem 0.75rem;
-  border-left: 4px grey solid;
-  border-bottom: 1px solid #555252;
-  transition: all ease 0.5s;
-}
-.profile-menu .profile-option:last-child {
-  border-bottom: 0;
-}
-.profile-menu .profile-option:hover {
-  cursor: pointer;
-  border-left-color: var(--clr-primary-mainBlue);
-}
-.profile-menu .profile-option.selected {
-  border-left-color: var(--clr-primary-mainPurple);
-}
-
-h4 {
-  border-bottom: solid 1px grey;
-  padding-bottom: 0.5rem;
+  font-size: 0.5rem;
 }
 @media all and (min-width: 48rem) {
-  h4 {
-    font-size: 1.5rem;
+  .modal-container .x-close {
+    top: 5px;
+    left: 10px;
+    font-size: 1rem;
   }
 }
 
-.profile-animation-wrapper {
-  width: 100%;
-}
-@media all and (min-width: 48rem) {
-  .profile-animation-wrapper {
-    width: 68%;
-  }
+.modal-title {
+  padding: 1rem;
+  font-size: 1.1rem;
 }
 
 .profile-data {
@@ -2648,71 +2759,6 @@ h4 {
   transform: translateX(-50%);
 }
 
-.account-data {
-  flex-direction: column;
-  align-content: center;
-}
-.account-data .inputs-wrapper {
-  width: 100%;
-  max-width: 22rem;
-}
-@media all and (min-width: 48rem) {
-  .account-data .inputs-wrapper {
-    margin: auto;
-    max-width: 30rem;
-  }
-}
-@media all and (min-width: 48rem) {
-  .account-data label {
-    max-width: 8rem;
-  }
-}
-.account-data .change-pass {
-  max-width: 10rem;
-  padding: 0.5rem;
-}
-
-.myprofile-wrapper {
-  background-color: whitesmoke;
-  padding: 5rem 1rem 0 1rem;
-}
-@media all and (min-width: 48rem) {
-  .myprofile-wrapper {
-    padding: 9rem 1.5rem 0 1.5rem;
-  }
-}
-
-@media all and (min-width: 48rem) {
-  .myprofile-container {
-    justify-content: space-evenly;
-  }
-}
-.myprofile-container .bio-container {
-  width: 100%;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  padding-bottom: 1rem;
-}
-@media all and (min-width: 48rem) {
-  .myprofile-container .bio-container {
-    padding-left: 4%;
-  }
-}
-.myprofile-container .bio-container .avatar-photo {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50% 50% 50% 50%;
-  -webkit-border-radius: 50% 50% 50% 50%;
-  -moz-border-radius: 50% 50% 50% 50%;
-  -ms-border-radius: 50% 50% 50% 50%;
-  -o-border-radius: 50% 50% 50% 50%;
-}
-
-.profile-menu {
-  margin-bottom: 2rem;
-}
-
 .post-pet-container {
   background-image: linear-gradient(120deg, var(--clr-primary-secondBlue), var(--clr-primary-secondPurple));
   padding: 6rem 0 3rem 0;
@@ -2924,52 +2970,6 @@ h4 {
 .staff-container .staff-member-card .each-star {
   margin-right: 0.3rem;
   cursor: pointer;
-}
-
-.margin-bottom {
-  margin-bottom: 0.5rem;
-}
-
-.modal-background {
-  background-color: var(--clr-shadow-glassy-shadow);
-  position: relative;
-  text-align: center;
-  margin-bottom: 1rem;
-  width: 90%;
-  max-width: 400px;
-  min-width: 250px;
-  padding: 1rem;
-  box-shadow: 5px 10px 10px #838383;
-}
-
-.modal-container {
-  width: 100%;
-}
-.modal-container .edit-modal-buttons-container {
-  width: 100%;
-}
-.modal-container .btn-rec-purple {
-  padding: 0.5rem;
-  width: 35%;
-}
-.modal-container .x-close {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  text-align: left;
-  font-size: 0.5rem;
-}
-@media all and (min-width: 48rem) {
-  .modal-container .x-close {
-    top: 5px;
-    left: 10px;
-    font-size: 1rem;
-  }
-}
-
-.modal-title {
-  padding: 1rem;
-  font-size: 1.1rem;
 }
 
 .staff-panel-wrapper {

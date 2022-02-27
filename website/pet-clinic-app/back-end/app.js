@@ -27,7 +27,6 @@ app.use(cors())
 // Using the Routers
 app.use(usersRouter)
 app.use(petsRouter)
-app.use(staffmemRouter)
 app.use(appointmentRouter)
 
 // not found url

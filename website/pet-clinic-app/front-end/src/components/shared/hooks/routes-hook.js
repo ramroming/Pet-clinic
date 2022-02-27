@@ -7,12 +7,18 @@ import Appointment from "./../..//pages/appointment/Appointment";
 import Adoption from "./../..//pages/adoption/Adoption";
 import AdoptionAds from "./../..//pages/adoptionAds/AdoptionAds";
 import AdoptionAd from "./../..//pages/adoptionAd/AdoptionAd";
-import Myprofile from "./../..//pages/myprofile/Myprofile";
+// import Myprofile from "./../..//pages/myprofile/Myprofile";
 import PostAd from "./../..//pages/postAd/PostAd";
 import PostPreview from "./../..//pages/postpreview/PostPreview";
 import Stafflist from "./../..//pages/stafflist/Stafflist";
 import StaffPanel from "./../..//pages/staffPanel/StaffPanel";
 import About from "./../..//pages/about/About";
+import SideNav from "../../layout/profile_side_nav/SideNav";
+import Account from "../../pages/profile/account/Account";
+import MyAdoptionPosts from "../../pages/profile/myadoptionposts/MyAdoptionPosts";
+import MyAdoptionRequests from "../../pages/profile/myadoptionrequests/MyAdoptionRequests";
+import PersonalInfo from "../../pages/profile/personalinfo/PersonalInfo";
+import PetInfo from "../../pages/profile/petinfo/PetInfo";
 
 // A hook that contains the routing logic and it uses the authed user state to determine whether the user is allowed to navigate to private Routes
 const useRoutes = (authedUser) => {
@@ -35,8 +41,21 @@ const useRoutes = (authedUser) => {
           element={<AdoptionAds />}></Route>
         <Route path='adoptionad'
           element={<AdoptionAd />}></Route>
-        <Route path='myprofile'
-          element={<Myprofile />}>
+        <Route path='myprofile' element={<SideNav />}>
+          <Route index
+            element={<Navigate to='/' />}></Route>
+          <Route path='mypersonalinfo'
+            element={ <PersonalInfo /> }></Route>
+          <Route path='account'
+            element={ <Account /> }></Route>
+          <Route path='myadoptionposts'
+            element={ <MyAdoptionPosts /> }></Route>
+          <Route path='myadoptionrequests'
+            element={ <MyAdoptionRequests /> }></Route>
+          <Route path='petinfo'
+            element={ <PetInfo /> }></Route>
+          <Route path='*'
+            element={<Navigate to='/' />}> </Route>
         </Route>
         <Route path='postad'
           element={<PostAd />}> </Route>

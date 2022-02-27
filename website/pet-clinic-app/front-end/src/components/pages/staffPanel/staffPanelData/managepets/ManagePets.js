@@ -2,7 +2,9 @@
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { useState } from 'react'
-import DeletePostModal from "../../../myprofile/profiledata/myadoptionposts/DeletePostModal"
+import DeletePostModal from "../../../profile/myadoptionposts/DeletePostModal"
+
+// import DeletePostModal from "../../../myprofile/profiledata/myadoptionposts/DeletePostModal"
 import EditPet from './EditPet'
 import { Link } from 'react-router-dom';
 
