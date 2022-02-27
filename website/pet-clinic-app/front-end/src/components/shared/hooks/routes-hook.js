@@ -14,7 +14,6 @@ import Stafflist from "./../..//pages/stafflist/Stafflist";
 import StaffPanel from "./../..//pages/staffPanel/StaffPanel";
 import About from "./../..//pages/about/About";
 
-
 // A hook that contains the routing logic and it uses the authed user state to determine whether the user is allowed to navigate to private Routes
 const useRoutes = (authedUser) => {
   if (authedUser === true)
@@ -37,7 +36,8 @@ const useRoutes = (authedUser) => {
         <Route path='adoptionad'
           element={<AdoptionAd />}></Route>
         <Route path='myprofile'
-          element={<Myprofile />}> </Route>
+          element={<Myprofile />}>
+        </Route>
         <Route path='postad'
           element={<PostAd />}> </Route>
         <Route path='postpreview'

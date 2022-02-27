@@ -1,4 +1,4 @@
-import AnimationFade from '../adoption/AnimationFade'
+// import AnimationFade from '../adoption/AnimationFade'
 //Import Animation objects
 import { container, item } from "../adoption/AnimationFade"
 
@@ -42,7 +42,7 @@ const About = () => {
 
                     {/* photo */}
                     <div className="about-image-container flex-col fjust-center falign-center">
-                        <img src="/media/imgs/favicon.png" alt="image" />
+                        <img src="/media/imgs/favicon.png" alt="image1" />
                     </div>
 
                     {/* description */}
@@ -62,7 +62,7 @@ const About = () => {
 
                     <div className="about-image-container
                     flex-col fjust-center falign-center">
-                        <img src="/media/imgs/hearts-paws.png" alt="image" />
+                        <img src="/media/imgs/hearts-paws.png" alt="image2" />
                     </div>
 
                     {/* description */}
