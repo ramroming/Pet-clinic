@@ -12,6 +12,7 @@
 @use "layout/nav/burgerlist/burgerList";
 @use "layout/footer/footer";
 @use "layout/profile_side_nav/sidenav";
+@use 'layout/staffpanel_side_nav/staffpanel_side_nav';
 @use "utils/containers";
 @use 'utils/datepicker/datepicker';
 @use 'utils/formErrorMsg/inputError';
@@ -29,15 +30,6 @@
 @use 'pages/adoptionAds/AdoptionAds';
 @use 'pages/adoption/adoption';
 @use 'pages/adoptionAd/adoptionAd';
-// @use 'pages/myprofile/profilemenu/profilemenu';
-// @use 'pages/myprofile/profiledata/profiledata';
-// @use 'pages/myprofile/profiledata/personalinfo/personalinfo';
-// @use 'pages/myprofile/profiledata/petinfo/petinfo';
-// @use 'pages/myprofile/profiledata/account/account';
-// @use 'pages/myprofile/profiledata/myadoptionposts/myadoptionposts.scss';
-// @use 'pages/myprofile/profiledata/myadoptionrequests/myadoptionrequests.scss';
-// @use 'pages/myprofile/myprofile';
-
 @use 'pages/profile/account/account';
 @use 'pages/profile/myadoptionposts/myadoptionposts';
 @use 'pages/profile/myadoptionrequests/myadoptionrequests';
@@ -47,12 +39,14 @@
 @use 'pages/postAd/postad';
 @use 'pages/postpreview/postpreview';
 @use 'pages/stafflist/stafflist';
-@use 'pages/staffPanel/staffPanel';
-@use 'pages/staffPanel/staffPanelData/appointmentmanagement/appointmentmanagement';
-@use 'pages/staffPanel/staffPanelData/adoptionmanagement/adoptionmanagement';
-@use 'pages/staffPanel/staffPanelData/registration/registration.scss';
-@use 'pages/staffPanel/staffPanelData/pettreatmenthistory/pettreatmenthistory';
-@use 'pages/staffPanel/staffPanelData/pettraininghistory/pettraininghistory';
-@use 'pages/staffPanel/staffPanelData/manageusers/manageusers';
-@use 'pages/staffPanel/staffPanelData/managepets/managepets';
+
+
+@use 'pages/staffPanel/appointmentmanagement/appointmentmanagement';
+@use 'pages/staffPanel/adoptionmanagement/adoptionmanagement';
+@use 'pages/staffPanel/registration/registration.scss';
+@use 'pages/staffPanel/pettreatmenthistory/pettreatmenthistory';
+@use 'pages/staffPanel/pettraininghistory/pettraininghistory';
+@use 'pages/staffPanel/manageusers/manageusers';
+@use 'pages/staffPanel/managepets/managepets';
+
 @use 'pages/about/about';

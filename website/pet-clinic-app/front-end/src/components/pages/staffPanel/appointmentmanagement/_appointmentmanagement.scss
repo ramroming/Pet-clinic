@@ -1,0 +1,36 @@
+@use '../../../abstracts/' as *;
+
+
+
+
+
+
+.search-bar-container{
+    padding: 1rem;
+
+    label{
+        font-size:1.1rem;
+    }
+}
+
+.search-bar{
+    border-color: var(--clr-primary-mainBlue);
+    padding: .2rem;
+}
+
+.edit-modal{
+
+    height: 140px;
+
+    .modal-container{
+        
+    .btn-rec-purple{
+        padding: .5rem;
+        width: 120px;
+        margin-right: 1rem;
+    }
+
+    }
+}
+
+
