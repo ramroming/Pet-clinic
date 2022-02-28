@@ -50,7 +50,9 @@ const Nav = () => {
             <Link
             className="btn-s" 
             to='/myprofile/mypersonalinfo'>My profile</Link>}
-            {auth.isLoggedIn && <button  onClick={() => auth.logout(auth.token)} className="btn-s">Logout</button>}
+            {auth.isLoggedIn && <button  onClick={() => {
+              auth.logout()
+            }} className="btn-s">Logout</button>}
             {!auth.isLoggedIn && 
             <Link
             className="btn-s" 

@@ -6,6 +6,7 @@ import PhotoInfo from "../../utils/up_photo_info/PhotoInfo";
 import { useContext, useEffect } from "react";
 import useFetch from "../../shared/hooks/fetch-hook";
 import { authContext } from "../../shared/context/auth-context";
+import useReDirector from "../../shared/hooks/redirector-hook";
 
 
 // this data will be used in the form's date input
@@ -57,6 +58,7 @@ const RegisterPet = () => {
   const [state, dispatch] = useRegisterPetForm(initialData)
   const sendRequest = useFetch(dispatch)
   const auth = useContext(authContext)
+  const redirector = useReDirector()
 
   useEffect(() => {
     dispatch({ type: 'getBreeds' })
@@ -84,8 +86,11 @@ const RegisterPet = () => {
         const parsedData = await sendRequest(`http://localhost:5000/users/me/pets/`, 'POST', state.dataToSend, {
           'Authorization': `Bearer ${auth.token}`
         })
-        if (parsedData)
-         dispatch({ type: 'success', data: parsedData })
+        if (parsedData){
+          dispatch({ type: 'success', data: parsedData })
+          redirector({ redirectTo: '/myprofile/petinfo' })
+        }
+         
       } catch (e) {
         dispatch({ type: 'failure', error: e.message})
       }
