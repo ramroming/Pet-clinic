@@ -26,16 +26,19 @@ const Burgerlist = () => {
   //   { title: 'My profile', href: '/myprofile'},
   // ]
 
-  const toggle = () => {
+  const toggle = (isLogout = false) => {
     setMenuTog((menuTog) => {
       return !menuTog
     })
+    if (isLogout) {
+      auth.logout()
+    }
   }
 
   return (
     <div className="dropdown">
       <i className="fa-solid fa-bars  burger-icon"
-        onClick={toggle}></i>
+        onClick={() => toggle()}></i>
       <AnimatePresence> {
         menuTog && <motion.div variants={menuAnimation}
           initial="initial"
@@ -52,7 +55,7 @@ const Burgerlist = () => {
                   <Link
                     to={item.toLowerCase().replace(' ', '')}
                     className="droplist-item"
-                    onClick={toggle}>
+                    onClick={() => toggle(item === 'Logout')}>
                     {item}
                   </Link>
               </motion.div>

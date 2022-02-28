@@ -38,7 +38,6 @@ const MakeAppointmentSlider = () => {
   const [slides, setSlides] = useState([true, false, false, false])
 
 
-  console.log(appointment.date)
 
   const position = useRef([0, 0]);
 

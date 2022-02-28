@@ -50,7 +50,6 @@ const initialState = {
 const Registration = () => {
 
   const [registerUser, setRegisterUser] = useState(false)
-  const [registerPet, setRegisterPet] = useState(false)
 
 
   // using the form-hook
@@ -96,7 +95,7 @@ const Registration = () => {
     if (state.isLoading) {
       fetchUser()
     }
-  }, [state.dataToSend, state.isLoading, sendRequest, auth])
+  }, [state.dataToSend, state.isLoading, sendRequest, auth, dispatch])
 
 
 
@@ -210,7 +209,6 @@ const Registration = () => {
         }
         <button className="btn-rec-purple"
           onClick={() => {
-            setRegisterPet(true)
           }}>
           Regsiter a pet
         </button>

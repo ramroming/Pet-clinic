@@ -33,7 +33,9 @@ import ManageProfits from '../../pages/staffPanel/manageProfits/ManageProfits'
 const useRoutes = (authedUser) => {
 
   if (authedUser !== null)
-      return (
+  {
+
+    return (
       // public routes
       <Routes>
         <Route path='/' element={<Home />}></Route>
@@ -137,6 +139,8 @@ const useRoutes = (authedUser) => {
           element={<Navigate to='/' />}> </Route>
       </Routes>
     )
+  }
+      
   return(<></>)
 }
 export default useRoutes

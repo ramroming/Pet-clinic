@@ -1,5 +1,4 @@
 import { useReducer } from 'react'
-import validator from 'validator'
 
 // This custom hook is currently adjusted to validate user inputs when login in using userReducer
 const formReducer = (state, action) => {

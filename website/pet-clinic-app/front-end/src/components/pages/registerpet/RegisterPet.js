@@ -11,7 +11,6 @@ import useReDirector from "../../shared/hooks/redirector-hook";
 
 // this data will be used in the form's date input
 const today = new Date()
-console.log(today)
 const maxDate = dateFormat(today, 'isoDate')
 const minDate = dateFormat(today.setMonth(today.getMonth() - 30 * 12), 'isoDate')
 
@@ -100,7 +99,7 @@ const RegisterPet = () => {
       registerPet()
     }
 
-  }, [state.isLoading, auth.token, sendRequest, state.dataToSend, dispatch])
+  }, [state.isLoading, auth.token, sendRequest, state.dataToSend, dispatch, redirector])
   const submitForm = (e) => {
     e.preventDefault()
     dispatch({ type: 'validate' })
