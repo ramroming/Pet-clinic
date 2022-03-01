@@ -34,9 +34,9 @@
       transition: 0.5s ease transform;
 
       @include break-point("medium", "up") {
-        width: 15%;
+        width: fit-content;
         min-width: 10rem;
-        padding: 3rem 0;
+        padding: 3rem 1rem;
       }
 
       &.active {

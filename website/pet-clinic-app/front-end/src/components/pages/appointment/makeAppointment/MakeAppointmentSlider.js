@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useContext } from "react"
 import Datepicker from "../../../utils/datepicker/Datepicker";
 
 //Import Animation object from sliderAnimation.js
@@ -6,13 +6,32 @@ import { appointmentSlider } from "../makeAppointment/makeAppointmentAnimation"
 
 //Import motion for defining entering motion, and AnimatePresence to define exit animation
 import { AnimatePresence, motion } from "framer-motion"
+import useFetch from "../../../shared/hooks/fetch-hook";
+
+import { authContext } from "../../../shared/context/auth-context";
+import useMakeAppointment from "../../../shared/hooks/make-appointment-hook";
+
 
 // Assign the imported object to local object sliderMotion
 const sliderMotion = appointmentSlider
 
 
+const initialData = {
+  isLoading: false,
+  pets: [],
+  stmems: [],
+  responseError: ''
+}
 const MakeAppointmentSlider = () => {
 
+  const auth = useContext(authContext)
+  // using the fetch hook
+  const sendRequest = useFetch()
+
+  const [slides, setSlides] = useState([true, false, false, false])
+
+  // usign the appointment hook
+  const [state, dispatch] = useMakeAppointment(initialData)
   const [appointment, setAppointment] = useState({
     appointmentType: '',
     petName: '',
@@ -20,8 +39,64 @@ const MakeAppointmentSlider = () => {
     date: new Date("October 01, 1991 00:00:00")
   })
 
+  // getting data from the endpoints
+  useEffect(() => {
+    const getPets = async () => {
+      try {
+        const pets = await sendRequest('http://localhost:5000/users/me/pets', 'GET', null,
+          {
+            'Authorization': `Bearer ${auth.token}`
+          }
+        )
+        if (pets) {
+          dispatch({ type: 'successPets', data: pets })
+        }
+      } catch (e) {
+
+        dispatch({ type: 'failure', error: e.error })
+      }
+    }
+    const getSt = async () => {
+      try {
+        const stmems = await sendRequest(`http://localhost:5000/appointment/staffmems?appointment_type=${appointment.appointmentType}`, 'GET', null,
+          {
+            'Authorization': `Bearer ${auth.token}`
+          }
+        )
+        if (stmems) {
+          dispatch({ type: 'successStmems', data: stmems })
+        }
+      } catch (e) {
+
+        dispatch({ type: 'failure', error: e.error })
+      }
+    }
+    if (slides[1] === true && !state.pets.length) {
+      dispatch({ type: 'start' })
+
+      getPets()
+    }
+    if (slides[2] === true) {
+      dispatch({ type: 'start' })
+      getSt()
+    }
+
+  }, [slides, auth.token, sendRequest, dispatch, state.pets.length, appointment.appointmentType, state.stmems.length])
+
+
+
+
+
+
+  // *************** slider movement related **************
+
   // for the datepicker
   const [date, setDate] = useState(new Date());
+
+  const position = useRef([0, 0]);
+
+
+
 
   useEffect(() => {
     const newDate = date
@@ -34,12 +109,6 @@ const MakeAppointmentSlider = () => {
     })
   }, [date])
 
-
-  const [slides, setSlides] = useState([true, false, false, false])
-
-
-
-  const position = useRef([0, 0]);
 
   const moveSlider = (event) => {
 
@@ -78,6 +147,7 @@ const MakeAppointmentSlider = () => {
       }
     }
   }
+
 
   //generic slide state detector
 
@@ -182,30 +252,18 @@ const MakeAppointmentSlider = () => {
             exit='exit' className="make-appointment-slider flex-col falign-center gap-24p">
             <h1>Select Your Pet:</h1>
             <div className="appointment-types flex-row fjust-center gap-24p">
+              {state && state.pets.length && state.pets.map((pet, index) => {
+                return (
+                  <div key={index} className={appointment.petName === pet.name ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center"}
+                    onClick={(event) => selectOption(event)}>
+                    <img src={pet.photo ? URL.createObjectURL(new Blob([new Uint8Array(pet.photo.data)])) : '/media/imgs/cat.png'} alt="cat" />
+                    <p>{pet.name}</p>
+                  </div>
+                )
+              })}
 
-              <div className={appointment.petName === 'Pet 1' ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center"}
-                onClick={(event) => selectOption(event)}>
-                <img src="/media/imgs/cat.png" alt="cat" />
-                <p>Pet 1</p>
-              </div>
 
-              <div className={appointment.petName === 'Pet 2' ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center"}
-                onClick={(event) => selectOption(event)}>
-                <img src="/media/imgs/cat.png" alt="cat" />
-                <p>Pet 2</p>
-              </div>
 
-              <div className={appointment.petName === 'Pet 3' ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center"}
-                onClick={(event) => selectOption(event)}>
-                <img src="/media/imgs/cat.png" alt="cat" />
-                <p>Pet 3</p>
-              </div>
-
-              <div className={appointment.petName === 'Pet 4' ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center"}
-                onClick={(event) => selectOption(event)}>
-                <img src="/media/imgs/cat.png" alt="cat" />
-                <p>Pet 4</p>
-              </div>
 
 
             </div>
@@ -241,29 +299,18 @@ const MakeAppointmentSlider = () => {
             <h1>Select staff:</h1>
             <div className="appointment-types flex-row fjust-center gap-24p">
 
-              <div className={appointment.staffMem === 'Staff 1' ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center"}
-                onClick={(event) => selectOption(event)}>
-                <img src="/media/imgs/staff.png" alt="cat" />
-                <p>Staff 1</p>
-              </div>
+              {state && state.stmems.length !==0 && state.stmems.map((stmem, index) => {
+                return (
+                  <div key={index} className={appointment.staffMem === (stmem.first_name + ' ' + stmem.last_name) ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center"}
+                    onClick={(event) => selectOption(event)}>
+                    <img src={stmem.photo ? URL.createObjectURL(new Blob([new Uint8Array(stmem.photo.data)])) : '/media/imgs/staff.png'} alt="cat" />
+                    <p>{stmem.first_name + ' ' + stmem.last_name }</p>
+                  </div>
+                )})
+              }
+              
 
-              <div className={appointment.staffMem === 'Staff 2' ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center"}
-                onClick={(event) => selectOption(event)}>
-                <img src="/media/imgs/staff.png" alt="cat" />
-                <p>Staff 2</p>
-              </div>
-
-              <div className={appointment.staffMem === 'Staff 3' ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center"}
-                onClick={(event) => selectOption(event)}>
-                <img src="/media/imgs/staff.png" alt="cat" />
-                <p>Staff 3</p>
-              </div>
-
-              <div className={appointment.staffMem === 'Staff 4' ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center"}
-                onClick={(event) => selectOption(event)}>
-                <img src="/media/imgs/staff.png" alt="cat" />
-                <p>Staff 4</p>
-              </div>
+              {/* /media/imgs/staff.png */ }
 
 
             </div>
@@ -331,9 +378,9 @@ const MakeAppointmentSlider = () => {
               <div className="appointment-buttons-wrapper flex-row fjust-around button-wrapper">
                 <button id="back" className="btn-rec-purple next"
                   onClick={(event) => moveSlider(event)}>Back</button>
-                <button id="next" 
-                className={ appointment.date.getHours() === 0 ? "btn-rec-purple next confirm disabled" : "btn-rec-purple next confirm"}
-                disabled={ appointment.date.getHours() === 0 ? true : false}
+                <button id="next"
+                  className={appointment.date.getHours() === 0 ? "btn-rec-purple next confirm disabled" : "btn-rec-purple next confirm"}
+                  disabled={appointment.date.getHours() === 0 ? true : false}
                   onClick={(event) => moveSlider(event)}>Confirm</button>
               </div>
             </motion.div>

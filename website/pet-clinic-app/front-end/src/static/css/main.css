@@ -1739,9 +1739,11 @@ i.active {
 }
 @media all and (min-width: 48rem) {
   .make-appointment-slider .appointment-types .appointment-type {
-    width: 15%;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
     min-width: 10rem;
-    padding: 3rem 0;
+    padding: 3rem 1rem;
   }
 }
 .make-appointment-slider .appointment-types .appointment-type.active {

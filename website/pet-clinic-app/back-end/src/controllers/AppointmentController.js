@@ -18,6 +18,9 @@ const getStaffMems = async (req, res) => {
     case 'Training':
       stmem_type = 'trainer'
       break
+    case 'Adoption':
+      stmem_type = 'receptionist'
+      break
 
     default:
       break
