@@ -28,15 +28,56 @@ const appointmentReducer = (state, action) => {
               timesArr: action.data
             }
           }
-        case 'successCreate': {
+       
+
+      
+          
+          case 'start': {
+              return {
+                  ...state,
+                  isLoading: true
+              }
+          }
+          case 'checkModalExit': {
             return {
               ...state,
-              responseError: '',
-              isLoading: false,
+              checkModal: false
+            }
+          }
+          case 'checkModalEnter': {
+            return {
+              ...state,
+              checkModal: true
+            }
+          }
+          case 'finalConfirm': {
+            return {
+              ...state,
+              finalConfirm: true
             }
           }
 
-      
+          case 'successCreate': {
+            return {
+              ...state,
+              createResponse: action.data,
+              responseError: '',
+              isLoading: false,
+              finalConfirm: false,
+              checkModal: false
+            }
+          }
+          case 'failureCreate': {
+            return {
+              ...state,
+              responseError: action.error,
+              isLoading: false,
+              finalConfirm: false,
+              checkModal: false
+
+            }
+          }
+
           // when fetching data is failed
           case 'failure': {
             return {
@@ -45,11 +86,11 @@ const appointmentReducer = (state, action) => {
               isLoading: false
             }
           }
-          case 'start': {
-              return {
-                  ...state,
-                  isLoading: true
-              }
+          case 'errorModalExit': {
+            return {
+              ...state,
+              responseError: ''
+            }
           }
           default:
             break

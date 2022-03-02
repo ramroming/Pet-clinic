@@ -200,7 +200,7 @@ const createAppointment = async (req, res) => {
 
     // if they reached their max
     if (activeAppointments.length && activeAppointments.length >= MAX_ACTIVE_APPOINTMENTS)
-      return res.status(400).send({ error: `Oops!! Looks like you have reached MAX ${MAX_ACTIVE_APPOINTMENTS} current active appointments at this clinic, in order to make an appointment you should cancel one of your active appointments and try again`})
+      return res.status(400).send({ error: `Oops!! Looks like you have reached MAX ${MAX_ACTIVE_APPOINTMENTS} current active appointments in this clinic`})
     // more than one appointment in a day
     if (activeAppointments){
       const appointmentsInDay = activeAppointments.filter((appointment) => {
@@ -211,7 +211,7 @@ const createAppointment = async (req, res) => {
         return filterDate.getTime() === userDate.getTime()
       })
       if (appointmentsInDay.length >= MAX_APPOINTMENTS_PER_DAY)
-        return res.status(400).send({ error: `Oops!! Looks like you already have ${MAX_APPOINTMENTS_PER_DAY} appointment at the date you specified, you can select another date or cancel the appointment at the date you specified`})
+        return res.status(400).send({ error: `Oops!! Looks like you already have ${MAX_APPOINTMENTS_PER_DAY} appointment at the date you specified, `})
     }
       
 
@@ -225,7 +225,7 @@ const createAppointment = async (req, res) => {
     const dateToInsert = `${date} ${hour}:00:00`
     await conn2.execute('INSERT INTO appointments (date, client_id, stmem_id, status, appointment_type_id, pet_id) VALUES (?, ?, ?, ?, ?, ?)', [dateToInsert, req.user.id, stmem_id, 1, req.appointmentTypeId, pet_id])
 
-    res.status(201).send({ response: 'Appointment was created successfully'})
+    res.status(201).send({ response: 'Your appointment was created successfully'})
 
   } catch (e) {
     if (e.errno === 1062)

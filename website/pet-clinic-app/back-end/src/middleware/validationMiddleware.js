@@ -1,5 +1,5 @@
 const myValidator = require('../utils/dataValidator')
-
+const { CLINIC_WORKING_HOURS } = require('../utils/petclinicrules')
 // Client Related
 const signup = (req, res, next) => {
   const { first_name, last_name, address, phone_number, username, email, password, user_type, stmem_type } = req.body
@@ -136,7 +136,7 @@ const appointmentsTimes = (req, res, next) => {
   if (!myValidator.isValidId(req.query.stmem_id))
     return res.status(400).send({ error: 'Bad URL!!' })
   if (!myValidator.isValidAppointmentDate(req.query.date))
-    return res.status(400).send({ error: 'No Available Dates on the date specified' })
+    return res.send({ availableTimes: [], CLINIC_WORKING_HOURS })
 
 
   next()

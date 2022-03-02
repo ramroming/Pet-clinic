@@ -9,10 +9,14 @@ import dateFormat from "dateformat";
 const Datepicker = (prop) => {
 
  
-
+  
+  const now = new Date()
+  const years = prop.appointment[0].date.split('-')[0]
+  const month = prop.appointment[0].date.split('-')[1]
+  const day = prop.appointment[0].date.split('-')[2]
   return (
     <>
-      <DatePicker selected={new Date(prop.appointment[0].date)}
+      <DatePicker selected={new Date(years, month - 1, day, now.getHours())}
         onChange={
           (newDate) => prop.appointment[1]((oldAppointment) => {
             return {...oldAppointment, date: dateFormat(newDate, 'isoDate')}
@@ -22,7 +26,8 @@ const Datepicker = (prop) => {
           new Date()
         }
         disabledKeyboardNavigation
-        withPortal />
+        withPortal
+        dateFormat="yyyy-MM-dd" />
 
     </>
   )

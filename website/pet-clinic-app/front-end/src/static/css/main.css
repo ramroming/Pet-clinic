@@ -1238,6 +1238,93 @@ body {
   background-color: var(--clr-primary-mainPurple) !important;
 }
 
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  padding-top: 10rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 4;
+}
+.modal .modal-container {
+  margin: auto;
+  padding: 3rem 1rem;
+  width: 40%;
+  min-width: 15rem;
+  max-width: 30rem;
+  background-color: white;
+  border: 4px solid black;
+  border-radius: 3rem 3rem 3rem 3rem;
+  -webkit-border-radius: 3rem 3rem 3rem 3rem;
+  -moz-border-radius: 3rem 3rem 3rem 3rem;
+  -ms-border-radius: 3rem 3rem 3rem 3rem;
+  -o-border-radius: 3rem 3rem 3rem 3rem;
+}
+@media all and (min-width: 48rem) {
+  .modal .modal-container {
+    padding: 3rem;
+  }
+}
+.modal .modal-container__error {
+  border-color: #ff0909;
+}
+.modal .modal-container__check {
+  border-color: var(--clr-primary-mainPurple);
+}
+.modal .modal-container__success {
+  border-color: #107526;
+}
+.modal .modal-container .modal-header {
+  font-weight: bold;
+}
+.modal .modal-container .modal-header__error {
+  color: red;
+}
+.modal .modal-container .modal-header__success {
+  color: #1bbb3e;
+}
+.modal .modal-container .modal-body {
+  text-align: center;
+  width: 100%;
+}
+.modal .modal-container .modal-body span {
+  font-weight: bold;
+  color: var(--clr-primary-mainBlue);
+}
+.modal .modal-container .modal-body p {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.modal .modal-container .modal-footer {
+  width: 100%;
+}
+.modal .modal-container .modal-footer__check {
+  display: flex;
+}
+.modal .modal-container .modal-footer .modal-button {
+  display: block;
+  margin: auto;
+  padding: 0.5rem;
+  color: var(--clr-primary-mainBlue);
+  transition: all ease 0.5s;
+  min-width: none;
+}
+@media all and (min-width: 48rem) {
+  .modal .modal-container .modal-footer .modal-button {
+    min-width: 5.9rem;
+  }
+}
+.modal .modal-container .modal-footer .modal-button:hover {
+  background-color: #dfdede;
+}
+.modal .modal-container .modal-footer .modal-button__confirm {
+  color: white;
+  background-color: var(--clr-primary-mainPurple);
+}
+
 .error-msg {
   width: -webkit-fit-content;
   width: -moz-fit-content;
@@ -1701,6 +1788,7 @@ i.active {
   top: 10%;
   width: 100%;
   padding: 0;
+  gap: 1rem;
 }
 @media all and (min-width: 48rem) {
   .make-appointment-slider {
@@ -1720,6 +1808,7 @@ i.active {
 .make-appointment-slider .appointment-types {
   width: 100%;
   max-width: 35rem;
+  justify-content: center;
 }
 @media all and (min-width: 48rem) {
   .make-appointment-slider .appointment-types {
@@ -1739,11 +1828,9 @@ i.active {
 }
 @media all and (min-width: 48rem) {
   .make-appointment-slider .appointment-types .appointment-type {
-    width: -webkit-fit-content;
-    width: -moz-fit-content;
-    width: fit-content;
+    width: 10rem;
     min-width: 10rem;
-    padding: 3rem 1rem;
+    padding: 2rem 1rem;
   }
 }
 .make-appointment-slider .appointment-types .appointment-type.active {
@@ -1764,7 +1851,7 @@ i.active {
 @media all and (min-width: 48rem) {
   .make-appointment-slider .appointment-types .appointment-type img {
     width: 80%;
-    height: 7rem;
+    height: 6rem;
   }
 }
 .make-appointment-slider .appointment-types .appointment-type:hover {

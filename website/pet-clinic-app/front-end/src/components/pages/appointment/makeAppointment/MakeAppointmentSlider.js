@@ -11,7 +11,7 @@ import useFetch from "../../../shared/hooks/fetch-hook";
 import { authContext } from "../../../shared/context/auth-context";
 import useMakeAppointment from "../../../shared/hooks/make-appointment-hook";
 import dateFormat from "dateformat";
-
+import Modal from "../../../utils/modal/Modal";
 
 // Assign the imported object to local object sliderMotion
 const sliderMotion = appointmentSlider
@@ -22,7 +22,11 @@ const initialData = {
   pets: [],
   stmems: [],
   timesArr: null,
-  responseError: ''
+  responseError: '',
+  createResponse: '',
+  checkModal: false,
+  finalConfirm: false,
+
 }
 const MakeAppointmentSlider = () => {
 
@@ -31,6 +35,7 @@ const MakeAppointmentSlider = () => {
   const sendRequest = useFetch()
 
   const [slides, setSlides] = useState([true, false, false, false])
+  const position = useRef([0, 0]);
 
   // usign the appointment hook
   const [state, dispatch] = useMakeAppointment(initialData)
@@ -41,6 +46,8 @@ const MakeAppointmentSlider = () => {
     // date: new Date("October 01, 1991 00:00:00"),
     hour: '',
     date: dateFormat(new Date(), 'isoDate'),
+    stmemName: '',
+    petName: ''
   })
 
   useEffect(() => {
@@ -59,6 +66,7 @@ const MakeAppointmentSlider = () => {
     }
 
     if (slides[3] === true) {
+      dispatch({ type: 'start' })
       getTimes()
     }
     // const newDate = dateFormat(date, 'isoDate')
@@ -66,7 +74,7 @@ const MakeAppointmentSlider = () => {
     //     return { ...oldAppointment, date: newDate }
     //   })
 
-    
+
   }, [appointment.date, appointment.stmem_id, auth.token, dispatch, sendRequest, slides])
 
   // getting data from the endpoints
@@ -101,7 +109,7 @@ const MakeAppointmentSlider = () => {
         dispatch({ type: 'failure', error: e.message })
       }
     }
-    
+
     if (slides[1] === true && !state.pets.length) {
       dispatch({ type: 'start' })
 
@@ -111,25 +119,9 @@ const MakeAppointmentSlider = () => {
       dispatch({ type: 'start' })
       getSt()
     }
-   
+
 
   }, [slides, auth.token, sendRequest, dispatch, state.pets.length, appointment.appointment_type])
-
-
-
-
-
-
-  // *************** slider movement related **************
-
-  // for the datepicker
-
-  const position = useRef([0, 0]);
-
-
-
-
-  
 
 
   const moveSlider = (event) => {
@@ -175,16 +167,21 @@ const MakeAppointmentSlider = () => {
 
   const selectOption = (event) => {
 
-    let x = ""
+    let x, y = ""
     switch (event.target.nodeName) {
       case 'IMG':
         x = event.target.parentNode.id
+        y = event.target.parentNode.getAttribute('refid')
         break
       case 'P':
         x = event.target.parentNode.id
+        y = event.target.parentNode.getAttribute('refid')
+
         break
       default:
         x = event.target.id
+        y = event.target.getAttribute('refid')
+
         break
 
     }
@@ -196,19 +193,19 @@ const MakeAppointmentSlider = () => {
     }
     if (slides[1]) {
       setAppointment((oldAppointment) => {
-        return { ...oldAppointment, pet_id: x }
+        return { ...oldAppointment, pet_id: x, petName: state.pets[y].name }
       })
     }
     if (slides[2]) {
       setAppointment((oldAppointment) => {
-        return { ...oldAppointment, stmem_id: x }
+        return { ...oldAppointment, stmem_id: x, stmemName: state.stmems[y].first_name + ' ' + state.stmems[y].last_name }
       })
 
     }
   }
 
   const changeDate = (event) => {
-    const selectedHour =parseInt(event.target.innerHTML.substring(0, 2)).toString()
+    const selectedHour = parseInt(event.target.innerHTML.substring(0, 2)).toString()
 
     setAppointment((oldAppointment) => {
       return { ...oldAppointment, hour: selectedHour }
@@ -216,24 +213,74 @@ const MakeAppointmentSlider = () => {
 
   }
 
-  // creating appointment
-  const createAppointment = async () => {
-    if (!state.isLoading) {
-      dispatch({ type: 'start' })
-      try {
-        const result = await sendRequest('http://localhost:5000/users/appointment', 'POST', JSON.stringify(appointment), {
-          'Authorization': `Bearer ${auth.token}`,
-          'Content-Type': 'application/json'
-        })
-        if (result)
-          dispatch({ type: 'successCreate' })
-      } catch (e) {
-        dispatch({ type: 'failure', error: e.message })
+  useEffect(() => {
+
+    if (state.finalConfirm && !state.isLoading) {
+      const createAppointment = async () => {
+
+        dispatch({ type: 'start' })
+        const dataToSend = {
+          appointment_type: appointment.appointment_type,
+          stmem_id: appointment.stmem_id,
+          pet_id: appointment.pet_id,
+          // date: new Date("October 01, 1991 00:00:00"),
+          hour: appointment.hour,
+          date: appointment.date,
+
+        }
+        try {
+          const result = await sendRequest('http://localhost:5000/users/appointment', 'POST', JSON.stringify(dataToSend), {
+            'Authorization': `Bearer ${auth.token}`,
+            'Content-Type': 'application/json'
+          })
+          if (result)
+            dispatch({ type: 'successCreate', data: result.response })
+        } catch (e) {
+          dispatch({ type: 'failureCreate', error: e.message })
+        }
+
       }
+      createAppointment()
     }
-  }
+
+  }, [state.finalConfirm, state.isLoading, dispatch, auth.token, appointment.stmem_id, appointment.appointment_type, appointment.date, appointment.hour, appointment.pet_id, sendRequest])
+  // creating appointment
+
+
+
   return (
     <>
+      {/* UI modals */}
+      {state.responseError &&
+        <Modal
+          modalClass='error'
+          header='Warning!!'
+          body={state.responseError}
+          dispatch={dispatch}
+        />}
+      {state.checkModal &&
+        <Modal
+          modalClass='check'
+          header='Check your appointment data!'
+          body={
+            <>
+              <p>Appointment: <span>{' ' + appointment.appointment_type}</span> </p>
+              <p>For your pet: <span>{' ' + appointment.petName}</span></p>
+              <p>staff: <span>{' ' + appointment.stmemName}</span></p>
+              <p>Date:  <span>{' ' + appointment.date}</span></p>
+              <p>At:  <span>{' ' + appointment.hour < 10 ? '0' + appointment.hour + ':00' : appointment.hour + ':00'}</span></p>
+            </>
+          }
+          dispatch={dispatch}
+        />}
+        {state.createResponse &&
+        <Modal
+          modalClass='success'
+          header='Success!!'
+          body={state.createResponse}
+          dispatch={dispatch}
+          refresh={true}
+        />}
       {/* first slide */}
       <AnimatePresence >
         {slides[0] &&
@@ -243,7 +290,7 @@ const MakeAppointmentSlider = () => {
             animate='final'
             exit='exit' className="make-appointment-slider flex-col falign-center gap-24p">
             <h1>What appointment do you want to make for your pet?</h1>
-            <div className="appointment-types flex-row gap-24p fjust-center">
+            <div className="appointment-types flex-row gap-32p fjust-center">
               <div id="Examination" className={appointment.appointment_type === 'Examination' ? "appointment-type flex-col gap-8p falign-center active " : "appointment-type flex-col gap-8p falign-center"}
                 onClick={(event) => selectOption(event)} >
                 <img src="/media/imgs/pet-examination.png" alt="" />
@@ -288,14 +335,14 @@ const MakeAppointmentSlider = () => {
             <div className="appointment-types flex-row fjust-center gap-24p">
               {state && state.pets.length && state.pets.map((pet, index) => {
                 return (
-                  <div id={pet.id} key={index} className={appointment.pet_id === pet.id.toString() ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center"}
+                  <div id={pet.id} key={index} refid={index} className={appointment.pet_id === pet.id.toString() ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center"}
                     onClick={(event) => selectOption(event)}>
                     <img src={pet.photo ? URL.createObjectURL(new Blob([new Uint8Array(pet.photo.data)])) : '/media/imgs/cat.png'} alt="cat" />
                     <p>{pet.name}</p>
                   </div>
                 )
               })}
-              {state.responseError && <p style={{ color: 'red', textAlign: 'center', width: '70%', margin: 'auto' }}>{state.responseError}</p>}
+
 
 
 
@@ -336,7 +383,7 @@ const MakeAppointmentSlider = () => {
 
               {state && state.stmems.length !== 0 && state.stmems.map((stmem, index) => {
                 return (
-                  <div id={stmem.id} key={index} className={appointment.stmem_id === (stmem.id.toString()) ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center"}
+                  <div id={stmem.id} refid={index} key={index} className={appointment.stmem_id === (stmem.id.toString()) ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center"}
                     onClick={(event) => selectOption(event)}>
                     <img src={stmem.photo ? URL.createObjectURL(new Blob([new Uint8Array(stmem.photo.data)])) : '/media/imgs/staff.png'} alt="cat" />
                     <p>{stmem.first_name + ' ' + stmem.last_name}</p>
@@ -344,7 +391,7 @@ const MakeAppointmentSlider = () => {
                 )
               })
               }
-              {state.responseError && <p style={{ color: 'red', textAlign: 'center', width: '70%', margin: 'auto' }}>{state.responseError}</p>}
+
 
 
 
@@ -385,11 +432,11 @@ const MakeAppointmentSlider = () => {
               </div>
 
               <div className="appointment-types flex-row fjust-center gap-16p date-container">
-                {state.timesArr && state.timesArr.CLINIC_WORKING_HOURS.map((time, index) => {
+                {state.timesArr && state.timesArr.availableTimes.length !==0 && state.timesArr.CLINIC_WORKING_HOURS.map((time, index) => {
                   return (
-                    <React.Fragment key= {index}>
+                    <React.Fragment key={index}>
                       {state.timesArr.availableTimes.includes(time) ?
-                        <p  className={appointment.hour === time.toString() ? "time active" : "time"}
+                        <p className={appointment.hour === time.toString() ? "time active" : "time"}
                           onClick={(e) => changeDate(e)}
                         >{`${time >= 10 ? time : '0' + time}:00 ${time > 11 ? 'PM' : 'AM'}`}</p>
                         :
@@ -397,8 +444,14 @@ const MakeAppointmentSlider = () => {
                     </React.Fragment>
                   )
                 })}
-               
+                {state.timesArr && state.timesArr.availableTimes.length === 0 && 
+                  <p style={{ color: 'white'}}>No Available appointments on the day specified</p>
+                }
+
               </div>
+              {/* {state.responseError && <p style={{ color: 'red', textAlign: 'center', width: '70%', margin: 'auto' }}>{state.responseError}</p>} */}
+              {/* modalClass, header, body, modalButtonClass, modalType */}
+
 
               <div className="appointment-buttons-wrapper flex-row fjust-around button-wrapper">
                 <button id="back" className="btn-rec-purple next"
@@ -406,8 +459,10 @@ const MakeAppointmentSlider = () => {
                 <button id="next"
                   className={appointment.hour === '' ? "btn-rec-purple next confirm disabled" : "btn-rec-purple next confirm"}
                   disabled={appointment.hour === '' ? true : false}
-                  onClick={() => createAppointment()}>Confirm</button>
+                  onClick={() => dispatch({ type: 'checkModalEnter' })}>Confirm</button>
               </div>
+
+
             </motion.div>
 
           </>

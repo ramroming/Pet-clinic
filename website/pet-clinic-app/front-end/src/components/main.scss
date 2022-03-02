@@ -15,6 +15,7 @@
 @use 'layout/staffpanel_side_nav/staffpanel_side_nav';
 @use "utils/containers";
 @use 'utils/datepicker/datepicker';
+@use 'utils/modal/modal';
 @use 'utils/formErrorMsg/inputError';
 @use 'utils/up_photo_info/photoinfo';
 @use "pages/signup/signup";
