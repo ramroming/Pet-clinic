@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise')
 const { getAvailableTimes } = require('../utils/timeOperations')
+const { CLINIC_WORKING_HOURS } = require('../utils/petclinicrules')
 const connData = require('../database/pet-clinic-db')
 
 
@@ -27,7 +28,7 @@ const getStaffMems = async (req, res) => {
   }
   try {
     const conn = await mysql.createConnection(connData)
-    const [staffList] = await conn.execute('SELECT u.id, u.username, u.email, u.user_type, u.personal_info_id, u.status, u.stmem_type, p.first_name, p.last_name, p.address, p.phone_number, p.photo  FROM users u INNER JOIN personal_info p ON u.personal_info_id = p.id WHERE u.stmem_type = ?', [ stmem_type ])
+    const [staffList] = await conn.execute('SELECT u.id, p.first_name, p.last_name, p.photo  FROM users u INNER JOIN personal_info p ON u.personal_info_id = p.id WHERE u.stmem_type = ?', [ stmem_type ])
     await conn.end()
     res.send(staffList)
   } catch (e) {
@@ -41,7 +42,7 @@ const appointmentsTimes = async (req, res) => {
   const stmemId = req.query.stmem_id
   try {
     const availableTimes = await getAvailableTimes(stmemId, userDate)
-    res.send(availableTimes)
+    res.send({availableTimes, CLINIC_WORKING_HOURS})
   } catch (e) {
     res.status(500).send({ error: e.message })
   }

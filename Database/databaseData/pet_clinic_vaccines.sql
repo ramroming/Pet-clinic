@@ -16,34 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `comments`
+-- Table structure for table `vaccines`
 --
 
-DROP TABLE IF EXISTS `comments`;
+DROP TABLE IF EXISTS `vaccines`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `comments` (
+CREATE TABLE `vaccines` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `date` datetime NOT NULL,
-  `text` varchar(150) NOT NULL,
-  `adoption_ad_id` int NOT NULL,
-  `client_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `COMMENTS_fk0` (`adoption_ad_id`),
-  KEY `COMMENTS_fk1` (`client_id`),
-  CONSTRAINT `COMMENTS_fk0` FOREIGN KEY (`adoption_ad_id`) REFERENCES `adoption_ads` (`id`),
-  CONSTRAINT `COMMENTS_fk1` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `name` varchar(150) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `comments`
+-- Dumping data for table `vaccines`
 --
 
-LOCK TABLES `comments` WRITE;
-/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-INSERT INTO `comments` VALUES (1,'2020-02-08 00:00:00','does this pet bite ? ',1,4),(2,'2020-02-09 00:00:00','is this cat friendly ? ',2,4);
-/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+LOCK TABLES `vaccines` WRITE;
+/*!40000 ALTER TABLE `vaccines` DISABLE KEYS */;
+INSERT INTO `vaccines` VALUES (1,'canine parvovirus'),(2,'distemper'),(3,'canine hepatitis'),(4,'rabies '),(5,'FVR'),(6,'FCV'),(7,'FPV');
+/*!40000 ALTER TABLE `vaccines` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -55,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-15 22:48:49
+-- Dump completed on 2022-03-02 13:54:59

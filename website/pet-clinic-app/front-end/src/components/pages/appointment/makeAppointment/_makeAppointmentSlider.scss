@@ -50,12 +50,12 @@
         }
       }
       img {
-        width: 3rem;
-        height: 3rem;
+        width: 90%;
+        height: 5rem;
 
         @include break-point("medium", "up") {
-          width: 6rem;
-          height: 6rem;
+          width: 80%;
+          height: 7rem;
         }
       }
 
@@ -105,6 +105,7 @@
   //buttons
 
   .appointment-buttons-wrapper {
+    padding: 0;
     @include break-point("medium", "up") {
       justify-content: center;
       gap: 4rem;

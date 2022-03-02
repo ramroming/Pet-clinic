@@ -16,31 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `personal_info`
+-- Table structure for table `training_types`
 --
 
-DROP TABLE IF EXISTS `personal_info`;
+DROP TABLE IF EXISTS `training_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `personal_info` (
+CREATE TABLE `training_types` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(150) NOT NULL,
-  `last_name` varchar(150) NOT NULL,
-  `address` varchar(150) NOT NULL,
-  `phone_number` varchar(150) DEFAULT NULL,
-  `photo` mediumblob,
+  `name` varchar(150) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `personal_info`
+-- Dumping data for table `training_types`
 --
 
-LOCK TABLES `personal_info` WRITE;
-/*!40000 ALTER TABLE `personal_info` DISABLE KEYS */;
-INSERT INTO `personal_info` VALUES (1,'rami','saad al deen','karabuk ','23423433',NULL),(2,'reem','alhalbouni','karabuk','3244432',NULL),(3,'Ilhami ','M.Orak','karabuk','1233212',NULL),(4,'bashar','alhalbouni','karabuk','3833299',NULL),(5,'wisam','saad al deen','karabuk','38289329',NULL),(6,'kyle','Milo','karabuk','19382374',NULL),(7,'Maria','Halimah','karabuk','1239872',NULL),(8,'Mostafa','Mehmet','karabuk','1298652',NULL);
-/*!40000 ALTER TABLE `personal_info` ENABLE KEYS */;
+LOCK TABLES `training_types` WRITE;
+/*!40000 ALTER TABLE `training_types` DISABLE KEYS */;
+INSERT INTO `training_types` VALUES (1,'Positive Reinforcement'),(2,'Clicker Training'),(3,'Alpha Dog'),(4,'litter training'),(5,'Staying calm'),(6,'Playing with toys');
+/*!40000 ALTER TABLE `training_types` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-15 22:48:50
+-- Dump completed on 2022-03-02 13:55:00

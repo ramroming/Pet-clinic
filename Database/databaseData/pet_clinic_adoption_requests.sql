@@ -16,29 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `user_tokens`
+-- Table structure for table `adoption_requests`
 --
 
-DROP TABLE IF EXISTS `user_tokens`;
+DROP TABLE IF EXISTS `adoption_requests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_tokens` (
-  `token` varchar(700) NOT NULL,
-  `user_id` int NOT NULL,
-  UNIQUE KEY `token` (`token`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+CREATE TABLE `adoption_requests` (
+  `date` datetime NOT NULL,
+  `client_id` int NOT NULL,
+  `adoption_ad_id` int NOT NULL,
+  PRIMARY KEY (`client_id`,`adoption_ad_id`),
+  KEY `ADOPTION_REQUESTS_fk1` (`adoption_ad_id`),
+  CONSTRAINT `ADOPTION_REQUESTS_fk0` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `ADOPTION_REQUESTS_fk1` FOREIGN KEY (`adoption_ad_id`) REFERENCES `adoption_ads` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user_tokens`
+-- Dumping data for table `adoption_requests`
 --
 
-LOCK TABLES `user_tokens` WRITE;
-/*!40000 ALTER TABLE `user_tokens` DISABLE KEYS */;
-INSERT INTO `user_tokens` VALUES ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjo4LCJpYXQiOjE2NDQ5NTQzMzMsImV4cCI6MTY0NTU1OTEzM30.xIhFlWH2_jYXT7iF0yNg9-zrdqbqtNFLIPd6AoKj5q0',8),('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjo5LCJpYXQiOjE2NDQ5NTQ0MDQsImV4cCI6MTY0NTU1OTIwNH0.D_S_QgTExXEDrMOqKbivNZQ3FIxYVBIHTs13SVCqYrY',9);
-/*!40000 ALTER TABLE `user_tokens` ENABLE KEYS */;
+LOCK TABLES `adoption_requests` WRITE;
+/*!40000 ALTER TABLE `adoption_requests` DISABLE KEYS */;
+INSERT INTO `adoption_requests` VALUES ('2020-02-04 00:00:00',4,1);
+/*!40000 ALTER TABLE `adoption_requests` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-15 22:48:49
+-- Dump completed on 2022-03-02 13:55:00

@@ -1758,13 +1758,13 @@ i.active {
   }
 }
 .make-appointment-slider .appointment-types .appointment-type img {
-  width: 3rem;
-  height: 3rem;
+  width: 90%;
+  height: 5rem;
 }
 @media all and (min-width: 48rem) {
   .make-appointment-slider .appointment-types .appointment-type img {
-    width: 6rem;
-    height: 6rem;
+    width: 80%;
+    height: 7rem;
   }
 }
 .make-appointment-slider .appointment-types .appointment-type:hover {
@@ -1807,6 +1807,9 @@ i.active {
     max-width: 50rem;
     gap: 2rem;
   }
+}
+.make-appointment-slider .appointment-buttons-wrapper {
+  padding: 0;
 }
 @media all and (min-width: 48rem) {
   .make-appointment-slider .appointment-buttons-wrapper {
@@ -3154,4 +3157,4 @@ a.my-great-button {
   .about-us-intro {
     flex-direction: row;
   }
-}/*# sourceMappingURL=main.css.map */
+}

@@ -201,7 +201,6 @@ const createAppointment = async (req, res) => {
     // if they reached their max
     if (activeAppointments.length && activeAppointments.length >= MAX_ACTIVE_APPOINTMENTS)
       return res.status(400).send({ error: `Oops!! Looks like you have reached MAX ${MAX_ACTIVE_APPOINTMENTS} current active appointments at this clinic, in order to make an appointment you should cancel one of your active appointments and try again`})
-    console.log(activeAppointments)
     // more than one appointment in a day
     if (activeAppointments){
       const appointmentsInDay = activeAppointments.filter((appointment) => {
@@ -226,7 +225,7 @@ const createAppointment = async (req, res) => {
     const dateToInsert = `${date} ${hour}:00:00`
     await conn2.execute('INSERT INTO appointments (date, client_id, stmem_id, status, appointment_type_id, pet_id) VALUES (?, ?, ?, ?, ?, ?)', [dateToInsert, req.user.id, stmem_id, 1, req.appointmentTypeId, pet_id])
 
-    res.status(201).send()
+    res.status(201).send({ response: 'Appointment was created successfully'})
 
   } catch (e) {
     if (e.errno === 1062)

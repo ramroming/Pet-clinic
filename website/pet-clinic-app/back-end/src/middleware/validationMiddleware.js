@@ -86,6 +86,7 @@ const registerPet = async (req, res, next) => {
 const createAppointment = async (req, res, next) => {
 
   const { appointment_type, stmem_id, pet_id, date, hour } = req.body
+  console.log(req.body)
   if (!appointment_type || !stmem_id || !pet_id || !date || !hour)
     return res.status(400).send({ error: 'missing data!!' })
   if (!myValidator.isValidId(stmem_id) || !myValidator.isValidId(pet_id))

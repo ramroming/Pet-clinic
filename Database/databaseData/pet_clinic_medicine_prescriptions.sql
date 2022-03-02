@@ -16,27 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `colors`
+-- Table structure for table `medicine_prescriptions`
 --
 
-DROP TABLE IF EXISTS `colors`;
+DROP TABLE IF EXISTS `medicine_prescriptions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `colors` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(150) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `medicine_prescriptions` (
+  `prescription_id` int NOT NULL,
+  `medicine_id` int NOT NULL,
+  `dose` int NOT NULL,
+  PRIMARY KEY (`prescription_id`,`medicine_id`),
+  KEY `MEDICINE_PRESCRIPTIONS_fk1` (`medicine_id`),
+  CONSTRAINT `MEDICINE_PRESCRIPTIONS_fk0` FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions` (`id`),
+  CONSTRAINT `MEDICINE_PRESCRIPTIONS_fk1` FOREIGN KEY (`medicine_id`) REFERENCES `medicines` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `colors`
+-- Dumping data for table `medicine_prescriptions`
 --
 
-LOCK TABLES `colors` WRITE;
-/*!40000 ALTER TABLE `colors` DISABLE KEYS */;
-INSERT INTO `colors` VALUES (1,'red'),(2,'blue'),(3,'green'),(4,'yellow'),(5,'black'),(6,'white'),(7,'grey'),(8,'brown'),(9,'orange'),(10,'purple'),(11,'pink'),(12,'beige'),(13,'silver'),(14,'golden');
-/*!40000 ALTER TABLE `colors` ENABLE KEYS */;
+LOCK TABLES `medicine_prescriptions` WRITE;
+/*!40000 ALTER TABLE `medicine_prescriptions` DISABLE KEYS */;
+INSERT INTO `medicine_prescriptions` VALUES (1,1,2),(1,2,3);
+/*!40000 ALTER TABLE `medicine_prescriptions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-15 22:48:49
+-- Dump completed on 2022-03-02 13:55:00

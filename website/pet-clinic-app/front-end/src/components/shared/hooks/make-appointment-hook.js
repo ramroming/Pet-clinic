@@ -11,12 +11,28 @@ const appointmentReducer = (state, action) => {
               pets: action.data
             }
           }
+
         case 'successStmems': {
             return {
               ...state,
               responseError: '',
               isLoading: false,
               stmems: action.data
+            }
+          }
+        case 'successTimes': {
+            return {
+              ...state,
+              responseError: '',
+              isLoading: false,
+              timesArr: action.data
+            }
+          }
+        case 'successCreate': {
+            return {
+              ...state,
+              responseError: '',
+              isLoading: false,
             }
           }
 

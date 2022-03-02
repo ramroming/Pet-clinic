@@ -16,27 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `shelters`
+-- Table structure for table `color_records`
 --
 
-DROP TABLE IF EXISTS `shelters`;
+DROP TABLE IF EXISTS `color_records`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `shelters` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `capacity` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `color_records` (
+  `pet_id` int NOT NULL,
+  `color_id` int NOT NULL,
+  PRIMARY KEY (`pet_id`,`color_id`),
+  KEY `COLOR_RECORDS_fk1` (`color_id`),
+  CONSTRAINT `COLOR_RECORDS_fk0` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`),
+  CONSTRAINT `COLOR_RECORDS_fk1` FOREIGN KEY (`color_id`) REFERENCES `colors` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `shelters`
+-- Dumping data for table `color_records`
 --
 
-LOCK TABLES `shelters` WRITE;
-/*!40000 ALTER TABLE `shelters` DISABLE KEYS */;
-INSERT INTO `shelters` VALUES (1,40);
-/*!40000 ALTER TABLE `shelters` ENABLE KEYS */;
+LOCK TABLES `color_records` WRITE;
+/*!40000 ALTER TABLE `color_records` DISABLE KEYS */;
+INSERT INTO `color_records` VALUES (1,1),(1,2),(2,3),(3,5);
+/*!40000 ALTER TABLE `color_records` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-15 22:48:49
+-- Dump completed on 2022-03-02 13:55:01

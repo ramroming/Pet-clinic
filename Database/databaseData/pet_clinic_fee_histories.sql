@@ -16,33 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `ratings`
+-- Table structure for table `fee_histories`
 --
 
-DROP TABLE IF EXISTS `ratings`;
+DROP TABLE IF EXISTS `fee_histories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `ratings` (
+CREATE TABLE `fee_histories` (
   `date` datetime NOT NULL,
-  `client_id` int NOT NULL,
-  `stmem_id` int NOT NULL,
-  `value` int NOT NULL,
-  PRIMARY KEY (`date`,`client_id`,`stmem_id`),
-  KEY `RATINGS_fk0` (`client_id`),
-  KEY `RATINGS_fk1` (`stmem_id`),
-  CONSTRAINT `RATINGS_fk0` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `RATINGS_fk1` FOREIGN KEY (`stmem_id`) REFERENCES `users` (`id`)
+  `appointment_type_id` int NOT NULL,
+  `value` float NOT NULL,
+  PRIMARY KEY (`date`,`appointment_type_id`),
+  KEY `FEE_HISTORIES_fk0` (`appointment_type_id`),
+  CONSTRAINT `FEE_HISTORIES_fk0` FOREIGN KEY (`appointment_type_id`) REFERENCES `appointment_types` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ratings`
+-- Dumping data for table `fee_histories`
 --
 
-LOCK TABLES `ratings` WRITE;
-/*!40000 ALTER TABLE `ratings` DISABLE KEYS */;
-INSERT INTO `ratings` VALUES ('2018-01-02 00:00:00',4,6,4),('2019-09-01 00:00:00',4,5,4),('2020-01-01 00:00:00',2,3,5);
-/*!40000 ALTER TABLE `ratings` ENABLE KEYS */;
+LOCK TABLES `fee_histories` WRITE;
+/*!40000 ALTER TABLE `fee_histories` DISABLE KEYS */;
+INSERT INTO `fee_histories` VALUES ('2019-01-01 00:00:00',1,100),('2019-01-01 00:00:00',2,300),('2019-01-01 00:00:00',3,50),('2019-01-01 00:00:00',4,0),('2021-01-01 00:00:00',1,150),('2021-01-01 00:00:00',2,350),('2021-01-01 00:00:00',3,75);
+/*!40000 ALTER TABLE `fee_histories` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-15 22:48:49
+-- Dump completed on 2022-03-02 13:55:00

@@ -16,27 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `appointment_types`
+-- Table structure for table `medicines`
 --
 
-DROP TABLE IF EXISTS `appointment_types`;
+DROP TABLE IF EXISTS `medicines`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `appointment_types` (
+CREATE TABLE `medicines` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(150) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `appointment_types`
+-- Dumping data for table `medicines`
 --
 
-LOCK TABLES `appointment_types` WRITE;
-/*!40000 ALTER TABLE `appointment_types` DISABLE KEYS */;
-INSERT INTO `appointment_types` VALUES (1,'Examination'),(2,'Training'),(3,'Grooming'),(4,'Adoption');
-/*!40000 ALTER TABLE `appointment_types` ENABLE KEYS */;
+LOCK TABLES `medicines` WRITE;
+/*!40000 ALTER TABLE `medicines` DISABLE KEYS */;
+INSERT INTO `medicines` VALUES (1,'panadol'),(2,'desmont'),(3,'lustral'),(4,'provien'),(5,'catnip');
+/*!40000 ALTER TABLE `medicines` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-15 22:48:48
+-- Dump completed on 2022-03-02 13:55:00
