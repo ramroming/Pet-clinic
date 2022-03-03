@@ -24,6 +24,7 @@
     width: 100%;
     max-width: 35rem;
     justify-content: center;
+    position: relative;
     @include break-point("medium", "up") {
       max-width: none;
     }

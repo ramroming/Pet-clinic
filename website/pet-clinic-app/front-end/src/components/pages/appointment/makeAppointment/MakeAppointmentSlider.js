@@ -13,6 +13,8 @@ import useMakeAppointment from "../../../shared/hooks/make-appointment-hook";
 import dateFormat from "dateformat";
 import Modal from "../../../utils/modal/Modal";
 import { Link } from 'react-router-dom'
+import { pageLoadingContext } from "../../../shared/context/loading-context";
+import LoadingSpinner from "../../../utils/loadingspinner/LoadingSpinner";
 
 // Assign the imported object to local object sliderMotion
 const sliderMotion = appointmentSlider
@@ -27,17 +29,19 @@ const initialData = {
   createResponse: '',
   checkModal: false,
   finalConfirm: false,
+  createLoading: false
 
 }
 const MakeAppointmentSlider = () => {
 
   const auth = useContext(authContext)
   // using the fetch hook
+  const setPageIsLoading = useContext(pageLoadingContext).setPageIsLoading
   const sendRequest = useFetch()
 
   const [slides, setSlides] = useState([true, false, false, false])
   const position = useRef([0, 0]);
-  
+
 
   // usign the appointment hook
   const [state, dispatch] = useMakeAppointment(initialData)
@@ -51,37 +55,44 @@ const MakeAppointmentSlider = () => {
     stmemName: '',
     petName: ''
   })
-  
+
 
   useEffect(() => {
 
+    let isMount = true
     const getTimes = async () => {
       try {
         const result = await sendRequest(`http://localhost:5000/appointment/appointmentstimes?stmem_id=${appointment.stmem_id}&date=${appointment.date}`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`,
 
         })
-        if (result)
+        if (result && isMount)
           dispatch({ type: 'successTimes', data: result })
       } catch (e) {
-        dispatch({ type: 'failure', error: e.message })
+        if (isMount)
+          dispatch({ type: 'failure', error: e.message })
       }
     }
 
     if (slides[3] === true) {
-      dispatch({ type: 'start' })
+      if (isMount)
+        dispatch({ type: 'start' })
       getTimes()
     }
     // const newDate = dateFormat(date, 'isoDate')
     //   setAppointment((oldAppointment) => {
     //     return { ...oldAppointment, date: newDate }
     //   })
+    return () => {
+      setPageIsLoading(false)
+      isMount = false
+    }
 
-
-  }, [appointment.date, appointment.stmem_id, auth.token, dispatch, sendRequest, slides])
+  }, [appointment.date, appointment.stmem_id, auth.token, dispatch, sendRequest, slides, setPageIsLoading])
 
   // getting data from the endpoints
   useEffect(() => {
+    let isMount = true
     const getPets = async () => {
       try {
         const pets = await sendRequest('http://localhost:5000/users/me/pets', 'GET', null,
@@ -89,12 +100,12 @@ const MakeAppointmentSlider = () => {
             'Authorization': `Bearer ${auth.token}`
           }
         )
-        if (pets) {
+        if (pets && isMount) {
           dispatch({ type: 'successPets', data: pets })
         }
       } catch (e) {
-
-        dispatch({ type: 'failure', error: e.message })
+        if (isMount)
+          dispatch({ type: 'failure', error: e.message })
       }
     }
     const getSt = async () => {
@@ -105,26 +116,32 @@ const MakeAppointmentSlider = () => {
           }
         )
         if (stmems) {
-          dispatch({ type: 'successStmems', data: stmems })
+          if (isMount)
+            dispatch({ type: 'successStmems', data: stmems })
         }
       } catch (e) {
-
-        dispatch({ type: 'failure', error: e.message })
+        if (isMount)
+          dispatch({ type: 'failure', error: e.message })
       }
     }
 
     if (slides[1] === true && !state.pets.length) {
-      dispatch({ type: 'start' })
+      if (isMount)
+        dispatch({ type: 'start' })
 
       getPets()
     }
     if (slides[2] === true) {
-      dispatch({ type: 'start' })
+      if (isMount)
+        dispatch({ type: 'start' })
       getSt()
     }
 
-
-  }, [slides, auth.token, sendRequest, dispatch, state.pets.length, appointment.appointment_type])
+    return () => {
+      setPageIsLoading(false)
+      isMount = false
+    }
+  }, [slides, auth.token, sendRequest, dispatch, state.pets.length, appointment.appointment_type, setPageIsLoading])
 
 
   const moveSlider = (event) => {
@@ -217,11 +234,12 @@ const MakeAppointmentSlider = () => {
   }
 
   useEffect(() => {
+    let isMount = true
 
-    if (state.finalConfirm && !state.isLoading) {
+    if (state.finalConfirm ) {
       const createAppointment = async () => {
-
-        dispatch({ type: 'start' })
+        if (isMount)
+          dispatch({ type: 'startCreate' })
         const dataToSend = {
           appointment_type: appointment.appointment_type,
           stmem_id: appointment.stmem_id,
@@ -237,17 +255,27 @@ const MakeAppointmentSlider = () => {
             'Content-Type': 'application/json'
           })
           if (result)
-            dispatch({ type: 'successCreate', data: result.response })
+            if (isMount)
+              dispatch({ type: 'successCreate', data: result.response })
         } catch (e) {
-          dispatch({ type: 'failureCreate', error: e.message })
+          if(isMount)
+            dispatch({ type: 'failureCreate', error: e.message })
         }
 
       }
       createAppointment()
     }
+    return () => {
+      setPageIsLoading(false)
+      isMount = false
+    }
 
-  }, [state.finalConfirm, state.isLoading, dispatch, auth.token, appointment.stmem_id, appointment.appointment_type, appointment.date, appointment.hour, appointment.pet_id, sendRequest])
+  }, [state.finalConfirm, dispatch, auth.token, appointment.stmem_id, appointment.appointment_type, appointment.date, appointment.hour, appointment.pet_id, sendRequest, setPageIsLoading])
   // creating appointment
+
+  useEffect(() => {
+    setPageIsLoading(state.createLoading)
+  }, [state.createLoading, setPageIsLoading])
 
 
 
@@ -327,8 +355,10 @@ const MakeAppointmentSlider = () => {
       </AnimatePresence>
       {/* second slide */}
       <AnimatePresence >
+        {state.isLoading && slides[1] && <LoadingSpinner color='light' top='30%' left='50%' />}
+
         {
-          slides[1] &&
+          slides[1] && !state.isLoading &&
           <motion.div
             variants={sliderMotion}
             initial="initial"
@@ -346,13 +376,13 @@ const MakeAppointmentSlider = () => {
                 )
               })}
               {state && state.pets.length === 0 &&
-                <div className="flex-col falign-center gap-24p" style={{width: '70%'}}>
+                <div className="flex-col falign-center gap-24p" style={{ width: '70%' }}>
                   <p style={{ color: 'white' }}>Looks like you have no registered pets, you can register your pet from here</p>
                   <Link
-                  to={`/registerpet`}
-                  // state={{ from: '/registerpet'}}
-                  className="btn-r btn-r-blue"
-                  style={{width: '9rem', padding: '.5rem'}}>
+                    to={`/registerpet`}
+                    state={{ from: '/appointment' }}
+                    className="btn-r btn-r-blue"
+                    style={{ width: '9rem', padding: '.5rem' }}>
                     Register pet
                   </Link>
                 </div>
@@ -381,14 +411,14 @@ const MakeAppointmentSlider = () => {
 
             </div>
           </motion.div>
-
         }
       </AnimatePresence>
       {/* third slide */}
 
       <AnimatePresence >
-        {
-          slides[2] &&
+
+        {state.isLoading && slides[2] && <LoadingSpinner color='light' top='30%' left='50%' />}
+        {slides[2] && !state.isLoading &&
           <motion.div
             variants={sliderMotion}
             initial="initial"
@@ -426,13 +456,13 @@ const MakeAppointmentSlider = () => {
 
             </div>
           </motion.div>
-
         }
+
       </AnimatePresence>
       {/* fourth slide */}
       <AnimatePresence >
-        {
-          slides[3] &&
+        {state.isLoading && slides[3] && <LoadingSpinner color='light' top='30%' left='50%' />}
+        {slides[3] && !state.isLoading &&
           <>
             <motion.div
               variants={sliderMotion}
@@ -482,8 +512,8 @@ const MakeAppointmentSlider = () => {
             </motion.div>
 
           </>
-
         }
+
       </AnimatePresence>
 
 

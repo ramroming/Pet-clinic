@@ -25,6 +25,7 @@ const useAuth = () => {
     const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 7 )
     setTokenExpirationDate(tokenExpirationDate)
     localStorage.setItem('userData', JSON.stringify({ uid, token, expiration: tokenExpirationDate.toISOString() }))
+     
 
 
 
@@ -66,8 +67,10 @@ const useAuth = () => {
       const remainingTime = tokenExpirationDate.getTime() - new Date().getTime()
       logoutTimer = setTimeout(logout, remainingTime)
 
+      if (location.pathname === '/login')
       //  here is when the login operation is completed and we can navigate to the page that the user came from
-      redirector(location.state)
+        redirector(location.state)
+     
 
     } else {
 
@@ -76,7 +79,7 @@ const useAuth = () => {
       // redirector({ redirectTo: '/' })
 
     }
-  }, [token, logout, tokenExpirationDate, location.state, redirector])
+  }, [token, logout, tokenExpirationDate, location.state, location.pathname, redirector])
 
   
 

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import dateFormat from "dateformat";
 import useRegisterPetForm from "../../shared/hooks/registerpet-form-hook";
 import InputError from "../../utils/formErrorMsg/InputError";
@@ -7,6 +7,7 @@ import { useContext, useEffect } from "react";
 import useFetch from "../../shared/hooks/fetch-hook";
 import { authContext } from "../../shared/context/auth-context";
 import useReDirector from "../../shared/hooks/redirector-hook";
+import { pageLoadingContext } from "../../shared/context/loading-context";
 
 
 // this data will be used in the form's date input
@@ -52,58 +53,85 @@ const initialData = {
   dataToSend: {},
 
 }
+
 const RegisterPet = () => {
 
   const [state, dispatch] = useRegisterPetForm(initialData)
   const sendRequest = useFetch(dispatch)
   const auth = useContext(authContext)
+  const setPageIsLoading = useContext(pageLoadingContext).setPageIsLoading
   const redirector = useReDirector()
+  const location = useLocation()
+
+ 
 
   useEffect(() => {
-    dispatch({ type: 'getBreeds' })
+    let isMount = true
+    if (isMount)
+      dispatch({ type: 'getBreeds' })
+
     const getBreeds = async () => {
       try {
 
         const parsedData = await sendRequest(`http://localhost:5000/pets/breeds?pet_type=${state.pet_type.value}`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
-        if (parsedData)
+        if (parsedData && isMount)
           dispatch({ type: 'getBreedsSuccess', data: parsedData})
       } catch (e) {
+        if (isMount)
         dispatch({ type: 'failure', data: e.message})
       }
     }
 
     
     getBreeds()
-  }, [state.pet_type, sendRequest, auth.token, dispatch])
+
+    return () => {
+      setPageIsLoading(false)
+      isMount = false
+    }
+  }, [state.pet_type, sendRequest, auth.token, dispatch, setPageIsLoading])
 
 
   useEffect(() => {
+    let isMount = true
     const registerPet = async () => {
+    
       try {
         const parsedData = await sendRequest(`http://localhost:5000/users/me/pets/`, 'POST', state.dataToSend, {
           'Authorization': `Bearer ${auth.token}`
         })
-        if (parsedData){
+        if (parsedData && isMount){
           dispatch({ type: 'success', data: parsedData })
+          if (location.state !== null)
+            return redirector({ redirectTo: location.state.from })
           redirector({ redirectTo: '/myprofile/petinfo' })
         }
          
       } catch (e) {
-        dispatch({ type: 'failure', error: e.message})
+        if (isMount)
+          dispatch({ type: 'failure', error: e.message})
       }
     }
     
     if (state.isLoading){
       registerPet()
     }
+    return () => {
+      setPageIsLoading(false)
+      isMount = false
+    }
 
-  }, [state.isLoading, auth.token, sendRequest, state.dataToSend, dispatch, redirector])
+  }, [state.isLoading, auth.token, sendRequest, state.dataToSend, dispatch, redirector, location.state, setPageIsLoading])
   const submitForm = (e) => {
     e.preventDefault()
     dispatch({ type: 'validate' })
   }
+
+  useEffect(() => {
+    setPageIsLoading(state.isLoading || state.isLoadingBreeds)
+  }, [state.isLoading, state.isLoadingBreeds, setPageIsLoading])
   return (
     <div className="background-dark-blue">
       <div className="main-container flex-row">

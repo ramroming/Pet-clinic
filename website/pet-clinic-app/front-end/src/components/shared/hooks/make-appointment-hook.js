@@ -38,6 +38,12 @@ const appointmentReducer = (state, action) => {
                   isLoading: true
               }
           }
+          case 'startCreate': {
+              return {
+                  ...state,
+                  createLoading: true
+              }
+          }
           case 'checkModalExit': {
             return {
               ...state,
@@ -62,7 +68,7 @@ const appointmentReducer = (state, action) => {
               ...state,
               createResponse: action.data,
               responseError: '',
-              isLoading: false,
+              createLoading: false,
               finalConfirm: false,
               checkModal: false
             }
@@ -71,7 +77,7 @@ const appointmentReducer = (state, action) => {
             return {
               ...state,
               responseError: action.error,
-              isLoading: false,
+              createLoading: false,
               finalConfirm: false,
               checkModal: false
 

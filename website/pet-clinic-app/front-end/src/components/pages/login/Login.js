@@ -3,6 +3,7 @@ import useFetch from "../../shared/hooks/fetch-hook";
 import useLoginForm from "../../shared/hooks/login-form-hook";
 import { authContext } from "../../shared/context/auth-context";
 import { Link } from "react-router-dom";
+import { pageLoadingContext } from "../../shared/context/loading-context";
 
 const initialState = {
   username: {
@@ -34,6 +35,7 @@ const Login = () => {
   const sendRequest = useFetch(dispatch)
 
   const auth = useContext(authContext)
+  const setPageIsLoading = useContext(pageLoadingContext).setPageIsLoading
 
   
   // useWhatChanged([state.isLoading, state.dataToSend, sendRequest, auth, state.responseData])
@@ -41,6 +43,7 @@ const Login = () => {
   // if we have async operation inside use effect we have to wrap the operation with an async function inside the useeffect and then we should call the same function again inside the useEffect without using await
   useEffect(() => {
 
+    let isMount = true
     const fetchUser = async () => {
       try {
         const parsedData = await sendRequest(
@@ -50,23 +53,37 @@ const Login = () => {
          {
           'Content-Type': 'application/json'
         })  
-        if (parsedData)
+        if (parsedData && isMount)
           dispatch({ type: 'success', data: parsedData})      
       } catch (e) {
-        dispatch({ type: 'failure', error: e.message })
+        if (isMount)
+          dispatch({ type: 'failure', error: e.message })
       }
+      
       
     }
     // isLoading changes from false to true if the validation process  passed successfully 
     if (state.isLoading)
       fetchUser()
-  }, [state.isLoading, state.dataToSend, sendRequest, dispatch])
+
+    return () => {
+      isMount = false
+      setPageIsLoading(false)
+
+    }
+  }, [state.isLoading, state.dataToSend, sendRequest, dispatch,  setPageIsLoading])
+
+  useEffect(() => {
+      setPageIsLoading(state.isLoading)
+  
+  }, [state.isLoading, setPageIsLoading])
 
   // after data been fetched if we have a token inside the data that means the login was successfull so we login
   useEffect(() => {
     if (state.responseData.token)
-    auth.login(state.responseData.user.id, state.responseData.token)
+      auth.login(state.responseData.user.id, state.responseData.token)
   }, [state.responseData, auth])
+
     return (
         <>
             <div className="background-blue">

@@ -3,6 +3,11 @@ import InputError from "../../utils/formErrorMsg/InputError"
 import useFetch from "../../shared/hooks/fetch-hook"
 import useSignupForm from "../../shared/hooks/signup-form-hook"
 import { authContext } from "../../shared/context/auth-context"
+import { pageLoadingContext } from "../../shared/context/loading-context"
+// import {
+//   useWhatChanged,
+//   setUseWhatChange,
+// } from '@simbathesailor/use-what-changed';
 
 
 
@@ -59,6 +64,7 @@ const Signup = () => {
 
 
   const auth = useContext(authContext)
+  const setPageIsLoading = useContext(pageLoadingContext).setPageIsLoading
 
 
   const submitForm = async (event) => {
@@ -66,32 +72,47 @@ const Signup = () => {
     dispatch({ type: 'validate' })
   }
 
+  // useWhatChanged([state.dataToSend, state.isLoading, sendRequest, auth, dispatch, state.responseData,state.responseError]);
   // if we have async operation inside use effect we have to wrap the operation with an async function inside the useeffect and then we should call the same function again inside the useEffect without using await
   useEffect(() => {
 
-
+    let isMount = true
     // wrapper function to enable us to use async functions inside useEffect
     const fetchUser = async () => {
-      try {
-        const parsedData = await sendRequest(
-          'http://localhost:5000/users',
-          'POST', JSON.stringify(state.dataToSend),
-          {
-            'Content-Type': 'application/json'
-          })
-        if (parsedData)
-          dispatch({ type: 'success', data: parsedData})
-      } catch (e) {
-        dispatch({ type: 'failure', error: e.message})
-      }
       
+        if (Object.keys(state.responseData).length === 0 && state.responseError === '') {
+
+          try {
+            const parsedData = await sendRequest(
+              'http://localhost:5000/users',
+              'POST', JSON.stringify(state.dataToSend),
+              {
+                'Content-Type': 'application/json'
+              })
+            if (parsedData && isMount)
+              dispatch({ type: 'success', data: parsedData})
+          } catch (e) {
+            dispatch({ type: 'failure', error: e.message})
+          }
+        }
     }
 
     // isLoading changes from false to true if the validation process  passed successfully 
-    if (state.isLoading) {
+    if (state.isLoading ) {
       fetchUser()
     }
-  }, [state.dataToSend, state.isLoading, sendRequest, auth, dispatch])
+
+    return () => {
+      setPageIsLoading(false)
+      isMount = false
+
+    }
+  }, [state.dataToSend, state.isLoading, sendRequest, dispatch, state.responseData,state.responseError,setPageIsLoading ])
+
+  
+  useEffect(() => {
+    setPageIsLoading(state.isLoading)
+  }, [state.isLoading, setPageIsLoading])
 
   // after data been fetched if we have a token inside the data that means the login was successfull so we login
   useEffect(() => {

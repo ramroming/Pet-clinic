@@ -28,15 +28,18 @@ import Registration from '../../pages/staffPanel/registration/Registration'
 import ManageUsers from '../../pages/staffPanel/manageusers/ManageUsers'
 import ManagePets from '../../pages/staffPanel/managepets/ManagePets'
 import ManageProfits from '../../pages/staffPanel/manageProfits/ManageProfits'
-
+import Nav from "../../layout/nav/Nav";
+import Footer from "../../layout/footer/Footer";
 // A hook that contains the routing logic and it uses the authed user state to determine whether the user is allowed to navigate to private Routes
 const useRoutes = (authedUser) => {
 
+  
   if (authedUser !== null)
-  {
-
+  { 
     return (
-      // public routes
+      <>
+        {/* // public routes */}
+      <Nav />
       <Routes>
         
         <Route path='home'
@@ -136,9 +139,12 @@ const useRoutes = (authedUser) => {
 
         <Route exact path='/' element={<Home />}></Route>
           {/* no path matched */}
-        {/* <Route path='*'
-          element={<Navigate to='/' />}> </Route> */}
+        <Route path='*'
+          element={<Navigate to='/' />}> </Route>
       </Routes>
+      <Footer />
+      </>
+      
     )
   }
       
