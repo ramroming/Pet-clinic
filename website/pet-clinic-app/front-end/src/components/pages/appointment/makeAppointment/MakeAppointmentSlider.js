@@ -12,6 +12,7 @@ import { authContext } from "../../../shared/context/auth-context";
 import useMakeAppointment from "../../../shared/hooks/make-appointment-hook";
 import dateFormat from "dateformat";
 import Modal from "../../../utils/modal/Modal";
+import { Link } from 'react-router-dom'
 
 // Assign the imported object to local object sliderMotion
 const sliderMotion = appointmentSlider
@@ -36,6 +37,7 @@ const MakeAppointmentSlider = () => {
 
   const [slides, setSlides] = useState([true, false, false, false])
   const position = useRef([0, 0]);
+  
 
   // usign the appointment hook
   const [state, dispatch] = useMakeAppointment(initialData)
@@ -49,6 +51,7 @@ const MakeAppointmentSlider = () => {
     stmemName: '',
     petName: ''
   })
+  
 
   useEffect(() => {
 
@@ -254,7 +257,7 @@ const MakeAppointmentSlider = () => {
       {state.responseError &&
         <Modal
           modalClass='error'
-          header='Warning!!'
+          header='Oops!!'
           body={state.responseError}
           dispatch={dispatch}
         />}
@@ -273,7 +276,7 @@ const MakeAppointmentSlider = () => {
           }
           dispatch={dispatch}
         />}
-        {state.createResponse &&
+      {state.createResponse &&
         <Modal
           modalClass='success'
           header='Success!!'
@@ -333,7 +336,7 @@ const MakeAppointmentSlider = () => {
             exit='exit' className="make-appointment-slider flex-col falign-center gap-24p">
             <h1>Select Your Pet:</h1>
             <div className="appointment-types flex-row fjust-center gap-24p">
-              {state && state.pets.length && state.pets.map((pet, index) => {
+              {state && state.pets.length !== 0 && state.pets.map((pet, index) => {
                 return (
                   <div id={pet.id} key={index} refid={index} className={appointment.pet_id === pet.id.toString() ? "appointment-type flex-col fjust-start gap-16p falign-center active" : "appointment-type flex-col fjust-start gap-16p falign-center"}
                     onClick={(event) => selectOption(event)}>
@@ -342,6 +345,19 @@ const MakeAppointmentSlider = () => {
                   </div>
                 )
               })}
+              {state && state.pets.length === 0 &&
+                <div className="flex-col falign-center gap-24p" style={{width: '70%'}}>
+                  <p style={{ color: 'white' }}>Looks like you have no registered pets, you can register your pet from here</p>
+                  <Link
+                  to={`/registerpet`}
+                  // state={{ from: '/registerpet'}}
+                  className="btn-r btn-r-blue"
+                  style={{width: '9rem', padding: '.5rem'}}>
+                    Register pet
+                  </Link>
+                </div>
+              }
+
 
 
 
@@ -432,7 +448,7 @@ const MakeAppointmentSlider = () => {
               </div>
 
               <div className="appointment-types flex-row fjust-center gap-16p date-container">
-                {state.timesArr && state.timesArr.availableTimes.length !==0 && state.timesArr.CLINIC_WORKING_HOURS.map((time, index) => {
+                {state.timesArr && state.timesArr.availableTimes.length !== 0 && state.timesArr.CLINIC_WORKING_HOURS.map((time, index) => {
                   return (
                     <React.Fragment key={index}>
                       {state.timesArr.availableTimes.includes(time) ?
@@ -444,8 +460,8 @@ const MakeAppointmentSlider = () => {
                     </React.Fragment>
                   )
                 })}
-                {state.timesArr && state.timesArr.availableTimes.length === 0 && 
-                  <p style={{ color: 'white'}}>No Available appointments on the day specified</p>
+                {state.timesArr && state.timesArr.availableTimes.length === 0 &&
+                  <p style={{ color: 'white' }}>No Available appointments on the day specified</p>
                 }
 
               </div>

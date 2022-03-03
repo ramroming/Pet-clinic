@@ -11,7 +11,6 @@ function App() {
 
   const { token, login, logout, userId, authedUser} = useAuth()
   const routes = useRoutes(authedUser)
-  
  
   return (
     <>

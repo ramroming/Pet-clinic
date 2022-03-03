@@ -38,13 +38,11 @@ const useRoutes = (authedUser) => {
     return (
       // public routes
       <Routes>
-        <Route path='/' element={<Home />}></Route>
+        
         <Route path='home'
           element={<Home />}></Route>           
         <Route path='about'
           element={<About />}> </Route>
-        <Route path='stafflist'
-        element={authedUser ? <Stafflist /> : <Navigate to='/login' />}> </Route>
         <Route path='login'
           element={authedUser ? <Navigate to='/' /> : <Login />}></Route>
         <Route path='signup' state={{ redirectTo: '/'}}
@@ -52,11 +50,13 @@ const useRoutes = (authedUser) => {
 
 
         {/* private routes */}
+        <Route path='stafflist'
+        element={authedUser ? <Stafflist /> : <Navigate to='/login' state={{ redirectTo: 'stafflist'}} />}> </Route>
+        <Route path='appointment'
+          element={authedUser ? <Appointment /> : <Navigate to='/login' state={{ redirectTo: 'appointment' }} />}></Route>
         <Route path='registerpet'
           element={authedUser ? <RegisterPet /> : <Navigate to='/login' state={{ redirectTo: 'registerpet' }} />}></Route>
 
-        <Route path='appointment'
-          element={authedUser ? <Appointment /> : <Navigate to='/login' state={{ redirectTo: 'appointment' }} />}></Route>
 
         <Route path='adoption'
           element={authedUser ? <Adoption /> : <Navigate to='/login' state={{ redirectTo: 'adoption' }} />}></Route>
@@ -128,15 +128,16 @@ const useRoutes = (authedUser) => {
           <Route path='manageprofits'
             element={authedUser ? <ManageProfits /> : <Navigate to='/login' state={{ redirectTo: 'staffpanel/manageprofits' }} />}></Route>
 
+          
           <Route path='*'
             element={<Navigate to='/' />}> </Route>
 
         </Route>
 
-        
+        <Route exact path='/' element={<Home />}></Route>
           {/* no path matched */}
-        <Route path='*'
-          element={<Navigate to='/' />}> </Route>
+        {/* <Route path='*'
+          element={<Navigate to='/' />}> </Route> */}
       </Routes>
     )
   }

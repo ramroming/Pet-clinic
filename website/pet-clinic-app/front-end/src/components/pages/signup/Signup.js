@@ -57,9 +57,8 @@ const Signup = () => {
   const sendRequest = useFetch()
   
 
+
   const auth = useContext(authContext)
-
-
 
 
   const submitForm = async (event) => {

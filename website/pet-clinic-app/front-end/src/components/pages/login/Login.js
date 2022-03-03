@@ -2,6 +2,7 @@ import { useEffect, useContext } from "react";
 import useFetch from "../../shared/hooks/fetch-hook";
 import useLoginForm from "../../shared/hooks/login-form-hook";
 import { authContext } from "../../shared/context/auth-context";
+import { Link } from "react-router-dom";
 
 const initialState = {
   username: {
@@ -112,9 +113,9 @@ const Login = () => {
                                 Login
                             </button>
 
-                            <a href="/#" className="btn-r btn-r-dark">
-                                Not a member?
-                            </a>
+                            <Link to='/signup' className="btn-r btn-r-dark" >
+                            Not a member?
+                            </Link>
                             <a href="/#" className="btn-r btn-r-purple">
                                 Forgot your password?</a>
 
