@@ -45,10 +45,10 @@ const AppointmentManagement = () => {
              Owner Name
            </Th>
            <Th>
-             Delete
+            Status
            </Th>
            <Th>
-             Status
+           Delete
            </Th>
           
          </Tr>

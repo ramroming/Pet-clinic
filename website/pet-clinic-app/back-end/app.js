@@ -25,7 +25,7 @@ app.use(cors())
 app.use((req, res, next) => {
   setTimeout(() => {
     next()
-  }, 3000)
+  }, 1000)
 })
 
 // Using the Routers
