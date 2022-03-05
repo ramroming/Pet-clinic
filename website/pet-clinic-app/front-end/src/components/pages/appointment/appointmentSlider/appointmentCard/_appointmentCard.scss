@@ -1,7 +1,7 @@
 @use "../../../../abstracts/" as *;
 
 .appointment-card {
-  min-width: 17rem;
+  width: 17rem;
   padding: 1rem 2rem;
   @include rounded-corners(0.5rem, 0.5rem, 0.5rem, 0.5rem);
   color: rgb(232, 232, 232);
@@ -21,7 +21,7 @@
     p.app-status {
       color: #6cfe6c;
     }
-    a {
+    button {
       padding: 0.5rem;
       position: absolute;
       right: 0.5rem;

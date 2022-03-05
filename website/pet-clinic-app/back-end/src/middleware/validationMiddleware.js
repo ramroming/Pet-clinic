@@ -1,5 +1,7 @@
-const myValidator = require('../utils/dataValidator')
-const { CLINIC_WORKING_HOURS } = require('../utils/petclinicrules')
+import myValidator from '../utils/dataValidator.js'
+import petClinicRules from '../utils/petclinicrules.js'
+
+const { CLINIC_WORKING_HOURS } = petClinicRules
 // Client Related
 const signup = (req, res, next) => {
   const { first_name, last_name, address, phone_number, username, email, password, user_type, stmem_type } = req.body
@@ -113,6 +115,12 @@ const createAppointment = async (req, res, next) => {
   next()
 }
 
+const deleteAppointment = async (req, res, next) => {
+  if (!req.params.id || !myValidator.isValidId(req.params.id))
+    return res.status(400).send({ error: 'Bad URL!!' })
+  next()
+}
+
 // Appointment Related
 
 const getStaff = async (req, res, next) => {
@@ -143,11 +151,12 @@ const appointmentsTimes = (req, res, next) => {
 }
 
 
-module.exports = {
+export default {
   signup,
   login,
   registerPet,
   getStaff,
   appointmentsTimes,
-  createAppointment
+  createAppointment,
+  deleteAppointment
 }

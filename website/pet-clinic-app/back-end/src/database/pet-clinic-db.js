@@ -1,4 +1,4 @@
-connData = {
+const connData = {
   host: 'localhost', 
   user: 'root',
   // password: 'Timsp1290',
@@ -7,4 +7,4 @@ connData = {
 }
 
 
-module.exports = connData
+export default connData

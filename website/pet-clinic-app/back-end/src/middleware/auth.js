@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken')
-const mysql = require('mysql2/promise')
-const connData = require('../database/pet-clinic-db')
+import  jwt  from 'jsonwebtoken'
+import { createConnection } from 'mysql2/promise'
+import connData from '../database/pet-clinic-db.js'
 const auth = async (req, res, next) => {
   // if (req.method === 'OPTIONS') 
   //   return next()
@@ -11,7 +11,7 @@ const auth = async (req, res, next) => {
 
     // checking the connection to the database
     try {
-      const conn = await mysql.createConnection(connData)
+      const conn = await createConnection(connData)
       const [users, fields] = await conn.execute('SELECT u.id, u.username, u.email, u.user_type, u.personal_info_id, u.status, u.stmem_type, p.first_name, p.last_name, p.address, p.phone_number, p.photo  FROM users u INNER JOIN personal_info p ON u.personal_info_id = p.id WHERE u.id = ?', [data.payload])
       // if the user has a valid token but the payload of the token doesn't match the data base
       if (!users.length) {
@@ -44,4 +44,4 @@ const auth = async (req, res, next) => {
   
 }
 
-module.exports = auth
+export default auth
