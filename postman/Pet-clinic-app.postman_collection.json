@@ -1,0 +1,400 @@
+{
+	"info": {
+		"_postman_id": "db5459e0-7547-4773-bc91-6fb83e9e05f3",
+		"name": "Pet-clinic-app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {\r",
+							"    pm.environment.set('authToken', pm.response.json().token)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\": \"roooo\",\r\n    \"last_name\": \"eeeee\",\r\n    \"address\": \"ddsdfsdf\",\r\n    \"phone_number\": \"\",\r\n    \"username\": \"helooekkei33333\",\r\n    \"email\": \"jjejfjiej3333@google.com\",\r\n    \"password\": \"333Beekkwoo2355551@###@@\"\r\n\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {\r",
+							"    pm.environment.set('authToken', pm.response.json().token)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"rami94\",\r\n \"password\": \"9=GUj?=?>Ftjw.f;\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "registerPet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "efwef",
+							"type": "default"
+						},
+						{
+							"key": "gender",
+							"value": "male",
+							"type": "default"
+						},
+						{
+							"key": "birth_date",
+							"value": "2020-01-01",
+							"type": "default"
+						},
+						{
+							"key": "pet_type",
+							"value": "cat",
+							"type": "default"
+						},
+						{
+							"key": "breed_name",
+							"value": "British Shorthair",
+							"type": "default"
+						},
+						{
+							"key": "photo",
+							"type": "file",
+							"src": "/C:/Users/Rami/Desktop/dog.jpg"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/me/pets",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"pets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createAppointment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"appointment_type\": \"Examination\",\r\n    \"stmem_id\": \"6\",\r\n    \"pet_id\": \"1\",\r\n    \"hour\": \"9\",\r\n    \"date\": \"2022-04-09\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/appointment",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get my profile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/me",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {\r",
+							"    pm.environment.set('authToken', '')\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/logout",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getPetBreeds",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/pets/breeds?pet_type=bird",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"pets",
+						"breeds"
+					],
+					"query": [
+						{
+							"key": "pet_type",
+							"value": "bird"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getMypets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/me/pets",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"pets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getStaffMembers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/appointment/staffmems?appointment_type=Examination",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"appointment",
+						"staffmems"
+					],
+					"query": [
+						{
+							"key": "appointment_type",
+							"value": "Examination"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAppointmentsTimes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/appointment/appointmentstimes?stmem_id=3&date=2022-04-05",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"appointment",
+						"appointmentstimes"
+					],
+					"query": [
+						{
+							"key": "stmem_id",
+							"value": "3"
+						},
+						{
+							"key": "date",
+							"value": "2022-04-05"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMyAppointments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/appointment",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Appointment",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/appointment",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:5000",
+			"type": "default"
+		}
+	]
+}
