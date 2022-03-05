@@ -234,6 +234,18 @@ const createAppointment = async (req, res) => {
   }
 }
 
+const getAppointments = async (req, res) => {
+  try {
+    const conn = await mysql.createConnection(connData)
+    const [appointments] = await conn.execute('SELECT * FROM appointmnets WHERE client_id= ?', [req.user.id])
+
+    await conn.end()
+    res.send(appointments)
+    
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
 
 module.exports = {
   signup,
@@ -242,5 +254,6 @@ module.exports = {
   logout,
   registerPet,
   getPets,
-  createAppointment
+  createAppointment,
+  getAppointments
 }

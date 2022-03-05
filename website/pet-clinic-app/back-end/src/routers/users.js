@@ -7,7 +7,8 @@ const {
   logout,
   registerPet,
   getPets,
-  createAppointment
+  createAppointment,
+  getAppointments
 } = require('../controllers/UserController')
 
 // middlewares
@@ -40,6 +41,9 @@ usersRouter.get('/users/me/pets/', auth, getPets)
 
 // creating an appointment for a user
 usersRouter.post('/users/appointment', auth, validationMiddleware.createAppointment, createAppointment)
+
+// to show a user's active and old appointments
+usersRouter.get('/users/appointment', auth, getAppointments)
 
 usersRouter.use('/users/*', (req, res) => {
   res.send('404 User endpoint not found!!')
