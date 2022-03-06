@@ -1,22 +1,15 @@
-const express = require('express')
+import { Router } from 'express'
 
-const { 
-  signup,
-  myProfile,
-  login,
-  logout,
-  registerPet,
-  getPets,
-  createAppointment,
-  getAppointments
-} = require('../controllers/UserController')
+import UserController from '../controllers/UserController.js'
 
 // middlewares
-const auth = require('../middleware/auth')
-const formDataMiddleWare = require('../middleware/formData')
-const validationMiddleware = require('../middleware/validationMiddleware')
+import auth from '../middleware/auth.js'
+import  formDataMiddleWare  from '../middleware/formData.js'
+import validationMiddleware from '../middleware/validationMiddleware.js'
 
-const usersRouter = new express.Router()
+const { signup, myProfile, login, logout, registerPet, getPets, createAppointment, getAppointments, deleteAppointments } = UserController
+
+const usersRouter = new Router()
 
 // create a new user endpoint
 usersRouter.post('/users', validationMiddleware.signup, signup)
@@ -45,8 +38,10 @@ usersRouter.post('/users/appointment', auth, validationMiddleware.createAppointm
 // to show a user's active and old appointments
 usersRouter.get('/users/appointment', auth, getAppointments)
 
+usersRouter.delete('/users/appointment/:id', auth, validationMiddleware.deleteAppointment, deleteAppointments)
+
 usersRouter.use('/users/*', (req, res) => {
   res.send('404 User endpoint not found!!')
 })
 
-module.exports = usersRouter
+export default usersRouter

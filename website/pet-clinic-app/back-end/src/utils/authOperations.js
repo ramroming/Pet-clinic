@@ -1,7 +1,5 @@
-const mysql = require('mysql2/promise')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const connData = require('../database/pet-clinic-db')
+import { compare } from 'bcrypt'
+import  jwt  from 'jsonwebtoken'
 
 // checking the user credentials when logging in
 const findUserByCredentials = async (conn, username, password) => {
@@ -11,7 +9,7 @@ const findUserByCredentials = async (conn, username, password) => {
 
   // comparing between the entered password and the password in the database
   const userPassword = user[0].password
-  const isMatch = await bcrypt.compare(password, userPassword)
+  const isMatch = await compare(password, userPassword)
   if (!isMatch)
     throw new Error('Wrong username or password')
 
@@ -40,7 +38,7 @@ const generateAuthToken = async (payload) => {
 
 }
 
-module.exports = {
+export default {
   findUserByCredentials,
   generateAuthToken,
 }

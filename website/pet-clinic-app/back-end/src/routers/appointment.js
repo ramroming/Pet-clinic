@@ -1,14 +1,12 @@
-const express = require('express')
-const appointmentRouter = new express.Router()
+import { Router } from 'express'
+const appointmentRouter = new Router()
 
 // middlewares
-const auth = require('../middleware/auth')
-const validationMiddleware = require('../middleware/validationMiddleware')
-const {
-  getStaffMems,
-  appointmentsTimes
-} = require('../controllers/AppointmentController')
+import auth from '../middleware/auth.js'
+import validationMiddleware from '../middleware/validationMiddleware.js'
+import AppointmentController from '../controllers/AppointmentController.js'
 
+const { getStaffMems, appointmentsTimes } = AppointmentController
 // getting necessary data when making an appointment
 
 // getting staff members for a certian appointment type
@@ -18,4 +16,4 @@ appointmentRouter.get('/appointment/staffmems', auth, validationMiddleware.getSt
 appointmentRouter.get('/appointment/appointmentstimes', auth, validationMiddleware.appointmentsTimes, appointmentsTimes)
 
 
-module.exports = appointmentRouter
+export default appointmentRouter

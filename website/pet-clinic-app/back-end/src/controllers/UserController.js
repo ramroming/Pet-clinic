@@ -1,12 +1,18 @@
-const bcrypt = require('bcrypt')
-const mysql = require('mysql2/promise')
-const sharp = require('sharp')
 
-const connData = require('../database/pet-clinic-db')
-const myValidator = require('../utils/dataValidator')
-const { findUserByCredentials, generateAuthToken } = require('../utils/authOperations')
-const { getAvailableTimes, convertToTurkishDate } = require('../utils/timeOperations')
-const { MAX_ACTIVE_APPOINTMENTS, MAX_APPOINTMENTS_PER_DAY} = require('../utils/petclinicrules')
+import { hash } from 'bcrypt'
+import sharp from 'sharp'
+import { createConnection } from 'mysql2/promise'
+import dateFormat from 'dateformat'
+
+
+import connData from '../database/pet-clinic-db.js'
+import authOperations from '../utils/authOperations.js'
+import timeOperations from '../utils/timeOperations.js'
+import petClinicRules from '../utils/petclinicrules.js'
+
+const { MAX_ACTIVE_APPOINTMENTS, MAX_APPOINTMENTS_PER_DAY } = petClinicRules
+const { getAvailableTimes, convertToTurkishDate } = timeOperations
+const { findUserByCredentials, generateAuthToken } = authOperations
 
 const signup = async (req, res) => {
   const { first_name, last_name, address, phone_number, username, email, password, user_type, stmem_type } = req.body
@@ -23,7 +29,7 @@ const signup = async (req, res) => {
 
 
     // establishing the connection
-    const conn = await mysql.createConnection(connData)
+    const conn = await createConnection(connData)
 
     // this try is to detected database violations and other errors when creating new user
     try {
@@ -39,7 +45,7 @@ const signup = async (req, res) => {
 
 
       // hashing password before adding it to the database
-      const hashedPassword = await bcrypt.hash(password, 8)
+      const hashedPassword = await hash(password, 8)
 
 
       // inserting data into users table all clients by default
@@ -97,7 +103,7 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const conn = await mysql.createConnection(connData)
+    const conn = await createConnection(connData)
 
     try {
       const user = await findUserByCredentials(conn, req.body.username, req.body.password)
@@ -135,7 +141,7 @@ const registerPet = async (req, res) => {
   try {
 
     // this try is to detected database violations and other errors when creating new pet
-    const conn = await mysql.createConnection(connData)
+    const conn = await createConnection(connData)
     try {
       const [rows1, fields1] = await conn.execute('SELECT * FROM pets WHERE owner_id = ?', [req.user.id])
       if (rows1.length >= 5) {
@@ -179,7 +185,7 @@ const registerPet = async (req, res) => {
 
 const getPets = async (req, res) => {
   try {
-    const conn = await mysql.createConnection(connData)
+    const conn = await createConnection(connData)
     const [pets] = await conn.execute('SELECT * FROM pets WHERE owner_id = ?', [req.user.id])
     await conn.end()
     res.send(pets)
@@ -192,7 +198,7 @@ const createAppointment = async (req, res) => {
   const {  stmem_id, pet_id, date, hour } = req.body
   const clientId = req.user.id
   try {
-    const conn = await mysql.createConnection(connData)
+    const conn = await createConnection(connData)
 
     // check how many active appointments does a client have in total
     const [activeAppointments] = await conn.execute('SELECT * FROM appointments WHERE   client_id = ? AND status=1', [clientId])
@@ -221,7 +227,7 @@ const createAppointment = async (req, res) => {
       return res.status(400).send({ error: 'It looks like that the time you specified got taken please try a different time' })
 
     // inserting the appointment data to the database
-    const conn2 = await mysql.createConnection(connData)
+    const conn2 = await createConnection(connData)
     const dateToInsert = `${date} ${hour}:00:00`
     await conn2.execute('INSERT INTO appointments (date, client_id, stmem_id, status, appointment_type_id, pet_id) VALUES (?, ?, ?, ?, ?, ?)', [dateToInsert, req.user.id, stmem_id, 1, req.appointmentTypeId, pet_id])
 
@@ -236,18 +242,46 @@ const createAppointment = async (req, res) => {
 
 const getAppointments = async (req, res) => {
   try {
-    const conn = await mysql.createConnection(connData)
-    const [appointments] = await conn.execute('SELECT * FROM appointmnets WHERE client_id= ?', [req.user.id])
-
-    await conn.end()
-    res.send(appointments)
     
+    const conn = await createConnection(connData)
+    const compareTime = `${convertToTurkishDate(new Date()).toISOString().split('T')[0]} ${convertToTurkishDate(new Date()).toISOString().split('T')[1].split('.')[0]}`
+    await conn.execute('UPDATE appointments SET status = 0 WHERE date < ?', [compareTime])
+
+    const [appointments] = await conn.execute(`select  a.id, apt.name as appointment_type, a.status, a.date, per.first_name, per.last_name, p.name as pet_name
+    FROM appointments a 
+    JOIN pets p ON p.id = a.pet_id 
+    JOIN users s ON a.stmem_id = s.id
+    JOIN personal_info per ON s.personal_info_id = per.id
+    JOIN appointment_types apt ON a.appointment_type_id = apt.id
+    WHERE a.client_id = ?
+    ORDER BY a.status DESC`, [req.user.id])
+    const arrayToSend = appointments.map((appointment, index) => {
+      const newDate = dateFormat(convertToTurkishDate(appointment.date) ,'UTC:ddd mmm dd yyyy HH:MM:ss')
+      return {...appointment, date: newDate}
+    })
+  
+    await conn.end()
+    res.send(arrayToSend)
+
   } catch (e) {
     res.status(500).send({ error: e.message })
   }
 }
 
-module.exports = {
+const deleteAppointments = async (req, res) => {
+  try {
+    const conn = await createConnection(connData)
+    const [appointments] = await conn.execute(`DELETE FROM appointments WHERE id = ? AND client_id=? AND status=1`, [req.params.id, req.user.id])
+    await conn.end()
+    if (appointments.affectedRows === 0)
+      res.status(400).send({ error: 'something bad has happened !!' })
+    res.send({ result: 'Your appointment has been canceled successfully'})
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+
+  }
+}
+export default {
   signup,
   myProfile,
   login,
@@ -255,5 +289,6 @@ module.exports = {
   registerPet,
   getPets,
   createAppointment,
-  getAppointments
+  getAppointments,
+  deleteAppointments
 }

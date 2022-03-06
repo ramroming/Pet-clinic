@@ -1,15 +1,13 @@
 // requiring express
-const express = require('express')
+import express, { json } from 'express'
 
-const cors = require('cors')
-// requiring the connection
-const conn = require('./src/database/pet-clinic-db')
+import cors from 'cors'
+
 
 // requiring the routers
-const usersRouter = require('./src/routers/users')
-const petsRouter = require('./src/routers/pets')
-const staffmemRouter = require('./src/routers/staffmem')
-const appointmentRouter = require('./src/routers/appointment')
+import usersRouter from './src/routers/users.js'
+import petsRouter from './src/routers/pets.js'
+import appointmentRouter from './src/routers/appointment.js'
 
 
 const app = express()
@@ -17,16 +15,16 @@ const app = express()
 const PORT = 5000
 
 // This will parse the incomming JSON data into javascript objects
-app.use(express.json())
+app.use(json())
 
 // this will fix the CORS Error
 app.use(cors())
 
-// app.use((req, res, next) => {
-//   setTimeout(() => {
-//     next()
-//   }, 3000)
-// })
+app.use((req, res, next) => {
+  setTimeout(() => {
+    next()
+  }, 3000)
+})
 
 // Using the Routers
 app.use(usersRouter)

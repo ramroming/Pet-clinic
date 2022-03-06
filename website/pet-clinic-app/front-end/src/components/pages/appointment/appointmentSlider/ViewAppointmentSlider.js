@@ -1,24 +1,28 @@
 import AppointmentCard from "./appointmentCard/AppointmentCard"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
+import LoadingSpinner from "../../../utils/loadingspinner/LoadingSpinner";
 
 
 
 
-// data from the database to be rendered with the component
-const cardsArray = (function (num) {
-  const array = []
-  for (let i = 0; i < num; i++) {
-    array.push({
-      id: i,
-      type: "Examination",
-      date: "17/05/2021",
-      staffMem: "Ahmet",
-      petName: "Popo",
-      status: (i % 2 === 0) ? "active" : 'past'
-    })
-  }
-  return array
-})(9); //from database
+
+
+
+// // data from the database to be rendered with the component
+// const cardsArray = (function (num) {
+//   const array = []
+//   for (let i = 0; i < num; i++) {
+//     array.push({
+//       appointment_type: "Examination",
+//       date: "17/05/2021",
+//       pet_name: "Popo",
+//       first_name: '',
+//       last_name: '',
+//       status: (i % 2 === 0) ? 1 : 0
+//     })
+//   }
+//   return array
+// })(9); //from database
 
 
 // initiate the pagination based on the number of cards retreived from the database, divArray is used to determine the division of the paginations,
@@ -45,7 +49,7 @@ const initiatePag = (cardsNumber, refArr, divArray) => {
 
 // initiate the first set of cards to appear in the first pag, this is also determined by divArray and refArr
 // this will return an array of components
-const initiateCards = (refArr, divArray) => {
+const initiateCards = (refArr, divArray, cardsArray) => {
 
   if (divArray) {
     for (let i = 0; i < divArray.length; i++) {
@@ -73,7 +77,7 @@ const initiateCards = (refArr, divArray) => {
 // move the card index when right arrow is pressed 
 // the movement depends on the current card index and the division array
 // an array of components is returned
-const rightArrowRender = (refArr, divArray) => {
+const rightArrowRender = (refArr, divArray, cardsArray) => {
   const cardsGroup = []
 
 
@@ -103,7 +107,7 @@ const rightArrowRender = (refArr, divArray) => {
 // move the card index when left arrow is pressed 
 // the movement depends on the current card index and the division array also it depends on the number of cards in the current pagination
 // an array of components is returned
-const leftArrowRender = (refArr, divArray, cardsLength) => {
+const leftArrowRender = (refArr, divArray, cardsLength, cardsArray) => {
   const cardsGroup = []
   for (let j = 0; j < divArray.length; j++) {
     if (refArr.current[3] < divArray[j].size) {
@@ -131,7 +135,7 @@ const leftArrowRender = (refArr, divArray, cardsLength) => {
 // move the card index when pagination is pressed 
 // the movement depends on the current card index and the division array also it depends on the number of cards in the current pagination
 // an array of components is returned
-const pagRender = (refArr, divArray, cardsLength) => {
+const pagRender = (refArr, divArray, cardsLength, cardsArray) => {
   const cardsGroup = []
   for (let j = 0; j < divArray.length; j++) {
     if (refArr.current[3] < divArray[j].size) {
@@ -177,25 +181,41 @@ const pagRender = (refArr, divArray, cardsLength) => {
 }
 
 
-
+ // division array that is an array of object each object represents the screen width and the maximum number of cards allowed for each size
+ const divArray = [{ size: 767, cardsNum: 2 }, { size: Infinity, cardsNum: 4 }]
 
 
 const ViewAppointmentSlider = (props) => {
-
+  
   // array of global referances it is used to store 
   // - slider's old and new position at indexes 0 and 1 accordingly
   // - Card's index at index 2
   // - screen width at index 3
   const refArr = useRef([0, 0, 0, window.innerWidth]);
-
-  // division array that is an array of object each object represents the screen width and the maximum number of cards allowed for each size
-  const divArray = [{ size: 767, cardsNum: 4 }, { size: Infinity, cardsNum: 8 }]
-
+  
+ 
+  
   // initiating the pag and cards array
-  const [slider, setSlider] = useState({
-    pag: initiatePag(cardsArray.length, refArr, divArray),
-    cards: initiateCards(refArr, divArray)
-  })
+  const [slider, setSlider] = useState({})
+  
+  
+  useEffect(() => {
+    if (props.appointments.length !== 0)
+      setSlider({
+        pag: initiatePag(props.appointments.length, refArr, divArray),
+        cards: initiateCards(refArr, divArray, props.appointments)
+      })
+  }, [props.appointments])
+
+
+  // useEffect(() => {
+  //   if (props.appointments && slider.cards) {
+
+  //     console.log(props.appointments)
+  //     console.log(slider.cards)
+  //     console.log(slider.cards.filter((value => props.appointments[value].status === props.status)))
+  //   }
+  // }, [props.appointments, props.cards, slider.cards, props.status])
 
   const moveSlider = (event) => {
 
@@ -209,7 +229,7 @@ const ViewAppointmentSlider = (props) => {
         refArr.current[1] = refArr.current[1] + 1
 
         // using the rightArrowRender function whenever right movement occurs
-        const cardsGroup = rightArrowRender(refArr, divArray)
+        const cardsGroup = rightArrowRender(refArr, divArray, props.appointments)
         setSlider((oldSlider) => {
 
           return {
@@ -233,7 +253,7 @@ const ViewAppointmentSlider = (props) => {
 
         // using the leftArrowRender function whenever left movement occurs
 
-        const cardsGroup = leftArrowRender(refArr, divArray, slider.cards.length)
+        const cardsGroup = leftArrowRender(refArr, divArray, slider.cards.length, props.appointments)
         // same as right movement idea
         setSlider((oldSlider) => {
           return {
@@ -257,7 +277,7 @@ const ViewAppointmentSlider = (props) => {
 
 
     // using the pagRender function whenever pag movement occurs
-    const cardsGroup = pagRender(refArr, divArray, slider.cards.length)
+    const cardsGroup = pagRender(refArr, divArray, slider.cards.length, props.appointments)
 
 
     // we modify the slider state based on the movement
@@ -270,17 +290,20 @@ const ViewAppointmentSlider = (props) => {
     })
   }
 
+  
 
 
   return (
     <>
-      {props.status === 'active' ? <h2>Your Active Appointments</h2> : <h2>Your Past Appointments</h2>}
+      
+      {props.status === 1 ? <h2>Your Active Appointments</h2> : <h2>Your Past Appointments</h2>}
       <div className=" view-appointment-animator flex-row gap-8p fjust-around">
         {/* Cards */}
-        {slider.cards.filter((value => cardsArray[value].status === props.status)).map((value) => {
+        {props.isLoading && <LoadingSpinner color='dark' />}
+        {!props.isLoading && props.appointments && slider.cards && slider.cards.map((value) => {
           return (
             <div key={value}>
-              <AppointmentCard card={cardsArray[value]} />
+              <AppointmentCard card={props.appointments[value]} dispatch={props.dispatch} />
             </div>
 
           )
@@ -299,13 +322,14 @@ const ViewAppointmentSlider = (props) => {
         })} */}
 
       </div>
-      <div className="pag-app flex-row gap-8p fjust-center">
+      {props.appointments && props.appointments.length !== 0 &&
+        <div className="pag-app flex-row gap-8p fjust-center">
         <span><i
           onClick={(event) => {
             moveSlider(event)
           }}
           className="fas fa-chevron-left"></i></span>
-        {slider.pag.map((value, index) => {
+        {slider.pag && slider.pag.map((value, index) => {
           return <span
             key={index}
             onClick={(event) => {
@@ -324,6 +348,8 @@ const ViewAppointmentSlider = (props) => {
           }}
           className="fas fa-chevron-right"></i></span>
       </div>
+      }
+      
     </>
   )
 }

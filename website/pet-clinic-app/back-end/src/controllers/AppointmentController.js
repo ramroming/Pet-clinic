@@ -1,9 +1,11 @@
-const mysql = require('mysql2/promise')
-const { getAvailableTimes } = require('../utils/timeOperations')
-const { CLINIC_WORKING_HOURS } = require('../utils/petclinicrules')
-const connData = require('../database/pet-clinic-db')
+import { createConnection } from 'mysql2/promise'
+import timeOperations from '../utils/timeOperations.js'
+import petClinicRules from '../utils/petclinicrules.js'
+import connData from '../database/pet-clinic-db.js'
 
 
+const { CLINIC_WORKING_HOURS } = petClinicRules
+const { getAvailableTimes } = timeOperations
 // getting necessary data when making an appointment
 
 // getting staff members for a certian appointment type
@@ -27,7 +29,7 @@ const getStaffMems = async (req, res) => {
       break
   }
   try {
-    const conn = await mysql.createConnection(connData)
+    const conn = await createConnection(connData)
     const [staffList] = await conn.execute('SELECT u.id, p.first_name, p.last_name, p.photo  FROM users u INNER JOIN personal_info p ON u.personal_info_id = p.id WHERE u.stmem_type = ?', [ stmem_type ])
     await conn.end()
     res.send(staffList)
@@ -48,7 +50,7 @@ const appointmentsTimes = async (req, res) => {
   }
 }
 
-module.exports = {
+export default {
   appointmentsTimes,
   getStaffMems
 }

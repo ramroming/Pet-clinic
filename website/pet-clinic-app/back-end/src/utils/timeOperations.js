@@ -1,7 +1,8 @@
-const mysql = require('mysql2/promise')
-const { CLINIC_TIME_ZONE_OFFSET, CLINIC_WORKING_HOURS, CLINIC_APPOINTMENT_GAP } = require('./petclinicrules')
+import { createConnection } from 'mysql2/promise'
+import petClinicRules from './petclinicrules.js'
+import connData from '../database/pet-clinic-db.js'
 
-
+const { CLINIC_TIME_ZONE_OFFSET, CLINIC_WORKING_HOURS, CLINIC_APPOINTMENT_GAP } = petClinicRules
 const convertToTurkishDate = (date, zero = false) => {
   if (!date) {
     const turkishDate = new Date(new Date().setUTCHours(new Date().getUTCHours() + CLINIC_TIME_ZONE_OFFSET))
@@ -31,7 +32,7 @@ const getAvailableTimes = async (stmemId, userDate) => {
   let unavailableTimes
 
   try {
-    const conn = await mysql.createConnection(connData)
+    const conn = await createConnection(connData)
     const [appointments] = await conn.execute('SELECT * FROM appointments WHERE stmem_id= ? AND DATE(date)= ? AND status=1', [stmemId, userDate])
     await conn.end()
 
@@ -75,7 +76,7 @@ const getAvailableTimes = async (stmemId, userDate) => {
 }
 
 
-module.exports = {
+export default {
   getAvailableTimes,
   convertToTurkishDate
 }

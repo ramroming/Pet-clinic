@@ -1,4 +1,4 @@
-const multer = require('multer')
+import multer from 'multer'
 // this middleware will automatically parse the multipart/form-data requests and will allow us to reach req.body and req.file , also it can validate the files comming with the request
 const formDataMiddleWare = multer({
   limits: {
@@ -12,4 +12,4 @@ const formDataMiddleWare = multer({
     cb(undefined, true)
   }
 })
-module.exports = formDataMiddleWare
+export default formDataMiddleWare

@@ -2,9 +2,9 @@ const petClinicRules = {
   CLINIC_WORKING_HOURS : [9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
   CLINIC_TIME_ZONE_OFFSET : 3,
   CLINIC_APPOINTMENT_GAP: 1,
-  MAX_ACTIVE_APPOINTMENTS: 2,
-  MAX_APPOINTMENTS_PER_DAY: 1,
+  MAX_ACTIVE_APPOINTMENTS: 50,
+  MAX_APPOINTMENTS_PER_DAY: 50,
 
 }
  
-module.exports = petClinicRules
+export  default petClinicRules
