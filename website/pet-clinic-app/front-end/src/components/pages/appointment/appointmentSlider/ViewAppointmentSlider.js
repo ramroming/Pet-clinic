@@ -18,7 +18,7 @@ const cardsArray = (function (num) {
     })
   }
   return array
-})(33); //from database
+})(9); //from database
 
 
 // initiate the pagination based on the number of cards retreived from the database, divArray is used to determine the division of the paginations,
