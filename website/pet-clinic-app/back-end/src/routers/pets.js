@@ -3,12 +3,15 @@ import { Router } from 'express'
 import petController from '../controllers/petController.js'
 import auth from '../middleware/auth.js'
 
-const { getPetsBreeds } = petController
+const { getPetsBreeds, getPetsColors } = petController
 
 const petsRouter = new Router()
 
 // to get the breeds when registering a pet
 petsRouter.get('/pets/breeds', auth, getPetsBreeds)
+
+// to get the colors when registering a pet
+petsRouter.get('/pets/colors', auth, getPetsColors)
 
 
 petsRouter.use('/pets/*', (req, res) => {

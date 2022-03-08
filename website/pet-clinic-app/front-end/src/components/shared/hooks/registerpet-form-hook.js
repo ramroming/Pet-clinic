@@ -41,17 +41,17 @@ const formReducer = (state, action) => {
       if (state.isLoading)
         return state
 
-      if (!state.name.value || !state.breed_name.value)
+      if (!state.name.value || !state.breed_name.value || state.selectedColors.length === 0)
         return {
           ...state,
           missingInput: true
-        } 
+        }
       // incase of errors in the form
       if (state.photo.errorMsg)
         return {
           ...state,
           missingInput: false
-        } 
+        }
       // incase of successfull validation, here we create FormData() object because we are not sending json, we are sending multipart/form-data 
       var formData = new FormData()
       formData.append('name', state.name.value)
@@ -60,6 +60,8 @@ const formReducer = (state, action) => {
       formData.append('pet_type', state.pet_type.value)
       formData.append('breed_name', state.breed_name.value)
       formData.append('photo', state.photo.value)
+      formData.append('colors', state.selectedColors.join(':'))
+      
       return {
         ...state,
         dataToSend: formData,
@@ -67,11 +69,11 @@ const formReducer = (state, action) => {
         missingInput: false
       }
     }
-    
+
 
     // *************** state management when using fetch *******************
-    
-    
+
+
     // when fetching data is succeded 
     case 'success': {
       return {
@@ -87,7 +89,11 @@ const formReducer = (state, action) => {
       return {
         ...state,
         responseError: action.error,
-        isLoading: false
+        isLoading: false,
+        isLoadingBreeds: false,
+        isLoadingColors: false
+
+
       }
     }
 
@@ -98,6 +104,12 @@ const formReducer = (state, action) => {
         isLoadingBreeds: true
       }
     }
+    case 'getColors': {
+      return {
+        ...state,
+        isLoadingColors: true
+      }
+    }
     case 'getBreedsSuccess': {
       return {
         ...state,
@@ -106,7 +118,33 @@ const formReducer = (state, action) => {
         breeds: action.data
       }
     }
-    
+    case 'getColorsSuccess': {
+      return {
+        ...state,
+        responseError: '',
+        isLoadingColors: false,
+        colors: action.data
+      }
+    }
+    case 'selectColor': {
+      var index = state.selectedColors.indexOf(action.color);
+      
+      if (index !== -1) {
+        return {
+          ...state,
+          selectedColors: state.selectedColors.filter((color) => {
+            return color !== action.color
+          })
+        }
+      }
+      if (state.selectedColors.length === 3)
+        return state
+      return {
+        ...state,
+        selectedColors: [...state.selectedColors, action.color]
+      }
+    }
+
 
 
     default:

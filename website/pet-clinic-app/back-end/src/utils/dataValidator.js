@@ -91,6 +91,32 @@ const myValidator = {
       throw e
     }
   },
+  // blue, red, jweoifjew
+  async isValidColors(colors) { 
+    if (colors === '') 
+      return false
+    const colorsArr = colors.split(':')
+    const colorWithId = []
+    try {
+      const conn = await createConnection(connData)
+      for (let i = 0; i < colorsArr.length; i++ ){
+        const [result] = await conn.execute('SELECT * FROM colors WHERE name = ?', [colorsArr[i]])
+        if (!result.length){
+          conn.end()
+          return { valid: false }
+        }
+        colorWithId.push({
+          id: result[0].id,
+          name: result[0].name
+        })
+      }
+      conn.end()
+      
+      return { valid: true, colorWithId}
+    } catch (e) {
+      throw e
+    }
+  },
 
   // Appointment related validations
 

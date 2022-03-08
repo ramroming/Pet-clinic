@@ -162,6 +162,11 @@ const registerPet = async (req, res) => {
         photo,
         req.user.id
       ])
+      req.body.colors.forEach( async color => {
+
+        await conn.execute('INSERT INTO color_records (pet_id, color_id) VALUES (?, ?)', [rows2.insertId, color.id])
+        
+      });
 
       // data to send back when registering a pet
       const petData = {
@@ -171,6 +176,7 @@ const registerPet = async (req, res) => {
         birth_date: birth_date ? birth_date : null,
         owner_id: req.user.id
       }
+      conn.end()
 
       res.status(201).send(petData)
     } catch (e) {

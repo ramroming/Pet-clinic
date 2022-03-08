@@ -41,7 +41,7 @@ const PostReview = () => {
                     </div>
 
                     <div className="flex-row gap-8p">
-                        <label>Located with: </label>
+                        <label>Located At: </label>
                         <p>Shelter</p>
                     </div>
 
@@ -52,7 +52,7 @@ const PostReview = () => {
 
             {/* second mini flex */}
             <div className="flex-col fjust-center falign-center pet-image-container">
-                <img src="media/imgs/petphoto.jpg" alt='pet'>
+                <img src="/media/imgs/petphoto.jpg" alt='pet'>
                 </img>
             </div>
 

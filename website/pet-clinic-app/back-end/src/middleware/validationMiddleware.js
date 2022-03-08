@@ -57,8 +57,10 @@ const login = (req, res, next) => {
 }
 
 const registerPet = async (req, res, next) => {
-  const { gender, birth_date, name, breed_name, pet_type } = req.body
+  const { gender, birth_date, name, breed_name, pet_type, colors } = req.body
 
+  if (!gender || !birth_date || !name || !breed_name || !pet_type || !colors)
+    return res.status(400).send({ error: 'missing data' })
   // checking long values
   if (myValidator.isLongData(gender) || myValidator.isLongData(birth_date) || myValidator.isLongData(name) || myValidator.isLongData(breed_name))
     return res.status(400).send({ error: 'Long Data!! ' })
@@ -79,6 +81,16 @@ const registerPet = async (req, res, next) => {
       return res.status(400).send({ error: 'invalid breed or pet_type ' })
   } catch (e) {
 
+    return res.status(500).send({ error: e.message })
+  }
+  try {
+    const result = await myValidator.isValidColors(colors)
+    if (!result.valid)
+      return res.status(400).send({ error: 'invalid colors' })
+    req.body.colors = result.colorWithId
+    
+  }
+  catch(e) {
     return res.status(500).send({ error: e.message })
   }
 

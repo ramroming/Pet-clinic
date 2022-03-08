@@ -49,8 +49,11 @@ const initialData = {
   responseData: null,
   responseError: '',
   isLoadingBreeds: false,
+  isLoadingColors: false,
   breeds: [],
+  colors: [],
   dataToSend: {},
+  selectedColors: []
 
 }
 
@@ -63,7 +66,7 @@ const RegisterPet = () => {
   const redirector = useReDirector()
   const location = useLocation()
 
- 
+
 
   useEffect(() => {
     let isMount = true
@@ -77,14 +80,14 @@ const RegisterPet = () => {
           'Authorization': `Bearer ${auth.token}`
         })
         if (parsedData && isMount)
-          dispatch({ type: 'getBreedsSuccess', data: parsedData})
+          dispatch({ type: 'getBreedsSuccess', data: parsedData })
       } catch (e) {
         if (isMount)
-        dispatch({ type: 'failure', data: e.message})
+          dispatch({ type: 'failure', data: e.message })
       }
     }
 
-    
+
     getBreeds()
 
     return () => {
@@ -93,29 +96,57 @@ const RegisterPet = () => {
     }
   }, [state.pet_type, sendRequest, auth.token, dispatch, setPageIsLoading])
 
+  useEffect(() => {
+    let isMount = true
+    if (isMount)
+      dispatch({ type: 'getColors' })
+
+    const getColors = async () => {
+      try {
+
+        const parsedData = await sendRequest(`http://localhost:5000/pets/colors`, 'GET', null, {
+          'Authorization': `Bearer ${auth.token}`
+        })
+        if (parsedData && isMount)
+          dispatch({ type: 'getColorsSuccess', data: parsedData })
+      } catch (e) {
+        if (isMount)
+          dispatch({ type: 'failure', data: e.message })
+      }
+    }
+
+
+    getColors()
+
+    return () => {
+      setPageIsLoading(false)
+      isMount = false
+    }
+  }, [sendRequest, auth.token, dispatch, setPageIsLoading])
+
 
   useEffect(() => {
     let isMount = true
     const registerPet = async () => {
-    
+
       try {
         const parsedData = await sendRequest(`http://localhost:5000/users/me/pets/`, 'POST', state.dataToSend, {
           'Authorization': `Bearer ${auth.token}`
         })
-        if (parsedData && isMount){
+        if (parsedData && isMount) {
           dispatch({ type: 'success', data: parsedData })
           if (location.state !== null)
             return redirector({ redirectTo: location.state.from })
           redirector({ redirectTo: '/myprofile/petinfo' })
         }
-         
+
       } catch (e) {
         if (isMount)
-          dispatch({ type: 'failure', error: e.message})
+          dispatch({ type: 'failure', error: e.message })
       }
     }
-    
-    if (state.isLoading){
+
+    if (state.isLoading) {
       registerPet()
     }
     return () => {
@@ -132,7 +163,11 @@ const RegisterPet = () => {
   useEffect(() => {
     setPageIsLoading(state.isLoading || state.isLoadingBreeds)
   }, [state.isLoading, state.isLoadingBreeds, setPageIsLoading])
-  return (
+  
+  const selectColor = (event) => {
+    dispatch({ type: 'selectColor', color: event.target.innerHTML })
+  }
+  return (  
     <div className="background-dark-blue">
       <div className="main-container flex-row">
 
@@ -164,9 +199,9 @@ const RegisterPet = () => {
                   id="type_name"
                   defaultChecked
                 />
-                <img 
-                onClick={() => dispatch({ type: 'enterValue', value: 'cat', field: 'pet_type' })}
-                className="pet-icon" src="/media/imgs/cat-icon.png" alt="" />
+                <img
+                  onClick={() => dispatch({ type: 'enterValue', value: 'cat', field: 'pet_type' })}
+                  className="pet-icon" src="/media/imgs/cat-icon.png" alt="" />
               </label>
 
               <label  >
@@ -176,9 +211,9 @@ const RegisterPet = () => {
                   name="pet_type"
                   id="type_name"
                 />
-                <img 
-                onClick={() => dispatch({ type: 'enterValue', value: 'dog', field: 'pet_type' })}
-                className="pet-icon" src="/media/imgs/dog-icon.jpg" alt="" />
+                <img
+                  onClick={() => dispatch({ type: 'enterValue', value: 'dog', field: 'pet_type' })}
+                  className="pet-icon" src="/media/imgs/dog-icon.jpg" alt="" />
               </label>
 
               <label >
@@ -188,9 +223,9 @@ const RegisterPet = () => {
                   name="pet_type"
                   id="type_name"
                 />
-                <img 
-                onClick={() => dispatch({ type: 'enterValue', value: 'bird', field: 'pet_type' })}
-                className="pet-icon low-op" src="/media/imgs/bird-icon.png" alt="" />
+                <img
+                  onClick={() => dispatch({ type: 'enterValue', value: 'bird', field: 'pet_type' })}
+                  className="pet-icon low-op" src="/media/imgs/bird-icon.png" alt="" />
               </label>
 
             </div>
@@ -299,7 +334,32 @@ const RegisterPet = () => {
             </select>
 
           </div>
+          <div className=" input-wrapper flex-row fjust-start">
+            <label className="">Select pet colors Max 3:
+            </label>
+          </div>
+          <div className="input-wrapper flex-row">
 
+            {state.colors && state.colors.length !==0 && !state.isLoadingColors && state.selectedColors &&
+              state.colors.map((color, index) => {
+                return (
+                  <div
+                  className={state.selectedColors.length !== 0 && state.selectedColors.includes(color.name) ? "color-tag color-selected" : "color-tag" }
+                  key={index}
+                  >
+                    <p 
+                  onClick={(event) => {
+                    selectColor(event)
+                  }}
+                  colorid={index}
+                 >{color.name}</p>
+                  </div>
+                )
+              })
+
+            }
+
+          </div>
           {state.missingInput && <p style={{ color: 'red', textAlign: 'center', width: '70%', margin: 'auto' }}>Please Fill mandatory fields *</p>}
           {state.responseError && <p style={{ color: 'red', textAlign: 'center', width: '70%', margin: 'auto' }}>{state.responseError}</p>}
 

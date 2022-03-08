@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "db5459e0-7547-4773-bc91-6fb83e9e05f3",
+		"_postman_id": "969eb4da-c31d-41a0-b08c-c89164d8a928",
 		"name": "Pet-clinic-app",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -121,6 +121,11 @@
 							"key": "photo",
 							"type": "file",
 							"src": "/C:/Users/Rami/Desktop/dog.jpg"
+						},
+						{
+							"key": "colors",
+							"value": "blue:green:red",
+							"type": "default"
 						}
 					],
 					"options": {
@@ -354,6 +359,24 @@
 					"path": [
 						"users",
 						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPetsColors",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/pets/colors",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"pets",
+						"colors"
 					]
 				}
 			},

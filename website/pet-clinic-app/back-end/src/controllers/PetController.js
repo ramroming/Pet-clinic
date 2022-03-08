@@ -13,7 +13,18 @@ const getPetsBreeds = async (req, res) => {
     res.status(500).send({ error: e.message})
   }
 }
+const getPetsColors = async (req, res) => {
+  try { 
+    const conn = await createConnection(connData)
+    const [colors] = await conn.execute('SELECT name from colors')
+    conn.end()
+    res.send(colors)
+  } catch (e) {
+    res.status(500).send({ error: e.message})
+  }
+}
 
 export default { 
   getPetsBreeds,
+  getPetsColors
  }

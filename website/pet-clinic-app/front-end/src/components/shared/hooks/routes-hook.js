@@ -72,7 +72,7 @@ const useRoutes = (authedUser) => {
         <Route path='postad'
           element={authedUser ? <PostAd /> : <Navigate to='/login' state={{ redirectTo: 'postad' }}/>}> </Route>
 
-        <Route path='postpreview'
+        <Route path='postpreview/:id'
           element={authedUser ? <PostPreview /> : <Navigate to='/login' state={{ redirectTo: 'postpreview' }}/>}> </Route>
 
         {/* My profile related paths */}
