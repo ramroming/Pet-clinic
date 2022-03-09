@@ -48,7 +48,8 @@ const About = () => {
                     {/* description */}
                     <div className="show-case">
                         <p>
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste quasi voluptas ex id fugiat! Saepe quaerat earum cum ducimus voluptates ea reiciendis autem harum doloribus ullam dolorum, magnam ipsum enim temporibus fugiat deserunt maiores. Quae commodi neque dolorum? Facere, repellendus.
+                            in our clinic, we look after your pets with love and care, your pet's favorite place is going to be our clinic!
+                            forget about worrying that your pet is going to be stressed to visit the clinic, it will be a relaxing and fun experience!
                         </p>
                     </div>
 
@@ -68,7 +69,9 @@ const About = () => {
                     {/* description */}
                     <div className="show-case">
                         <p>
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste quasi voluptas ex id fugiat! Saepe quaerat earum cum ducimus voluptates ea reiciendis autem harum doloribus ullam dolorum, magnam ipsum enim temporibus fugiat deserunt maiores. Quae commodi neque dolorum? Facere, repellendus.
+                            If you want to find your new best friend, visit our shelter!
+                            you can also check the adoption ads posted by many of our users
+                            what are you waiting for? hop on on the journey of finding your new BFF
                         </p>
                     </div>
 
