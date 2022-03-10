@@ -7,7 +7,7 @@ import auth from '../middleware/auth.js'
 import  formDataMiddleWare  from '../middleware/formData.js'
 import validationMiddleware from '../middleware/validationMiddleware.js'
 
-const { signup, myProfile, login, logout, registerPet, getPets, createAppointment, getAppointments, deleteAppointments } = UserController
+const { signup, myProfile, login, logout, registerPet, getPets, createAppointment, getAppointments, deleteAppointments, getMyPet } = UserController
 
 const usersRouter = new Router()
 
@@ -29,8 +29,11 @@ usersRouter.post('/users/me/pets', auth, formDataMiddleWare.single('photo'), val
   res.status(400).send({ error: error.message })
 })
 
-// get the pets of the user
+// get all  pets of the user
 usersRouter.get('/users/me/pets/', auth, getPets)
+
+// get a user pet by id
+usersRouter.get('/users/me/pets/:id', auth, validationMiddleware.getMyPet,  getMyPet)
 
 // creating an appointment for a user
 usersRouter.post('/users/appointment', auth, validationMiddleware.createAppointment, createAppointment)

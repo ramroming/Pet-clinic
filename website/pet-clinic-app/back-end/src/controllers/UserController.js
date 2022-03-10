@@ -199,6 +199,23 @@ const getPets = async (req, res) => {
     res.status(500).send({ error: e.message })
   }
 }
+// get pet data by id including training data
+const getMyPet =  async (req, res) => {
+  try {
+    const conn = await createConnection(connData)
+    const [trainings] = await conn.execute(`SELECT t.start_date, t.end_date, tt.name AS training, pi.first_name AS trainer_first_name, pi.last_name AS trainer_last_name FROM trainings t
+    JOIN training_types tt ON t.training_type_id = tt.id
+    JOIN users u ON t.trainer_id = u.id
+    JOIN personal_info pi ON pi.id = u.personal_info_id
+    WHERE t.pet_id = ?`, [req.params.id])
+    await conn.end()
+    req.pet.trainings = trainings
+    res.send(req.pet)
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+  
+}
 
 const createAppointment = async (req, res) => {
   const {  stmem_id, pet_id, date, hour } = req.body
@@ -296,5 +313,6 @@ export default {
   getPets,
   createAppointment,
   getAppointments,
-  deleteAppointments
+  deleteAppointments,
+  getMyPet
 }

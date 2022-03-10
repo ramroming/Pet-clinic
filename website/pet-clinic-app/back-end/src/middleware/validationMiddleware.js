@@ -97,6 +97,19 @@ const registerPet = async (req, res, next) => {
   next()
 }
 
+const getMyPet = async (req, res, next) => {
+  if (!req.params.id || !myValidator.isValidId(req.params.id))
+    return res.status(400).send({ error: 'Bad URL !!'})
+  try {
+    const result = await myValidator.isOwnerPet(req.user.id, req.params.id)
+    if (!result)
+      return res.status(400).send({ error: 'invalid pet/owner_id'})
+    req.pet = result
+  } catch (e) {
+    throw e
+  }
+  next()
+}
 const createAppointment = async (req, res, next) => {
 
   const { appointment_type, stmem_id, pet_id, date, hour } = req.body
@@ -109,7 +122,7 @@ const createAppointment = async (req, res, next) => {
     return res.status(400).send({ error: 'No Available Dates on the date specified' })
 
   try {
-    const result = await myValidator.isMyPet(req.user.id, pet_id)
+    const result = await myValidator.isOwnerPet(req.user.id, pet_id)
     if (!result)
       return res.status(400).send({ error: 'Invalid pet/owner ' })
 
@@ -170,5 +183,6 @@ export default {
   getStaff,
   appointmentsTimes,
   createAppointment,
-  deleteAppointment
+  deleteAppointment,
+  getMyPet
 }

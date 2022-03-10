@@ -42,10 +42,14 @@ const myValidator = {
   isLongPassword(password) {
     return password.length > 128
   },
-  async isMyPet(userId, pet_id) {
+  // this will check if a pet belongs to a user and will return all data about the pet
+  async isOwnerPet(userId, pet_id) {
     try {
       const conn = await createConnection(connData)
-      const [rows, fields] = await conn.execute('SELECT name FROM pets WHERE owner_id = ? AND id = ?', [userId, pet_id])
+      const [rows, fields] = await conn.execute(`SELECT p.name As pet_name, p.gender, p.birth_date, p.breed_name, GROUP_CONCAT(c.name) As colors, p.photo  FROM pets p
+      LEFT JOIN color_records cr ON cr.pet_id = p.id
+      LEFT JOIN colors c ON cr.color_id = c.id
+      WHERE p.owner_id = ? AND p.id = ?`, [userId, pet_id])
       await conn.end()
 
       // if a user dosen't own the pet 
@@ -54,7 +58,7 @@ const myValidator = {
       
       
       // if the user owns the pet
-      return true
+      return rows[0]
 
     }  catch(e) {
       throw e
