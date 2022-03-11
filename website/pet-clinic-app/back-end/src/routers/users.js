@@ -1,13 +1,13 @@
 import { Router } from 'express'
 
-import UserController from '../controllers/UserController.js'
+import { signup, myProfile, login, logout, registerPet, getPets, createAppointment, getAppointments, deleteAppointments, getMyPet, createAdoptionAd } from '../controllers/UserController.js'
 
 // middlewares
 import auth from '../middleware/auth.js'
 import  formDataMiddleWare  from '../middleware/formData.js'
 import validationMiddleware from '../middleware/validationMiddleware.js'
 
-const { signup, myProfile, login, logout, registerPet, getPets, createAppointment, getAppointments, deleteAppointments, getMyPet } = UserController
+
 
 const usersRouter = new Router()
 
@@ -42,6 +42,9 @@ usersRouter.post('/users/appointment', auth, validationMiddleware.createAppointm
 usersRouter.get('/users/appointment', auth, getAppointments)
 
 usersRouter.delete('/users/appointment/:id', auth, validationMiddleware.deleteAppointment, deleteAppointments)
+
+// create an adoption ad for a user
+usersRouter.post('/users/me/adoptionads/', auth, validationMiddleware.createAdoptionAd, createAdoptionAd)
 
 usersRouter.use('/users/*', (req, res) => {
   res.send('404 User endpoint not found!!')

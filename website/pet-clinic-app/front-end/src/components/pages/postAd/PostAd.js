@@ -45,6 +45,9 @@ const PostAd = () => {
       }
     }
     getPets()
+    return () => {
+      isMount = false
+    }
 
   }, [auth.token, sendRequest])
 

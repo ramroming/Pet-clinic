@@ -1,6 +1,6 @@
 const InputError = (props) => {
   return (
-    <span className={props.class}>{props.msg}</span>
+    <span style={props.style} className={props.class}>{props.msg}</span>
   )
 }
 

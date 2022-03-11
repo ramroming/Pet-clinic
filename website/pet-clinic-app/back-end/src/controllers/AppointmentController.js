@@ -1,7 +1,7 @@
 import { createConnection } from 'mysql2/promise'
+import connData from '../database/pet-clinic-db.js'
 import timeOperations from '../utils/timeOperations.js'
 import petClinicRules from '../utils/petclinicrules.js'
-import connData from '../database/pet-clinic-db.js'
 
 
 const { CLINIC_WORKING_HOURS } = petClinicRules
@@ -50,7 +50,7 @@ const appointmentsTimes = async (req, res) => {
   }
 }
 
-export default {
+export  {
   appointmentsTimes,
   getStaffMems
 }

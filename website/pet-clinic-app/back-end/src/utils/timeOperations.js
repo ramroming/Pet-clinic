@@ -74,9 +74,20 @@ const getAvailableTimes = async (stmemId, userDate) => {
 
 
 }
+const calculatePetAge = (birth_date) => {
+  const now = new Date()
+  const ageInDays = (now.getTime() - birth_date.getTime())/(1000 * 3600 * 24)
+  if (ageInDays >= 365)
+    return `About ${Math.round(ageInDays/365)} Year(s) old`
+  if (ageInDays >= 30)
+    return `About ${Math.round(ageInDays/30)} Month(s) old`
+  if (ageInDays <= 29)
+    return `About ${Math.round(ageInDays)} Day(s) old`
 
+}
 
 export default {
   getAvailableTimes,
-  convertToTurkishDate
+  convertToTurkishDate,
+  calculatePetAge
 }

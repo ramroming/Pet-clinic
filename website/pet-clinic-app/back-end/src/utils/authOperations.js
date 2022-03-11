@@ -4,7 +4,7 @@ import  jwt  from 'jsonwebtoken'
 // checking the user credentials when logging in
 const findUserByCredentials = async (conn, username, password) => {
   const [user] = await conn.execute('SELECT id, username, email, password, user_type, personal_info_id, status, stmem_type FROM users WHERE username = ?', [username])
-  if (!user.length)
+  if (user.length === 0)
     throw new Error('Wrong username or password')
 
   // comparing between the entered password and the password in the database

@@ -106,14 +106,13 @@ const getMyPet = async (req, res, next) => {
       return res.status(400).send({ error: 'invalid pet/owner_id'})
     req.pet = result
   } catch (e) {
-    throw e
+    return res.status(500).send({ error: e.message })
   }
   next()
 }
 const createAppointment = async (req, res, next) => {
 
   const { appointment_type, stmem_id, pet_id, date, hour } = req.body
-  console.log(req.body)
   if (!appointment_type || !stmem_id || !pet_id || !date || !hour)
     return res.status(400).send({ error: 'missing data!!' })
   if (!myValidator.isValidId(stmem_id) || !myValidator.isValidId(pet_id))
@@ -143,6 +142,28 @@ const createAppointment = async (req, res, next) => {
 const deleteAppointment = async (req, res, next) => {
   if (!req.params.id || !myValidator.isValidId(req.params.id))
     return res.status(400).send({ error: 'Bad URL!!' })
+  next()
+}
+
+const createAdoptionAd = async (req, res, next) => {
+  const { pet_id, story } = req.body
+  if (!pet_id || !story)
+    return res.status(400).send({ error: 'Missing Data!!' })
+  if (myValidator.is2TooLong(story) || !myValidator.isValidId(pet_id))
+    return res.status(400).send({ error: 'Invalid Data!! ' })
+  try {
+    const result = await myValidator.isOwnerPet(req.user.id, pet_id)
+    if (!result)
+      return res.status(400).send({ error: 'invalid pet/owner_id'})
+    if (!result.photo)
+      return res.status(400).send({ error: 'You should upload a photo for your pet first to create a post!!'})
+
+    req.pet = result
+
+  } catch (e) {
+    return res.status(500).send({ error: e.message })
+  }
+  
   next()
 }
 
@@ -184,5 +205,6 @@ export default {
   appointmentsTimes,
   createAppointment,
   deleteAppointment,
-  getMyPet
+  getMyPet,
+  createAdoptionAd
 }

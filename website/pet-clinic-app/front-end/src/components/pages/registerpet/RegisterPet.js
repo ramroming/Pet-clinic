@@ -306,7 +306,11 @@ const RegisterPet = () => {
               <i className="fas fa-upload"></i>
             </label>
             <input
-              onChange={(e) => dispatch({ type: 'uploadPhoto', field: 'photo', value: e.currentTarget.files[0], url: URL.createObjectURL(e.currentTarget.files[0]) })}
+              onChange={(e) => { 
+                if (e.currentTarget.files.length !== 0)
+                  return dispatch({ type: 'uploadPhoto', field: 'photo', value: e.currentTarget.files[0], url: URL.createObjectURL(e.currentTarget.files[0]) })
+                return
+                } }
               type="file"
               name="photo"
               id="photo"

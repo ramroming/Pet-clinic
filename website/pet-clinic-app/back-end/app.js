@@ -8,6 +8,7 @@ import cors from 'cors'
 import usersRouter from './src/routers/users.js'
 import petsRouter from './src/routers/pets.js'
 import appointmentRouter from './src/routers/appointment.js'
+import adoptionRouter from './src/routers/adoption.js'
 
 
 const app = express()
@@ -20,16 +21,17 @@ app.use(json())
 // this will fix the CORS Error
 app.use(cors())
 
-// app.use((req, res, next) => {
-//   setTimeout(() => {
-//     next()
-//   }, 1000)
-// })
+app.use((req, res, next) => {
+  setTimeout(() => {
+    next()
+  }, 1000)
+})
 
 // Using the Routers
 app.use(usersRouter)
 app.use(petsRouter)
 app.use(appointmentRouter)
+app.use(adoptionRouter)
 
 // not found url
 app.use('/*', (req, res) => {

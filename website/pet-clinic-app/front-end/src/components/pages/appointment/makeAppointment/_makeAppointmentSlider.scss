@@ -37,8 +37,8 @@
       transition: 0.5s ease transform;
 
       @include break-point("medium", "up") {
-        width: 10rem;
-        min-width: 10rem;
+        width: 9.5rem;
+        min-width: 9.5rem;
         padding: 2rem 1rem;
       }
 

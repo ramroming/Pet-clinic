@@ -25,6 +25,7 @@ const formReducer = (state, action) => {
             errorMsg: 'Image size is greater than 10Mb!'
           }
         }
+      console.log(action.value)
       return {
         ...state,
         [action.field]: {

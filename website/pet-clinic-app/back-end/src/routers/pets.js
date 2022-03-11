@@ -1,9 +1,9 @@
 import { Router } from 'express'
 
-import petController from '../controllers/petController.js'
+import { getPetsBreeds, getPetsColors } from '../controllers/petController.js'
 import auth from '../middleware/auth.js'
 
-const { getPetsBreeds, getPetsColors } = petController
+
 
 const petsRouter = new Router()
 

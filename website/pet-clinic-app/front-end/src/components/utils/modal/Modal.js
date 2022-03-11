@@ -1,12 +1,14 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
 import modalMotion from "./modalMotion"
+import { useNavigate } from 'react-router-dom'
 
 const modalVariant = modalMotion
 
 const Modal = (props) => {
 
   const [show, setShow] = useState(true)
+  const navigate = useNavigate()
   return (
     <>
       <div className={`modal modal-${props.modalClass}`}>
@@ -40,6 +42,8 @@ const Modal = (props) => {
                   setShow(false)
                   if (props.refresh)
                     return  setTimeout(() => {window.location.reload()}, 300)
+                  if (props.redirectTo)
+                    return setTimeout(() => {navigate(props.redirectTo)}, 300)
                     
                   setTimeout(() => {props.dispatch({ type: `${props.modalClass}ModalExit` })}, 300)
                   

@@ -22,7 +22,7 @@ const useAuth = () => {
     setUserId(uid)
     setAuthedUser(true)
     // create an expiration date for the token when loginin, if the user refresh the page or re-enter the browser the useEffect will work and will call the login so if the token is still valid override the date in the storage with itself so nothing will change
-    const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 7 )
+    const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 6 )
     setTokenExpirationDate(tokenExpirationDate)
     localStorage.setItem('userData', JSON.stringify({ uid, token, expiration: tokenExpirationDate.toISOString() }))
      

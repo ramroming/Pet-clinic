@@ -1,6 +1,16 @@
+const initialData = {
+  isLoading: false,
+  isCreating: false,
+  responseData: {},
+  responseError: '',
+  story: {
+    value: '',
+    error: ''
+  },
+  missingStory: '',
+  responseCreate: '',
 
-
-
+}
 const AdoptionAd = () => {
     return (
         <div className=" adoption-ad-wrapper home-container flex-col falign-center gap-24p ">
@@ -36,7 +46,7 @@ const AdoptionAd = () => {
                         </div>
 
                         <div className="flex-row gap-8p">
-                            <label>Located with: </label>
+                            <label>Located At: </label>
                             <p>Shelter</p>
                         </div>
 
@@ -47,7 +57,7 @@ const AdoptionAd = () => {
 
                 {/* second mini flex */}
                 <div className="flex-col fjust-center falign-center pet-image-container">
-                    <img src="media/imgs/petphoto.jpg" alt='pet'>
+                    <img src="/media/imgs/petphoto.jpg" alt='pet'>
                     </img>
                     <button className="btn-rec adopt-btn">Adopt me!</button>
                 </div>

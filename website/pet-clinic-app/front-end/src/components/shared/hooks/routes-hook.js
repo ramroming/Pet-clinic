@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Signup from "./../..//pages/signup/Signup";
 import Login from "./../..//pages/login/Login";
 import Home from "./../..//pages/home/Home";
@@ -33,7 +33,7 @@ import Footer from "../../layout/footer/Footer";
 // A hook that contains the routing logic and it uses the authed user state to determine whether the user is allowed to navigate to private Routes
 const useRoutes = (authedUser) => {
 
-  
+  const location = useLocation()
   if (authedUser !== null)
   { 
     return (
@@ -54,41 +54,41 @@ const useRoutes = (authedUser) => {
 
         {/* private routes */}
         <Route path='stafflist'
-        element={authedUser ? <Stafflist /> : <Navigate to='/login' state={{ redirectTo: 'stafflist'}} />}> </Route>
+        element={authedUser ? <Stafflist /> : <Navigate to='/login' state={{ redirectTo: location.pathname}} />}> </Route>
         <Route path='appointment'
-          element={authedUser ? <Appointment /> : <Navigate to='/login' state={{ redirectTo: 'appointment' }} />}></Route>
+          element={authedUser ? <Appointment /> : <Navigate to='/login' state={{ redirectTo: location.pathname  }} />}></Route>
         <Route path='registerpet'
           element={authedUser ? <RegisterPet /> : <Navigate to='/login' state={{ redirectTo: 'registerpet' }} />}></Route>
 
 
         <Route path='adoption'
-          element={authedUser ? <Adoption /> : <Navigate to='/login' state={{ redirectTo: 'adoption' }} />}></Route>
+          element={authedUser ? <Adoption /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
         <Route path='adoptionads'
-          element={authedUser ? <AdoptionAds /> : <Navigate to='/login' state={{ redirectTo: 'adoptionads' }} />}></Route>
+          element={authedUser ? <AdoptionAds /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
-        <Route path='adoptionad'
-          element={authedUser ? <AdoptionAd /> : <Navigate to='/login' state={{ redirectTo: 'adoptionad' }} />}></Route>
+        <Route path='adoptionad/:id'
+          element={authedUser ? <AdoptionAd /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
         <Route path='postad'
-          element={authedUser ? <PostAd /> : <Navigate to='/login' state={{ redirectTo: 'postad' }}/>}> </Route>
+          element={authedUser ? <PostAd /> : <Navigate to='/login' state={{ redirectTo: location.pathname }}/>}> </Route>
 
         <Route path='postpreview/:id'
-          element={authedUser ? <PostPreview /> : <Navigate to='/login' state={{ redirectTo: 'postpreview' }}/>}> </Route>
+          element={authedUser ? <PostPreview /> : <Navigate to='/login' state={{ redirectTo: location.pathname }}/>}> </Route>
 
         {/* My profile related paths */}
         <Route path='myprofile' element={  <SideNav /> }>
           <Route index
             element={<Navigate to='/' />}></Route>
           <Route path='mypersonalinfo'
-            element={authedUser ? <PersonalInfo /> : <Navigate to='/login' state={{ redirectTo: 'myprofile/mypersonalinfo' }} />}></Route>
+            element={authedUser ? <PersonalInfo /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
           <Route path='account'
-            element={authedUser ? <Account /> : <Navigate to='/login' state={{ redirectTo: 'myprofile/account' }} />}></Route>
+            element={authedUser ? <Account /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
           <Route path='myadoptionposts'
-            element={authedUser ? <MyAdoptionPosts /> : <Navigate to='/login' state={{ redirectTo: 'myprofile/myadoptionposts' }} />}></Route>
+            element={authedUser ? <MyAdoptionPosts /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
           <Route path='myadoptionrequests'
-            element={authedUser ? <MyAdoptionRequests /> : <Navigate to='/login' state={{ redirectTo: 'myprofile/myadoptionrequests' }} />}></Route>
+            element={authedUser ? <MyAdoptionRequests /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
           <Route path='petinfo'
-            element={authedUser ? <PetInfo /> : <Navigate to='/login' state={{ redirectTo: 'myprofile/petinfo' }} />}></Route>
+            element={authedUser ? <PetInfo /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
           <Route path='*'
             element={<Navigate to='/' />}> </Route>
         </Route>
@@ -100,36 +100,36 @@ const useRoutes = (authedUser) => {
           <Route index
             element={<Navigate to='/' />}></Route>
           <Route path='mypersonalinfo'
-            element={authedUser ? <PersonalInfo /> : <Navigate to='/login' state={{ redirectTo: 'staffpanel/mypersonalinfo' }} />}></Route>
+            element={authedUser ? <PersonalInfo /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
           <Route path='account'
-            element={authedUser ? <Account /> : <Navigate to='/login' state={{ redirectTo: 'staffpanel/account' }} />}></Route>
+            element={authedUser ? <Account /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
           <Route path='manageappointments'
-            element={authedUser ? <AppointmentManagement /> : <Navigate to='/login' state={{ redirectTo: 'staffpanel/manageappointments' }} />}></Route>
+            element={authedUser ? <AppointmentManagement /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
           <Route path='adoptionrequests'
-            element={authedUser ? <AdoptionManagement/> : <Navigate to='/login' state={{ redirectTo: 'staffpanel/adoptionrequests' }} />}></Route>
+            element={authedUser ? <AdoptionManagement/> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
           <Route path='adoptionposts'
-            element={authedUser ? <AdoptionPostsManagement/> : <Navigate to='/login' state={{ redirectTo: 'staffpanel/adoptionposts' }} />}></Route>
+            element={authedUser ? <AdoptionPostsManagement/> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
           <Route path='pettreatmenthistory'
-            element={authedUser ? <PetTreatmentHistory /> : <Navigate to='/login' state={{ redirectTo: 'staffpanel/pettreatmenthistory' }} />}></Route>
+            element={authedUser ? <PetTreatmentHistory /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
           <Route path='pettraininghistory'
-            element={authedUser ? <PetTrainingHistory /> : <Navigate to='/login' state={{ redirectTo: 'staffpanel/pettraininghistory' }} />}></Route>
+            element={authedUser ? <PetTrainingHistory /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
           <Route path='registration'
-            element={authedUser ? <Registration /> : <Navigate to='/login' state={{ redirectTo: 'staffpanel/registration' }} />}></Route>
+            element={authedUser ? <Registration /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
           <Route path='manageusers'
-            element={authedUser ? <ManageUsers /> : <Navigate to='/login' state={{ redirectTo: 'staffpanel/manageusers' }} />}></Route>
+            element={authedUser ? <ManageUsers /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
           <Route path='managepets'
-            element={authedUser ? <ManagePets /> : <Navigate to='/login' state={{ redirectTo: 'staffpanel/managepets' }} />}></Route>
+            element={authedUser ? <ManagePets /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
           <Route path='manageprofits'
-            element={authedUser ? <ManageProfits /> : <Navigate to='/login' state={{ redirectTo: 'staffpanel/manageprofits' }} />}></Route>
+            element={authedUser ? <ManageProfits /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
           
           <Route path='*'

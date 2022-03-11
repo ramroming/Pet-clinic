@@ -2,9 +2,11 @@ import validator from 'validator'
 import { createConnection } from 'mysql2/promise'
 import connData from '../database/pet-clinic-db.js'
 import petClinicRules from './petclinicrules.js'
+import timeOperations from './timeOperations.js'
 
 const { CLINIC_TIME_ZONE_OFFSET, CLINIC_WORKING_HOURS } = petClinicRules
 const { isMobilePhone, isEmail, isStrongPassword, isDate } = validator
+const { calculatePetAge } = timeOperations
 const myValidator = {
 
   
@@ -14,6 +16,9 @@ const myValidator = {
   },
   isTooLong(data) {
     return data.length > 200
+  },
+  is2TooLong(data) {
+    return data.length > 400
   },
   isValidId(id) {
     return !(isNaN(id) || id <= 0)
@@ -47,15 +52,16 @@ const myValidator = {
     try {
       const conn = await createConnection(connData)
       const [rows, fields] = await conn.execute(`SELECT p.name As pet_name, p.gender, p.birth_date, p.breed_name, GROUP_CONCAT(c.name) As colors, p.photo  FROM pets p
-      LEFT JOIN color_records cr ON cr.pet_id = p.id
-      LEFT JOIN colors c ON cr.color_id = c.id
+      JOIN color_records cr ON cr.pet_id = p.id
+      JOIN colors c ON cr.color_id = c.id
       WHERE p.owner_id = ? AND p.id = ?`, [userId, pet_id])
       await conn.end()
 
       // if a user dosen't own the pet 
-      if (!rows.length)
+      if (!rows[0].pet_name)
         return false
       
+      rows[0].birth_date = calculatePetAge(rows[0].birth_date)
       
       // if the user owns the pet
       return rows[0]
@@ -84,7 +90,7 @@ const myValidator = {
       await conn.end()
 
       // if the pet_type and the breeds are invalid 
-      if (!rows.length)
+      if (rows.length === 0)
         return false
       
       
@@ -105,7 +111,7 @@ const myValidator = {
       const conn = await createConnection(connData)
       for (let i = 0; i < colorsArr.length; i++ ){
         const [result] = await conn.execute('SELECT * FROM colors WHERE name = ?', [colorsArr[i]])
-        if (!result.length){
+        if (result.length === 0){
           conn.end()
           return { valid: false }
         }
@@ -131,7 +137,7 @@ const myValidator = {
       await conn.end()
 
       // if the appointment_type is invalid 
-      if (!rows.length)
+      if (rows.length === 0)
         return false
       
       
