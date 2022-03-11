@@ -234,8 +234,8 @@ const createAppointment = async (req, res) => {
     if (activeAppointments){
       const appointmentsInDay = activeAppointments.filter((appointment) => {
         // getting date from database and convert it to turkish time and then zero its time
-        const filterDate = convertToTurkishDate(appointment.date, true)
-        const userDate = convertToTurkishDate(new Date(date), true)
+        const filterDate = new Date(new Date(appointment.date).setUTCHours(0, 0, 0, 0))
+        const userDate = new Date(new Date(date).setUTCHours(0, 0, 0, 0))
 
         return filterDate.getTime() === userDate.getTime()
       })
@@ -267,7 +267,7 @@ const getAppointments = async (req, res) => {
   try {
     
     const conn = await createConnection(connData)
-    const compareTime = `${convertToTurkishDate(new Date()).toISOString().split('T')[0]} ${convertToTurkishDate(new Date()).toISOString().split('T')[1].split('.')[0]}`
+    const compareTime = `${new Date().toISOString().split('T')[0]} ${new Date().toISOString().split('T')[1].split('.')[0]}`
     await conn.execute('UPDATE appointments SET status = 0 WHERE date < ?', [compareTime])
 
     const [appointments] = await conn.execute(`select  a.id, apt.name as appointment_type, a.status, a.date, per.first_name, per.last_name, p.name as pet_name
@@ -279,7 +279,7 @@ const getAppointments = async (req, res) => {
     WHERE a.client_id = ?
     ORDER BY a.status DESC`, [req.user.id])
     const arrayToSend = appointments.map((appointment, index) => {
-      const newDate = dateFormat(convertToTurkishDate(appointment.date) ,'UTC:ddd mmm dd yyyy HH:MM:ss')
+      const newDate = dateFormat((appointment.date) ,'isoUtcDateTime')
       return {...appointment, date: newDate}
     })
   

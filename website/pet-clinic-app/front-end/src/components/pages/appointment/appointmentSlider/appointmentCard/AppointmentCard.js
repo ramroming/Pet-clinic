@@ -2,7 +2,7 @@
 import { motion } from "framer-motion"
 import { sliderAnimation } from '../viewAppointmentSliderAnimation'
 import { AnimatePresence } from "framer-motion"
-
+import dateFormat from "dateformat"
 
 const sliderMotion = sliderAnimation
 
@@ -30,7 +30,7 @@ const AppointmentCard = (props) => {
         {/* appointment date */}
         <div className="flex-row gap-16p">
           <i className="fas fa-clock"></i>
-          <p>{props.card.date}</p>
+          <p>{dateFormat(props.card.date, 'default')}</p>
         </div>
 
         {/* Staff mem */}

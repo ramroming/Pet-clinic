@@ -26,7 +26,7 @@ const getAvailableTimes = async (stmemId, userDate) => {
   // this will get the time in turkey
   const currentDate = new Date(new Date().setUTCHours(0, 0, 0, 0))
   const currentTime = new Date()
-  const user_date = new Date(new Date(userDate).setDate(0, 0, 0, 0))
+  const user_date = new Date(new Date(userDate).setUTCHours(0, 0, 0, 0))
 
   const availableTimes = CLINIC_WORKING_HOURS
   let unavailableTimes
