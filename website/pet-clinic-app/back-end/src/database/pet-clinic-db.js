@@ -4,7 +4,7 @@ const connData = {
   // password: 'Timsp1290',
   password: 'petApp12345!',
   database: 'pet_clinic',
-  // timezone: '+03:00'
+  timezone: 'Z'
 }
 
 

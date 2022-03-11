@@ -153,7 +153,7 @@ const myValidator = {
   },
   isValidAppointmentDate(date) {
 
-    return (isDate(date, { format: 'YYYY-MM-DD', strictMode: true, delimiters: ['-']}) && (new Date(date).setUTCHours(23) >= new Date(new Date().setUTCHours(new Date().getUTCHours() + CLINIC_TIME_ZONE_OFFSET))))
+    return (isDate(date, { format: 'YYYY-MM-DD', strictMode: true, delimiters: ['-']}) && (new Date(date).setUTCHours(23) >= new Date()))
   },
   isValidHour(hour) {
     return (!isNaN(hour) && CLINIC_WORKING_HOURS.includes(hour))

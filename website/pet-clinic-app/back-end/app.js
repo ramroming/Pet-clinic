@@ -20,7 +20,6 @@ app.use(json())
 
 // this will fix the CORS Error
 app.use(cors())
-
 app.use((req, res, next) => {
   setTimeout(() => {
     next()
