@@ -1,4 +1,4 @@
-import useDefaultReducer from "../../shared/hooks/default-reducer-hook"
+import usePostPreview from "../../shared/hooks/postpreview-hook"
 import { useEffect, useContext } from 'react'
 import useFetch from "../../shared/hooks/fetch-hook"
 import { useParams } from "react-router"
@@ -26,7 +26,7 @@ const initialData = {
 const PostReview = () => {
 
   const { id } = useParams()
-  const [state, dispatch] = useDefaultReducer(initialData)
+  const [state, dispatch] = usePostPreview(initialData)
   const sendRequest = useFetch()
   const auth = useContext(authContext)
   const setPageIsLoading = useContext(pageLoadingContext).setPageIsLoading
@@ -128,7 +128,7 @@ const PostReview = () => {
             <div className="intro flex-col falign-center fjust-center gap-16p">
               <p className="intro-hi">hi i'm</p>
               <p className="pet-name">{state.responseData.pet_name && state.responseData.pet_name}</p>
-              <p className="pet-breed">{state.responseData.breed_nam && state.responseData.breed_nam}</p>
+              <p className="pet-breed">Breed: {state.responseData.breed_name && state.responseData.breed_name}</p>
             </div>
 
             <div className="pet-info flex-col gap-16p">

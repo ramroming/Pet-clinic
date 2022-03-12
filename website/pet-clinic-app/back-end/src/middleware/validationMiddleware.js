@@ -166,6 +166,14 @@ const createAdoptionAd = async (req, res, next) => {
   
   next()
 }
+const commentOnAd =  (req, res, next) => {
+  if (!req.body.comment || !req.body.ad_id || !myValidator.isValidId(req.body.ad_id))
+    return res.status(400).send({ error: 'Bad Data' })
+
+  if (myValidator.is2TooLong(req.body.comment))
+    return res.status(400).send({ error: 'LONG DATA !!' })
+  next()
+}
 
 // Appointment Related
 
@@ -206,5 +214,6 @@ export default {
   createAppointment,
   deleteAppointment,
   getMyPet,
-  createAdoptionAd
+  createAdoptionAd,
+  commentOnAd
 }

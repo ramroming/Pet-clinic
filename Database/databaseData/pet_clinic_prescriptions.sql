@@ -16,38 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `treatments`
+-- Table structure for table `prescriptions`
 --
 
-DROP TABLE IF EXISTS `treatments`;
+DROP TABLE IF EXISTS `prescriptions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `treatments` (
-  `date` datetime NOT NULL,
-  `doctor_id` int NOT NULL,
-  `pet_id` int NOT NULL,
-  `case_id` int NOT NULL,
-  `vaccine_id` int DEFAULT NULL,
-  PRIMARY KEY (`date`,`doctor_id`,`pet_id`),
-  KEY `TREATMENTS_fk0` (`doctor_id`),
-  KEY `TREATMENTS_fk1` (`pet_id`),
-  KEY `TREATMENTS_fk2` (`case_id`),
-  KEY `TREATMENTS_fk3` (`vaccine_id`),
-  CONSTRAINT `TREATMENTS_fk0` FOREIGN KEY (`doctor_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `TREATMENTS_fk1` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`),
-  CONSTRAINT `TREATMENTS_fk2` FOREIGN KEY (`case_id`) REFERENCES `cases` (`id`),
-  CONSTRAINT `TREATMENTS_fk3` FOREIGN KEY (`vaccine_id`) REFERENCES `vaccines` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `prescriptions` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `code` varchar(150) NOT NULL,
+  `treatment_date` datetime DEFAULT NULL,
+  `doctor_id` int DEFAULT NULL,
+  `pet_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `PRESCRIPTIONS_fk0` (`treatment_date`),
+  KEY `PRESCRIPTIONS_fk1` (`doctor_id`),
+  KEY `PRESCRIPTIONS_fk2` (`pet_id`),
+  CONSTRAINT `PRESCRIPTIONS_fk0` FOREIGN KEY (`treatment_date`) REFERENCES `treatments` (`date`) ON DELETE CASCADE,
+  CONSTRAINT `PRESCRIPTIONS_fk1` FOREIGN KEY (`doctor_id`) REFERENCES `treatments` (`doctor_id`) ON DELETE CASCADE,
+  CONSTRAINT `PRESCRIPTIONS_fk2` FOREIGN KEY (`pet_id`) REFERENCES `treatments` (`pet_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `treatments`
+-- Dumping data for table `prescriptions`
 --
 
-LOCK TABLES `treatments` WRITE;
-/*!40000 ALTER TABLE `treatments` DISABLE KEYS */;
-INSERT INTO `treatments` VALUES ('2020-02-08 00:00:00',3,1,2,NULL),('2020-02-08 00:00:00',3,2,3,NULL),('2020-07-07 00:00:00',3,1,1,5);
-/*!40000 ALTER TABLE `treatments` ENABLE KEYS */;
+LOCK TABLES `prescriptions` WRITE;
+/*!40000 ALTER TABLE `prescriptions` DISABLE KEYS */;
+INSERT INTO `prescriptions` VALUES (1,'500200',NULL,NULL,NULL);
+/*!40000 ALTER TABLE `prescriptions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -59,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-08 19:45:59
+-- Dump completed on 2022-03-12 16:08:25

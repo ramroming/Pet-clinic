@@ -16,27 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `training_types`
+-- Table structure for table `ratings`
 --
 
-DROP TABLE IF EXISTS `training_types`;
+DROP TABLE IF EXISTS `ratings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `training_types` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(150) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `ratings` (
+  `date` datetime NOT NULL,
+  `client_id` int NOT NULL,
+  `stmem_id` int NOT NULL,
+  `value` int NOT NULL,
+  PRIMARY KEY (`date`,`client_id`,`stmem_id`),
+  KEY `RATINGS_fk0` (`client_id`),
+  KEY `RATINGS_fk1` (`stmem_id`),
+  CONSTRAINT `RATINGS_fk0` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `RATINGS_fk1` FOREIGN KEY (`stmem_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `training_types`
+-- Dumping data for table `ratings`
 --
 
-LOCK TABLES `training_types` WRITE;
-/*!40000 ALTER TABLE `training_types` DISABLE KEYS */;
-INSERT INTO `training_types` VALUES (1,'Positive Reinforcement'),(2,'Clicker Training'),(3,'Alpha Dog'),(4,'litter training'),(5,'Staying calm'),(6,'Playing with toys');
-/*!40000 ALTER TABLE `training_types` ENABLE KEYS */;
+LOCK TABLES `ratings` WRITE;
+/*!40000 ALTER TABLE `ratings` DISABLE KEYS */;
+INSERT INTO `ratings` VALUES ('2018-01-02 00:00:00',4,6,4),('2019-09-01 00:00:00',4,5,4),('2020-01-01 00:00:00',2,3,5);
+/*!40000 ALTER TABLE `ratings` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-08 19:45:59
+-- Dump completed on 2022-03-12 16:08:24

@@ -16,27 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `appointment_types`
+-- Table structure for table `trainings`
 --
 
-DROP TABLE IF EXISTS `appointment_types`;
+DROP TABLE IF EXISTS `trainings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `appointment_types` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(150) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `trainings` (
+  `start_date` datetime NOT NULL,
+  `pet_id` int NOT NULL,
+  `trainer_id` int NOT NULL,
+  `training_type_id` int NOT NULL,
+  `end_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`start_date`,`pet_id`,`trainer_id`),
+  KEY `TRAININGS_fk0` (`pet_id`),
+  KEY `TRAININGS_fk1` (`trainer_id`),
+  KEY `TRAININGS_fk2` (`training_type_id`),
+  CONSTRAINT `TRAININGS_fk0` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`),
+  CONSTRAINT `TRAININGS_fk1` FOREIGN KEY (`trainer_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `TRAININGS_fk2` FOREIGN KEY (`training_type_id`) REFERENCES `training_types` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `appointment_types`
+-- Dumping data for table `trainings`
 --
 
-LOCK TABLES `appointment_types` WRITE;
-/*!40000 ALTER TABLE `appointment_types` DISABLE KEYS */;
-INSERT INTO `appointment_types` VALUES (1,'Examination'),(2,'Training'),(3,'Grooming'),(4,'Adoption');
-/*!40000 ALTER TABLE `appointment_types` ENABLE KEYS */;
+LOCK TABLES `trainings` WRITE;
+/*!40000 ALTER TABLE `trainings` DISABLE KEYS */;
+INSERT INTO `trainings` VALUES ('2020-02-01 00:00:00',1,5,1,NULL),('2020-02-01 00:00:00',3,5,2,NULL),('2020-03-01 00:00:00',1,5,3,NULL),('2020-03-02 00:00:00',51,5,3,NULL);
+/*!40000 ALTER TABLE `trainings` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-08 19:46:00
+-- Dump completed on 2022-03-12 16:08:26

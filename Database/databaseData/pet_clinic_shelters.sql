@@ -16,30 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `fee_histories`
+-- Table structure for table `shelters`
 --
 
-DROP TABLE IF EXISTS `fee_histories`;
+DROP TABLE IF EXISTS `shelters`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `fee_histories` (
-  `date` datetime NOT NULL,
-  `appointment_type_id` int NOT NULL,
-  `value` float NOT NULL,
-  PRIMARY KEY (`date`,`appointment_type_id`),
-  KEY `FEE_HISTORIES_fk0` (`appointment_type_id`),
-  CONSTRAINT `FEE_HISTORIES_fk0` FOREIGN KEY (`appointment_type_id`) REFERENCES `appointment_types` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `shelters` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `capacity` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `fee_histories`
+-- Dumping data for table `shelters`
 --
 
-LOCK TABLES `fee_histories` WRITE;
-/*!40000 ALTER TABLE `fee_histories` DISABLE KEYS */;
-INSERT INTO `fee_histories` VALUES ('2019-01-01 00:00:00',1,100),('2019-01-01 00:00:00',2,300),('2019-01-01 00:00:00',3,50),('2019-01-01 00:00:00',4,0),('2021-01-01 00:00:00',1,150),('2021-01-01 00:00:00',2,350),('2021-01-01 00:00:00',3,75);
-/*!40000 ALTER TABLE `fee_histories` ENABLE KEYS */;
+LOCK TABLES `shelters` WRITE;
+/*!40000 ALTER TABLE `shelters` DISABLE KEYS */;
+INSERT INTO `shelters` VALUES (1,40);
+/*!40000 ALTER TABLE `shelters` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-08 19:46:00
+-- Dump completed on 2022-03-12 16:08:26

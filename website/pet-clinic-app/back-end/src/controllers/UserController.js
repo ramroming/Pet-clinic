@@ -321,6 +321,18 @@ const createAdoptionAd = async (req, res) => {
     return res.status(500).send({ error: e.message })
   }
 }
+const commentOnAd = async (req, res) => {
+  try {
+    const conn = await createConnection(connData)
+    const [rows] = await conn.execute('INSERT INTO comments (date, text, adoption_ad_id, client_id) VALUES (?, ?, ?, ?)', [new Date(), req.body.comment, req.body.ad_id, req.user.id])
+    await conn.end()
+    res.status(201).send({ result: 'comment created' })
+  } catch (e) {
+    if (e.errno === 1452)
+      return res.status(400).send({ error: 'Post not founnd' })
+    res.status(500).send({ error: e.message })
+  }
+}
 export  {
   signup,
   myProfile,
@@ -332,5 +344,6 @@ export  {
   getAppointments,
   deleteAppointments,
   getMyPet,
-  createAdoptionAd
+  createAdoptionAd,
+  commentOnAd
 }

@@ -16,31 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `adoption_requests`
+-- Table structure for table `cases`
 --
 
-DROP TABLE IF EXISTS `adoption_requests`;
+DROP TABLE IF EXISTS `cases`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `adoption_requests` (
-  `date` datetime NOT NULL,
-  `client_id` int NOT NULL,
-  `adoption_ad_id` int NOT NULL,
-  PRIMARY KEY (`client_id`,`adoption_ad_id`),
-  KEY `ADOPTION_REQUESTS_fk1` (`adoption_ad_id`),
-  CONSTRAINT `ADOPTION_REQUESTS_fk0` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `ADOPTION_REQUESTS_fk1` FOREIGN KEY (`adoption_ad_id`) REFERENCES `adoption_ads` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `cases` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `adoption_requests`
+-- Dumping data for table `cases`
 --
 
-LOCK TABLES `adoption_requests` WRITE;
-/*!40000 ALTER TABLE `adoption_requests` DISABLE KEYS */;
-INSERT INTO `adoption_requests` VALUES ('2020-02-04 00:00:00',4,1);
-/*!40000 ALTER TABLE `adoption_requests` ENABLE KEYS */;
+LOCK TABLES `cases` WRITE;
+/*!40000 ALTER TABLE `cases` DISABLE KEYS */;
+INSERT INTO `cases` VALUES (1,'vaccination'),(2,'spaying'),(3,'check-up');
+/*!40000 ALTER TABLE `cases` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-08 19:45:58
+-- Dump completed on 2022-03-12 16:08:25

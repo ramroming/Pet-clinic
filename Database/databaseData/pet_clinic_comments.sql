@@ -16,36 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `trainings`
+-- Table structure for table `comments`
 --
 
-DROP TABLE IF EXISTS `trainings`;
+DROP TABLE IF EXISTS `comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `trainings` (
-  `start_date` datetime NOT NULL,
-  `pet_id` int NOT NULL,
-  `trainer_id` int NOT NULL,
-  `training_type_id` int NOT NULL,
-  `end_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`start_date`,`pet_id`,`trainer_id`),
-  KEY `TRAININGS_fk0` (`pet_id`),
-  KEY `TRAININGS_fk1` (`trainer_id`),
-  KEY `TRAININGS_fk2` (`training_type_id`),
-  CONSTRAINT `TRAININGS_fk0` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`),
-  CONSTRAINT `TRAININGS_fk1` FOREIGN KEY (`trainer_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `TRAININGS_fk2` FOREIGN KEY (`training_type_id`) REFERENCES `training_types` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `comments` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `text` varchar(150) NOT NULL,
+  `adoption_ad_id` int NOT NULL,
+  `client_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `COMMENTS_fk0` (`adoption_ad_id`),
+  KEY `COMMENTS_fk1` (`client_id`),
+  CONSTRAINT `COMMENTS_fk0` FOREIGN KEY (`adoption_ad_id`) REFERENCES `adoption_ads` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `COMMENTS_fk1` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `trainings`
+-- Dumping data for table `comments`
 --
 
-LOCK TABLES `trainings` WRITE;
-/*!40000 ALTER TABLE `trainings` DISABLE KEYS */;
-INSERT INTO `trainings` VALUES ('2020-02-01 00:00:00',3,5,2,NULL),('2020-05-06 00:00:00',1,5,1,'2020-06-06 00:00:00');
-/*!40000 ALTER TABLE `trainings` ENABLE KEYS */;
+LOCK TABLES `comments` WRITE;
+/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+INSERT INTO `comments` VALUES (22,'2022-03-12 12:59:06','fwefwef',10,157),(23,'2022-03-12 13:01:34','I love this pet',10,157),(24,'2022-03-12 13:02:00','Kooki is Cutieee',10,157),(25,'2022-03-12 13:03:57','Man I love this pet',10,2);
+/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-08 19:45:58
+-- Dump completed on 2022-03-12 16:08:26

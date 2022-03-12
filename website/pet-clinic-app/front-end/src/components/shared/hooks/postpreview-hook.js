@@ -1,7 +1,7 @@
 import { useReducer } from 'react'
 
 // This custom hook is currently adjusted to validate user inputs when signing up using userReducer
-const defaultStateReducer = (state, action) => {
+const postPreview = (state, action) => {
   switch (action.type) {
 
     // ***************** Forms input validations *************************
@@ -92,8 +92,8 @@ const defaultStateReducer = (state, action) => {
   }
 }
 
-const useDefaultReducer = (initialState) => {
-  const [state, dispatch] = useReducer(defaultStateReducer, initialState)
+const usePostPreview = (initialState) => {
+  const [state, dispatch] = useReducer(postPreview, initialState)
   return [state, dispatch]
 }
-export default useDefaultReducer
+export default usePostPreview

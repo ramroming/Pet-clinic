@@ -11,18 +11,22 @@ const getAdoptionAd = async (req, res) => {
 
   try {
     const conn = await createConnection(connData)
-    const [adoptionAds] = await conn.execute(`SELECT ad.date, ad.story,p.id AS pet_id, p.name as pet_name, p.gender, p.birth_date, p.breed_name, p.photo, u.username, group_concat(co.name) as Colors FROM adoption_ads ad
+    const [adoptionAds] = await conn.execute(`SELECT ad.date, ad.story,p.owner_id, p.id AS pet_id, p.name as pet_name, p.gender, p.birth_date, p.breed_name, p.photo, u.username, group_concat(co.name) as colors FROM adoption_ads ad
     JOIN pets p ON ad.pet_id = p.id
     JOIN users u ON p.owner_id = u.id
     JOIN color_records cr ON cr.pet_id = p.id
     JOIN colors co ON co.id = cr.color_id WHERE ad.id = ? AND ad.status=1`, [req.params.id])
     await conn.end()
-    if (!adoptionAds.length)
-      return res.status(404).send()
+    
+    // the sql query will return an array with one object that containes nulls and that is because of group_concat
+    if (!adoptionAds[0].date)
+      return res.status(404).send({ error: 'Post not found' })
 
     // getting the comments of an adoption ad
     const conn2 = await createConnection(connData)
-    const [comments] = await conn2.execute('SELECT * FROM comments WHERE adoption_ad_id = ?', [req.params.id])
+    const [comments] = await conn2.execute(`SELECT c.date, c.text, u.username, u.id AS user_id FROM comments c JOIN users u ON c.client_id = u.id
+    WHERE adoption_ad_id = ?
+    ORDER BY date DESC `, [req.params.id])
     await conn2.end()
 
     // getting the training of the pet
