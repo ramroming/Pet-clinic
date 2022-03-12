@@ -32,6 +32,7 @@ const initialData = {
   createLoading: false
 
 }
+const turkishTimeOffset = 3
 const MakeAppointmentSlider = () => {
 
   const auth = useContext(authContext)
@@ -225,7 +226,7 @@ const MakeAppointmentSlider = () => {
   }
 
   const changeDate = (event) => {
-    const selectedHour = parseInt(event.target.innerHTML.substring(0, 2)).toString()
+    const selectedHour = (parseInt(event.target.innerHTML.substring(0, 2)) - turkishTimeOffset).toString()
 
     setAppointment((oldAppointment) => {
       return { ...oldAppointment, hour: selectedHour }
@@ -299,7 +300,7 @@ const MakeAppointmentSlider = () => {
               <p>For your pet: <span>{' ' + appointment.petName}</span></p>
               <p>staff: <span>{' ' + appointment.stmemName}</span></p>
               <p>Date:  <span>{' ' + appointment.date}</span></p>
-              <p>At:  <span>{' ' + appointment.hour < 10 ? '0' + appointment.hour + ':00' : appointment.hour + ':00'}</span></p>
+              <p>At:  <span>{' ' + (parseInt(appointment.hour) + turkishTimeOffset) < 10 ? '0' + (parseInt(appointment.hour) + turkishTimeOffset) + ':00' : (parseInt(appointment.hour) + turkishTimeOffset) + ':00'}</span></p>
             </>
           }
           dispatch={dispatch}
@@ -469,7 +470,8 @@ const MakeAppointmentSlider = () => {
               initial="initial"
               animate="final"
               exit='exit' className="make-appointment-slider flex-col falign-center gap-24p">
-              <h1>Select Date:</h1>
+              <h1>Select Date</h1>
+              <p style={{color: 'white', margin: 'auto', width: '80%', textAlign: 'center'}}> *The working hours of the clinic are according to the Turkish local time*</p>
               <div className="appointment-types flex-row fjust-center gap-24p ">
                 <div className="date-picker-input">
                   <img src="/media/imgs/calendar.png" alt="calendar" />
@@ -479,14 +481,15 @@ const MakeAppointmentSlider = () => {
 
               <div className="appointment-types flex-row fjust-center gap-16p date-container">
                 {state.timesArr && state.timesArr.availableTimes.length !== 0 && state.timesArr.CLINIC_WORKING_HOURS.map((time, index) => {
+                  const offsetTime = time + turkishTimeOffset
                   return (
                     <React.Fragment key={index}>
                       {state.timesArr.availableTimes.includes(time) ?
                         <p className={appointment.hour === time.toString() ? "time active" : "time"}
                           onClick={(e) => changeDate(e)}
-                        >{`${time >= 10 ? time : '0' + time}:00 ${time > 11 ? 'PM' : 'AM'}`}</p>
+                        >{`${offsetTime >= 10 ? offsetTime : '0' + offsetTime}:00 ${offsetTime > 11 ? 'PM' : 'AM'}`}</p>
                         :
-                        <p className="time not-available">{`${time >= 10 ? time : '0' + time}:00 ${time > 11 ? 'PM' : 'AM'}`}</p>}
+                        <p className="time not-available">{`${offsetTime >= 10 ? offsetTime : '0' + offsetTime}:00 ${offsetTime > 11 ? 'PM' : 'AM'}`}</p>}
                     </React.Fragment>
                   )
                 })}

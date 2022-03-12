@@ -5,8 +5,9 @@
   top: 10%;
   width: 100%;
   padding: 0;
-  gap: 1rem;
+  gap: .5rem;
   @include break-point("medium", "up") {
+    gap: 1rem;
     padding: 3rem 1rem;
   }
 

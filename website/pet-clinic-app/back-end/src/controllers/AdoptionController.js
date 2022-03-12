@@ -3,7 +3,7 @@ import connData from '../database/pet-clinic-db.js'
 import myValidator from '../utils/dataValidator.js'
 import timeOperations from '../utils/timeOperations.js'
 
-const { convertToTurkishDate, calculatePetAge } = timeOperations
+const { calculatePetAge } = timeOperations
 
 const getAdoptionAd = async (req, res) => {
  if (!req.params.id || !myValidator.isValidId(req.params.id))
@@ -33,8 +33,6 @@ const getAdoptionAd = async (req, res) => {
     JOIN personal_info pi ON pi.id = u.personal_info_id
     WHERE t.pet_id = ?`, [adoptionAds[0].pet_id])
     await conn3.end()
-    // adoptionAds[0].date = convertToTurkishDate(adoptionAds[0].date)
-    console.log(adoptionAds[0].date)
     adoptionAds[0].birth_date = calculatePetAge(adoptionAds[0].birth_date)
     adoptionAds[0].trainings = trainings
     res.send({adoptionAd: adoptionAds[0], comments})

@@ -296,7 +296,7 @@ const ViewAppointmentSlider = (props) => {
   return (
     <>
       
-      {props.status === 1 ? <h2>Your Active Appointments</h2> : <h2>Your Past Appointments</h2>}
+      {props.status === 1 ? <h2>Your Active Appointments in local Time</h2> : <h2>Your Active Appointments in local Time</h2>}
       <div className=" view-appointment-animator flex-row gap-8p fjust-around">
         {/* Cards */}
         {props.isLoading && <LoadingSpinner color='dark' />}

@@ -11,7 +11,7 @@ import timeOperations from '../utils/timeOperations.js'
 import petClinicRules from '../utils/petclinicrules.js'
 
 const { MAX_ACTIVE_APPOINTMENTS, MAX_APPOINTMENTS_PER_DAY, MAX_PETS_PER_USER } = petClinicRules
-const { getAvailableTimes, convertToTurkishDate } = timeOperations
+const { getAvailableTimes } = timeOperations
 const { findUserByCredentials, generateAuthToken } = authOperations
 
 const signup = async (req, res) => {
@@ -297,7 +297,7 @@ const deleteAppointments = async (req, res) => {
     const [appointments] = await conn.execute(`DELETE FROM appointments WHERE id = ? AND client_id=? AND status=1`, [req.params.id, req.user.id])
     await conn.end()
     if (appointments.affectedRows === 0)
-      res.status(400).send({ error: 'something bad has happened !!' })
+      return res.status(400).send({ error: 'something bad has happened !!' })
     res.send({ result: 'Your appointment has been canceled successfully'})
   } catch (e) {
     res.status(500).send({ error: e.message })
@@ -306,7 +306,6 @@ const deleteAppointments = async (req, res) => {
 }
 
 const createAdoptionAd = async (req, res) => {
-  const turkishDate = convertToTurkishDate(new Date())
   // getting the pet type based on the pet breed to add it to the adoption post
   try {
     const conn = await createConnection(connData)
@@ -315,7 +314,7 @@ const createAdoptionAd = async (req, res) => {
       return res.status(400).send({ error: 'It looks like you have already posted an ad for this pet, you may post again once your ad is removed from the site !!'})
 
     const [result] = await conn.execute('SELECT type_name FROM breeds WHERE name = ? ', [req.pet.breed_name])
-    await conn.execute('INSERT INTO adoption_ads (date, ad_type, status, pet_id, client_id, story) VALUES (?, ?, 1, ?, ?, ?)', [dateFormat(turkishDate, 'UTC: yyyy-mm-dd HH:MM:ss'), result[0].type_name, req.body.pet_id, req.user.id, req.body.story ])
+    await conn.execute('INSERT INTO adoption_ads (date, ad_type, status, pet_id, client_id, story) VALUES (?, ?, 1, ?, ?, ?)', [dateFormat(new Date(), 'UTC: yyyy-mm-dd HH:MM:ss'), result[0].type_name, req.body.pet_id, req.user.id, req.body.story ])
     await conn.end()
     return res.status(201).send({ response: 'Your Adoption ad Was posted Successfully '})
   } catch (e) {
