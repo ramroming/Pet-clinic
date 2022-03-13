@@ -20,11 +20,11 @@ app.use(json())
 
 // this will fix the CORS Error
 app.use(cors())
-// app.use((req, res, next) => {
-//   setTimeout(() => {
-//     next()
-//   }, 1000)
-// })
+app.use((req, res, next) => {
+  setTimeout(() => {
+    next()
+  }, 1000)
+})
 
 // Using the Routers
 app.use(usersRouter)

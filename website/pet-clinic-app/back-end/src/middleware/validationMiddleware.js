@@ -1,5 +1,6 @@
 import myValidator from '../utils/dataValidator.js'
 import petClinicRules from '../utils/petclinicrules.js'
+import  validator  from 'validator'
 
 const { CLINIC_WORKING_HOURS } = petClinicRules
 // Client Related
@@ -206,7 +207,7 @@ const appointmentsTimes = (req, res, next) => {
 
 // Adoption related
 const getAdoptionAds = async (req, res, next) => {
-  if (req.query.last_id && !myValidator.isValidId)
+  if (req.query.last_date && !validator.isISO8601(req.query.last_date))
     return res.status(400).send({ error: 'Invalid Query string' })
   next()
 }

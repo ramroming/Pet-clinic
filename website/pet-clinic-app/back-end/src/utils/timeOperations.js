@@ -81,9 +81,10 @@ const calculatePetAge = (birth_date) => {
     return `About ${Math.round(ageInDays/365)} Year(s) old`
   if (ageInDays >= 30)
     return `About ${Math.round(ageInDays/30)} Month(s) old`
-  if (ageInDays <= 29)
+  if (ageInDays >= 1)
     return `About ${Math.round(ageInDays)} Day(s) old`
 
+    return `New Born`
 }
 
 export default {
