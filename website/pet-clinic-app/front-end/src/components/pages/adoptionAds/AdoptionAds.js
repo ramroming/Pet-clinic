@@ -9,9 +9,9 @@ import React from 'react'
 import useAdoptionAds from "../../shared/hooks/adoptionads-hook"
 import Modal from '../../utils/modal/Modal'
 
-import {
-  useWhatChanged,
-} from '@simbathesailor/use-what-changed';
+// import {
+//   useWhatChanged,
+// } from '@simbathesailor/use-what-changed';
 
 
 
@@ -48,8 +48,6 @@ const AdoptionAds = () => {
   // every time the last node get mounted the lastpost is changed to the new last node
   const lastPost = useRef(null)
 
-  console.log(lastPost.current)
-  useWhatChanged([postState.getMore, dispatch])
   const observeLast = useCallback(() => {
     // remove the attachment to the previous node so that scrolling up back to the previous last node wont fire a set
     if (observer.current) observer.current.disconnect()
