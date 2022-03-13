@@ -1,64 +1,12 @@
-import { useState, useEffect, useCallback, useRef } from "react"
+import { useState, useEffect, useCallback, useRef, useContext } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { adoptionMotion } from '../adoptionAds/adoptionMotion'
+import { authContext } from '../../shared/context/auth-context'
+import useFetch from '../../shared/hooks/fetch-hook'
+import dateFormat from "dateformat"
 
 
 
-
-// function to fetch adoption post data
-
-
-const serverFetch1 = () => {
-
-  return new Promise((resolve, reject) => {
-
-    const posts = []
-
-    for (let i = 0; i < 10; i++) {
-      posts.push({
-        id: i,
-        type: 'cat',
-        breed: 'British',
-        title: 'Ads info Lorem ipsum dolor sit amet consectetur adipisicing elit.ipsum dolor sit amet consectetur adipisicing elit.',
-        img: "media/imgs/post-image.jpg",
-        createdAt: '24 Jan 2021'
-      })
-    }
-    //retreiving data from the database 
-
-    //for now simulation to that
-
-    setTimeout(() => {
-      resolve(posts)
-    }, 3000)
-  })
-}
-const serverFetch2 = () => {
-
-  return new Promise((resolve, reject) => {
-
-    const posts = []
-
-    for (let i = 40; i < 70; i++) {
-      posts.push({
-        id: i,
-        type: 'cat',
-        breed: 'British',
-        title: 'Ads info Lorem ipsum dolor sit amet consectetur adipisicing elit.ipsum dolor sit amet consectetur adipisicing elit.',
-        img: "media/imgs/post-image2.jpg",
-        createdAt: '24 Jan 2021'
-
-      })
-    }
-    //retreiving data from the database 
-
-    //for now simulation to that
-
-    setTimeout(() => {
-      resolve(posts)
-    }, 3000)
-  })
-}
 
 
 
@@ -66,6 +14,9 @@ const serverFetch2 = () => {
 
 
 const AdoptionAds = () => {
+
+  const sendRequest = useFetch()
+  const auth = useContext(authContext)
 
 
   const [postArr, setPostArr] = useState({
@@ -103,74 +54,60 @@ const AdoptionAds = () => {
     if (lastPost.current) observer.current.observe(lastPost.current)
   }, [postArr.isLoading]);
 
-  // const observeLast = (lastPost) => {
-
-
-
-  //   // remove the attachment to the previous node so that scrolling up back to the previous last node wont fire a set
-  //   if (observer.current) observer.current.disconnect()
-
-  //   // create new attachment to the last node every thing written inside the arrow function will be called when there is an intersecting
-  //   observer.current = new IntersectionObserver((entries) => {
-
-  //     // if we are not intersecting with  the node or if loading is hapenning we do nothing
-  //     if (!entries[0].isIntersecting || postArr.isLoading) return
-
-
-  //     // When we touch the last node
-  //     setPostArr((oldObj) => {
-  //       return { ...oldObj, isLoading: true }
-  //     })
-
-  //   })
-
-  //   if (lastPost) observer.current.observe(lastPost)
-  // }
-
+ 
+  const getAdoptionAds = useCallback (async (isMounted) => {
+    try {
+      const adoptionAds = await sendRequest('http://localhost:5000/adoptionads/', 'GET', null, {
+        'Authorization': `Bearer ${auth.token}`
+      })
+     
+      if (samePage.current)
+        if(isMounted)
+          setPostArr((oldPosts) => {
+            return { isLoading: false, posts: [...oldPosts.posts, ...adoptionAds] }
+          })
+      else
+        if(isMounted)
+          setPostArr({ isLoading: false, posts: adoptionAds })
+    } catch (e) {
+      console.log(e)
+    }
+  }, [auth.token, sendRequest])
 
   // what happens onload
   useEffect(() => {
-    serverFetch1().then((result) => {
-      setPostArr({ isLoading: false, posts: result })
-    }).catch((error) => {
-      console.log(error)
-    })
-  }, [])
-
+    let isMounted = true
+    
+    console.log('fetching')
+    getAdoptionAds(isMounted)
+    return () => {
+      isMounted = false
+    }
+  }, [getAdoptionAds])
 
 
 
   //fetch from the database as the button gets pressed and update the posts array
   useEffect(() => {
+    let mounted = true
     observeLast()
     if (isMounted.current) {
       if (postArr.isLoading) {
-        if (samePage.current) {
-          serverFetch2().then((result) => {
-            setPostArr((oldPosts) => {
-              return { isLoading: false, posts: [...oldPosts.posts, ...result] }
-            })
-          }).catch((error) => {
-            console.log(error)
-          })
-        } else {
-          serverFetch2().then((result) => {
-            samePage.current = true
-            setPostArr({ isLoading: false, posts: result })
-          }).catch((error) => {
-            console.log(error)
-          })
-        }
-
+        getAdoptionAds(mounted)
       }
     }
     else {
       isMounted.current = true
     }
-  }, [postArr, observeLast])
+    return () => {
+      mounted = false
+    }
+  }, [postArr, observeLast, getAdoptionAds])
 
   // find pets based of filters this will triggers the loading message by changing the loading state to true
   const findPets = () => {
+    console.log(lastPost.current)
+
     if (!postArr.isLoading) {
       samePage.current = false
       setPostArr((oldObj) => {
@@ -178,7 +115,6 @@ const AdoptionAds = () => {
       })
     }
   }
-
 
 
 
@@ -284,11 +220,10 @@ const AdoptionAds = () => {
                     href="/#"
                     ref={lastPost}  //marking the last post
                     className="adoption-post gap-8p flex-col falign-center ">
-                    <img src={post.img} alt="" className="post-image" />
-                    <p>{post.id}</p>
-                    <p><span>{post.type} - </span><span>{post.breed}</span></p>
-                    <p className="pTitle">{post.title}</p>
-                    <p><i className="fa fa-clock"></i>&nbsp;{post.createdAt}</p>
+                    <img src={URL.createObjectURL(new Blob([new Uint8Array(post.photo.data)]))} alt="" className="post-image" />
+                    <p><span>{post.ad_type} - </span><span>{post.breed}</span></p>
+                    <p className="pTitle">{post.breed_name}</p>
+                    <p><i className="fa fa-clock"></i>&nbsp;{dateFormat(post.date, 'default')}</p>
                     <button href="/#" className="btn-rec-blue">
                       View Post
                     </button>
@@ -304,11 +239,10 @@ const AdoptionAds = () => {
                     exit='exit'
                     href="/#"
                     className="adoption-post gap-8p flex-col falign-center ">
-                    <img src={post.img} alt="" className="post-image" />
-                    <p>{post.id}</p>
-                    <p><span>{post.type} - </span><span>{post.breed}</span></p>
-                    <p className="pTitle">{post.title}</p>
-                    <p><i className="fa fa-clock"></i>&nbsp;{post.createdAt}</p>
+                    <img src={URL.createObjectURL(new Blob([new Uint8Array(post.photo.data)]))} alt="" className="post-image" />
+                    <p><span>{post.ad_type}  </span><span>{post.breed}</span></p>
+                    <p className="pTitle">{post.breed_name}</p>
+                    <p><i className="fa fa-clock"></i>&nbsp;{dateFormat(post.date, 'default')}</p>
                     <button href="/#" className="btn-rec-blue">
                       View Post
                     </button>

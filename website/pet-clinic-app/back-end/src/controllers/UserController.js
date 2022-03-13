@@ -314,9 +314,9 @@ const createAdoptionAd = async (req, res) => {
       return res.status(400).send({ error: 'It looks like you have already posted an ad for this pet, you may post again once your ad is removed from the site !!'})
 
     const [result] = await conn.execute('SELECT type_name FROM breeds WHERE name = ? ', [req.pet.breed_name])
-    await conn.execute('INSERT INTO adoption_ads (date, ad_type, status, pet_id, client_id, story) VALUES (?, ?, 1, ?, ?, ?)', [dateFormat(new Date(), 'UTC: yyyy-mm-dd HH:MM:ss'), result[0].type_name, req.body.pet_id, req.user.id, req.body.story ])
+    const [insertResult] = await conn.execute('INSERT INTO adoption_ads (date, ad_type, status, pet_id, client_id, story) VALUES (?, ?, 1, ?, ?, ?)', [dateFormat(new Date(), 'UTC: yyyy-mm-dd HH:MM:ss'), result[0].type_name, req.body.pet_id, req.user.id, req.body.story ])
     await conn.end()
-    return res.status(201).send({ response: 'Your Adoption ad Was posted Successfully '})
+    return res.status(201).send({ response: 'Your Adoption ad Was posted Successfully ', ad_id: insertResult.insertId})
   } catch (e) {
     return res.status(500).send({ error: e.message })
   }

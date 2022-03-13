@@ -204,6 +204,13 @@ const appointmentsTimes = (req, res, next) => {
   next()
 }
 
+// Adoption related
+const getAdoptionAds = async (req, res, next) => {
+  if (req.query.last_id && !myValidator.isValidId)
+    return res.status(400).send({ error: 'Invalid Query string' })
+  next()
+}
+
 
 export default {
   signup,
@@ -215,5 +222,6 @@ export default {
   deleteAppointment,
   getMyPet,
   createAdoptionAd,
-  commentOnAd
+  commentOnAd,
+  getAdoptionAds
 }

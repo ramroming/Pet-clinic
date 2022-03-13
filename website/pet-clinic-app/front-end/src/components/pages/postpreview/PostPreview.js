@@ -72,7 +72,7 @@ const PostReview = () => {
           'Authorization': `Bearer ${auth.token}`
         })
         if (result && isMount)
-          dispatch({ type: 'successCreate', data: result.response })
+          dispatch({ type: 'successCreate', data: result })
       } catch (e) {
         if (isMount)
           dispatch({ type: 'failure', error: e.message })
@@ -104,9 +104,9 @@ const PostReview = () => {
         <Modal
           modalClass='success'
           header='Success!!'
-          body={state.responseCreate}
+          body={state.responseCreate.response}
           dispatch={dispatch}
-          redirectTo='/adoptionad'
+          redirectTo={`/adoptionad/${state.responseCreate.ad_id}`}
         />}
       <div className=" adoption-ad-wrapper home-container flex-col falign-center gap-24p ">
 

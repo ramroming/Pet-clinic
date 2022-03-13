@@ -153,7 +153,8 @@ const AdoptionAd = () => {
             {state.responseData && state.responseData.adoptionAd.photo ?
               <>
                 <img src={URL.createObjectURL(new Blob([new Uint8Array(state.responseData.adoptionAd.photo.data)]))} alt="pet" />
-                <button className="btn-rec adopt-btn">Adopt me!</button>
+                {state.responseData.adoptionAd.owner_id !== auth.userId &&<button className="btn-rec adopt-btn">Adopt me!</button>}
+                
               </>
               :
               <>

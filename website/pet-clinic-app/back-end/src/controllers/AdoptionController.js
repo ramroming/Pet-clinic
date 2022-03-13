@@ -46,7 +46,21 @@ const getAdoptionAd = async (req, res) => {
   }
 }
 
-
+const getAdoptionAds = async (req, res) => {
+  try {
+    const conn = await createConnection(connData)
+    const [adoptionAds] = await conn.execute(`SELECT ad.date, ad.ad_type, ad.id, p.breed_name, p.photo FROM adoption_ads ad
+    JOIN pets p ON ad.pet_id = p.id
+    WHERE ad.status = 1 AND ad.id > ?
+    ORDER BY ad.id
+    limit 10`, [req.query.last_id ? req.query.last_id : 0])
+    await conn.end()
+    res.send(adoptionAds)
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
 export  {
   getAdoptionAd,
+  getAdoptionAds
 }
