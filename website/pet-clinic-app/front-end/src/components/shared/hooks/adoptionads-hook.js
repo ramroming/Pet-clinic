@@ -6,20 +6,11 @@ const adoptionAds = (state, action) => {
 
     // ***************** Forms input validations *************************
     case 'enterValue': {
-      if (action.value.length > 400)
-        return {
-          ...state,
-          [action.field]: {
-            ...state[action.field],
-            errorMsg: 'Max Characters length is 400 !!',
-          }
-        }
       return {
         ...state,
-        [action.field]: {
-          errorMsg: '',
-          value: action.value
-        }
+        isLoading: true,
+        noMore: false,
+        [action.field]: action.value
       }
     }
    

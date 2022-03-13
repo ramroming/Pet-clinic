@@ -9,7 +9,10 @@ import React from 'react'
 import useAdoptionAds from "../../shared/hooks/adoptionads-hook"
 import Modal from '../../utils/modal/Modal'
 
-
+import {
+  useWhatChanged,
+  setUseWhatChange,
+} from '@simbathesailor/use-what-changed';
 
 
 
@@ -21,8 +24,8 @@ const initialData = {
   posts: [],
   noMore: false,
   responseError: '',
-  pet_type: '',
-  breed: '',
+  ad_type: '',
+  breed_name: '',
   gender: ''
 }
 
@@ -45,6 +48,8 @@ const AdoptionAds = () => {
   // every time the last node get mounted the lastpost is changed to the new last node
   const lastPost = useRef(null)
 
+  console.log(lastPost.current)
+  useWhatChanged([postState.isLoading, postState.noMore, dispatch])
   const observeLast = useCallback(() => {
     // remove the attachment to the previous node so that scrolling up back to the previous last node wont fire a set
     if (observer.current) observer.current.disconnect()
@@ -56,8 +61,11 @@ const AdoptionAds = () => {
       if (!entries[0].isIntersecting || postState.isLoading || postState.noMore) return
 
 
+      console.log('observer')
+      console.log(postState.isLoading)
       // When we touch the last node
       dispatch({ type: 'start' })
+
 
     })
 
@@ -65,19 +73,24 @@ const AdoptionAds = () => {
   }, [postState.isLoading, postState.noMore, dispatch]);
 
 
-  const getAdoptionAds = useCallback(async () => {
+  const getAdoptionAds = useCallback(async (ad_type, breed_name, gender) => {
     try {
-      const adoptionAds = await sendRequest(`http://localhost:5000/adoptionads?last_date=${lastPost.current ? lastPost.current.id : ''}`, 'GET', null, {
+      console.log(`http://localhost:5000/adoptionads?last_date=${lastPost.current ? lastPost.current.id : ''}&ad_type=${ad_type ? ad_type : ''}&breed_name=${breed_name ? breed_name : ''}&gender=${gender ? gender : ''}`)
+
+      const adoptionAds = await sendRequest(`http://localhost:5000/adoptionads?last_date=${lastPost.current ? lastPost.current.id : ''}&ad_type=${ad_type ? ad_type : ''}&breed_name=${breed_name ? breed_name : ''}&gender=${gender ? gender : ''}`, 'GET', null, {
         'Authorization': `Bearer ${auth.token}`
       })
       if (adoptionAds.length === 0)
         dispatch({ type: 'noMore' })
-      if (samePage.current)
+      if (samePage.current){
         if (isMountedEffect.current)
           dispatch({ type: 'getFirstTime', data: adoptionAds})
-      else
-        if (isMountedEffect.current)
+      } else {
+        if (isMountedEffect.current){
+          samePage.current = true
           dispatch({ type: 'getNotFirst', data: adoptionAds})
+        }
+      }
     } catch (e) {
       if (isMountedEffect.current)
         dispatch({ type: 'failure', error: e.message })
@@ -87,7 +100,8 @@ const AdoptionAds = () => {
   // what happens onload
   useEffect(() => {
     isMountedEffect.current = true
-    getAdoptionAds()
+    console.log('fetch')
+      getAdoptionAds()
     return () => {
       isMountedEffect.current = false
     }
@@ -101,7 +115,8 @@ const AdoptionAds = () => {
     observeLast()
     if (isMounted.current) {
       if (postState.isLoading) {
-        getAdoptionAds()
+        console.log('fetch 2')
+        getAdoptionAds(postState.ad_type, postState.breed_name ,postState.gender)
       }
     }
     else {
@@ -110,7 +125,7 @@ const AdoptionAds = () => {
     return () => {
       isMountedEffect.current = false
     }
-  }, [postState, observeLast, getAdoptionAds])
+  }, [postState.isLoading, observeLast, getAdoptionAds, postState.ad_type, postState.breed_name, postState.gender])
 
   // find pets based of filters this will triggers the loading message by changing the loading state to true
   // const findPets = () => {
@@ -156,7 +171,15 @@ const AdoptionAds = () => {
               <label htmlFor="pet-type">
                 Pet:
               </label>
-              <select name="pet-type" id="pet-type">
+              <select 
+              onChange={
+                (e) => {
+                  samePage.current = false
+                  dispatch({ type: 'enterValue', field: 'ad_type', value: e.currentTarget.value})}}
+              name="pet-type" id="pet-type"
+              defaultValue={''}
+              >
+                <option value="">All</option>
                 <option value="cat">Cat</option>
                 <option value="dog">Dog</option>
                 <option value="bird">Bird</option>
@@ -168,7 +191,8 @@ const AdoptionAds = () => {
               <label htmlFor="pet-breed">
                 Breed:
               </label>
-              <select name="pet-breed" id="pet-breed">
+              <select name="pet-breed" id="pet-breed" defaultValue={''}>
+                <option value="">All</option>
                 <option value="british">British</option>
                 <option value="retriever">Retriever</option>
                 <option value="momo">Momo</option>
@@ -181,10 +205,10 @@ const AdoptionAds = () => {
               <label htmlFor="pet-gender">
                 Gender:
               </label>
-              <select name="pet-gender" id="pet-gender">
+              <select name="pet-gender" id="pet-gender" defaultValue={''}>
+                <option value="">Both</option>
                 <option value="male">Male</option>
                 <option value="Female">Female</option>
-                <option value="everything">Both</option>
               </select>
 
             </div>

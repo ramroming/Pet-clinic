@@ -53,7 +53,7 @@ const getAdoptionAds = async (req, res) => {
   const thirdColor = colors ? colors[2] ? colors[2] : '' : ''
   try {
     const conn = await createConnection(connData)
-    const sqlQuery = `SELECT ad.date, ad.ad_type, ad.id, p.gender, p.breed_name, group_concat(c.name) as colors FROM adoption_ads ad
+    const sqlQuery = `SELECT ad.date, ad.ad_type, ad.id, p.gender, p.breed_name, p.photo, group_concat(c.name) as colors FROM adoption_ads ad
     JOIN pets p ON ad.pet_id = p.id
     JOIN color_records cr ON cr.pet_id = p.id
     JOIN colors c ON cr.color_id = c.id
