@@ -23,7 +23,7 @@ const adoptionAds = (state, action) => {
       return {
         ...state,
         responseError: '',
-        isLoading: true,
+        getMore: true,
       }
     }
     case 'noMore': {
@@ -33,16 +33,20 @@ const adoptionAds = (state, action) => {
         noMore: true
       }
     }
-    case 'getFirstTime': {
+    case 'firstRender': {
       return { 
         ...state, 
         isLoading: false, 
+        getMore: false,
+        connectObserver: !state.connectObserver,
         posts: [...state.posts, ...action.data] }
     }
-    case 'getNotFirst': {
+    case 'otherRenders': {
       return { 
         ...state, 
-        isLoading: false, 
+        connectObserver: !state.connectObserver,
+        getMore: false, 
+        isLoading: false,
         posts: action.data }
     }
     
@@ -63,6 +67,12 @@ const adoptionAds = (state, action) => {
       }
     }
 
+    case 'lastPost': {
+      return {
+        ...state,
+        lastPost: action.data
+      }
+    }
 
     default:
       break

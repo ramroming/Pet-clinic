@@ -11,7 +11,6 @@ import Modal from '../../utils/modal/Modal'
 
 import {
   useWhatChanged,
-  setUseWhatChange,
 } from '@simbathesailor/use-what-changed';
 
 
@@ -21,12 +20,15 @@ import {
 const MotionLink = motion(Link, { forwardMotionProps: true })
 const initialData = {
   isLoading: true,
+  getMore: false,
   posts: [],
   noMore: false,
+  connectObserver: false,
   responseError: '',
   ad_type: '',
   breed_name: '',
-  gender: ''
+  gender: '',
+  lastPost: ''
 }
 
 const AdoptionAds = () => {
@@ -36,10 +38,8 @@ const AdoptionAds = () => {
   const auth = useContext(authContext)
 
 
- 
-  const isMounted = useRef(false)
+  const firstRender = useRef(true)
   const isMountedEffect = useRef(true)
-  const samePage = useRef(true)
 
   //setup the infinite scrolling
   // we want to preserve the observer's values all the time that why we use ref
@@ -49,7 +49,7 @@ const AdoptionAds = () => {
   const lastPost = useRef(null)
 
   console.log(lastPost.current)
-  useWhatChanged([postState.isLoading, postState.noMore, dispatch])
+  useWhatChanged([postState.getMore, dispatch])
   const observeLast = useCallback(() => {
     // remove the attachment to the previous node so that scrolling up back to the previous last node wont fire a set
     if (observer.current) observer.current.disconnect()
@@ -58,11 +58,9 @@ const AdoptionAds = () => {
     observer.current = new IntersectionObserver((entries) => {
 
       // if we are not intersecting with  the node or if loading is hapenning we do nothing
-      if (!entries[0].isIntersecting || postState.isLoading || postState.noMore) return
+      if (!entries[0].isIntersecting || postState.getMore ) return
 
 
-      console.log('observer')
-      console.log(postState.isLoading)
       // When we touch the last node
       dispatch({ type: 'start' })
 
@@ -70,27 +68,30 @@ const AdoptionAds = () => {
     })
 
     if (lastPost.current) observer.current.observe(lastPost.current)
-  }, [postState.isLoading, postState.noMore, dispatch]);
+  }, [postState.getMore, dispatch])
 
 
-  const getAdoptionAds = useCallback(async (ad_type, breed_name, gender) => {
+  const getAdoptionAds = useCallback(async (lastPost, ad_type, breed_name, gender, newRender) => {
     try {
-      console.log(`http://localhost:5000/adoptionads?last_date=${lastPost.current ? lastPost.current.id : ''}&ad_type=${ad_type ? ad_type : ''}&breed_name=${breed_name ? breed_name : ''}&gender=${gender ? gender : ''}`)
+      console.log(`http://localhost:5000/adoptionads?last_date=${lastPost ? lastPost : ''}&ad_type=${ad_type ? ad_type : ''}&breed_name=${breed_name ? breed_name : ''}&gender=${gender ? gender : ''}`)
 
-      const adoptionAds = await sendRequest(`http://localhost:5000/adoptionads?last_date=${lastPost.current ? lastPost.current.id : ''}&ad_type=${ad_type ? ad_type : ''}&breed_name=${breed_name ? breed_name : ''}&gender=${gender ? gender : ''}`, 'GET', null, {
+      const adoptionAds = await sendRequest(`http://localhost:5000/adoptionads?last_date=${lastPost ? lastPost : ''}&ad_type=${ad_type ? ad_type : ''}&breed_name=${breed_name ? breed_name : ''}&gender=${gender ? gender : ''}`, 'GET', null, {
         'Authorization': `Bearer ${auth.token}`
       })
       if (adoptionAds.length === 0)
         dispatch({ type: 'noMore' })
-      if (samePage.current){
-        if (isMountedEffect.current)
-          dispatch({ type: 'getFirstTime', data: adoptionAds})
-      } else {
-        if (isMountedEffect.current){
-          samePage.current = true
-          dispatch({ type: 'getNotFirst', data: adoptionAds})
+
+        if (newRender){
+          if (isMountedEffect.current)
+            dispatch({ type: 'otherRenders', data: adoptionAds})
+          }
+        else {
+          if (isMountedEffect.current)
+            dispatch({ type: 'firstRender', data: adoptionAds})
         }
-      }
+
+        
+      
     } catch (e) {
       if (isMountedEffect.current)
         dispatch({ type: 'failure', error: e.message })
@@ -100,43 +101,41 @@ const AdoptionAds = () => {
   // what happens onload
   useEffect(() => {
     isMountedEffect.current = true
-    console.log('fetch')
       getAdoptionAds()
     return () => {
       isMountedEffect.current = false
     }
   }, [getAdoptionAds])
 
+  useEffect(() => {
+    if (firstRender.current){
+      return 
+    }
+    getAdoptionAds(null, postState.ad_type, postState.breed_name, postState.gender, true)
+  }, 
+  [postState.ad_type, postState.breed_name, postState.gender, getAdoptionAds])
+
 
   //fetch from the database as the button gets pressed and update the posts array
+  // useWhatChanged([postState.getMore, observeLast, getAdoptionAds,postState.lastPost, postState.ad_type, postState.breed_name, postState.gender])
   useEffect(() => {
     isMountedEffect.current = true
 
-    observeLast()
-    if (isMounted.current) {
-      if (postState.isLoading) {
-        console.log('fetch 2')
-        getAdoptionAds(postState.ad_type, postState.breed_name ,postState.gender)
+    if (!postState.noMore)
+      observeLast()
+    if (!firstRender.current) {
+      if (postState.getMore) {
+        getAdoptionAds(postState.lastPost, postState.ad_type, postState.breed_name ,postState.gender)
       }
     }
     else {
-      isMounted.current = true
+      firstRender.current = false
     }
     return () => {
       isMountedEffect.current = false
     }
-  }, [postState.isLoading, observeLast, getAdoptionAds, postState.ad_type, postState.breed_name, postState.gender])
+  }, [postState.noMore, postState.getMore, observeLast, getAdoptionAds,postState.lastPost, postState.ad_type, postState.breed_name, postState.gender])
 
-  // find pets based of filters this will triggers the loading message by changing the loading state to true
-  // const findPets = () => {
-
-  //   if (!postState.isLoading) {
-  //     samePage.current = false
-  //     setPostState((oldObj) => {
-  //       return { ...oldObj, isLoading: true }
-  //     })
-  //   }
-  // }
 
 
 
@@ -174,7 +173,6 @@ const AdoptionAds = () => {
               <select 
               onChange={
                 (e) => {
-                  samePage.current = false
                   dispatch({ type: 'enterValue', field: 'ad_type', value: e.currentTarget.value})}}
               name="pet-type" id="pet-type"
               defaultValue={''}
@@ -191,7 +189,11 @@ const AdoptionAds = () => {
               <label htmlFor="pet-breed">
                 Breed:
               </label>
-              <select name="pet-breed" id="pet-breed" defaultValue={''}>
+              <select 
+              onChange={
+                (e) => {
+                  dispatch({ type: 'enterValue', field: 'breed_name', value: e.currentTarget.value})}}
+              name="pet-breed" id="pet-breed" defaultValue={''}>
                 <option value="">All</option>
                 <option value="british">British</option>
                 <option value="retriever">Retriever</option>
@@ -205,7 +207,11 @@ const AdoptionAds = () => {
               <label htmlFor="pet-gender">
                 Gender:
               </label>
-              <select name="pet-gender" id="pet-gender" defaultValue={''}>
+              <select 
+              onChange={
+                (e) => {
+                  dispatch({ type: 'enterValue', field: 'gender', value: e.currentTarget.value})}}
+              name="pet-gender" id="pet-gender" defaultValue={''}>
                 <option value="">Both</option>
                 <option value="male">Male</option>
                 <option value="Female">Female</option>
@@ -243,19 +249,23 @@ const AdoptionAds = () => {
                   initial='initial'
                   animate='final'
                   exit='exit'
+                  key={'1s'}
                   className="loaderWrapper-top flex-row fjust-center">
                   <div className="lds-ripple"><div></div><div></div></div>
                 </motion.div>
+               
               }
+             
             </AnimatePresence>
             <AnimatePresence>
               {postState.posts.map((post, index) => {
                 // mark the last post
-                if (postState.posts.length === index + 1)
+                if (postState.posts.length === index + 1){
+                  if(postState.lastPost !== post.date)
+                    dispatch({ type: 'lastPost', data: post.date })
                   return (
                     <MotionLink
                       key={post.id}
-                      id={post.date}
                       variants={itemMotion}
                       initial='initial'
                       animate='final'
@@ -272,6 +282,7 @@ const AdoptionAds = () => {
                       </button>
                     </MotionLink>
                   )
+                }
                 else
                   return (
                     <MotionLink
@@ -297,7 +308,7 @@ const AdoptionAds = () => {
               )}
             </AnimatePresence>
             <AnimatePresence exitBeforeEnter>
-              {postState.isLoading &&
+              {postState.getMore &&
                 <motion.div
                   variants={itemMotion}
                   initial='initial'

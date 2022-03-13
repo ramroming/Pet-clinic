@@ -64,7 +64,7 @@ const getAdoptionAds = async (req, res) => {
     group by p.id
     having colors like '%${firstColor}%' AND colors like '%${secondColor}%' AND colors like '%${thirdColor}%'
     ORDER BY ad.date DESC
-    limit 10`
+    limit 5`
 
     const [adoptionAds] = await conn.execute(sqlQuery, 
       [req.query.last_date ? req.query.last_date : new Date(), 
