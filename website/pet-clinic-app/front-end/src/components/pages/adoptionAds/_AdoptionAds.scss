@@ -111,6 +111,9 @@
      }
 
 }
+.posts-main-container {
+  width: 100%;
+}
 
 .posts-animated-container{
     width: 90%;
@@ -124,13 +127,15 @@
 
 .adoption-post{
 
-    width: 90%;
-    max-width: 17rem;
+    width: 15rem;
     padding-bottom: 1rem;
     margin: auto;
     background-color: var(--clr-shadow-gray-shadow);
     box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.775);
     transition: 0.6s ease all;
+    @include break-point('medium', 'up') {
+      width: 17rem;
+    }
 
     &:hover{
         cursor: pointer;
@@ -178,6 +183,13 @@
 .loaderWrapper-top {
   position: absolute;
   top: 2rem;
+}
+.no-more {
+  width: 15rem;
+  height: 1px;
+  border: solid var(--clr-primary-mainPurple) 2px;
+  margin: auto;
+  
 }
 
 

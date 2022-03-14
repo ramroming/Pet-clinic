@@ -52,6 +52,11 @@ const getAdoptionAds = async (req, res) => {
   const secondColor = colors ? colors[1] ? colors[1] : '' : ''
   const thirdColor = colors ? colors[2] ? colors[2] : '' : ''
   try {
+    
+    const conn2 = await createConnection(connData)
+    const [breeds] = await conn2.execute(`SELECT name FROM breeds WHERE type_name = ? ${req.query.ad_type ? '' : ' OR 1=1'}`, [req.query.ad_type ? req.query.ad_type : ''])
+    await conn2.end()
+
     const conn = await createConnection(connData)
     const sqlQuery = `SELECT ad.date, ad.ad_type, ad.id, p.gender, p.breed_name, p.photo, group_concat(c.name) as colors FROM adoption_ads ad
     JOIN pets p ON ad.pet_id = p.id
@@ -73,9 +78,11 @@ const getAdoptionAds = async (req, res) => {
       req.query.gender ? req.query.gender : '',
       
     ])
+    
+    
 
     await conn.end()
-    res.send(adoptionAds)
+    res.send({result: adoptionAds, breeds})
   } catch (e) {
     res.status(500).send({ error: e.message })
   }
