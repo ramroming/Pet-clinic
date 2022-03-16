@@ -20,7 +20,7 @@ const getAdoptionAd = async (req, res) => {
     
     // the sql query will return an array with one object that containes nulls and that is because of group_concat
     if (!adoptionAds[0].date)
-      return res.status(404).send({ error: 'Post not found' })
+      return res.status(404).send({ error: 'Post is not found :( Bad link or the post you are looking for was removed by the owner' })
 
     // getting the comments of an adoption ad
     const conn2 = await createConnection(connData)

@@ -163,13 +163,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/users/appointment",
+					"raw": "{{url}}/users/me/appointments",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"users",
-						"appointment"
+						"me",
+						"appointments"
 					]
 				}
 			},
@@ -228,6 +229,26 @@
 						"me",
 						"comments",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateRequest",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/me/requests/21",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"requests",
+						"21"
 					]
 				}
 			},
@@ -392,13 +413,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/users/appointment",
+					"raw": "{{url}}/users/me/appointments",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"users",
-						"appointment"
+						"me",
+						"appointments"
 					]
 				}
 			},
@@ -466,7 +488,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/adoptionads?last_id=20",
+					"raw": "{{url}}/adoptionads?ad_type=cat",
 					"host": [
 						"{{url}}"
 					],
@@ -475,9 +497,77 @@
 					],
 					"query": [
 						{
-							"key": "last_id",
-							"value": "20"
+							"key": "ad_type",
+							"value": "cat"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getMyAdoptionAds",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/me/adoptionads/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"adoptionads",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMyRequests",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/me/requests",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"requests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateAdPostStory",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"story\": \"I love editing my pet so much\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/me/adoptionads/10",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"adoptionads",
+						"10"
 					]
 				}
 			},
@@ -489,13 +579,35 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/users/appointment",
+					"raw": "{{url}}/users/me/appointments/312",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"users",
-						"appointment"
+						"me",
+						"appointments",
+						"312"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteAdoptionAd",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/me/adoptionads/40",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"adoptionads",
+						"40"
 					]
 				}
 			},

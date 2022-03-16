@@ -9,6 +9,7 @@ import connData from '../database/pet-clinic-db.js'
 import authOperations from '../utils/authOperations.js'
 import timeOperations from '../utils/timeOperations.js'
 import petClinicRules from '../utils/petclinicrules.js'
+import { getWishList } from '../utils/adoptionOperations.js'
 
 const { MAX_ACTIVE_APPOINTMENTS, MAX_APPOINTMENTS_PER_DAY, MAX_PETS_PER_USER } = petClinicRules
 const { getAvailableTimes } = timeOperations
@@ -333,6 +334,82 @@ const commentOnAd = async (req, res) => {
     res.status(500).send({ error: e.message })
   }
 }
+
+const getMyAdoptionAds = async (req, res) => {
+  try {
+    const conn = await createConnection(connData)
+    const [myAdoptionAds] = await conn.execute('SELECT id, date, story FROM adoption_ads WHERE client_id = ? ORDER BY date DESC', [req.user.id])
+    await conn.end()
+    res.send(myAdoptionAds)
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+const updatePostStory = async (req, res) => {
+  try {
+    const conn = await createConnection(connData)
+    const [result] = await conn.execute('UPDATE adoption_ads SET story = ? WHERE client_id = ? AND id = ? ', [req.body.story, req.user.id, req.params.ad_id])
+    if (result.affectedRows === 0) 
+      return res.status(404).send()
+    res.send({ result: 'Adoption post story was updated successfully !!' })
+    await conn.end()
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+const deleteAdPost = async (req, res) => {
+  try {
+    const conn = await createConnection(connData)
+    const [result] = await conn.execute('DELETE FROM adoption_ads WHERE client_id = ? AND id = ? ', [req.user.id, req.params.ad_id])
+    await conn.end()
+    if (result.affectedRows === 0)
+      return res.status(404).send()
+    res.send({ result: 'Adoption ad was deleted successfully '})
+  } catch(e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+
+const getMyRequests = async (req, res) => {
+  try {
+    // get sent requests
+    const conn1 = await createConnection(connData)
+    const [sentRequests] = await conn1.execute('SELECT date, adoption_ad_id FROM adoption_requests WHERE client_id= ?', [req.user.id])
+    await conn1.end()
+    // get received requests
+    const conn2 = await createConnection(connData)
+    const [receivedRequests] = await conn2.execute(`select ar.date, ar.client_id as requester_id, ar.adoption_ad_id, aa.client_id as post_owner_id, pi.first_name as requester_first_name, pi.last_name as requester_last_name, pi.phone_number as requester_phone_number FROM adoption_requests ar
+    JOIN adoption_ads aa ON ar.adoption_ad_id = aa.id
+    JOIN users u ON u.id = ar.client_id
+    JOIN personal_info pi ON u.personal_info_id = pi.id
+    WHERE aa.client_id = ?
+    ORDER BY ar.adoption_ad_id , ar.date  desc`, [req.user.id])
+    await conn2.end()
+    res.send({sentRequests, receivedRequests})
+
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+const createRequest = async (req, res) => {
+  try {
+    // getting the wishlist count
+    const requesters_count = await getWishList(req.params.ad_id)
+
+    const conn = await createConnection(connData)
+    const [result] = await conn.execute('INSERT INTO adoption_requests (date, client_id, adoption_ad_id, status) VALUES (?, ?, ?, "pending")', [
+      dateFormat(new Date(), 'UTC: yyyy-mm-dd HH:MM:ss'),
+      req.user.id,
+      req.params.ad_id
+    ])
+    await conn.end()
+
+    res.status(201).send({ result: `You've been successfully added to a wish list of ${requesters_count} ${requesters_count >= 2 ? 'people': 'person'}  you can always check and manage your adoption requests from your profile `})
+    
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
 export  {
   signup,
   myProfile,
@@ -345,5 +422,11 @@ export  {
   deleteAppointments,
   getMyPet,
   createAdoptionAd,
-  commentOnAd
+  commentOnAd,
+  getMyAdoptionAds,
+  updatePostStory,
+  deleteAdPost,
+  getMyRequests,
+  createRequest
+
 }

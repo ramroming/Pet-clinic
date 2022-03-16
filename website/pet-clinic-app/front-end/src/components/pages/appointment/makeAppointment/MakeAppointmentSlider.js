@@ -251,7 +251,7 @@ const MakeAppointmentSlider = () => {
 
         }
         try {
-          const result = await sendRequest('http://localhost:5000/users/appointment', 'POST', JSON.stringify(dataToSend), {
+          const result = await sendRequest('http://localhost:5000/users/me/appointments', 'POST', JSON.stringify(dataToSend), {
             'Authorization': `Bearer ${auth.token}`,
             'Content-Type': 'application/json'
           })

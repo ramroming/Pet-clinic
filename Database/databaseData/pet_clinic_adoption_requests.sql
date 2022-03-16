@@ -26,6 +26,7 @@ CREATE TABLE `adoption_requests` (
   `date` datetime NOT NULL,
   `client_id` int NOT NULL,
   `adoption_ad_id` int NOT NULL,
+  `status` varchar(15) NOT NULL,
   PRIMARY KEY (`client_id`,`adoption_ad_id`),
   KEY `ADOPTION_REQUESTS_fk1` (`adoption_ad_id`),
   CONSTRAINT `ADOPTION_REQUESTS_fk0` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -39,6 +40,7 @@ CREATE TABLE `adoption_requests` (
 
 LOCK TABLES `adoption_requests` WRITE;
 /*!40000 ALTER TABLE `adoption_requests` DISABLE KEYS */;
+INSERT INTO `adoption_requests` VALUES ('2022-03-16 14:56:16',2,20,'pending'),('2022-03-14 13:11:17',2,21,'pending'),('2022-02-14 13:11:12',4,11,'pending'),('2022-03-20 13:11:17',4,12,'pending'),('2022-03-15 15:11:17',4,20,'pending'),('2022-03-17 13:11:17',7,13,'pending');
 /*!40000 ALTER TABLE `adoption_requests` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-14 22:00:01
+-- Dump completed on 2022-03-16 18:14:48

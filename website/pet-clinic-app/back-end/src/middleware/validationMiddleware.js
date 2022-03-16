@@ -175,6 +175,31 @@ const commentOnAd =  (req, res, next) => {
     return res.status(400).send({ error: 'LONG DATA !!' })
   next()
 }
+const updatePostStory = (req, res, next) => {
+  if (!req.body.story || myValidator.is2TooLong(req.body.story) || !req.params.ad_id || !myValidator.isValidId(req.params.ad_id))
+    return res.status(400).send({ error: 'Bad Data !!' })
+  next()
+}
+const createRequest = async (req, res, next) => {
+  if (!req.params.ad_id || !myValidator.isValidId(req.params.ad_id))
+    return res.status(400).send({ error: 'Bad Data !!' })
+  try {
+    const isValid = await myValidator.isValidRequestAdoptionAd(req.user.id, req.params.ad_id)
+    if (!isValid)
+      return res.status(404).send({ error: 'Invalid adoption ad id' })
+    const exist = await myValidator.nonExistentRequest(req.user.id, req.params.ad_id)
+    if (exist)
+      return res.status(400).send({ error: 'you have already requested  this adoption ad'})
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+  next()
+}
+const deleteAdPost = (req, res, next) => {
+  if (!req.params.ad_id || !myValidator.isValidId(req.params.ad_id))
+    return res.status(400).send({ error: 'Bad Data !!' })
+  next() 
+}
 
 // Appointment Related
 
@@ -213,6 +238,8 @@ const getAdoptionAds = async (req, res, next) => {
 }
 
 
+
+
 export default {
   signup,
   login,
@@ -224,5 +251,9 @@ export default {
   getMyPet,
   createAdoptionAd,
   commentOnAd,
-  getAdoptionAds
+  getAdoptionAds,
+  updatePostStory,
+  deleteAdPost,
+  createRequest
+
 }

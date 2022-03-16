@@ -1,5 +1,5 @@
-import { createConnection } from 'mysql2/promise'
 import petClinicRules from './petclinicrules.js'
+import { createConnection } from 'mysql2/promise'
 import connData from '../database/pet-clinic-db.js'
 
 const { CLINIC_TIME_ZONE_OFFSET, CLINIC_WORKING_HOURS, CLINIC_APPOINTMENT_GAP } = petClinicRules

@@ -158,6 +158,36 @@ const myValidator = {
   isValidHour(hour) {
     return (!isNaN(hour) && CLINIC_WORKING_HOURS.includes(hour))
   },
+
+  // adoption realted validations
+  async isValidRequestAdoptionAd(userId, adoptionId) {
+    try {
+      // check that is user requesting an already existing ad that doesn't belong to him
+      const conn = await createConnection(connData)
+      const [result] = await conn.execute('SELECT id from adoption_ads WHERE client_id != ? AND id=?', [userId, adoptionId])
+      await conn.end()
+      if (!result.length  )
+        return false
+      return true
+    } catch(e) {
+      throw e
+    }
+  },
+  async nonExistentRequest(userId, adoptionId) {
+    try {
+      // check if the user has already requested the adoption ad
+      const conn = await createConnection(connData)
+
+      const [result2] = await conn.execute('SELECT date FROM adoption_requests WHERE client_id = ? AND adoption_ad_id = ?', [userId, adoptionId])
+      await conn.end()
+
+      if (result2.length)
+        return true
+      return false
+    } catch(e) {
+      throw e
+    }
+  }
   
 
 

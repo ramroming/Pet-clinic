@@ -11,7 +11,7 @@ const Modal = (props) => {
   const navigate = useNavigate()
   return (
     <>
-      <div className={`modal modal-${props.modalClass}`}>
+      <div className={`modal modal_${props.modalClass}`}>
         <AnimatePresence>
           {show && <motion.div 
           variants={modalVariant}
@@ -28,7 +28,7 @@ const Modal = (props) => {
               {props.body}
             </div>
             <footer className={`modal-footer modal-footer__${props.modalClass}`}>
-            {props.modalClass === 'check' && 
+            {(props.modalClass === 'check' || props.modalClass === 'edit') && 
                 <button
                 onClick={() => {
                   setShow(false)
@@ -48,7 +48,7 @@ const Modal = (props) => {
                   setTimeout(() => {props.dispatch({ type: `${props.modalClass}ModalExit` })}, 300)
                   
                 }}
-                className={`btn-rec modal-button modal-button__${props.modalClass}`}>{props.modalClass === 'success' ? 'OK' : props.modalClass === 'check' ? 'Cancel' : 'Exit'}</button>
+                className={`btn-rec modal-button modal-button__${props.modalClass}`}>{props.modalClass === 'success' ? 'OK' : props.modalClass === 'check' ? 'Cancel' :props.modalClass === 'edit' ? 'Cancel' : 'Exit'}</button>
 
               
               
