@@ -15,7 +15,8 @@ const getAdoptionAd = async (req, res) => {
     JOIN pets p ON ad.pet_id = p.id
     JOIN users u ON p.owner_id = u.id
     JOIN color_records cr ON cr.pet_id = p.id
-    JOIN colors co ON co.id = cr.color_id WHERE ad.id = ? AND ad.status=1`, [req.params.id])
+    JOIN colors co ON co.id = cr.color_id WHERE ad.id = ? AND ad.status=1
+    GROUP BY ad.date, ad.story,p.owner_id, p.id , p.name , p.gender, p.birth_date, p.breed_name, u.username`, [req.params.id])
     await conn.end()
     
     // the sql query will return an array with one object that containes nulls and that is because of group_concat
@@ -66,7 +67,7 @@ const getAdoptionAds = async (req, res) => {
     AND (ad.ad_type=? ${req.query.ad_type ? '': ' OR 1=1'})
     AND (p.breed_name=? ${req.query.breed_name ? '': ' OR 1=1'})
     AND (p.gender=? ${req.query.gender ? '': ' OR 1=1'})
-    group by p.id
+    group by p.id, ad.date, ad.ad_type, ad.id, p.gender, p.breed_name
     having colors like '%${firstColor}%' AND colors like '%${secondColor}%' AND colors like '%${thirdColor}%'
     ORDER BY ad.date DESC
     limit 5`

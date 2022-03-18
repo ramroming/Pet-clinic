@@ -54,7 +54,8 @@ const myValidator = {
       const [rows, fields] = await conn.execute(`SELECT p.name As pet_name, p.gender, p.birth_date, p.breed_name, GROUP_CONCAT(c.name) As colors, p.photo  FROM pets p
       JOIN color_records cr ON cr.pet_id = p.id
       JOIN colors c ON cr.color_id = c.id
-      WHERE p.owner_id = ? AND p.id = ?`, [userId, pet_id])
+      WHERE p.owner_id = ? AND p.id = ?
+      group by p.name, p.gender, p.birth_date, p.breed_name, p.photo`, [userId, pet_id])
       await conn.end()
 
       // if a user dosen't own the pet 
