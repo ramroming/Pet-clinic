@@ -24,7 +24,7 @@ const getPetsColors = async (req, res) => {
   }
 }
 
-export default { 
+export  { 
   getPetsBreeds,
   getPetsColors
  }

@@ -37,7 +37,7 @@ const Appointment = () => {
       if(isMount)
         dispatch({ type: 'start' })
       try {
-        const appointments = await sendRequest('http://localhost:5000/users/appointment',
+        const appointments = await sendRequest('http://localhost:5000/users/me/appointments',
           'GET',
           null,
           {
@@ -75,7 +75,7 @@ const Appointment = () => {
       if (isMount)
         dispatch({ type: 'startDeleting' })
       try {
-        const result = await sendRequest(`http://localhost:5000/users/appointment/${state.appointmentToDelete}`, 'DELETE', null, {
+        const result = await sendRequest(`http://localhost:5000/users/me/appointments/${state.appointmentToDelete}`, 'DELETE', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (result && isMount)

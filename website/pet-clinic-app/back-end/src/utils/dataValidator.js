@@ -2,9 +2,11 @@ import validator from 'validator'
 import { createConnection } from 'mysql2/promise'
 import connData from '../database/pet-clinic-db.js'
 import petClinicRules from './petclinicrules.js'
+import timeOperations from './timeOperations.js'
 
 const { CLINIC_TIME_ZONE_OFFSET, CLINIC_WORKING_HOURS } = petClinicRules
 const { isMobilePhone, isEmail, isStrongPassword, isDate } = validator
+const { calculatePetAge } = timeOperations
 const myValidator = {
 
   
@@ -14,6 +16,9 @@ const myValidator = {
   },
   isTooLong(data) {
     return data.length > 200
+  },
+  is2TooLong(data) {
+    return data.length > 400
   },
   isValidId(id) {
     return !(isNaN(id) || id <= 0)
@@ -42,19 +47,24 @@ const myValidator = {
   isLongPassword(password) {
     return password.length > 128
   },
-  async isMyPet(userId, pet_id) {
+  // this will check if a pet belongs to a user and will return all data about the pet
+  async isOwnerPet(userId, pet_id) {
     try {
       const conn = await createConnection(connData)
-      const [rows, fields] = await conn.execute('SELECT name FROM pets WHERE owner_id = ? AND id = ?', [userId, pet_id])
+      const [rows, fields] = await conn.execute(`SELECT p.name As pet_name, p.gender, p.birth_date, p.breed_name, GROUP_CONCAT(c.name) As colors, p.photo  FROM pets p
+      JOIN color_records cr ON cr.pet_id = p.id
+      JOIN colors c ON cr.color_id = c.id
+      WHERE p.owner_id = ? AND p.id = ?`, [userId, pet_id])
       await conn.end()
 
       // if a user dosen't own the pet 
-      if (!rows.length)
+      if (!rows[0].pet_name)
         return false
       
+      rows[0].birth_date = calculatePetAge(rows[0].birth_date)
       
       // if the user owns the pet
-      return true
+      return rows[0]
 
     }  catch(e) {
       throw e
@@ -80,7 +90,7 @@ const myValidator = {
       await conn.end()
 
       // if the pet_type and the breeds are invalid 
-      if (!rows.length)
+      if (rows.length === 0)
         return false
       
       
@@ -101,7 +111,7 @@ const myValidator = {
       const conn = await createConnection(connData)
       for (let i = 0; i < colorsArr.length; i++ ){
         const [result] = await conn.execute('SELECT * FROM colors WHERE name = ?', [colorsArr[i]])
-        if (!result.length){
+        if (result.length === 0){
           conn.end()
           return { valid: false }
         }
@@ -127,7 +137,7 @@ const myValidator = {
       await conn.end()
 
       // if the appointment_type is invalid 
-      if (!rows.length)
+      if (rows.length === 0)
         return false
       
       
@@ -143,11 +153,41 @@ const myValidator = {
   },
   isValidAppointmentDate(date) {
 
-    return (isDate(date, { format: 'YYYY-MM-DD', strictMode: true, delimiters: ['-']}) && (new Date(date).setUTCHours(23) >= new Date(new Date().setUTCHours(new Date().getUTCHours() + CLINIC_TIME_ZONE_OFFSET))))
+    return (isDate(date, { format: 'YYYY-MM-DD', strictMode: true, delimiters: ['-']}) && (new Date(date).setUTCHours(23) >= new Date()))
   },
   isValidHour(hour) {
     return (!isNaN(hour) && CLINIC_WORKING_HOURS.includes(hour))
   },
+
+  // adoption realted validations
+  async isValidRequestAdoptionAd(userId, adoptionId) {
+    try {
+      // check that is user requesting an already existing ad that doesn't belong to him
+      const conn = await createConnection(connData)
+      const [result] = await conn.execute('SELECT id from adoption_ads WHERE client_id != ? AND id=?', [userId, adoptionId])
+      await conn.end()
+      if (!result.length  )
+        return false
+      return true
+    } catch(e) {
+      throw e
+    }
+  },
+  async nonExistentRequest(userId, adoptionId) {
+    try {
+      // check if the user has already requested the adoption ad
+      const conn = await createConnection(connData)
+
+      const [result2] = await conn.execute('SELECT date FROM adoption_requests WHERE client_id = ? AND adoption_ad_id = ?', [userId, adoptionId])
+      await conn.end()
+
+      if (result2.length)
+        return true
+      return false
+    } catch(e) {
+      throw e
+    }
+  }
   
 
 

@@ -1,13 +1,13 @@
 import { Router } from 'express'
 
-import UserController from '../controllers/UserController.js'
+import { signup, myProfile, login, logout, registerPet, getPets, createAppointment, getAppointments, deleteAppointments, getMyPet, createAdoptionAd, commentOnAd, updatePostStory, deleteAdPost, getMyAdoptionAds, getMyRequests, createRequest} from '../controllers/UserController.js'
 
 // middlewares
 import auth from '../middleware/auth.js'
 import  formDataMiddleWare  from '../middleware/formData.js'
 import validationMiddleware from '../middleware/validationMiddleware.js'
 
-const { signup, myProfile, login, logout, registerPet, getPets, createAppointment, getAppointments, deleteAppointments } = UserController
+
 
 const usersRouter = new Router()
 
@@ -29,16 +29,34 @@ usersRouter.post('/users/me/pets', auth, formDataMiddleWare.single('photo'), val
   res.status(400).send({ error: error.message })
 })
 
-// get the pets of the user
+// get all  pets of the user
 usersRouter.get('/users/me/pets/', auth, getPets)
 
+// get a user pet by id
+usersRouter.get('/users/me/pets/:id', auth, validationMiddleware.getMyPet,  getMyPet)
+
 // creating an appointment for a user
-usersRouter.post('/users/appointment', auth, validationMiddleware.createAppointment, createAppointment)
+usersRouter.post('/users/me/appointments', auth, validationMiddleware.createAppointment, createAppointment)
 
 // to show a user's active and old appointments
-usersRouter.get('/users/appointment', auth, getAppointments)
+usersRouter.get('/users/me/appointments', auth, getAppointments)
 
-usersRouter.delete('/users/appointment/:id', auth, validationMiddleware.deleteAppointment, deleteAppointments)
+usersRouter.delete('/users/me/appointments/:id', auth, validationMiddleware.deleteAppointment, deleteAppointments)
+
+usersRouter.get('/users/me/adoptionads/', auth, getMyAdoptionAds)
+// create an adoption ad for a user
+usersRouter.post('/users/me/adoptionads/', auth, validationMiddleware.createAdoptionAd, createAdoptionAd)
+
+// update the story of an adoption ad
+usersRouter.patch('/users/me/adoptionads/:ad_id', auth, validationMiddleware.updatePostStory, updatePostStory)
+// update the story of an adoption ad
+usersRouter.delete('/users/me/adoptionads/:ad_id', auth, validationMiddleware.deleteAdPost, deleteAdPost)
+
+usersRouter.get('/users/me/requests/', auth, getMyRequests)
+usersRouter.post('/users/me/requests/:ad_id', auth, validationMiddleware.createRequest, createRequest)
+
+// comment on an Ad
+usersRouter.post('/users/me/comments/', auth, validationMiddleware.commentOnAd, commentOnAd)
 
 usersRouter.use('/users/*', (req, res) => {
   res.send('404 User endpoint not found!!')

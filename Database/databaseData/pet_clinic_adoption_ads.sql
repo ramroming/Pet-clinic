@@ -30,6 +30,7 @@ CREATE TABLE `adoption_ads` (
   `pet_id` int NOT NULL,
   `shelter_id` int DEFAULT NULL,
   `client_id` int DEFAULT NULL,
+  `story` varchar(500) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `ADOPTION_ADS_fk0` (`pet_id`),
   KEY `ADOPTION_ADS_fk1` (`shelter_id`),
@@ -38,7 +39,7 @@ CREATE TABLE `adoption_ads` (
   CONSTRAINT `ADOPTION_ADS_fk1` FOREIGN KEY (`shelter_id`) REFERENCES `shelters` (`id`),
   CONSTRAINT `ADOPTION_ADS_fk2` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`),
   CONSTRAINT `arc_adoption_ad` CHECK (((`shelter_id` is null) or (`client_id` is null)))
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +48,7 @@ CREATE TABLE `adoption_ads` (
 
 LOCK TABLES `adoption_ads` WRITE;
 /*!40000 ALTER TABLE `adoption_ads` DISABLE KEYS */;
-INSERT INTO `adoption_ads` VALUES (1,'2020-02-08 00:00:00','dog',1,3,NULL,2),(2,'2020-02-09 00:00:00','cat',1,1,1,NULL);
+INSERT INTO `adoption_ads` VALUES (11,'2022-03-13 07:49:47','bird',1,52,NULL,2,'Another update check'),(12,'2022-03-13 07:50:04','bird',1,53,NULL,2,'My bird 2 is such cute and lovely bird'),(13,'2022-03-13 07:50:27','dog',1,71,NULL,2,'My dog 1 is such cute and lovely dog'),(14,'2022-03-13 07:50:43','dog',1,72,NULL,2,'My dog 2 is such cute and lovely dog'),(15,'2022-03-13 07:51:09','dog',1,73,NULL,2,'My dog 3 is such cute and lovely dog'),(16,'2022-03-13 07:51:27','dog',1,74,NULL,2,'My dog 4 is such cute and lovely dog'),(17,'2022-03-13 07:51:46','dog',1,75,NULL,2,'My dog 5 is such cute and lovely dog'),(18,'2022-03-13 07:52:07','dog',1,76,NULL,2,'My dog 6 is such cute and lovely dog'),(19,'2022-03-13 07:52:27','dog',1,77,NULL,2,'My dog 7 is such cute and lovely dog'),(20,'2022-03-13 07:53:30','bird',1,54,NULL,126,'I love my bird 3 so much why don\'t you adopt it'),(21,'2022-03-13 07:53:46','bird',1,55,NULL,126,'I love my bird 4 so much why don\'t you adopt it'),(22,'2022-03-13 07:58:04','dog',1,78,NULL,126,'I love my dog 8 so much why don\'t you adopt it'),(23,'2022-03-13 07:58:48','dog',1,79,NULL,126,'I love my dog 9 so much why don\'t you adopt it'),(24,'2022-03-13 08:00:59','dog',1,80,NULL,126,'I love my dog 10 so much why don\'t you adopt it'),(25,'2022-03-13 08:02:31','bird',1,56,NULL,4,'Don\'t you like my bird 5 go ahead and adopt it'),(26,'2022-03-13 08:03:01','bird',1,57,NULL,4,'Don\'t you like my bird 6 go ahead and adopt it'),(27,'2022-03-13 08:06:30','bird',1,58,NULL,4,'Say hello to my lovely bird'),(28,'2022-03-13 08:06:41','bird',1,59,NULL,4,'Say hello to my lovely bird'),(29,'2022-03-13 08:06:53','bird',1,60,NULL,4,'Say hello to my lovely bird'),(30,'2022-03-13 08:07:05','bird',1,61,NULL,4,'Say hello to my lovely bird'),(31,'2022-03-13 08:07:22','cat',1,62,NULL,4,'Say hello to my lovely cat'),(32,'2022-03-13 08:07:39','cat',1,63,NULL,4,'Say hello to my lovely cat'),(33,'2022-03-13 08:07:48','cat',1,64,NULL,4,'Say hello to my lovely cat'),(34,'2022-03-13 08:14:31','cat',1,65,NULL,7,'I love my cat so much'),(35,'2022-03-13 08:14:40','cat',1,66,NULL,7,'I love my cat so much'),(36,'2022-03-13 08:14:49','cat',1,67,NULL,7,'I love my cat so much'),(37,'2022-03-13 08:14:58','cat',1,68,NULL,7,'I love my cat so much'),(38,'2022-03-13 08:15:09','cat',1,69,NULL,7,'I love my cat so much'),(39,'2022-03-13 08:15:23','cat',1,70,NULL,7,'I love my cat so much'),(44,'2022-03-16 12:03:24','cat',1,1,NULL,2,'Finaly updated my pet ad story');
 /*!40000 ALTER TABLE `adoption_ads` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -60,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-05 22:50:07
+-- Dump completed on 2022-03-16 18:14:46

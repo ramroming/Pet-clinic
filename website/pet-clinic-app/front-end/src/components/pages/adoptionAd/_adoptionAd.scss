@@ -8,7 +8,7 @@
         var(--clr-primary-secondBlue),
         var(--clr-primary-secondPurple)
     );
-    margin-top: 4rem;
+    padding-top: 9rem;
 
     .review-header {
       width: 100%;
@@ -79,7 +79,7 @@
             .adopt-btn {
                 position: absolute;
                 text-transform: lowercase;
-                background-color: rgba(255, 255, 255, 0.268);
+                background-color: rgba(0, 0, 0, 0.468);
                 color: white;
                 transition: ease 0.5s all;
                 letter-spacing: 0.2rem;
@@ -93,6 +93,10 @@
                     color: white;
                     background-color: var(--clr-primary-mainBlue);
                     transform: scale(1.1);
+                }
+                &.special {
+                  background-color: var(--clr-primary-mainBlue);
+                  width: 80%;
                 }
             }
 
@@ -127,6 +131,19 @@
         flex: 1;
         align-items: center;
         padding: 0 1rem;
+
+        .training-wrapper {
+          width: 100%;
+          @include break-point('medium', 'up') {
+            text-align: center;
+            label {
+              width: 100%;
+            }
+            p {
+              width: 100%;
+            }
+          }
+        }
     }
 
     .adopt-story {
@@ -173,6 +190,7 @@
     }
 
     .leave-comment-wrapper {
+        position: relative;
         padding: 1rem;
         width: 100%;
         max-width: 18.75rem;

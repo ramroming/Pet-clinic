@@ -1,5 +1,6 @@
 import myValidator from '../utils/dataValidator.js'
 import petClinicRules from '../utils/petclinicrules.js'
+import  validator  from 'validator'
 
 const { CLINIC_WORKING_HOURS } = petClinicRules
 // Client Related
@@ -97,10 +98,22 @@ const registerPet = async (req, res, next) => {
   next()
 }
 
+const getMyPet = async (req, res, next) => {
+  if (!req.params.id || !myValidator.isValidId(req.params.id))
+    return res.status(400).send({ error: 'Bad URL !!'})
+  try {
+    const result = await myValidator.isOwnerPet(req.user.id, req.params.id)
+    if (!result)
+      return res.status(400).send({ error: 'invalid pet/owner_id'})
+    req.pet = result
+  } catch (e) {
+    return res.status(500).send({ error: e.message })
+  }
+  next()
+}
 const createAppointment = async (req, res, next) => {
 
   const { appointment_type, stmem_id, pet_id, date, hour } = req.body
-  console.log(req.body)
   if (!appointment_type || !stmem_id || !pet_id || !date || !hour)
     return res.status(400).send({ error: 'missing data!!' })
   if (!myValidator.isValidId(stmem_id) || !myValidator.isValidId(pet_id))
@@ -109,7 +122,7 @@ const createAppointment = async (req, res, next) => {
     return res.status(400).send({ error: 'No Available Dates on the date specified' })
 
   try {
-    const result = await myValidator.isMyPet(req.user.id, pet_id)
+    const result = await myValidator.isOwnerPet(req.user.id, pet_id)
     if (!result)
       return res.status(400).send({ error: 'Invalid pet/owner ' })
 
@@ -131,6 +144,61 @@ const deleteAppointment = async (req, res, next) => {
   if (!req.params.id || !myValidator.isValidId(req.params.id))
     return res.status(400).send({ error: 'Bad URL!!' })
   next()
+}
+
+const createAdoptionAd = async (req, res, next) => {
+  const { pet_id, story } = req.body
+  if (!pet_id || !story)
+    return res.status(400).send({ error: 'Missing Data!!' })
+  if (myValidator.is2TooLong(story) || !myValidator.isValidId(pet_id))
+    return res.status(400).send({ error: 'Invalid Data!! ' })
+  try {
+    const result = await myValidator.isOwnerPet(req.user.id, pet_id)
+    if (!result)
+      return res.status(400).send({ error: 'invalid pet/owner_id'})
+    if (!result.photo)
+      return res.status(400).send({ error: 'You should upload a photo for your pet first to create a post!!'})
+
+    req.pet = result
+
+  } catch (e) {
+    return res.status(500).send({ error: e.message })
+  }
+  
+  next()
+}
+const commentOnAd =  (req, res, next) => {
+  if (!req.body.comment || !req.body.ad_id || !myValidator.isValidId(req.body.ad_id))
+    return res.status(400).send({ error: 'Bad Data' })
+
+  if (myValidator.is2TooLong(req.body.comment))
+    return res.status(400).send({ error: 'LONG DATA !!' })
+  next()
+}
+const updatePostStory = (req, res, next) => {
+  if (!req.body.story || myValidator.is2TooLong(req.body.story) || !req.params.ad_id || !myValidator.isValidId(req.params.ad_id))
+    return res.status(400).send({ error: 'Bad Data !!' })
+  next()
+}
+const createRequest = async (req, res, next) => {
+  if (!req.params.ad_id || !myValidator.isValidId(req.params.ad_id))
+    return res.status(400).send({ error: 'Bad Data !!' })
+  try {
+    const isValid = await myValidator.isValidRequestAdoptionAd(req.user.id, req.params.ad_id)
+    if (!isValid)
+      return res.status(404).send({ error: 'Invalid adoption ad id' })
+    const exist = await myValidator.nonExistentRequest(req.user.id, req.params.ad_id)
+    if (exist)
+      return res.status(400).send({ error: 'you have already requested  this adoption ad'})
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+  next()
+}
+const deleteAdPost = (req, res, next) => {
+  if (!req.params.ad_id || !myValidator.isValidId(req.params.ad_id))
+    return res.status(400).send({ error: 'Bad Data !!' })
+  next() 
 }
 
 // Appointment Related
@@ -162,6 +230,15 @@ const appointmentsTimes = (req, res, next) => {
   next()
 }
 
+// Adoption related
+const getAdoptionAds = async (req, res, next) => {
+  if (req.query.last_date && !validator.isISO8601(req.query.last_date))
+    return res.status(400).send({ error: 'Invalid Query string' })
+  next()
+}
+
+
+
 
 export default {
   signup,
@@ -170,5 +247,13 @@ export default {
   getStaff,
   appointmentsTimes,
   createAppointment,
-  deleteAppointment
+  deleteAppointment,
+  getMyPet,
+  createAdoptionAd,
+  commentOnAd,
+  getAdoptionAds,
+  updatePostStory,
+  deleteAdPost,
+  createRequest
+
 }

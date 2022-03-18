@@ -103,6 +103,15 @@ input.radio-img:checked + img {
         background-color: var(--clr-primary-mainBlue);
         color: white;
     }
+    &.color-selected-purple {
+        background-color: var(--clr-primary-mainPurple);
+        color: white;
+        border: 1px solid white;
+    }
+    &.bright {
+      border: 1px solid black;
+    }
+    
     p {
         padding: .25rem .5rem;
 

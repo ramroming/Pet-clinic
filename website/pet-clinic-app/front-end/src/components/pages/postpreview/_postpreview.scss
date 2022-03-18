@@ -32,6 +32,10 @@
 .link{
     text-decoration: underline;
     color: var(--clr-primary-mainPurple);
+    &:visited {
+      color: var(--clr-primary-mainPurple);
+    }
+
 }
 
 
@@ -44,8 +48,8 @@
        height: 150px;
        padding: 1rem;
        margin-bottom:1rem;
-       color: var(--clr-shadow-light-gray);
        overflow: auto;
+       resize: vertical;
        @include rounded-corners(0.5rem, 0.5rem, 0.5rem, 0.5rem);
        border: 2px solid var(--clr-primary-mainBlue);
        box-shadow: -8px 7px 0px 0px rgba(0, 0, 0, 0.775);
@@ -58,6 +62,7 @@
 }
 
 .adopt-story{
+  position: relative;
     .btn-rec-purple{
         @include break-point("medium", "up") {
            width: 50%;

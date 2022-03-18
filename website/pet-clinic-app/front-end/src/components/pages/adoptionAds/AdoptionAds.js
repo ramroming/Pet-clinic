@@ -1,79 +1,50 @@
-import { useState, useEffect, useCallback, useRef } from "react"
+import { useEffect, useCallback, useRef, useContext } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { adoptionMotion } from '../adoptionAds/adoptionMotion'
+import { authContext } from '../../shared/context/auth-context'
+import useFetch from '../../shared/hooks/fetch-hook'
+import dateFormat from "dateformat"
+import { Link } from "react-router-dom"
+import React from 'react'
+import useAdoptionAds from "../../shared/hooks/adoptionads-hook"
+import Modal from '../../utils/modal/Modal'
+import { pageLoadingContext } from "../../shared/context/loading-context"
+
+// import {
+//   useWhatChanged,
+// } from '@simbathesailor/use-what-changed';
 
 
 
 
-// function to fetch adoption post data
 
-
-const serverFetch1 = () => {
-
-  return new Promise((resolve, reject) => {
-
-    const posts = []
-
-    for (let i = 0; i < 10; i++) {
-      posts.push({
-        id: i,
-        type: 'cat',
-        breed: 'British',
-        title: 'Ads info Lorem ipsum dolor sit amet consectetur adipisicing elit.ipsum dolor sit amet consectetur adipisicing elit.',
-        img: "media/imgs/post-image.jpg",
-        createdAt: '24 Jan 2021'
-      })
-    }
-    //retreiving data from the database 
-
-    //for now simulation to that
-
-    setTimeout(() => {
-      resolve(posts)
-    }, 3000)
-  })
+const MotionLink = motion(Link, { forwardMotionProps: true })
+const initialData = {
+  isLoading: true,
+  isLoadingColors: false,
+  getMore: false,
+  posts: [],
+  breeds: [],
+  colors: [],
+  selectedColors: [],
+  noMore: false,
+  responseError: '',
+  ad_type: '',
+  breed_name: '',
+  gender: '',
+  lastPost: ''
 }
-const serverFetch2 = () => {
-
-  return new Promise((resolve, reject) => {
-
-    const posts = []
-
-    for (let i = 40; i < 70; i++) {
-      posts.push({
-        id: i,
-        type: 'cat',
-        breed: 'British',
-        title: 'Ads info Lorem ipsum dolor sit amet consectetur adipisicing elit.ipsum dolor sit amet consectetur adipisicing elit.',
-        img: "media/imgs/post-image2.jpg",
-        createdAt: '24 Jan 2021'
-
-      })
-    }
-    //retreiving data from the database 
-
-    //for now simulation to that
-
-    setTimeout(() => {
-      resolve(posts)
-    }, 3000)
-  })
-}
-
-
-
-
-
 
 const AdoptionAds = () => {
 
+  const sendRequest = useFetch()
+  const [postState, dispatch] = useAdoptionAds(initialData)
+  const setPageIsLoading = useContext(pageLoadingContext).setPageIsLoading
+  const auth = useContext(authContext)
 
-  const [postArr, setPostArr] = useState({
-    isLoading: true,
-    posts: []
-  })
-  const isMounted = useRef(false)
-  const samePage = useRef(true)
+
+  const firstRender = useRef(true)
+  const isMountedEffect = useRef(true)
 
   //setup the infinite scrolling
   // we want to preserve the observer's values all the time that why we use ref
@@ -82,260 +53,345 @@ const AdoptionAds = () => {
   // every time the last node get mounted the lastpost is changed to the new last node
   const lastPost = useRef(null)
 
+
+
+
+  const getAdoptionAds = useCallback(async (lastPost, ad_type, breed_name, gender, selectedColors = [], newRender) => {
+    try {
+      
+      const adoptionAds = await sendRequest(`http://localhost:5000/adoptionads?last_date=${lastPost ? lastPost : ''}&ad_type=${ad_type ? ad_type : ''}&breed_name=${breed_name ? breed_name : ''}&gender=${gender ? gender : ''}&colors=${selectedColors.length ? selectedColors.join(',') : ''}`, 'GET', null, {
+        'Authorization': `Bearer ${auth.token}`
+      })
+      if (adoptionAds.result.length === 0)
+        dispatch({ type: 'noMore' })
+
+      if (newRender) {
+        if (isMountedEffect.current)
+          dispatch({ type: 'otherRenders', data: adoptionAds })
+      }
+      else {
+        if (isMountedEffect.current)
+          dispatch({ type: 'firstRender', data: adoptionAds })
+      }
+
+
+
+    } catch (e) {
+      if (isMountedEffect.current)
+        dispatch({ type: 'failure', error: e.message })
+    }
+  }, [auth.token, sendRequest, dispatch])
+
+  // what happens onload
+  useEffect(() => {
+    isMountedEffect.current = true
+    getAdoptionAds()
+    return () => {
+      isMountedEffect.current = false
+    }
+  }, [getAdoptionAds])
+
+  useEffect(() => {
+    if (firstRender.current) {
+      return
+    }
+    getAdoptionAds(null, postState.ad_type, postState.breed_name, postState.gender, postState.selectedColors, true)
+  },
+    [postState.ad_type, postState.breed_name, postState.gender, postState.selectedColors, getAdoptionAds])
+
+
+
   const observeLast = useCallback(() => {
     // remove the attachment to the previous node so that scrolling up back to the previous last node wont fire a set
-    if (observer.current) observer.current.disconnect()
+    if (observer.current) {
+      observer.current.disconnect()
+    }
+
 
     // create new attachment to the last node every thing written inside the arrow function will be called when there is an intersecting
     observer.current = new IntersectionObserver((entries) => {
 
       // if we are not intersecting with  the node or if loading is hapenning we do nothing
-      if (!entries[0].isIntersecting || postArr.isLoading) return
-
+      if (!entries[0].isIntersecting || postState.getMore) return
 
       // When we touch the last node
-      setPostArr((oldObj) => {
-        return { ...oldObj, isLoading: true }
-      })
+      dispatch({ type: 'start' })
+      
+
 
     })
 
-    if (lastPost.current) observer.current.observe(lastPost.current)
-  }, [postArr.isLoading]);
-
-  // const observeLast = (lastPost) => {
-
-
-
-  //   // remove the attachment to the previous node so that scrolling up back to the previous last node wont fire a set
-  //   if (observer.current) observer.current.disconnect()
-
-  //   // create new attachment to the last node every thing written inside the arrow function will be called when there is an intersecting
-  //   observer.current = new IntersectionObserver((entries) => {
-
-  //     // if we are not intersecting with  the node or if loading is hapenning we do nothing
-  //     if (!entries[0].isIntersecting || postArr.isLoading) return
-
-
-  //     // When we touch the last node
-  //     setPostArr((oldObj) => {
-  //       return { ...oldObj, isLoading: true }
-  //     })
-
-  //   })
-
-  //   if (lastPost) observer.current.observe(lastPost)
-  // }
-
-
-  // what happens onload
-  useEffect(() => {
-    serverFetch1().then((result) => {
-      setPostArr({ isLoading: false, posts: result })
-    }).catch((error) => {
-      console.log(error)
-    })
-  }, [])
-
-
-
-
+    if (lastPost.current) {
+      observer.current.observe(lastPost.current)
+    }
+  }, [postState.getMore, dispatch])
   //fetch from the database as the button gets pressed and update the posts array
+  // useWhatChanged([postState.getMore, observeLast, getAdoptionAds,postState.lastPost, postState.ad_type, postState.breed_name, postState.gender])
   useEffect(() => {
-    observeLast()
-    if (isMounted.current) {
-      if (postArr.isLoading) {
-        if (samePage.current) {
-          serverFetch2().then((result) => {
-            setPostArr((oldPosts) => {
-              return { isLoading: false, posts: [...oldPosts.posts, ...result] }
-            })
-          }).catch((error) => {
-            console.log(error)
-          })
-        } else {
-          serverFetch2().then((result) => {
-            samePage.current = true
-            setPostArr({ isLoading: false, posts: result })
-          }).catch((error) => {
-            console.log(error)
-          })
-        }
+    isMountedEffect.current = true
 
+    if (!postState.noMore && postState.posts)
+      observeLast()
+    if (!firstRender.current) {
+      if (postState.getMore) {
+        getAdoptionAds(postState.lastPost, postState.ad_type, postState.breed_name, postState.gender, postState.selectedColors)
       }
     }
     else {
-      isMounted.current = true
+      firstRender.current = false
     }
-  }, [postArr, observeLast])
-
-  // find pets based of filters this will triggers the loading message by changing the loading state to true
-  const findPets = () => {
-    if (!postArr.isLoading) {
-      samePage.current = false
-      setPostArr((oldObj) => {
-        return { ...oldObj, isLoading: true }
-      })
+    return () => {
+      isMountedEffect.current = false
     }
-  }
+  }, [postState.noMore, postState.getMore, observeLast, getAdoptionAds, postState.lastPost, postState.ad_type, postState.breed_name, postState.gender, postState.selectedColors, postState.posts])
+
+  // getting pets colors from the database
+  useEffect(() => {
+    let isMount = true
+    if (isMount)
+      dispatch({ type: 'getColors' })
+
+    const getColors = async () => {
+      try {
+        const colors = await sendRequest(`http://localhost:5000/pets/colors`, 'GET', null, {
+          'Authorization': `Bearer ${auth.token}`
+        })
+        if (colors && isMount)
+          dispatch({ type: 'getColorsSuccess', data: colors })
+      } catch (e) {
+        if (isMount)
+          dispatch({ type: 'failure', data: e.message })
+      }
+    }
 
 
+    getColors()
 
+    return () => {
+      setPageIsLoading(false)
+      isMount = false
+    }
+  }, [sendRequest, auth.token, dispatch, setPageIsLoading])
+
+  useEffect(() => {
+    setPageIsLoading(postState.isLoadingColors)
+  }, [setPageIsLoading, postState.isLoadingColors])
 
   const itemMotion = adoptionMotion
-
   return (
-    <div className="adoption-container home-container flex-col falign-center fjust-start gap-24p">
+    <>
+      {/* UI modals */}
+      {postState.responseError &&
+        <Modal
+          modalClass='error'
+          header='Oops!!'
+          body={postState.responseError}
+          dispatch={dispatch}
+          redirectTo='/'
+        />}
 
-      {/* first flex item */}
-      <div className=" adoption-filter-wrapper flex-col falign-center fjust-center fgap-16p">
+      <div className="adoption-container home-container flex-col falign-center fjust-start gap-24p">
 
-        {/* first mini flex item */}
-        <p>
-          Find your perfect pet!
-        </p>
+        {/* first flex item */}
+        <div className=" adoption-filter-wrapper flex-col falign-center fjust-center fgap-16p">
 
-        {/* second  mini flex item */}
-        <div className="filter-container flex-col falign-center fjust-center gap-16p">
+          {/* first mini flex item */}
+          <p>
+            Find your perfect pet!
+          </p>
 
-          <div className="flex-col falign-start fjust-center filter-item gap-8p">
-            <label htmlFor="pet-type">
-              Pet:
-            </label>
-            <select name="pet-type" id="pet-type">
-              <option value="cat">Cat</option>
-              <option value="dog">Dog</option>
-              <option value="bird">Bird</option>
-            </select>
+          {/* second  mini flex item */}
+          <div className="filter-container flex-col falign-center fjust-center gap-16p">
+
+            <div className="flex-col falign-start fjust-center filter-item gap-8p">
+              <label htmlFor="pet-type">
+                Pet:
+              </label>
+              <select
+                disabled={postState.isLoading}
+                onChange={
+                  (e) => {
+                    dispatch({ type: 'enterValue', field: 'ad_type', value: e.currentTarget.value })
+                  }}
+                name="pet-type" id="pet-type"
+                defaultValue={''}
+              >
+                <option value="">All</option>
+                <option value="cat">Cat</option>
+                <option value="dog">Dog</option>
+                <option value="bird">Bird</option>
+              </select>
+
+            </div>
+
+            <div className="flex-col falign-start fjust-center filter-item gap-8p">
+              <label htmlFor="pet-breed">
+                Breed:
+              </label>
+              <select
+                disabled={postState.isLoading || !postState.ad_type}
+                onChange={
+                  (e) => {
+                    dispatch({ type: 'enterValue', field: 'breed_name', value: e.currentTarget.value })
+                  }}
+                name="pet-breed" id="pet-breed" value={postState.breed_name}>
+                <option value="">All</option>
+                {postState.breeds.length && postState.breeds.map((breed, index) => {
+                  return (
+                    <option key={index} value={breed.name}>{breed.name}</option>
+                  )
+                })}
+              </select>
+
+            </div>
+
+
+            <div className="flex-col falign-start fjust-center filter-item gap-8p">
+              <label htmlFor="pet-gender">
+                Gender:
+              </label>
+              <select
+                disabled={postState.isLoading}
+                onChange={
+                  (e) => {
+                    dispatch({ type: 'enterValue', field: 'gender', value: e.currentTarget.value })
+                  }}
+                name="pet-gender" id="pet-gender" defaultValue={''}>
+                <option value="">Both</option>
+                <option value="male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+
+            </div>
+
+            <div className="flex-col fjust-center filter-item gap-8p">
+              {/* <button className="find-pets btn-rec-purple"
+                onClick={() => { findPets() }}>Find Pets</button> */}
+            </div>
 
           </div>
-
-          <div className="flex-col falign-start fjust-center filter-item gap-8p">
-            <label htmlFor="pet-breed">
-              Breed:
-            </label>
-            <select name="pet-breed" id="pet-breed">
-              <option value="british">British</option>
-              <option value="retriever">Retriever</option>
-              <option value="momo">Momo</option>
-            </select>
-
-          </div>
-
-
-          <div className="flex-col falign-start fjust-center filter-item gap-8p">
-            <label htmlFor="pet-gender">
-              Gender:
-            </label>
-            <select name="pet-gender" id="pet-gender">
-              <option value="male">Male</option>
-              <option value="Female">Female</option>
-              <option value="everything">Both</option>
-            </select>
-
-          </div>
-
-          <div className="flex-col fjust-center filter-item gap-8p">
-            <button className="find-pets btn-rec-purple"
-              onClick={() => { findPets() }}>Find Pets</button>
-          </div>
-
         </div>
 
+        <p style={{ fontSize: '1.5rem', color: 'purple' }}>Filter by color</p>
+        <div className="flex-row" style={{ width: '80%' }}>
+          {postState.colors.length !== 0 && !postState.isLoadingColors &&
+            postState.colors.map((color, index) => {
+              return (
+                <div
+                  className={postState.selectedColors.length && postState.selectedColors.includes(color.name) ? "color-tag  color-selected-purple" : "color-tag bright"}
+                  key={index}
+                >
+                  <p
+                    disabled={true}
+                    onClick={(event) => {
+                      if (postState.isLoading)
+                        return
+                      dispatch({ type: 'selectColor', color: event.target.innerHTML })
+                    }}
+                    colorid={index}
+                  >{color.name}</p>
+                </div>
+              )
+            })
+
+          }
+        </div>
+
+        <p className='posts-title'>Recently posted ads</p>
 
 
-      </div>
+        {/* here we put the ads */}
+
+        {/* The non flex container that contains the animation container */}
+        <div className="posts-main-container">
+          <div className="posts-animated-container flex-row fjust-center gap-16p">
 
 
+            <AnimatePresence exitBeforeEnter>
+              {postState.isLoading &&
+                <motion.div
+                  variants={itemMotion}
+                  initial='initial'
+                  animate='final'
+                  exit='exit'
+                  key={'1s'}
+                  className="loaderWrapper-top flex-row fjust-center">
+                  <div className="lds-ripple"><div></div><div></div></div>
+                </motion.div>
 
-      <p className='posts-title'>Recently posted ads</p>
+              }
 
+            </AnimatePresence>
+            
+              {postState.posts.map((post, index) => {
+                // mark the last post
+                if (postState.posts.length === index + 1) {
+                  if (postState.lastPost !== post.date)
+                    dispatch({ type: 'lastPost', data: post.date })
+                  return (
+                    <MotionLink
+                      key={post.id}
+                      variants={itemMotion}
+                      initial='initial'
+                      animate='final'
+                      exit='exit'
+                      to={`/adoptionad/${post.id}`}
+                      ref={lastPost}  //marking the last post
+                      className="adoption-post gap-8p flex-col falign-center ">
+                      <img src={URL.createObjectURL(new Blob([new Uint8Array(post.photo.data)]))} alt="" className="post-image" />
+                      <p><span>{post.ad_type} - </span><span>{post.breed}</span></p>
+                      <p className="pTitle">{post.breed_name}</p>
+                      <p><i className="fa fa-clock"></i>&nbsp;{dateFormat(post.date, 'default')}</p>
+                      <button className="btn-rec-blue">
+                        View Post
+                      </button>
+                    </MotionLink>
+                  )
+                }
+                else
+                  return (
+                    <MotionLink
+                      key={post.id}
+                      variants={itemMotion}
+                      initial='initial'
+                      animate='final'
+                      exit='exit'
+                      to={`/adoptionad/${post.id}`}
+                      className="adoption-post gap-8p flex-col falign-center ">
+                      <img src={URL.createObjectURL(new Blob([new Uint8Array(post.photo.data)]))} alt="" className="post-image" />
+                      <p><span>{post.ad_type}  </span><span>{post.breed}</span></p>
+                      <p className="pTitle">{post.breed_name}</p>
+                      <p><i className="fa fa-clock"></i>&nbsp;{dateFormat(post.date, 'default')}</p>
+                      <button
+                        className="btn-rec-blue">
+                        View Post
+                      </button>
+                    </MotionLink>
+                  )
 
-      {/* here we put the ads */}
+              }
+              )}
+            
+            <AnimatePresence exitBeforeEnter>
+              {postState.getMore &&
+                <motion.div
+                  variants={itemMotion}
+                  initial='initial'
+                  animate='final'
+                  exit='exit'
+                  className="loaderWrapper flex-row fjust-center">
+                  <div className="lds-ripple"><div></div><div></div></div>
+                </motion.div>
+              }
 
-      {/* The non flex container that contains the animation container */}
-      <div className="posts-main-container">
-        <div className="posts-animated-container flex-row fjust-center gap-16p">
+            </AnimatePresence>
 
-
-          <AnimatePresence exitBeforeEnter>
-            {postArr.isLoading &&
-              <motion.div
-                variants={itemMotion}
-                initial='initial'
-                animate='final'
-                exit='exit'
-                className="loaderWrapper-top flex-row fjust-center">
-                <div className="lds-ripple"><div></div><div></div></div>
-              </motion.div>
-            }
-          </AnimatePresence>
-          <AnimatePresence>
-            {postArr.posts.map((post, index) => {
-              // mark the last post
-              if (postArr.posts.length === index + 1)
-                return (
-                  <motion.a
-                    key={post.id}
-                    variants={itemMotion}
-                    initial='initial'
-                    animate='final'
-                    exit='exit'
-                    href="/#"
-                    ref={lastPost}  //marking the last post
-                    className="adoption-post gap-8p flex-col falign-center ">
-                    <img src={post.img} alt="" className="post-image" />
-                    <p>{post.id}</p>
-                    <p><span>{post.type} - </span><span>{post.breed}</span></p>
-                    <p className="pTitle">{post.title}</p>
-                    <p><i className="fa fa-clock"></i>&nbsp;{post.createdAt}</p>
-                    <button href="/#" className="btn-rec-blue">
-                      View Post
-                    </button>
-                  </motion.a>
-                )
-              else
-                return (
-                  <motion.a
-                    key={post.id}
-                    variants={itemMotion}
-                    initial='initial'
-                    animate='final'
-                    exit='exit'
-                    href="/#"
-                    className="adoption-post gap-8p flex-col falign-center ">
-                    <img src={post.img} alt="" className="post-image" />
-                    <p>{post.id}</p>
-                    <p><span>{post.type} - </span><span>{post.breed}</span></p>
-                    <p className="pTitle">{post.title}</p>
-                    <p><i className="fa fa-clock"></i>&nbsp;{post.createdAt}</p>
-                    <button href="/#" className="btn-rec-blue">
-                      View Post
-                    </button>
-                  </motion.a>
-                )
-
-            }
-            ) }
-          </AnimatePresence>
-          <AnimatePresence exitBeforeEnter>
-            {postArr.isLoading &&
-              <motion.div
-                variants={itemMotion}
-                initial='initial'
-                animate='final'
-                exit='exit'
-                className="loaderWrapper flex-row fjust-center">
-                <div className="lds-ripple"><div></div><div></div></div>
-              </motion.div>
-            }
-          </AnimatePresence>
-
-
-
+          </div>
+            {postState.noMore && <div className="no-more"></div>}
         </div>
       </div>
-    </div>
+    </>
+
   )
 }
 

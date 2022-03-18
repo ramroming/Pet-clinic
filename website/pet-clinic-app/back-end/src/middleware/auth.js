@@ -14,7 +14,7 @@ const auth = async (req, res, next) => {
       const conn = await createConnection(connData)
       const [users, fields] = await conn.execute('SELECT u.id, u.username, u.email, u.user_type, u.personal_info_id, u.status, u.stmem_type, p.first_name, p.last_name, p.address, p.phone_number, p.photo  FROM users u INNER JOIN personal_info p ON u.personal_info_id = p.id WHERE u.id = ?', [data.payload])
       // if the user has a valid token but the payload of the token doesn't match the data base
-      if (!users.length) {
+      if (users.length === 0) {
         await conn.end()
         return res.status(401).send({ error: 'please Authanticate '})
       }

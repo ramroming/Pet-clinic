@@ -1,5 +1,5 @@
-import { createConnection } from 'mysql2/promise'
 import petClinicRules from './petclinicrules.js'
+import { createConnection } from 'mysql2/promise'
 import connData from '../database/pet-clinic-db.js'
 
 const { CLINIC_TIME_ZONE_OFFSET, CLINIC_WORKING_HOURS, CLINIC_APPOINTMENT_GAP } = petClinicRules
@@ -24,9 +24,9 @@ const convertToTurkishDate = (date, zero = false) => {
 const getAvailableTimes = async (stmemId, userDate) => {
 
   // this will get the time in turkey
-  const dateInTurkey = convertToTurkishDate(undefined, true)
-  const timeInTurkey = convertToTurkishDate(undefined)
-  const userTurkishDate = convertToTurkishDate(new Date(userDate), true)
+  const currentDate = new Date(new Date().setUTCHours(0, 0, 0, 0))
+  const currentTime = new Date()
+  const user_date = new Date(new Date(userDate).setUTCHours(0, 0, 0, 0))
 
   const availableTimes = CLINIC_WORKING_HOURS
   let unavailableTimes
@@ -40,14 +40,14 @@ const getAvailableTimes = async (stmemId, userDate) => {
     if (appointments.length) {
 
       unavailableTimes = appointments.map((appointment) => {
-        return (convertToTurkishDate(appointment.date).getUTCHours())
+        return ((appointment.date).getUTCHours())
       })
 
 
       // if the user making an appointment in the same day but some are not available
-      if (dateInTurkey.getTime() === userTurkishDate.getTime()) {
+      if (currentDate.getTime() === user_date.getTime()) {
         return (availableTimes.filter((time) => {
-          return (!unavailableTimes.includes(time) && timeInTurkey.getUTCHours() + CLINIC_APPOINTMENT_GAP < time)
+          return (!unavailableTimes.includes(time) && currentTime.getUTCHours()  < time)
         }))
       }
       // if the user making an appointment in a future day but some are not available
@@ -57,9 +57,9 @@ const getAvailableTimes = async (stmemId, userDate) => {
     }
     else {
       // if the user making an appointment in the same day and all dates are available
-      if (dateInTurkey.getTime() === userTurkishDate.getTime()) {
+      if (currentDate.getTime() === user_date.getTime()) {
         return (availableTimes.filter((time) => {
-          return (timeInTurkey.getUTCHours() + CLINIC_APPOINTMENT_GAP < time)
+          return (currentTime.getUTCHours() + CLINIC_APPOINTMENT_GAP < time)
         }))
       }
       // if the user making an appointment in a future day and all dates are available
@@ -74,9 +74,21 @@ const getAvailableTimes = async (stmemId, userDate) => {
 
 
 }
+const calculatePetAge = (birth_date) => {
+  const now = new Date()
+  const ageInDays = (now.getTime() - birth_date.getTime())/(1000 * 3600 * 24)
+  if (ageInDays >= 365)
+    return `About ${Math.round(ageInDays/365)} Year(s) old`
+  if (ageInDays >= 30)
+    return `About ${Math.round(ageInDays/30)} Month(s) old`
+  if (ageInDays >= 1)
+    return `About ${Math.round(ageInDays)} Day(s) old`
 
+    return `New Born`
+}
 
 export default {
   getAvailableTimes,
-  convertToTurkishDate
+  convertToTurkishDate,
+  calculatePetAge
 }

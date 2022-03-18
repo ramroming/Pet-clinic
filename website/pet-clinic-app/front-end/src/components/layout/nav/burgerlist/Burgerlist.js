@@ -15,7 +15,7 @@ const Burgerlist = () => {
   const dropList = [
     auth.isLoggedIn ? 'Logout' : 'Login',
     auth.isLoggedIn ? 'My profile' : 'Signup',
-    'Appointment', 'Adoption', 'About', 'Register pet']
+     'Register pet', 'Appointment', 'Adoption', 'About']
 
   // const dropList = [
   //   { title: 'Logout' },
@@ -53,7 +53,7 @@ const Burgerlist = () => {
                 >
                 
                   <Link
-                    to={item.toLowerCase().replace(' ', '')}
+                    to={item.toLowerCase().replace(' ', '') === 'myprofile' ? 'myprofile/mypersonalinfo' : item.toLowerCase().replace(' ', '')}
                     className="droplist-item"
                     onClick={() => toggle(item === 'Logout')}>
                     {item}

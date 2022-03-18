@@ -4,9 +4,8 @@ const appointmentRouter = new Router()
 // middlewares
 import auth from '../middleware/auth.js'
 import validationMiddleware from '../middleware/validationMiddleware.js'
-import AppointmentController from '../controllers/AppointmentController.js'
+import { getStaffMems, appointmentsTimes } from '../controllers/AppointmentController.js'
 
-const { getStaffMems, appointmentsTimes } = AppointmentController
 // getting necessary data when making an appointment
 
 // getting staff members for a certian appointment type
