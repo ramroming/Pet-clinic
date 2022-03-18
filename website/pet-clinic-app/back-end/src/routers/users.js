@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import { signup, myProfile, login, logout, registerPet, getPets, createAppointment, getAppointments, deleteAppointments, getMyPet, createAdoptionAd, commentOnAd, updatePostStory, deleteAdPost, getMyAdoptionAds, getMyRequests, createRequest} from '../controllers/UserController.js'
+import { signup, myProfile, login, logout, registerPet, getPets, createAppointment, getAppointments, deleteAppointments, getMyPet, createAdoptionAd, commentOnAd, updatePostStory, deleteAdPost, getMyAdoptionAds, getMyRequests, createRequest, deleteRequest} from '../controllers/UserController.js'
 
 // middlewares
 import auth from '../middleware/auth.js'
@@ -54,6 +54,7 @@ usersRouter.delete('/users/me/adoptionads/:ad_id', auth, validationMiddleware.de
 
 usersRouter.get('/users/me/requests/', auth, getMyRequests)
 usersRouter.post('/users/me/requests/:ad_id', auth, validationMiddleware.createRequest, createRequest)
+usersRouter.delete('/users/me/requests/:req_id', auth, validationMiddleware.deleteRequest, deleteRequest)
 
 // comment on an Ad
 usersRouter.post('/users/me/comments/', auth, validationMiddleware.commentOnAd, commentOnAd)

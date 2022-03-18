@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e3384a35-43db-49f8-8c9c-5c0afa417c0e",
+		"_postman_id": "e6c75b2d-5fa6-4ea5-99b7-3401f46ba475",
 		"name": "Pet-clinic-app",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -64,7 +64,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"rami94\",\r\n \"password\": \"9=GUj?=?>Ftjw.f;\"\r\n}",
+					"raw": "{\r\n    \"username\": \"moSaro\",\r\n \"password\": \"kRZ,29ejPq&_3y6s\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -608,6 +608,26 @@
 						"me",
 						"adoptionads",
 						"40"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteAdoptionRequest",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/me/requests/38",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"requests",
+						"38"
 					]
 				}
 			},

@@ -55,6 +55,14 @@ const adoptionAd = (state, action) => {
 
       }
     }
+    case 'successAdopting': {
+      return {
+        ...state,
+        responseError: '',
+        isAdopting: false,
+        adoptResponse: action.data
+      }
+    }
 
     // when fetching data is failed
     case 'failure': {
@@ -62,7 +70,8 @@ const adoptionAd = (state, action) => {
         ...state,
         responseError: action.error,
         isLoading: false,
-        isCommenting: false
+        isCommenting: false,
+        isAdopting: false
       }
     }
 
@@ -84,6 +93,26 @@ const adoptionAd = (state, action) => {
       return {
         ...state,
         responseError: ''
+      }
+    }
+    case 'checkModalExit': {
+      return {
+        ...state,
+        checkModal: false
+      }
+    }
+    case 'checkModalEnter': {
+      return {
+        ...state,
+        checkModal: true
+      }
+    }
+    case 'finalConfirm': {
+      return {
+        ...state,
+        isAdopting: true,
+        checkModal: false
+
       }
     }
 

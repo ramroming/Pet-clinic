@@ -200,6 +200,12 @@ const deleteAdPost = (req, res, next) => {
     return res.status(400).send({ error: 'Bad Data !!' })
   next() 
 }
+const deleteRequest = (req, res, next) => {
+  if (!req.params.req_id || !myValidator.isValidId(req.params.req_id))
+    return res.status(400).send({ error: 'Bad URL'})
+  
+  next()
+}
 
 // Appointment Related
 
@@ -254,6 +260,7 @@ export default {
   getAdoptionAds,
   updatePostStory,
   deleteAdPost,
-  createRequest
+  createRequest, 
+  deleteRequest
 
 }

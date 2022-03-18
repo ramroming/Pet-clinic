@@ -38,8 +38,12 @@ const getAdoptionAd = async (req, res) => {
     JOIN personal_info pi ON pi.id = u.personal_info_id
     WHERE t.pet_id = ?`, [adoptionAds[0].pet_id])
     await conn3.end()
+    
+    const isRequestedByMe = await myValidator.nonExistentRequest(req.user.id, req.params.id)
+
     adoptionAds[0].birth_date = calculatePetAge(adoptionAds[0].birth_date)
     adoptionAds[0].trainings = trainings
+    adoptionAds[0].requested = isRequestedByMe
     res.send({adoptionAd: adoptionAds[0], comments})
 
   } catch(e) {

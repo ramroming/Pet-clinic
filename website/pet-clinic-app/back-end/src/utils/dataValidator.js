@@ -165,7 +165,7 @@ const myValidator = {
     try {
       // check that is user requesting an already existing ad that doesn't belong to him
       const conn = await createConnection(connData)
-      const [result] = await conn.execute('SELECT id from adoption_ads WHERE client_id != ? AND id=?', [userId, adoptionId])
+      const [result] = await conn.execute('SELECT id from adoption_ads WHERE client_id != ? AND id=? AND status = 1', [userId, adoptionId])
       await conn.end()
       if (!result.length  )
         return false
@@ -179,7 +179,7 @@ const myValidator = {
       // check if the user has already requested the adoption ad
       const conn = await createConnection(connData)
 
-      const [result2] = await conn.execute('SELECT date FROM adoption_requests WHERE client_id = ? AND adoption_ad_id = ?', [userId, adoptionId])
+      const [result2] = await conn.execute('SELECT date FROM adoption_requests WHERE client_id = ? AND adoption_ad_id = ? AND status="pending"', [userId, adoptionId])
       await conn.end()
 
       if (result2.length)
@@ -188,7 +188,17 @@ const myValidator = {
     } catch(e) {
       throw e
     }
-  }
+  },
+  // async isMyRequest(userId, requestId) {
+  //   try {
+  //     const conn = await createConnection(connData)
+  //     const [result] = await conn.execute('SELECT date FROM adoption_requests WHERE client_id = ? AND adoption_ad_id = ?', [req.user.id, requestId])
+  //     await conn.end()
+
+  //   } catch (e) {
+  //     throw e
+  //   }
+  // }
   
 
 

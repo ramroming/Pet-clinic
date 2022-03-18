@@ -33,7 +33,7 @@ CREATE TABLE `comments` (
   KEY `COMMENTS_fk1` (`client_id`),
   CONSTRAINT `COMMENTS_fk0` FOREIGN KEY (`adoption_ad_id`) REFERENCES `adoption_ads` (`id`) ON DELETE CASCADE,
   CONSTRAINT `COMMENTS_fk1` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +42,7 @@ CREATE TABLE `comments` (
 
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+INSERT INTO `comments` VALUES (28,'2022-03-18 10:46:35','Please adopt my pet',45,158),(29,'2022-03-18 10:47:17','rami is cute',45,158),(30,'2022-03-18 10:47:27','gotoo toota',45,158),(32,'2022-03-18 14:10:25','I really want this dude',47,159);
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-16 18:14:47
+-- Dump completed on 2022-03-18 19:05:03

@@ -137,7 +137,7 @@ const logout = async (req, res) => {
 }
 
 const registerPet = async (req, res) => {
-  
+
   // this try is to detect database connection errors
   try {
 
@@ -150,11 +150,11 @@ const registerPet = async (req, res) => {
         return res.status(403).send({ error: 'Max pet per user reached!' })
       }
       const { name, gender, birth_date, breed_name } = req.body
-  
 
 
-      const photo = req.file ? await sharp(req.file.buffer).resize({ width: 350, height: 350}).png().toBuffer() : null
-      
+
+      const photo = req.file ? await sharp(req.file.buffer).resize({ width: 350, height: 350 }).png().toBuffer() : null
+
       const [rows2, fields2] = await conn.execute('INSERT INTO pets (name, gender, birth_date, breed_name, photo, owner_id) VALUES (?, ?, ?, ?, ?, ?)', [
         name ? name : null,
         gender ? gender : null,
@@ -163,10 +163,10 @@ const registerPet = async (req, res) => {
         photo,
         req.user.id
       ])
-      req.body.colors.forEach( async color => {
+      req.body.colors.forEach(async color => {
 
         await conn.execute('INSERT INTO color_records (pet_id, color_id) VALUES (?, ?)', [rows2.insertId, color.id])
-        
+
       });
 
       // data to send back when registering a pet
@@ -201,7 +201,7 @@ const getPets = async (req, res) => {
   }
 }
 // get pet data by id including training data
-const getMyPet =  async (req, res) => {
+const getMyPet = async (req, res) => {
   try {
     const conn = await createConnection(connData)
     const [trainings] = await conn.execute(`SELECT t.start_date, t.end_date, tt.name AS training, pi.first_name AS trainer_first_name, pi.last_name AS trainer_last_name FROM trainings t
@@ -215,11 +215,11 @@ const getMyPet =  async (req, res) => {
   } catch (e) {
     res.status(500).send({ error: e.message })
   }
-  
+
 }
 
 const createAppointment = async (req, res) => {
-  const {  stmem_id, pet_id, date, hour } = req.body
+  const { stmem_id, pet_id, date, hour } = req.body
   const clientId = req.user.id
   try {
     const conn = await createConnection(connData)
@@ -230,9 +230,9 @@ const createAppointment = async (req, res) => {
 
     // if they reached their max
     if (activeAppointments.length && activeAppointments.length >= MAX_ACTIVE_APPOINTMENTS)
-      return res.status(400).send({ error: `Oops!! Looks like you have reached MAX ${MAX_ACTIVE_APPOINTMENTS} current active appointments in this clinic`})
+      return res.status(400).send({ error: `Oops!! Looks like you have reached MAX ${MAX_ACTIVE_APPOINTMENTS} current active appointments in this clinic` })
     // more than one appointment in a day
-    if (activeAppointments){
+    if (activeAppointments) {
       const appointmentsInDay = activeAppointments.filter((appointment) => {
         // getting date from database and convert it to turkish time and then zero its time
         const filterDate = new Date(new Date(appointment.date).setUTCHours(0, 0, 0, 0))
@@ -241,9 +241,9 @@ const createAppointment = async (req, res) => {
         return filterDate.getTime() === userDate.getTime()
       })
       if (appointmentsInDay.length >= MAX_APPOINTMENTS_PER_DAY)
-        return res.status(400).send({ error: `Oops!! Looks like you already have ${MAX_APPOINTMENTS_PER_DAY} appointment at the date you specified, `})
+        return res.status(400).send({ error: `Oops!! Looks like you already have ${MAX_APPOINTMENTS_PER_DAY} appointment at the date you specified, ` })
     }
-      
+
 
     // selected time was taken
     const availableTimes = await getAvailableTimes(stmem_id, date)
@@ -255,7 +255,7 @@ const createAppointment = async (req, res) => {
     const dateToInsert = `${date} ${hour}:00:00`
     await conn2.execute('INSERT INTO appointments (date, client_id, stmem_id, status, appointment_type_id, pet_id) VALUES (?, ?, ?, ?, ?, ?)', [dateToInsert, req.user.id, stmem_id, 1, req.appointmentTypeId, pet_id])
 
-    res.status(201).send({ response: 'Your appointment was created successfully'})
+    res.status(201).send({ response: 'Your appointment was created successfully' })
 
   } catch (e) {
     if (e.errno === 1062)
@@ -266,7 +266,7 @@ const createAppointment = async (req, res) => {
 
 const getAppointments = async (req, res) => {
   try {
-    
+
     const conn = await createConnection(connData)
     const compareTime = `${new Date().toISOString().split('T')[0]} ${new Date().toISOString().split('T')[1].split('.')[0]}`
     await conn.execute('UPDATE appointments SET status = 0 WHERE date < ?', [compareTime])
@@ -280,10 +280,10 @@ const getAppointments = async (req, res) => {
     WHERE a.client_id = ?
     ORDER BY a.status DESC`, [req.user.id])
     const arrayToSend = appointments.map((appointment, index) => {
-      const newDate = dateFormat((appointment.date) ,'isoUtcDateTime')
-      return {...appointment, date: newDate}
+      const newDate = dateFormat((appointment.date), 'isoUtcDateTime')
+      return { ...appointment, date: newDate }
     })
-  
+
     await conn.end()
     res.send(arrayToSend)
 
@@ -299,7 +299,7 @@ const deleteAppointments = async (req, res) => {
     await conn.end()
     if (appointments.affectedRows === 0)
       return res.status(400).send({ error: 'something bad has happened !!' })
-    res.send({ result: 'Your appointment has been canceled successfully'})
+    res.send({ result: 'Your appointment has been canceled successfully' })
   } catch (e) {
     res.status(500).send({ error: e.message })
 
@@ -312,12 +312,12 @@ const createAdoptionAd = async (req, res) => {
     const conn = await createConnection(connData)
     const [ads] = await conn.execute('SELECT id FROM adoption_ads WHERE pet_id = ? AND status=1', [req.body.pet_id])
     if (ads.length !== 0)
-      return res.status(400).send({ error: 'It looks like you have already posted an ad for this pet, you may post again once your ad is removed from the site !!'})
+      return res.status(400).send({ error: 'It looks like you have already posted an ad for this pet, you may post again once your ad is removed from the site !!' })
 
     const [result] = await conn.execute('SELECT type_name FROM breeds WHERE name = ? ', [req.pet.breed_name])
-    const [insertResult] = await conn.execute('INSERT INTO adoption_ads (date, ad_type, status, pet_id, client_id, story) VALUES (?, ?, 1, ?, ?, ?)', [dateFormat(new Date(), 'UTC: yyyy-mm-dd HH:MM:ss'), result[0].type_name, req.body.pet_id, req.user.id, req.body.story ])
+    const [insertResult] = await conn.execute('INSERT INTO adoption_ads (date, ad_type, status, pet_id, client_id, story) VALUES (?, ?, 1, ?, ?, ?)', [dateFormat(new Date(), 'UTC: yyyy-mm-dd HH:MM:ss'), result[0].type_name, req.body.pet_id, req.user.id, req.body.story])
     await conn.end()
-    return res.status(201).send({ response: 'Your Adoption ad Was posted Successfully ', ad_id: insertResult.insertId})
+    return res.status(201).send({ response: 'Your Adoption ad Was posted Successfully ', ad_id: insertResult.insertId })
   } catch (e) {
     return res.status(500).send({ error: e.message })
   }
@@ -349,7 +349,7 @@ const updatePostStory = async (req, res) => {
   try {
     const conn = await createConnection(connData)
     const [result] = await conn.execute('UPDATE adoption_ads SET story = ? WHERE client_id = ? AND id = ? ', [req.body.story, req.user.id, req.params.ad_id])
-    if (result.affectedRows === 0) 
+    if (result.affectedRows === 0)
       return res.status(404).send()
     res.send({ result: 'Adoption post story was updated successfully !!' })
     await conn.end()
@@ -364,8 +364,8 @@ const deleteAdPost = async (req, res) => {
     await conn.end()
     if (result.affectedRows === 0)
       return res.status(404).send()
-    res.send({ result: 'Adoption ad was deleted successfully '})
-  } catch(e) {
+    res.send({ result: 'Adoption ad was deleted successfully ' })
+  } catch (e) {
     res.status(500).send({ error: e.message })
   }
 }
@@ -374,18 +374,44 @@ const getMyRequests = async (req, res) => {
   try {
     // get sent requests
     const conn1 = await createConnection(connData)
-    const [sentRequests] = await conn1.execute('SELECT date, adoption_ad_id FROM adoption_requests WHERE client_id= ?', [req.user.id])
+    const [sentRequests] = await conn1.execute('SELECT id, date, adoption_ad_id, status FROM adoption_requests WHERE client_id= ?', [req.user.id])
     await conn1.end()
     // get received requests
     const conn2 = await createConnection(connData)
-    const [receivedRequests] = await conn2.execute(`select ar.date, ar.client_id as requester_id, ar.adoption_ad_id, aa.client_id as post_owner_id, pi.first_name as requester_first_name, pi.last_name as requester_last_name, pi.phone_number as requester_phone_number FROM adoption_requests ar
+    const [receivedRequests] = await conn2.execute(`select ar.id, ar.date, ar.client_id as requester_id, ar.adoption_ad_id, ar.status, aa.client_id as post_owner_id, pi.first_name as requester_first_name, pi.last_name as requester_last_name, pi.phone_number as requester_phone_number FROM adoption_requests ar
     JOIN adoption_ads aa ON ar.adoption_ad_id = aa.id
     JOIN users u ON u.id = ar.client_id
     JOIN personal_info pi ON u.personal_info_id = pi.id
     WHERE aa.client_id = ?
     ORDER BY ar.adoption_ad_id , ar.date  desc`, [req.user.id])
     await conn2.end()
-    res.send({sentRequests, receivedRequests})
+    const finalReceived = []
+    let adoption_ad_requests = []
+    for (let i = 0; i < receivedRequests.length; i++) {
+      if (i === 0) {
+        adoption_ad_requests.push(receivedRequests[i])
+        if (i + 1 === receivedRequests.length)
+          finalReceived.push(adoption_ad_requests)
+        continue
+      }
+      if (receivedRequests[i - 1].adoption_ad_id === receivedRequests[i].adoption_ad_id) {
+        if (i+1 === receivedRequests.length)
+          finalReceived.push(adoption_ad_requests)
+        adoption_ad_requests.push(receivedRequests[i])
+        continue
+      }
+      else {
+        finalReceived.push(adoption_ad_requests)
+        adoption_ad_requests = []
+        adoption_ad_requests.push(receivedRequests[i])
+        if (i+1 === receivedRequests.length)
+          finalReceived.push(adoption_ad_requests)
+        continue
+      }
+      
+
+    }
+    res.send({ sentRequests, finalReceived })
 
   } catch (e) {
     res.status(500).send({ error: e.message })
@@ -404,13 +430,27 @@ const createRequest = async (req, res) => {
     ])
     await conn.end()
 
-    res.status(201).send({ result: `You've been successfully added to a wish list of ${requesters_count} ${requesters_count >= 2 ? 'people': 'person'}  you can always check and manage your adoption requests from your profile `})
-    
+    res.status(201).send({ result: `You've been successfully added to a wish list of ${requesters_count} ${requesters_count >= 2 ? 'people' : requesters_count === 0 ? 'people' : 'person'}  you can always check and manage your adoption requests from your profile ` })
+
   } catch (e) {
     res.status(500).send({ error: e.message })
   }
 }
-export  {
+const deleteRequest = async (req, res) => {
+  try {
+    const conn = await createConnection(connData)
+    const [result] = await conn.execute('DELETE FROM adoption_requests WHERE client_id = ? AND adoption_ad_id = ?', [req.user.id, req.params.req_id])
+    await conn.end()
+    if (!result.affectedRows)
+      return res.status(404).send({ error: 'Request not found' })
+    res.send({ result: 'Your Request has been deleted successfully !!' })
+
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+
+}
+export {
   signup,
   myProfile,
   login,
@@ -427,6 +467,7 @@ export  {
   updatePostStory,
   deleteAdPost,
   getMyRequests,
-  createRequest
+  createRequest,
+  deleteRequest
 
 }

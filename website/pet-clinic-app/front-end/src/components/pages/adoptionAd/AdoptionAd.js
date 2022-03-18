@@ -21,6 +21,10 @@ const initialData = {
   responseData: null,
   responseError: '',
   missingComment: '',
+  checkModal: false,
+  finalConfirm: false,
+  isAdopting: false,
+  adoptResponse: ''
   
 
 }
@@ -93,6 +97,31 @@ const AdoptionAd = () => {
       isMount = false
     }
   }, [auth.token, dispatch, id, sendRequest, setPageIsLoading, state.comment.value, state.isCommenting, navigate])
+
+  useEffect(() => {
+    let isMount = true
+    const adoptPet = async () => {
+      try {
+        const adopting = await sendRequest(`http://localhost:5000/users/me/requests/${id}`, 'POST', null, {
+          'Authorization': `Bearer ${auth.token}`
+        })
+        if (adopting && isMount)
+          dispatch({ type: 'successAdopting', data: adopting.result})
+      } catch (e) {
+        if (isMount)
+          dispatch({ type: 'failure', error: e.message })
+      }
+    }
+    if (state.isAdopting)
+      adoptPet()
+    return () => {
+      setPageIsLoading(false)
+      isMount = false
+    }
+  }, [auth.token, dispatch, id, sendRequest, setPageIsLoading, state.isAdopting])
+  useEffect(() => {
+    setPageIsLoading(state.isAdopting)
+  }, [state.isAdopting, setPageIsLoading])
   return (
     <>
       {/* UI modals */}
@@ -103,6 +132,25 @@ const AdoptionAd = () => {
           body={state.responseError}
           dispatch={dispatch}
           redirectTo={'/'}
+        />}
+        {state.checkModal &&
+        <Modal
+          modalClass='check'
+          header=''
+          body={
+            <>
+              <p>You are about to send an adoption request to the pet owner. Your first name, last name and your phone number will be sent to the pet owner as well so that he can contact you as soon as possible are you sure you want to proceed ?</p>
+            </>
+          }
+          dispatch={dispatch}
+        />}
+        {state.adoptResponse &&
+        <Modal
+          modalClass='success'
+          header='Success!!'
+          body={state.adoptResponse}
+          dispatch={dispatch}
+          redirectTo={'/myprofile/myadoptionrequests'}
         />}
       <div className=" adoption-ad-wrapper home-container flex-col falign-center gap-24p ">
 
@@ -153,7 +201,9 @@ const AdoptionAd = () => {
             {state.responseData && state.responseData.adoptionAd.photo ?
               <>
                 <img src={URL.createObjectURL(new Blob([new Uint8Array(state.responseData.adoptionAd.photo.data)]))} alt="pet" />
-                {state.responseData.adoptionAd.owner_id !== auth.userId &&<button className="btn-rec adopt-btn">Adopt me!</button>}
+                {state.responseData.adoptionAd.owner_id !== auth.userId && !state.responseData.adoptionAd.requested &&<button 
+                onClick={() => dispatch({ type: 'checkModalEnter' })}
+                className="btn-rec adopt-btn">Adopt me!</button>}
                 
               </>
               :
