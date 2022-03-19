@@ -76,6 +76,7 @@ const myAdoptionRequests = (state, action) => {
       return {
         ...state,
         showModal: false, 
+        areYouSureSubmit: false
 
       }
     }
@@ -87,6 +88,19 @@ const myAdoptionRequests = (state, action) => {
       return {
         ...state,
         editPost: false,
+      }
+    }
+
+    case 'areYouSureEnter': {
+      return {
+        ...state,
+        areYouSureSubmit: !state.areYouSureSubmit
+      }
+    }
+    case 'areYouSureExit': {
+      return {
+        ...state,
+        areYouSureSubmit: false
       }
     }
   

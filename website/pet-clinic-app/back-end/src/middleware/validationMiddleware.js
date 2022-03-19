@@ -206,6 +206,29 @@ const deleteRequest = (req, res, next) => {
   
   next()
 }
+const transferOwnerShip = async (req, res, next) => {
+  if (!req.params.new_owner_id || !req.params.pet_id || !req.params.ad_id || !myValidator.isValidId(req.params.pet_id) || !myValidator.isValidId(req.params.new_owner_id) || !myValidator.isValidId(req.params.ad_id))
+    return res.status(400).send({ error: 'Bad URL' })
+  try {
+    const result = await myValidator.isOwnerPet(req.user.id, req.params.pet_id)
+    if (!result)
+      return res.status(400).send({ error: 'invalid pet/owner_id'})
+    const inAd = await myValidator.petInAdoptionAd(req.params.pet_id, req.params.ad_id, req.user.id)
+    if (!inAd)
+      return res.status(400).send({ error: 'invalid pet/adoption_ad'})
+    const requested = await myValidator.nonExistentRequest(req.params.new_owner_id, req.params.ad_id)
+
+    if (!requested){
+      return res.status(400).send({ error: 'new owner didnt request your pet '})
+    }
+    
+    
+    next()
+
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
 
 // Appointment Related
 
@@ -261,6 +284,7 @@ export default {
   updatePostStory,
   deleteAdPost,
   createRequest, 
-  deleteRequest
+  deleteRequest,
+  transferOwnerShip
 
 }

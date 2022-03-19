@@ -1,1 +1,24 @@
-@use '../../../abstracts/' as *;
+@use "../../../abstracts/" as *;
+.accept-adoption {
+  width: 80%;
+  padding: 0.5rem;
+}
+.accept-adoption-final {
+  width: 30%;
+  padding: 0.5rem;
+}
+.are-you-sure-container {
+  width: 100%;
+}
+.are-you-sure-message {
+  color: darkred;
+  padding: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.are-you-sure-wrapper {
+  scroll-behavior: smooth;
+  max-height: 400px !important;
+  overflow-y: auto;
+}

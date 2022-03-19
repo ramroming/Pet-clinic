@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e6c75b2d-5fa6-4ea5-99b7-3401f46ba475",
+		"_postman_id": "5ef6452d-0841-44fc-8df2-0d0f70a9bf4a",
 		"name": "Pet-clinic-app",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -628,6 +628,28 @@
 						"me",
 						"requests",
 						"38"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TransferOwnerShip",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/me/pets/84/159/47",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"pets",
+						"84",
+						"159",
+						"47"
 					]
 				}
 			},

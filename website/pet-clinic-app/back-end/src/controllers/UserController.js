@@ -338,7 +338,7 @@ const commentOnAd = async (req, res) => {
 const getMyAdoptionAds = async (req, res) => {
   try {
     const conn = await createConnection(connData)
-    const [myAdoptionAds] = await conn.execute('SELECT id, date, story FROM adoption_ads WHERE client_id = ? ORDER BY date DESC', [req.user.id])
+    const [myAdoptionAds] = await conn.execute('SELECT id, date, story, status FROM adoption_ads WHERE client_id = ? ORDER BY date DESC', [req.user.id])
     await conn.end()
     res.send(myAdoptionAds)
   } catch (e) {
@@ -348,7 +348,7 @@ const getMyAdoptionAds = async (req, res) => {
 const updatePostStory = async (req, res) => {
   try {
     const conn = await createConnection(connData)
-    const [result] = await conn.execute('UPDATE adoption_ads SET story = ? WHERE client_id = ? AND id = ? ', [req.body.story, req.user.id, req.params.ad_id])
+    const [result] = await conn.execute('UPDATE adoption_ads SET story = ? WHERE client_id = ? AND id = ? AND status=1 ', [req.body.story, req.user.id, req.params.ad_id])
     if (result.affectedRows === 0)
       return res.status(404).send()
     res.send({ result: 'Adoption post story was updated successfully !!' })
@@ -360,10 +360,10 @@ const updatePostStory = async (req, res) => {
 const deleteAdPost = async (req, res) => {
   try {
     const conn = await createConnection(connData)
-    const [result] = await conn.execute('DELETE FROM adoption_ads WHERE client_id = ? AND id = ? ', [req.user.id, req.params.ad_id])
+    const [result] = await conn.execute('DELETE FROM adoption_ads WHERE client_id = ? AND id = ?  ', [req.user.id, req.params.ad_id])
     await conn.end()
     if (result.affectedRows === 0)
-      return res.status(404).send()
+      return res.status(404).send({ error: '404 not found'})
     res.send({ result: 'Adoption ad was deleted successfully ' })
   } catch (e) {
     res.status(500).send({ error: e.message })
@@ -378,11 +378,12 @@ const getMyRequests = async (req, res) => {
     await conn1.end()
     // get received requests
     const conn2 = await createConnection(connData)
-    const [receivedRequests] = await conn2.execute(`select ar.id, ar.date, ar.client_id as requester_id, ar.adoption_ad_id, ar.status, aa.client_id as post_owner_id, pi.first_name as requester_first_name, pi.last_name as requester_last_name, pi.phone_number as requester_phone_number FROM adoption_requests ar
+    const [receivedRequests] = await conn2.execute(`select ar.id, ar.date, ar.client_id as requester_id, ar.adoption_ad_id, ar.status, aa.client_id as post_owner_id, p.id as pet_id, pi.first_name as requester_first_name, pi.last_name as requester_last_name, pi.phone_number as requester_phone_number FROM adoption_requests ar
     JOIN adoption_ads aa ON ar.adoption_ad_id = aa.id
+    JOIN pets p ON p.id = aa.pet_id
     JOIN users u ON u.id = ar.client_id
     JOIN personal_info pi ON u.personal_info_id = pi.id
-    WHERE aa.client_id = ?
+    WHERE aa.client_id = ? AND aa.status= 1
     ORDER BY ar.adoption_ad_id , ar.date  desc`, [req.user.id])
     await conn2.end()
     const finalReceived = []
@@ -439,7 +440,7 @@ const createRequest = async (req, res) => {
 const deleteRequest = async (req, res) => {
   try {
     const conn = await createConnection(connData)
-    const [result] = await conn.execute('DELETE FROM adoption_requests WHERE client_id = ? AND adoption_ad_id = ?', [req.user.id, req.params.req_id])
+    const [result] = await conn.execute('DELETE FROM adoption_requests WHERE client_id = ? AND adoption_ad_id = ? AND status="pending"', [req.user.id, req.params.req_id])
     await conn.end()
     if (!result.affectedRows)
       return res.status(404).send({ error: 'Request not found' })
@@ -449,6 +450,35 @@ const deleteRequest = async (req, res) => {
     res.status(500).send({ error: e.message })
   }
 
+}
+const transferOwnerShip = async (req, res) => {
+  try {
+    // disable the requested post
+    const conn = await createConnection(connData)
+    const [result] = await conn.execute(`UPDATE adoption_ads
+    SET status = 0
+    WHERE id= ? AND status = 1`, [req.params.ad_id])
+    await conn.end()
+
+    // accept the selected requester and reject all other requesters
+    const conn2 = await createConnection(connData)
+    const [result2] = await conn2.execute(`UPDATE adoption_requests
+    SET status = CASE WHEN client_id = ? THEN 'accepted' ELSE 'rejected' END
+    WHERE adoption_ad_id = ? AND status="pending"`, [req.params.new_owner_id, req.params.ad_id])
+    await conn2.end()
+
+    // transfer the pet for the old owner to the new owner
+    const conn3 = await createConnection(connData)
+    const [result3] = await conn3.execute(`UPDATE pets
+    SET pervious_owner = ?, owner_id = ?
+    WHERE id = ?`, [req.user.id, req.params.new_owner_id, req.params.pet_id])
+    await conn3.end()
+
+    res.send({ result: 'Your ownership has been successfully transfered to the selected requester ' })
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+  res.send()
 }
 export {
   signup,
@@ -468,6 +498,7 @@ export {
   deleteAdPost,
   getMyRequests,
   createRequest,
-  deleteRequest
+  deleteRequest,
+  transferOwnerShip
 
 }

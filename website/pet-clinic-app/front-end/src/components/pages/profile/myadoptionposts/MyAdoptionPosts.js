@@ -189,6 +189,9 @@ const MyAdoptionPosts = () => {
                 Edit
               </Th>
               <Th>
+                Status
+              </Th>
+              <Th>
                 Delete
               </Th>
 
@@ -200,17 +203,19 @@ const MyAdoptionPosts = () => {
               return (
                 <Tr key={index}>
                   <Td>
+                  {adoptionAd.status === 0 ? 'Removed' : 
                     <Link 
                     target={'_blank'}
                     className="my-great-button" to={`/adoptionad/${adoptionAd.id}`}>
                       Click here to view
-                    </Link>
+                    </Link>}
+                    
                   </Td>
                   <Td>
                     {dateFormat(adoptionAd.date, 'default')}
                   </Td>
                   <Td>
-                    <button 
+                    {adoptionAd.status === 0 ? "Can't Edit" : <button 
                     id={index}
                     ad_id={adoptionAd.id}
                     onClick={(e) => {
@@ -219,7 +224,11 @@ const MyAdoptionPosts = () => {
                     }}
                     className="my-great-button">
                       Click here to edit
-                    </button>
+                    </button>}
+                    
+                  </Td>
+                  <Td style={{color: adoptionAd.status === 0 ? 'Green' : ''}}>
+                    {adoptionAd.status === 0 ? 'Found new home' : 'Looking for new owner'}
                   </Td>
                   <Td>
                     <button 

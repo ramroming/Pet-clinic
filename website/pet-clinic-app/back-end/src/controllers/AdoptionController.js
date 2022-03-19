@@ -19,14 +19,17 @@ const getAdoptionAd = async (req, res) => {
     GROUP BY ad.date, ad.story,p.owner_id, p.id , p.name , p.gender, p.birth_date, p.breed_name, u.username`, [req.params.id])
     await conn.end()
     
+    console.log(adoptionAds)
     // the sql query will return an array with one object that containes nulls and that is because of group_concat
-    if (!adoptionAds[0].date)
+    if (!adoptionAds.length)
       return res.status(404).send({ error: 'Post is not found :( Bad link or the post you are looking for was removed by the owner' })
 
     // getting the comments of an adoption ad
     const conn2 = await createConnection(connData)
-    const [comments] = await conn2.execute(`SELECT c.date, c.text, u.username, u.id AS user_id FROM comments c JOIN users u ON c.client_id = u.id
-    WHERE adoption_ad_id = ?
+    const [comments] = await conn2.execute(`SELECT c.date, c.text, u.username, u.id AS user_id FROM comments c 
+    JOIN users u ON c.client_id = u.id
+    JOIN adoption_ads aa ON aa.id = c.adoption_ad_id
+    WHERE adoption_ad_id = ? AND aa.status = 1
     ORDER BY date DESC `, [req.params.id])
     await conn2.end()
 

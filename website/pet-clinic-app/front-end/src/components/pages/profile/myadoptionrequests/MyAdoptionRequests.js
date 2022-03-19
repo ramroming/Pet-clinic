@@ -1,6 +1,6 @@
 
 import DeletePostModal from "../myadoptionposts/DeletePostModal"
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import EditAdoptionStatus from "./EditAdoptionStatus"
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
@@ -20,7 +20,8 @@ const initialData = {
   isDeleting: false,
   deleteResult: '',
   showModal: false,
-  selectedRequest: null
+  selectedRequest: null,
+  areYouSureSubmit: false,
 
 
 
@@ -34,7 +35,12 @@ const MyAdoptionRequests = () => {
   const auth = useContext(authContext)
   const setPageIsLoading = useContext(pageLoadingContext).setPageIsLoading
   const sendRequest = useFetch()
+  const modalTopRef = useRef(null)
 
+
+  const goTopModal = () => {
+    modalTopRef.current.scrollIntoView()
+  }
 
   useEffect(() => {
     let isMount = true
@@ -111,55 +117,83 @@ const MyAdoptionRequests = () => {
           modalClass='show'
           header='Your adoption ad wish list'
           body={
-            <>
-              <Table className="my-table">
+            <div
+              className="are-you-sure-wrapper">
+              <div
+
+                className=" flex-col gap-12p">
+                {state.areYouSureSubmit &&
+
+                  <div 
+                  ref={modalTopRef}
+                  className="are-you-sure-container flex-col gap-16p">
+                    <p
+                      
+                      className='are-you-sure-message'>By accepting the request you will be approving that a meeting with the requester has been conducted and the requester you have selected is the right candidate for your pet, and you are willing to transfer your pet's ownership to the requester. You can no longer see the requested pet in your profile and all data related to you pet will be handed to the new owner,Also by accepting you will be rejecting all other requesters in the list so is Yes your final answer ?</p>
+                    <div className="are-you-sure-buttons-wrapper flex-row gap-8p fjust-center">
+                      <button
+                        onClick={() => dispatch({ type: 'areYouSure' })}
+                        className="btn-r btn-r-blue accept-adoption-final">Yes</button>
+                      <button
+                        onClick={() => dispatch({ type: 'areYouSureExit' })}
+                        className="btn-r btn-r-blue accept-adoption-final">No</button>
+                    </div>
+                  </div>
+
+                }
+                <Table className="my-table">
+                  <Thead>
+                    <Tr>
+                      <Th>Sent AT</Th>
+                      <Th>Status</Th>
+                      <Th>Requester first name</Th>
+                      <Th>Requester last name</Th>
+                      <Th>Requester phone number</Th>
+                      <Th>Action</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {
+                      state.responseData && state.responseData.finalReceived[state.selectedRequest].map((request, index) => {
+                        return (
+                          <React.Fragment key={index}>
+                            <Tr>
+                              <Td>{dateFormat(request.date, 'default')}</Td>
+                              <Td>{request.status}</Td>
+                              <Td>{request.requester_first_name}</Td>
+                              <Td>{request.requester_last_name}</Td>
+                              <Td>{request.requester_phone_number}</Td>
+                              <Td><button
+                                onClick={(e) => {
+                                  dispatch({ type: 'areYouSureEnter' })
+                                  setTimeout(() => {
+                                    goTopModal()
+                                  }, 300);
+                                }
+                                }
+                                disabled={state.areYouSureSubmit}
+                                style={{
+                                  backgroundColor: state.areYouSureSubmit ? 'grey' : '',
+                                  color: state.areYouSureSubmit ? 'white' : '', cursor: state.areYouSureSubmit ? 'default' : 'pointer'
+                                }}
+                                className="btn-r btn-r-blue accept-adoption">Accept</button></Td>
+                            </Tr>
+
+                          </React.Fragment>
 
 
-                <Thead>
-                  <Tr>
-                    <Th>Sent AT</Th>
-                    <Th>Status</Th>
-                    <Th>Requester first name</Th>
-                    <Th>Requester last name</Th>
-                    <Th>Requester phone number</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-
-                  {
-                    state.responseData && state.responseData.finalReceived[state.selectedRequest].map((request, index) => {
-                      return (
-                          <Tr key={index}>
-                          <Td>{dateFormat(request.date, 'default')}</Td>
-                          <Td>{request.status}</Td>
-                          <Td>{request.requester_first_name}</Td>
-                          <Td>{request.requester_last_name}</Td>
-                          <Td>{request.requester_phone_number}</Td>
-                          </Tr>
-                      )
-                    })
-                  }
+                        )
+                      })
+                    }
 
 
-                </Tbody>
+                  </Tbody>
 
 
-              </Table>
-            </>}
-
-          // {/* </>
-          //   state.responseData && state.responseData.finalReceived[state.selectedRequest].map((request, index) => {
-          //   return (
-
-          //     // <React.Fragment key={index}>
-          //     //   <p>{dateFormat(request.date, 'default')}</p>
-          //     //   <p>{request.status}</p>
-          //     //   <p>{request.requester_first_name}</p>
-          //     //   <p>{request.requester_last_name}</p>
-          //     //   <p>{request.requester_phone_number}</p>
-          //     // </React.Fragment>
-          //   )
-          // })} */}
+                </Table>
+              </div>
+            </div>
+          }
 
 
           dispatch={dispatch}
@@ -198,7 +232,7 @@ const MyAdoptionRequests = () => {
 
                 {state.responseData.sentRequests.map((request, index) => {
                   return (
-                    <Tr key={index}>
+                    <Tr key={`${index + '-tr'}`}>
                       <Td>
                         <Link className="my-great-button" to={`/adoptionad/${request.adoption_ad_id}`}
                           target={'_blank'}>
@@ -241,7 +275,7 @@ const MyAdoptionRequests = () => {
 
         <Table className="my-table">
 
-          {!state.responseData || !state.responseData.finalReceived || !state.responseData.finalReceived.length ?
+          {state.responseData && state.responseData.finalReceived && !state.responseData.finalReceived.length &&
             <Thead>
               <Tr>
                 <Th>
@@ -249,7 +283,8 @@ const MyAdoptionRequests = () => {
                 </Th>
               </Tr>
             </Thead>
-            :
+          }
+          {state.responseData && state.responseData.finalReceived && state.responseData.finalReceived.length &&
             <>
               <Thead>
                 <Tr>
