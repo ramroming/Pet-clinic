@@ -22,6 +22,11 @@ const initialData = {
   showModal: false,
   selectedRequest: null,
   areYouSureSubmit: false,
+  isTransferingOwner: false,
+  transferOwnerResult: '',
+  selectedPet: '',
+  selectedAd: '',
+  selectedNewOwner: ''
 
 
 
@@ -89,8 +94,33 @@ const MyAdoptionRequests = () => {
 
 
   useEffect(() => {
-    setPageIsLoading(state.isLoading || state.isDeleting)
-  }, [setPageIsLoading, state.isLoading, state.isDeleting])
+    let isMount = true
+    const transferOwner = async () => {
+      try {
+        const result = await sendRequest(`http://localhost:5000/users/me/pets/${state.selectedPet && state.selectedPet}/${state.selectedNewOwner && state.selectedNewOwner}/${state.selectedAd && state.selectedAd}`, 'PATCH', null, {
+          'Authorization': `Bearer ${auth.token}`,
+        })
+        if (result && isMount)
+          dispatch({ type: 'successTransfer', data: result.result })
+      } catch (e) {
+        if (isMount)
+          dispatch({ type: 'failure', error: e.message })
+      }
+    }
+    if (state.isTransferingOwner && isMount) {
+      transferOwner()
+    }
+    return () => {
+      setPageIsLoading(false)
+      isMount = false
+    }
+  }, [auth.token, dispatch, sendRequest, setPageIsLoading, state.isTransferingOwner, state.selectedAd, state.selectedPet, state.selectedNewOwner])
+
+
+
+  useEffect(() => {
+    setPageIsLoading(state.isLoading || state.isDeleting || state.isTransferingOwner)
+  }, [setPageIsLoading, state.isLoading, state.isDeleting, state.isTransferingOwner])
 
 
   return (
@@ -112,6 +142,14 @@ const MyAdoptionRequests = () => {
           dispatch={dispatch}
           refresh={true}
         />}
+      {state.transferOwnerResult &&
+        <Modal
+          modalClass='success'
+          header='Success!!'
+          body={state.transferOwnerResult}
+          dispatch={dispatch}
+          refresh={true}
+        />}
       {state.showModal &&
         <Modal
           modalClass='show'
@@ -124,15 +162,18 @@ const MyAdoptionRequests = () => {
                 className=" flex-col gap-12p">
                 {state.areYouSureSubmit &&
 
-                  <div 
-                  ref={modalTopRef}
-                  className="are-you-sure-container flex-col gap-16p">
+                  <div
+                    ref={modalTopRef}
+                    className="are-you-sure-container flex-col gap-16p">
                     <p
-                      
-                      className='are-you-sure-message'>By accepting the request you will be approving that a meeting with the requester has been conducted and the requester you have selected is the right candidate for your pet, and you are willing to transfer your pet's ownership to the requester. You can no longer see the requested pet in your profile and all data related to you pet will be handed to the new owner,Also by accepting you will be rejecting all other requesters in the list so is Yes your final answer ?</p>
+
+                      className='are-you-sure-message'>By accepting the request you will be approving that a meeting with the requester has been conducted and the requester you have selected is the right candidate for your pet, and you are willing to transfer your pet's ownership to the requester. Your adoption post will be removed so you can no longer see the requested pet in your profile and all data related to you pet will be handed to the new owner,Also by accepting you will be rejecting all other requesters in the list so is Yes your final answer ?</p>
                     <div className="are-you-sure-buttons-wrapper flex-row gap-8p fjust-center">
                       <button
-                        onClick={() => dispatch({ type: 'areYouSure' })}
+                        onClick={() => {
+                          dispatch({ type: 'areYouSureConfirm' })
+                        }
+                        }
                         className="btn-r btn-r-blue accept-adoption-final">Yes</button>
                       <button
                         onClick={() => dispatch({ type: 'areYouSureExit' })}
@@ -164,7 +205,9 @@ const MyAdoptionRequests = () => {
                               <Td>{request.requester_last_name}</Td>
                               <Td>{request.requester_phone_number}</Td>
                               <Td><button
+                                reqid={request.requester_id}
                                 onClick={(e) => {
+                                  dispatch({ type: 'selectRequester', data: e.currentTarget.getAttribute('reqid')})
                                   dispatch({ type: 'areYouSureEnter' })
                                   setTimeout(() => {
                                     goTopModal()
@@ -194,8 +237,6 @@ const MyAdoptionRequests = () => {
               </div>
             </div>
           }
-
-
           dispatch={dispatch}
         />}
       <h4>Adoption Requests Management</h4>
@@ -210,15 +251,16 @@ const MyAdoptionRequests = () => {
         <h3>Sent Adoption Requests</h3>
         <Table className="my-table">
 
-          {!state.responseData || !state.responseData.sentRequests || !state.responseData.sentRequests.length ?
-            <Thead>
-              <Tr>
-                <Th>
-                  No sent requests
-                </Th>
-              </Tr>
-            </Thead>
-            :
+          {state.responseData && state.responseData.sentRequests && state.responseData.sentRequests.length === 0 &&
+          <Thead>
+            <Tr>
+              <Th>
+                No sent requests
+              </Th>
+            </Tr>
+          </Thead>
+          }
+          {state.responseData && state.responseData.sentRequests && state.responseData.sentRequests.length !== 0 &&
             <>
               <Thead>
                 <Tr>
@@ -234,18 +276,30 @@ const MyAdoptionRequests = () => {
                   return (
                     <Tr key={`${index + '-tr'}`}>
                       <Td>
-                        <Link className="my-great-button" to={`/adoptionad/${request.adoption_ad_id}`}
-                          target={'_blank'}>
-                          Click here to view
-                        </Link>
+                        {request.status === 'pending' ?
+                          <Link className="my-great-button" to={`/adoptionad/${request.adoption_ad_id}`}
+                            target={'_blank'}>
+                            Click here to view
+                          </Link>
+                          : request.status === 'accepted' ?
+                            <Link
+                              className="my-great-button" to={`/myprofile/petinfo`}
+                            >
+                              Check out your new pet
+                            </Link>
+                            :
+                            'Post got removed'
+                        }
+
                       </Td>
                       <Td>
                         {dateFormat(request.date, 'default')}
                       </Td>
-                      <Td>
-                        {request.status}
+                      <Td style={request.status === 'accepted' ? { color: 'green' } : request.status === 'rejected' ? { color: 'red' } : { color: 'black' }}>
+                        {request.status === 'accepted' ? 'Owner accepted your request': request.status === 'rejected' ? 'Pet got adopted by others': request.status}
                       </Td>
 
+                      {request.status === 'pending' ? 
                       <Td>
                         <button
                           disabled={openModal}
@@ -258,7 +312,13 @@ const MyAdoptionRequests = () => {
                             setOpenModal(true)
                           }}
                         ><i className="fa-regular fa-trash-can"></i></button>
-                      </Td>
+                      </Td> 
+                      :
+                        <Td>
+                          -/-
+                        </Td>
+                      }
+
 
                     </Tr>
                   )
@@ -275,7 +335,7 @@ const MyAdoptionRequests = () => {
 
         <Table className="my-table">
 
-          {state.responseData && state.responseData.finalReceived && !state.responseData.finalReceived.length &&
+          {state.responseData && state.responseData.finalReceived && state.responseData.finalReceived.length === 0 &&
             <Thead>
               <Tr>
                 <Th>
@@ -284,7 +344,7 @@ const MyAdoptionRequests = () => {
               </Tr>
             </Thead>
           }
-          {state.responseData && state.responseData.finalReceived && state.responseData.finalReceived.length &&
+          {state.responseData && state.responseData.finalReceived && state.responseData.finalReceived.length !== 0 &&
             <>
               <Thead>
                 <Tr>
@@ -308,11 +368,16 @@ const MyAdoptionRequests = () => {
                         <Td>
                           <button
                             id={index}
+                            petid={request[0].pet_id}
+                            adid={request[0].adoption_ad_id}
                             className="my-great-button margin-bottom"
                             onClick={(e) => {
+                              dispatch({ type: 'ownershipData', petId: e.currentTarget.getAttribute('petid'),
+                              adId: e.currentTarget.getAttribute('adid')
+                              })
                               dispatch({ type: 'showModalEnter', data: e.currentTarget.id })
                             }}
-                          >You have {request.length} requests click to check <i className="fa-solid fa-circle-exclamation"></i></button>
+                          >You have {request.length} request(s) click to check <i className="fa-solid fa-circle-exclamation"></i></button>
                         </Td>
                       </Tr>
 

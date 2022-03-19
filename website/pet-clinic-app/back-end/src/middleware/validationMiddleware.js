@@ -23,10 +23,9 @@ const signup = (req, res, next) => {
   if (!myValidator.isValidEmail(email))
     return res.status(400).send({ error: 'invalid Email Address!!' })
 
-  if (phone_number) {
-    if (!myValidator.isPhoneNumber(phone_number))
-      return res.status(400).send({ error: 'invalid Phone Number!!' })
-  }
+  if (!myValidator.isPhoneNumber(phone_number))
+    return res.status(400).send({ error: 'invalid Phone Number!!' })
+  
 
   if (user_type) {
     if (!myValidator.isUserType(user_type))

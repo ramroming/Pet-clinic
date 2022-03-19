@@ -231,6 +231,7 @@ const MyAdoptionPosts = () => {
                     {adoptionAd.status === 0 ? 'Found new home' : 'Looking for new owner'}
                   </Td>
                   <Td>
+                    {adoptionAd.status === 0 ? '-/-' : 
                     <button 
                     disabled={openModal}
                     style={{ color: openModal ? 'grey' : '', cursor: openModal ? 'default' : 'pointer'}}
@@ -241,7 +242,8 @@ const MyAdoptionPosts = () => {
                         dispatch({ type: 'selectPostToDelete', data: e.currentTarget.id})                       
                         setOpenModal(true)
                        }}
-                    ><i className="fa-regular fa-trash-can"></i></button>
+                    ><i className="fa-regular fa-trash-can"></i></button>}
+                    
                   </Td>
 
                 </Tr>

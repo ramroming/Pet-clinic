@@ -374,7 +374,7 @@ const getMyRequests = async (req, res) => {
   try {
     // get sent requests
     const conn1 = await createConnection(connData)
-    const [sentRequests] = await conn1.execute('SELECT id, date, adoption_ad_id, status FROM adoption_requests WHERE client_id= ?', [req.user.id])
+    const [sentRequests] = await conn1.execute('SELECT id, date, adoption_ad_id, status FROM adoption_requests WHERE client_id= ? ORDER BY date DESC', [req.user.id])
     await conn1.end()
     // get received requests
     const conn2 = await createConnection(connData)
