@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import { signup, myProfile, login, logout, registerPet, getPets, createAppointment, getAppointments, deleteAppointments, getMyPet, createAdoptionAd, commentOnAd, updatePostStory, deleteAdPost, getMyAdoptionAds, getMyRequests, createRequest, deleteRequest} from '../controllers/UserController.js'
+import { signup, myProfile, login, logout, registerPet, getPets, createAppointment, getAppointments, deleteAppointments, getMyPet, createAdoptionAd, commentOnAd, updatePostStory, deleteAdPost, getMyAdoptionAds, getMyRequests, createRequest, deleteRequest, transferOwnerShip} from '../controllers/UserController.js'
 
 // middlewares
 import auth from '../middleware/auth.js'
@@ -32,6 +32,9 @@ usersRouter.post('/users/me/pets', auth, formDataMiddleWare.single('photo'), val
 // get all  pets of the user
 usersRouter.get('/users/me/pets/', auth, getPets)
 
+// transfer the owner ship of a pet to the requester after owner approval
+usersRouter.patch('/users/me/pets/:pet_id/:new_owner_id/:ad_id', auth, validationMiddleware.transferOwnerShip, transferOwnerShip)
+
 // get a user pet by id
 usersRouter.get('/users/me/pets/:id', auth, validationMiddleware.getMyPet,  getMyPet)
 
@@ -55,6 +58,7 @@ usersRouter.delete('/users/me/adoptionads/:ad_id', auth, validationMiddleware.de
 usersRouter.get('/users/me/requests/', auth, getMyRequests)
 usersRouter.post('/users/me/requests/:ad_id', auth, validationMiddleware.createRequest, createRequest)
 usersRouter.delete('/users/me/requests/:req_id', auth, validationMiddleware.deleteRequest, deleteRequest)
+usersRouter.patch('/users/me/a')
 
 // comment on an Ad
 usersRouter.post('/users/me/comments/', auth, validationMiddleware.commentOnAd, commentOnAd)

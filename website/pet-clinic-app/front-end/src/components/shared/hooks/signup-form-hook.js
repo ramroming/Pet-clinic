@@ -200,7 +200,7 @@ const formReducer = (state, action) => {
         return state
 
       // incase of missing mandatory inputs
-      if (!state.first_name.value || !state.last_name.value || !state.username.value || !state.email.value || !state.address.value || !state.password.value || !state.re_password.value)
+      if (!state.first_name.value || !state.last_name.value || !state.username.value || !state.email.value || !state.address.value || !state.password.value || !state.re_password.value || !state.phone_number.value)
         return {
           ...state,
           missingInput: true

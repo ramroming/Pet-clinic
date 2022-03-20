@@ -59,7 +59,7 @@ const myValidator = {
       await conn.end()
 
       // if a user dosen't own the pet 
-      if (!rows[0].pet_name)
+      if (!rows.length)
         return false
       
       rows[0].birth_date = calculatePetAge(rows[0].birth_date)
@@ -181,14 +181,27 @@ const myValidator = {
 
       const [result2] = await conn.execute('SELECT date FROM adoption_requests WHERE client_id = ? AND adoption_ad_id = ? AND status="pending"', [userId, adoptionId])
       await conn.end()
-
       if (result2.length)
         return true
+
       return false
     } catch(e) {
       throw e
     }
   },
+  async petInAdoptionAd(petId, adoptionAdId, clientId) {
+    try {
+      const conn = await createConnection(connData)
+      const [result] = await conn.execute('SELECT id FROM adoption_ads WHERE status = 1 AND id = ? AND pet_id = ? AND client_id = ?', [adoptionAdId, petId, clientId])
+      await conn.end()
+      if (!result.length)
+        return false
+
+      return true
+    } catch (e) {
+      throw e
+    }
+  }
   // async isMyRequest(userId, requestId) {
   //   try {
   //     const conn = await createConnection(connData)

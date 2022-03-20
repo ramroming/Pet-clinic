@@ -30,14 +30,6 @@ const myAdoptionRequests = (state, action) => {
         isDeleting: true
       }
     }
-    case 'success': {
-      return {
-        ...state,
-        responseError: '',
-        isLoading: false,
-        responseData: action.data
-      }
-    }
     case 'successDelete': {
       return {
         ...state,
@@ -47,14 +39,23 @@ const myAdoptionRequests = (state, action) => {
       }
     }
 
-    
+    case 'success': {
+      return {
+        ...state,
+        responseError: '',
+        isLoading: false,
+        responseData: action.data
+      }
+    }
 
+  
     case 'failure': {
       return {
         ...state,
         responseError: action.error,
         isLoading: false,
-        isDeleting: false
+        isDeleting: false,
+        isTransferingOwner: false
  
       }
     }
@@ -64,6 +65,7 @@ const myAdoptionRequests = (state, action) => {
         responseError: ''
       }
     }
+
     case 'showModalEnter': {
       return {
         ...state,
@@ -76,19 +78,57 @@ const myAdoptionRequests = (state, action) => {
       return {
         ...state,
         showModal: false, 
+        areYouSureSubmit: false
 
       }
     }
    
   
-  
+   case 'ownershipData': {
+    return {
+      ...state,
+      selectedAd: action.adId,
+      selectedPet: action.petId
+    }
+   }
+   case 'selectRequester': {
+    return {
+      ...state,
+      selectedNewOwner: action.data,
 
-    case 'finalConfirm': {
+    }
+   }
+
+   
+    case 'areYouSureEnter': {
       return {
         ...state,
-        editPost: false,
+        areYouSureSubmit: !state.areYouSureSubmit
       }
     }
+    case 'areYouSureExit': {
+      return {
+        ...state,
+        areYouSureSubmit: false
+      }
+    }
+    case 'areYouSureConfirm': {
+      return {
+        ...state,
+        isTransferingOwner: true,
+        showModal: false, 
+      }
+    }
+   
+    case 'successTransfer': {
+      return {
+        ...state,
+        isTransferingOwner: false,
+        transferOwnerResult: action.data
+      }
+    }
+
+
   
   
 

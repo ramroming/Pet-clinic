@@ -336,6 +336,7 @@ const AdoptionAds = () => {
                       animate='final'
                       exit='exit'
                       to={`/adoptionad/${post.id}`}
+                      target={'_blank'}
                       ref={lastPost}  //marking the last post
                       className="adoption-post gap-8p flex-col falign-center ">
                       <img src={URL.createObjectURL(new Blob([new Uint8Array(post.photo.data)]))} alt="" className="post-image" />
@@ -357,6 +358,7 @@ const AdoptionAds = () => {
                       animate='final'
                       exit='exit'
                       to={`/adoptionad/${post.id}`}
+                      target={'_blank'}
                       className="adoption-post gap-8p flex-col falign-center ">
                       <img src={URL.createObjectURL(new Blob([new Uint8Array(post.photo.data)]))} alt="" className="post-image" />
                       <p><span>{post.ad_type}  </span><span>{post.breed}</span></p>
