@@ -64,7 +64,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"moSaro\",\r\n \"password\": \"kRZ,29ejPq&_3y6s\"\r\n}",
+					"raw": "{\r\n    \"username\": \"rami94\",\r\n \"password\": \"9=GUj?=?>Ftjw.f;\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -574,6 +574,170 @@
 			"response": []
 		},
 		{
+			"name": "TransferOwnerShip",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/me/pets/84/159/47",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"pets",
+						"84",
+						"159",
+						"47"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateMyProfileInfo",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "first_name",
+							"value": "j1",
+							"type": "default"
+						},
+						{
+							"key": "last_name",
+							"value": "j2",
+							"type": "default"
+						},
+						{
+							"key": "address",
+							"value": "j3",
+							"type": "default"
+						},
+						{
+							"key": "phone_number",
+							"value": "666552",
+							"type": "default"
+						},
+						{
+							"key": "photo",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/me",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateAccountInfo",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"rami94\",\r\n    \"email\": \"rami2000@gmail.com\",\r\n    \"changePassword\": \"no\",\r\n    \"new_password\": \"9=GUj?=?>Ftjw.f;\",\r\n    \"old_password\": \"9=GUj?=?>Ftjw.g;\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/me/account",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdatePetData",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "rami",
+							"type": "default"
+						},
+						{
+							"key": "gender",
+							"value": "male",
+							"type": "default"
+						},
+						{
+							"key": "birth_date",
+							"value": "2023-11-07",
+							"type": "default"
+						},
+						{
+							"key": "breed_name",
+							"value": "Bulldog",
+							"type": "default"
+						},
+						{
+							"key": "pet_type",
+							"value": "dog",
+							"type": "default"
+						},
+						{
+							"key": "colors",
+							"value": "white",
+							"type": "default"
+						},
+						{
+							"key": "photo",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/users/me/pet/52",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"pet",
+						"52"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Delete Appointment",
 			"request": {
 				"method": "DELETE",
@@ -628,28 +792,6 @@
 						"me",
 						"requests",
 						"38"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "TransferOwnerShip",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/users/me/pets/84/159/47",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"users",
-						"me",
-						"pets",
-						"84",
-						"159",
-						"47"
 					]
 				}
 			},

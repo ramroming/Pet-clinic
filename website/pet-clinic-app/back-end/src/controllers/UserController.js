@@ -1,8 +1,9 @@
 
-import { hash } from 'bcrypt'
+import { hash, compare } from 'bcrypt'
 import sharp from 'sharp'
 import { createConnection } from 'mysql2/promise'
 import dateFormat from 'dateformat'
+
 
 
 import connData from '../database/pet-clinic-db.js'
@@ -93,7 +94,7 @@ const signup = async (req, res) => {
 
       // to check duplication error, this 1062 is an sql error code for duplication
       if (e.errno === 1062)
-        return res.status(400).send({ error: 'UserName or Email already used!!' })
+        return res.status(400).send({ error: 'UserName or Email is already used!!' })
       res.status(400).send({ error: e.message })
     }
 
@@ -137,7 +138,6 @@ const logout = async (req, res) => {
 }
 
 const registerPet = async (req, res) => {
-
   // this try is to detect database connection errors
   try {
 
@@ -189,11 +189,160 @@ const registerPet = async (req, res) => {
     res.status(500).send({ error: e.message })
   }
 }
+const updatePet = async (req, res) => {
 
+  // this try is to detect database connection errors
+  try {
+
+    // this try is to detected database violations and other errors when creating new pet
+    const conn = await createConnection(connData)
+    try {
+
+      const { name, gender, birth_date, breed_name } = req.body
+
+
+
+      const photo = req.file ? await sharp(req.file.buffer).resize({ width: 350, height: 350 }).png().toBuffer() : null
+
+
+      if (photo) {
+        // updating with photo
+        const [rows2, fields2] = await conn.execute(`UPDATE  pets 
+        set name= ?, gender = ?, birth_date = ?, breed_name = ?, photo = ?
+        WHERE id = ?`, [
+          name ? name : null,
+          gender ? gender : null,
+          birth_date ? birth_date : null,
+          breed_name ? breed_name : null,
+          photo,
+          req.params.pet_id
+        ])
+      } else {
+        // updating without photo
+
+        const [rows2, fields2] = await conn.execute(`UPDATE  pets 
+        set name= ?, gender = ?, birth_date = ?, breed_name = ?
+        WHERE id = ?`, [
+          name ? name : null,
+          gender ? gender : null,
+          birth_date ? birth_date : null,
+          breed_name ? breed_name : null,
+          req.params.pet_id
+        ])
+      }
+      await conn.execute('DELETE FROM color_records WHERE pet_id = ?', [req.params.pet_id])
+
+      req.body.colors.forEach(async color => {
+
+        await conn.execute('INSERT INTO color_records (pet_id, color_id) VALUES (?, ?)', [req.params.pet_id, color.id])
+
+      });
+      conn.end()
+      res.status(200).send({ result: 'Pet data has been successfully updated' })
+    } catch (e) {
+      conn.end()
+      return res.status(400).send({ error: e.message })
+    }
+
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+
+const updateMyProfile = async (req, res) => {
+  const { first_name, last_name, address, phone_number, photoChanged } = req.body
+  try {
+
+    const photo = req.file ? await sharp(req.file.buffer).resize({ width: 350, height: 350 }).png().toBuffer() : null
+    const conn = await createConnection(connData)
+
+    if (photoChanged === 'yes') {
+      const [result] = await conn.execute(`UPDATE personal_info SET
+      first_name = ?, last_name = ?, address = ?, phone_number = ?, photo = ?
+      WHERE id = ?`, [
+        first_name,
+        last_name,
+        address,
+        phone_number,
+        photo,
+        req.user.personal_info_id
+      ])
+    }
+    if (photoChanged === 'no') {
+      const [result] = await conn.execute(`UPDATE personal_info SET
+      first_name = ?, last_name = ?, address = ?, phone_number = ?
+      WHERE id = ?`, [
+        first_name,
+        last_name,
+        address,
+        phone_number,
+        req.user.personal_info_id
+      ])
+    }
+    await conn.end()
+    res.send({ result: 'Profile data hast been updated successfully !!' })
+
+
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+
+const updateMyAccount = async (req, res) => {
+  const { username, email, old_password, new_password, changePassword } = req.body
+  try {
+    const conn = await createConnection(connData)
+    try {
+      if (changePassword === 'no') {
+        const [result] = await conn.execute(`UPDATE users SET
+        username = ?, email = ?
+        WHERE id = ?`, [
+          username,
+          email,
+          req.user.id
+        ])
+      }
+      if (changePassword === 'yes') {
+        const [oldPassword] = await conn.execute(`SELECT password FROM users WHERE id = ?`, [req.user.id])
+
+        const isMatch = await compare(old_password, oldPassword[0].password)
+
+        if (!isMatch)
+          return res.status(400).send({ error: 'Wrong old password' })
+
+
+        const newPasswordHashed = await hash(new_password, 8)
+
+        const [result] = await conn.execute(`UPDATE users SET
+          username = ?, email = ?, password = ?
+          WHERE id = ?`, [
+          username,
+          email,
+          newPasswordHashed,
+          req.user.id
+        ])
+      }
+      await conn.end()
+      res.send({ result: 'Account info was updated successfully ' })
+    } catch (e) {
+      if (e.errno === 1062)
+        return res.status(400).send({ error: 'UserName or Email is already used!!' })
+      throw e
+    }
+
+
+
+
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
 const getPets = async (req, res) => {
   try {
     const conn = await createConnection(connData)
-    const [pets] = await conn.execute('SELECT * FROM pets WHERE owner_id = ?', [req.user.id])
+    const [pets] = await conn.execute(`SELECT p.id, p.name, p.gender, p.birth_date, p.breed_name, p.photo, p.pervious_owner, p.shelter_id, p.owner_id, b.type_name as pet_type FROM pets p
+    JOIN breeds b ON b.name = p.breed_name
+    WHERE owner_id = ?`, [req.user.id])
     await conn.end()
     res.send(pets)
   } catch (e) {
@@ -363,7 +512,7 @@ const deleteAdPost = async (req, res) => {
     const [result] = await conn.execute('DELETE FROM adoption_ads WHERE client_id = ? AND id = ?  ', [req.user.id, req.params.ad_id])
     await conn.end()
     if (result.affectedRows === 0)
-      return res.status(404).send({ error: '404 not found'})
+      return res.status(404).send({ error: '404 not found' })
     res.send({ result: 'Adoption ad was deleted successfully ' })
   } catch (e) {
     res.status(500).send({ error: e.message })
@@ -396,7 +545,7 @@ const getMyRequests = async (req, res) => {
         continue
       }
       if (receivedRequests[i - 1].adoption_ad_id === receivedRequests[i].adoption_ad_id) {
-        if (i+1 === receivedRequests.length)
+        if (i + 1 === receivedRequests.length)
           finalReceived.push(adoption_ad_requests)
         adoption_ad_requests.push(receivedRequests[i])
         continue
@@ -405,11 +554,11 @@ const getMyRequests = async (req, res) => {
         finalReceived.push(adoption_ad_requests)
         adoption_ad_requests = []
         adoption_ad_requests.push(receivedRequests[i])
-        if (i+1 === receivedRequests.length)
+        if (i + 1 === receivedRequests.length)
           finalReceived.push(adoption_ad_requests)
         continue
       }
-      
+
 
     }
     res.send({ sentRequests, finalReceived })
@@ -483,9 +632,12 @@ const transferOwnerShip = async (req, res) => {
 export {
   signup,
   myProfile,
+  updateMyProfile,
+  updateMyAccount,
   login,
   logout,
   registerPet,
+  updatePet,
   getPets,
   createAppointment,
   getAppointments,

@@ -6,7 +6,7 @@ const SideNav = () => {
   return (
     <div className="home-container myprofile-wrapper">
       <div className="myprofile-container flex-row">
-        <div className="bio-container flex-row gap-8p falign-center">
+        {/* <div className="bio-container flex-row gap-8p falign-center">
           <img className="avatar-photo" alt='avatar' src='/media/imgs/avatar.jpg' />
           <div className="bio-info flex-col gap-4p">
             <p className="user-name">
@@ -14,7 +14,7 @@ const SideNav = () => {
             </p>
             <p>Your personal account</p>
           </div>
-        </div>
+        </div> */}
         <div className="profile-menu flex-col ">
           <NavLink
             to='/myprofile/mypersonalinfo'
