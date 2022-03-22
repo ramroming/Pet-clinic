@@ -12,6 +12,7 @@
   
 
   .change-pic {
+    position: relative;
     width: 100%;
     @include break-point('medium', 'up'){
       align-content: center;
@@ -65,10 +66,10 @@
             padding-left: 0.4rem;
           }
         }
-        a {
+        a, p {
           text-align: left;
         }
-        label, a {
+        label, a, p {
           transition: ease 0.5s all;
           &:hover {
             cursor: pointer;
@@ -81,9 +82,11 @@
   }
   .inputs-wrapper {
     
-
+    padding-top: 5rem;
     @include break-point('medium', 'up'){
       width: 90%;
+      padding-top: 0rem;
+
     }
 
   

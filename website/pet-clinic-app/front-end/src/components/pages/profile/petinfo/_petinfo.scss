@@ -155,3 +155,33 @@
   left: 50%;
   transform: translateX(-50%);
 }
+.pet-slider {
+  .pet-mini-card {
+
+    border: 2px solid var(--clr-primary-mainPurple);
+    transition: all ease .5s;
+    @include rounded-corners(.8rem, .8rem, .8rem, .8rem);
+    p {
+      padding-top: .25rem;
+  
+      @include break-point("medium", "up") {
+        padding-top: 1rem
+      }
+  
+    }
+    .mini-pet-photo{
+      width: 5rem;
+      height: 5rem;
+      @include rounded-corners(.8rem, .8rem, .8rem, .8rem);
+
+    }
+    &:hover {
+      cursor: pointer;
+      border-color: var(--clr-primary-secondBlue);
+    }
+    &.selected {
+      border-color: var(--clr-primary-secondBlue);
+    }
+  }
+}
+

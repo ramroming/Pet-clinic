@@ -31,9 +31,8 @@ CREATE TABLE `adoption_requests` (
   PRIMARY KEY (`client_id`,`adoption_ad_id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `ADOPTION_REQUESTS_fk1` (`adoption_ad_id`),
-  CONSTRAINT `ADOPTION_REQUESTS_fk0` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `ADOPTION_REQUESTS_fk1` FOREIGN KEY (`adoption_ad_id`) REFERENCES `adoption_ads` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `ADOPTION_REQUESTS_fk0` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +41,7 @@ CREATE TABLE `adoption_requests` (
 
 LOCK TABLES `adoption_requests` WRITE;
 /*!40000 ALTER TABLE `adoption_requests` DISABLE KEYS */;
-INSERT INTO `adoption_requests` VALUES (1,'2022-03-16 14:56:16',2,20,'pending'),(5,'2022-03-15 15:11:17',4,20,'pending'),(6,'2022-03-17 13:11:17',7,13,'pending'),(7,'2022-02-17 13:11:19',156,45,'pending'),(10,'2022-03-18 14:08:44',156,47,'pending'),(12,'2022-03-18 14:10:49',159,45,'pending'),(11,'2022-03-18 14:10:34',159,47,'pending');
+INSERT INTO `adoption_requests` VALUES (1,'2022-03-16 14:56:16',2,20,'rejected'),(5,'2022-03-15 15:11:17',4,20,'rejected'),(6,'2022-03-17 13:11:17',7,13,'pending'),(15,'2022-03-19 17:31:08',100,20,'accepted'),(16,'2022-03-19 17:31:59',100,21,'pending'),(14,'2022-03-19 16:09:36',126,45,'pending'),(13,'2022-03-19 16:09:04',126,47,'pending'),(7,'2022-02-17 13:11:19',156,45,'pending'),(10,'2022-03-18 14:08:44',156,47,'pending'),(12,'2022-03-18 14:10:49',159,45,'pending'),(11,'2022-03-18 14:10:34',159,47,'pending');
 /*!40000 ALTER TABLE `adoption_requests` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-19 15:46:40
+-- Dump completed on 2022-03-20 19:15:06

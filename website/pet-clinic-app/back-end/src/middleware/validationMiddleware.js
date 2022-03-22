@@ -43,7 +43,54 @@ const signup = (req, res, next) => {
 
   next()
 }
+const updateMyProfile = (req, res, next) => {
 
+  const { first_name, last_name, address, phone_number, photoChanged } = req.body
+
+  // validating data for signing up
+
+ 
+  if (!first_name || !last_name || !address || !phone_number || !photoChanged)
+    return res.status(400).send({ error: 'missing data' })
+  if (photoChanged !== 'yes' && photoChanged !=='no')
+    return res.status(400).send({ error: 'missing data' })
+
+  if (myValidator.isLongData(first_name))
+    return res.status(400).send({ error: 'long first name !!' })
+
+  if (myValidator.isLongData(last_name))
+    return res.status(400).send({ error: 'long last name !!' })
+
+  if (myValidator.isTooLong(address))
+    return res.status(400).send({ error: 'long address  !!' })
+
+
+  if (!myValidator.isPhoneNumber(phone_number))
+    return res.status(400).send({ error: 'invalid Phone Number!!' })
+  
+
+  next()
+}
+
+const updateMyAccount = (req, res, next) => {
+  const { username, email, old_password, new_password, changePassword } = req.body
+  if (!username || !email || !changePassword)
+    return res.status(400).send({ error: 'missing data' })
+  if (changePassword !== 'yes' && changePassword !== 'no')
+    return res.status(400).send({ error: 'bad data' })
+
+  if (changePassword === 'yes') {
+    if (!old_password || !new_password)
+      return res.status(400).send({ error: 'missing data' })
+    if (!myValidator.isGoodPassword(new_password))
+      return res.status(400).send({ error: 'Weak password' })
+  }
+  if (!myValidator.isValidEmail(email))
+    return res.status(400).send({ error: 'invalid Email Address' })
+
+
+  next()
+}
 const login = (req, res, next) => {
   const { username, password } = req.body
 
@@ -96,7 +143,54 @@ const registerPet = async (req, res, next) => {
 
   next()
 }
+const updatePet = async (req, res, next) => {
+  const { gender, birth_date, name, breed_name, colors, pet_type } = req.body
 
+  if (!gender || !birth_date || !name || !breed_name || !req.params.pet_id || !pet_type || !colors)
+    return res.status(400).send({ error: 'missing data' })
+
+  if (!myValidator.isValidId(req.params.pet_id))
+    return res.status(400).send({ error: 'Bad Data' })
+
+  // checking long values
+  if (myValidator.isLongData(gender) || myValidator.isLongData(birth_date) || myValidator.isLongData(name) || myValidator.isLongData(breed_name))
+    return res.status(400).send({ error: 'Long Data!! ' })
+
+  // checking gender's validity
+  if (!myValidator.isValidGender(gender))
+    return res.status(400).send({ error: 'invalid gender value ' })
+
+  // checking birth_date validity 
+  if (!myValidator.isValidBirthDate(birth_date))
+    return res.status(400).send({ error: 'invalid birthdate value or format hint: only YYYY-MM-DD format is allowed' })
+  if (!myValidator.isValidPetType(pet_type))
+    return res.status(400).send({ error: 'invalid pet_type ' })
+
+  try {
+    const result = await myValidator.isValidBreed(breed_name, pet_type)
+    if (!result)
+      return res.status(400).send({ error: 'invalid breed or pet_type ' })
+  } catch (e) {
+
+    return res.status(500).send({ error: e.message })
+  }
+  try {
+    const result = await myValidator.isValidColors(colors)
+    if (!result.valid)
+      return res.status(400).send({ error: 'invalid colors' })
+    req.body.colors = result.colorWithId
+    const validPet = await myValidator.isOwnerPet(req.user.id, req.params.pet_id)
+    if (!validPet)
+      return res.status(400).send({ error: 'invalid pet/owner_id' })
+
+    
+  }
+  catch(e) {
+    return res.status(500).send({ error: e.message })
+  }
+
+  next()
+}
 const getMyPet = async (req, res, next) => {
   if (!req.params.id || !myValidator.isValidId(req.params.id))
     return res.status(400).send({ error: 'Bad URL !!'})
@@ -270,8 +364,11 @@ const getAdoptionAds = async (req, res, next) => {
 
 export default {
   signup,
+  updateMyProfile,
+  updateMyAccount,
   login,
   registerPet,
+  updatePet,
   getStaff,
   appointmentsTimes,
   createAppointment,
@@ -284,6 +381,6 @@ export default {
   deleteAdPost,
   createRequest, 
   deleteRequest,
-  transferOwnerShip
+  transferOwnerShip,
 
 }

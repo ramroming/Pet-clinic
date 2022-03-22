@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import { signup, myProfile, login, logout, registerPet, getPets, createAppointment, getAppointments, deleteAppointments, getMyPet, createAdoptionAd, commentOnAd, updatePostStory, deleteAdPost, getMyAdoptionAds, getMyRequests, createRequest, deleteRequest, transferOwnerShip} from '../controllers/UserController.js'
+import { signup, myProfile, updateMyProfile, login, logout, registerPet, getPets, createAppointment, getAppointments, deleteAppointments, getMyPet, createAdoptionAd, commentOnAd, updatePostStory, deleteAdPost, getMyAdoptionAds, getMyRequests, createRequest, deleteRequest, transferOwnerShip, updateMyAccount,updatePet} from '../controllers/UserController.js'
 
 // middlewares
 import auth from '../middleware/auth.js'
@@ -20,6 +20,14 @@ usersRouter.post('/users/login', validationMiddleware.login, login)
 // get my profile data
 usersRouter.get('/users/me', auth, myProfile)
 
+// update user's personal info
+usersRouter.patch('/users/me', auth, formDataMiddleWare.single('photo'), validationMiddleware.updateMyProfile,  updateMyProfile, (error, req, res, next) => {
+  res.status(400).send({ error: error.message })
+})
+
+//update users' account info
+usersRouter.patch('/users/me/account', auth, validationMiddleware.updateMyAccount, updateMyAccount)
+
 // logout user
 usersRouter.get('/users/logout', auth, logout)
 
@@ -28,12 +36,16 @@ usersRouter.get('/users/logout', auth, logout)
 usersRouter.post('/users/me/pets', auth, formDataMiddleWare.single('photo'), validationMiddleware.registerPet, registerPet, (error, req, res, next) => {
   res.status(400).send({ error: error.message })
 })
-
-// get all  pets of the user
-usersRouter.get('/users/me/pets/', auth, getPets)
+// update pets for a user
+usersRouter.patch('/users/me/pet/:pet_id', auth, formDataMiddleWare.single('photo'), validationMiddleware.updatePet, updatePet, (error, req, res, next) => {
+  res.status(400).send({ error: error.message })
+})
 
 // transfer the owner ship of a pet to the requester after owner approval
 usersRouter.patch('/users/me/pets/:pet_id/:new_owner_id/:ad_id', auth, validationMiddleware.transferOwnerShip, transferOwnerShip)
+
+// get all  pets of the user
+usersRouter.get('/users/me/pets/', auth, getPets)
 
 // get a user pet by id
 usersRouter.get('/users/me/pets/:id', auth, validationMiddleware.getMyPet,  getMyPet)

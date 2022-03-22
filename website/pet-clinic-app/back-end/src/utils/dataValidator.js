@@ -107,6 +107,8 @@ const myValidator = {
     if (colors === '') 
       return false
     const colorsArr = colors.split(':')
+    if (colorsArr.length > 3)
+      return false
     const colorWithId = []
     try {
       const conn = await createConnection(connData)
