@@ -193,7 +193,7 @@ const PetInfo = () => {
 
         {state.responseError && <p style={{ color: 'red', textAlign: 'center', width: '70%', margin: 'auto' }}>{state.responseError}</p>}
         <p className='manage-pet-header'>Manage your current pets select to change</p>
-        <div className="manage-pets-container flex-col gap-12p">
+        <div className="manage-pets-container flex-col gap-24p">
           <AnimatePresence exitBeforeEnter>
             {state.isLoadingPets &&
               <motion.div
@@ -206,7 +206,7 @@ const PetInfo = () => {
               </motion.div>
             }
           </AnimatePresence>
-          <div className="pet-slider flex-row gap-8p">
+          <div className="pet-slider flex-row fjust-center gap-8p">
             {state.getPetsResult && state.getPetsResult.map((pet, index) => {
               return (
                 <div

@@ -29,7 +29,7 @@ const getAdoptionAd = async (req, res) => {
     JOIN users u ON c.client_id = u.id
     JOIN adoption_ads aa ON aa.id = c.adoption_ad_id
     WHERE adoption_ad_id = ? AND aa.status = 1
-    ORDER BY date DESC `, [req.params.id])
+    ORDER BY date  `, [req.params.id])
     await conn2.end()
 
     // getting the training of the pet

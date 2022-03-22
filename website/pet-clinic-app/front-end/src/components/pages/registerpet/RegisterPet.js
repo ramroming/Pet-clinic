@@ -163,11 +163,11 @@ const RegisterPet = () => {
   useEffect(() => {
     setPageIsLoading(state.isLoading || state.isLoadingBreeds)
   }, [state.isLoading, state.isLoadingBreeds, setPageIsLoading])
-  
+
   const selectColor = (event) => {
     dispatch({ type: 'selectColor', color: event.target.innerHTML })
   }
-  return (  
+  return (
     <div className="background-dark-blue">
       <div className="main-container flex-row">
 
@@ -191,7 +191,9 @@ const RegisterPet = () => {
             <div className="flex-row fjust-evenly icons-wrapper">
 
               {state.pet_type.errorMsg && <InputError class='error-msg' msg={state.pet_type.errorMsg} />}
-              <label >
+              <label
+                onClick={() => dispatch({ type: 'enterValue', value: 'cat', field: 'pet_type' })}
+              >
                 <input
                   className="radio-img"
                   type="radio"
@@ -200,11 +202,12 @@ const RegisterPet = () => {
                   defaultChecked
                 />
                 <img
-                  onClick={() => dispatch({ type: 'enterValue', value: 'cat', field: 'pet_type' })}
                   className="pet-icon" src="/media/imgs/cat-icon.png" alt="" />
               </label>
 
-              <label  >
+              <label
+                onClick={() => dispatch({ type: 'enterValue', value: 'dog', field: 'pet_type' })}
+              >
                 <input
                   className="radio-img"
                   type="radio"
@@ -212,11 +215,11 @@ const RegisterPet = () => {
                   id="type_name"
                 />
                 <img
-                  onClick={() => dispatch({ type: 'enterValue', value: 'dog', field: 'pet_type' })}
                   className="pet-icon" src="/media/imgs/dog-icon.jpg" alt="" />
               </label>
 
-              <label >
+              <label onClick={() => dispatch({ type: 'enterValue', value: 'bird', field: 'pet_type' })}
+              >
                 <input
                   className="radio-img"
                   type="radio"
@@ -224,7 +227,6 @@ const RegisterPet = () => {
                   id="type_name"
                 />
                 <img
-                  onClick={() => dispatch({ type: 'enterValue', value: 'bird', field: 'pet_type' })}
                   className="pet-icon low-op" src="/media/imgs/bird-icon.png" alt="" />
               </label>
 
@@ -306,11 +308,11 @@ const RegisterPet = () => {
               <i className="fas fa-upload"></i>
             </label>
             <input
-              onChange={(e) => { 
+              onChange={(e) => {
                 if (e.currentTarget.files.length !== 0)
                   return dispatch({ type: 'uploadPhoto', field: 'photo', value: e.currentTarget.files[0], url: URL.createObjectURL(e.currentTarget.files[0]) })
                 return
-                } }
+              }}
               type="file"
               name="photo"
               id="photo"
@@ -344,19 +346,19 @@ const RegisterPet = () => {
           </div>
           <div className="input-wrapper flex-row">
 
-            {state.colors && state.colors.length !==0 && !state.isLoadingColors && state.selectedColors &&
+            {state.colors && state.colors.length !== 0 && !state.isLoadingColors && state.selectedColors &&
               state.colors.map((color, index) => {
                 return (
                   <div
-                  className={state.selectedColors.length !== 0 && state.selectedColors.includes(color.name) ? "color-tag color-selected" : "color-tag" }
-                  key={index}
+                    className={state.selectedColors.length !== 0 && state.selectedColors.includes(color.name) ? "color-tag color-selected" : "color-tag"}
+                    key={index}
                   >
-                    <p 
-                  onClick={(event) => {
-                    selectColor(event)
-                  }}
-                  colorid={index}
-                 >{color.name}</p>
+                    <p
+                      onClick={(event) => {
+                        selectColor(event)
+                      }}
+                      colorid={index}
+                    >{color.name}</p>
                   </div>
                 )
               })
