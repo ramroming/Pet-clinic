@@ -5,7 +5,7 @@ const petClinicRules = {
   MAX_ACTIVE_APPOINTMENTS: 3,
   MAX_APPOINTMENTS_PER_DAY: 1,
   // 4 pets
-  MAX_PETS_PER_USER: 10
+  MAX_PETS_PER_USER: 4
   
 
 }
