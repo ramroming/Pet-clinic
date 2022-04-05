@@ -12,10 +12,17 @@ const Burgerlist = () => {
   const [menuTog, setMenuTog] = useState(false)
   const auth = useContext(authContext)
 
-  const dropList = [
-    auth.isLoggedIn ? 'Logout' : 'Login',
-    auth.isLoggedIn ? 'My profile' : 'Signup',
-     'Register pet', 'Appointment', 'Adoption', 'About']
+  let dropList
+
+  if (auth.userRole === null){
+     dropList = [
+      auth.isLoggedIn ? 'Logout' : 'Login',
+      auth.isLoggedIn ? 'My profile' : 'Signup',
+       'Register pet', 'Appointment', 'Adoption', 'About']
+  } else {
+    dropList = ['Logout']
+  }
+
 
   // const dropList = [
   //   { title: 'Logout' },

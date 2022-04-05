@@ -64,7 +64,7 @@ const signup = async (req, res) => {
       await conn.end()
 
       // creating the JWT 
-      const token = await generateAuthToken(userID)
+      const token = await generateAuthToken({userId: userID, userRole: stmem_type})
 
       // if storing token to the database failed
       if (!token) {
@@ -109,7 +109,7 @@ const login = async (req, res) => {
 
     try {
       const user = await findUserByCredentials(conn, req.body.username, req.body.password)
-      const token = await generateAuthToken(user.id)
+      const token = await generateAuthToken({userId: user.id, userRole: user.stmem_type})
       // if saving token to database failed
       if (!token) {
         return res.status(500).send({ error: 'couldnt save token to database' })

@@ -4,7 +4,7 @@ const LoadingPage = () => {
   const pageIsLoading = useContext(pageLoadingContext).pageIsLoading
   return (
     <>
-      {pageIsLoading &&
+      {pageIsLoading === true &&
         <div className="loading-page">
 
           <div className="lds-ripple-page"><div></div><div></div></div>

@@ -22,6 +22,10 @@ Td,Tr,Th{
     padding: 1rem 0;
     
 }
+td {
+    overflow: auto;
+    padding: 1rem .5rem;
+}
 
 .my-great-button{
 

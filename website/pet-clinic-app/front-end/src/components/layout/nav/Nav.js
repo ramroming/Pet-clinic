@@ -12,56 +12,60 @@ const Nav = () => {
         <Link to='/' className="image-link"><img className='full-logo' src="/media/imgs/fulllogo.jpg" alt="" /></Link>
 
         <div className="nav-items flex-row fjust-around falign-center">
-          <div className="links-wrapper flex-row fjust-around ">
-            <NavLink
-              to='/'
-              className={({ isActive }) =>
-                isActive ? 'nav-item active-link' : 'nav-item'
-              }>Home</NavLink>
-            <NavLink
-              to='/appointment'
-              className={({ isActive }) =>
-                isActive ? 'nav-item active-link' : 'nav-item'
-              }
-            >Appointment</NavLink>
-            <NavLink
-              to='/adoption'
-              className={({ isActive }) =>
-                isActive ? 'nav-item active-link' : 'nav-item'
-              }
-            >Adoption</NavLink>
-            <NavLink
-              to='/about'
-              className={({ isActive }) =>
-                isActive ? 'nav-item active-link' : 'nav-item'
-              }
-            >About</NavLink>
-            <NavLink
-              to='/registerpet'
-              className={({ isActive }) =>
-                isActive ? 'nav-item active-link' : 'nav-item'
-              }
-            >Add pet</NavLink>
-            
-          </div>
+          {(auth.userRole === null) &&
+            <div className="links-wrapper flex-row fjust-around ">
+              <NavLink
+                to='/'
+                className={({ isActive }) =>
+                  isActive ? 'nav-item active-link' : 'nav-item'
+                }>Home</NavLink>
+              <NavLink
+                to='/appointment'
+                className={({ isActive }) =>
+                  isActive ? 'nav-item active-link' : 'nav-item'
+                }
+              >Appointment</NavLink>
+              <NavLink
+                to='/adoption'
+                className={({ isActive }) =>
+                  isActive ? 'nav-item active-link' : 'nav-item'
+                }
+              >Adoption</NavLink>
+              <NavLink
+                to='/about'
+                className={({ isActive }) =>
+                  isActive ? 'nav-item active-link' : 'nav-item'
+                }
+              >About</NavLink>
+              <NavLink
+                to='/registerpet'
+                className={({ isActive }) =>
+                  isActive ? 'nav-item active-link' : 'nav-item'
+                }
+              >Add pet</NavLink>
+
+            </div>
+          }
+
 
           <div className="btn-wrapper flex-row fjust-start gap-8p">
-            {auth.isLoggedIn && 
-            <Link
-            className="btn-s" 
-            to='/myprofile/mypersonalinfo'>My profile</Link>}
-            {auth.isLoggedIn && <button  onClick={() => {
+            {auth.isLoggedIn && auth.userRole === null &&
+              <Link
+                className="btn-s"
+                to='/myprofile/mypersonalinfo'>My profile</Link>}
+          
+            {auth.isLoggedIn && <button onClick={() => {
               auth.logout()
             }} className="btn-s">Logout</button>}
-            {!auth.isLoggedIn && 
-            <Link
-            className="btn-s" 
-            to='/login'>Login</Link>}
-            {!auth.isLoggedIn && 
-            <Link
-            className="btn-s" 
-            to='/signup'>Signup</Link>}
-            
+            {!auth.isLoggedIn &&
+              <Link
+                className="btn-s"
+                to='/login'>Login</Link>}
+            {!auth.isLoggedIn &&
+              <Link
+                className="btn-s"
+                to='/signup'>Signup</Link>}
+
           </div>
         </div>
 

@@ -117,7 +117,7 @@ const Signup = () => {
   // after data been fetched if we have a token inside the data that means the login was successfull so we login
   useEffect(() => {
     if (state.responseData.token)
-      auth.login(state.responseData.userData.id, state.responseData.token)
+      auth.login(state.responseData.userData.id, state.responseData.token, state.responseData.userData.stmem_type)
     
   }, [state.responseData, auth])
 

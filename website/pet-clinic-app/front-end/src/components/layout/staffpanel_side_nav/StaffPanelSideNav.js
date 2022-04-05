@@ -1,9 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { Outlet } from "react-router";
+import { authContext } from "../../shared/context/auth-context";
+import { useContext } from 'react';
 
 const StaffPanelSideNav = () => {
 
-
+  const userRole = useContext(authContext).userRole
   return (
     <div className="home-container myprofile-wrapper">
       <div className="myprofile-container flex-row">
@@ -27,7 +29,9 @@ const StaffPanelSideNav = () => {
             className={({ isActive }) =>
               isActive ? 'profile-option selected' : 'profile-option'
             }>Manage Account</NavLink>
-          <NavLink
+          { userRole === 'admin' && 
+            <>
+              <NavLink
             to='/staffpanel/manageappointments'
             className={({ isActive }) =>
               isActive ? 'profile-option selected' : 'profile-option'
@@ -72,6 +76,42 @@ const StaffPanelSideNav = () => {
             className={({ isActive }) =>
               isActive ? 'profile-option selected' : 'profile-option'
             }>Manage Profits</NavLink>
+            </>
+          }
+          { userRole === 'receptionist' && 
+            <>
+            <NavLink
+            to='/staffpanel/manageappointments'
+            className={({ isActive }) =>
+              isActive ? 'profile-option selected' : 'profile-option'
+            }>Manage Appointments</NavLink>
+            <NavLink
+            to='/staffpanel/registration'
+            className={({ isActive }) =>
+              isActive ? 'profile-option selected' : 'profile-option'
+            }>Registration</NavLink>
+            <NavLink
+            to='/staffpanel/adoptionrequests'
+            className={({ isActive }) =>
+              isActive ? 'profile-option selected' : 'profile-option'
+            }>Manage Adoption Requests</NavLink>
+            </>
+          }
+           { userRole === 'vet' && 
+            <NavLink
+            to='/staffpanel/pettreatmenthistory'
+            className={({ isActive }) =>
+              isActive ? 'profile-option selected' : 'profile-option'
+            }>Pet Treatment History</NavLink>
+          } 
+          { userRole === 'trainer' && 
+            <NavLink
+            to='/staffpanel/pettraininghistory'
+            className={({ isActive }) =>
+              isActive ? 'profile-option selected' : 'profile-option'
+            }>Pet Training History</NavLink>
+          } 
+          
 
         </div>
         <div className="profile-animation-wrapper">

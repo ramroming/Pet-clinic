@@ -9,22 +9,25 @@ const useAuth = () => {
   // creating the states that will be sent via the context
   const [token, setToken] = useState(null)
   const [userId, setUserId] = useState(null)
+  const [userRole, setUserRole] = useState(null)
   const [tokenExpirationDate, setTokenExpirationDate] = useState()
 
   // using this state to tell the routes that the user is logged in
   const [authedUser, setAuthedUser] = useState(null)
+  // using this state to tell the routes that the user is logged in
 
   const location = useLocation()
   const redirector = useReDirector()
 
-  const login = useCallback((uid, token, expirationDate) => {
+  const login = useCallback((uid, token, role, expirationDate) => {
     setToken(token)
     setUserId(uid)
     setAuthedUser(true)
+    setUserRole(role)
     // create an expiration date for the token when loginin, if the user refresh the page or re-enter the browser the useEffect will work and will call the login so if the token is still valid override the date in the storage with itself so nothing will change
     const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 6 )
     setTokenExpirationDate(tokenExpirationDate)
-    localStorage.setItem('userData', JSON.stringify({ uid, token, expiration: tokenExpirationDate.toISOString() }))
+    localStorage.setItem('userData', JSON.stringify({ uid, token, role, expiration: tokenExpirationDate.toISOString() }))
      
 
 
@@ -37,6 +40,8 @@ const useAuth = () => {
     setUserId(null)
     setTokenExpirationDate(null)
     setAuthedUser(false)
+    setUserRole(null)
+
     localStorage.removeItem('userData')
 
 
@@ -50,7 +55,7 @@ const useAuth = () => {
     // in order to login the storage must have a valid token, the token is valid if the expration date is later than the current date
     if (storedData && storedData.token) {
       if (new Date(storedData.expiration) > new Date()) {
-        login(storedData.uid, storedData.token)
+        login(storedData.uid, storedData.token, storedData.role)
       } else {
 
         setAuthedUser(false)
@@ -83,7 +88,7 @@ const useAuth = () => {
 
   
 
-  return { token, login, logout, userId, authedUser }
+  return { token, login, logout, userId, authedUser, userRole }
 }
 
 export default useAuth
