@@ -4,7 +4,7 @@ const appointmentRouter = new Router()
 // middlewares
 import auth from '../middleware/auth.js'
 import validationMiddleware from '../middleware/validationMiddleware.js'
-import { getStaffMems, appointmentsTimes } from '../controllers/AppointmentController.js'
+import { getStaffMems, appointmentsTimes, getAppointmentTypes } from '../controllers/AppointmentController.js'
 
 // getting necessary data when making an appointment
 
@@ -13,6 +13,9 @@ appointmentRouter.get('/appointment/staffmems', auth, validationMiddleware.getSt
 
 // getting available times on a specific date for a specific stmem
 appointmentRouter.get('/appointment/appointmentstimes', auth, validationMiddleware.appointmentsTimes, appointmentsTimes)
+
+// getting available times on a specific date for a specific stmem
+appointmentRouter.get('/appointment/appointmenttypes', auth, getAppointmentTypes)
 
 
 export default appointmentRouter

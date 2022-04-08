@@ -51,4 +51,24 @@
     }
   }
 }
+.rec-make-appointment {
+  position: relative;
+  padding-top: 2rem;
+  min-height: 60rem;
+  @include break-point('medium', 'up') {
+  min-height: 45rem;
+  }
+  h1, p {
+    color: black !important;
+  }
+  .user-name-appointment {
+    padding: .3rem;
+    @include rounded-corners(.5rem, .5rem, .5rem, .5rem);
+    border: 1px solid grey;
+  }
+  .make-appointment-slider {
+    padding: 0;
+    top: 18%;
+  }
+}
 

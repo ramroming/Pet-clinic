@@ -50,7 +50,19 @@ const appointmentsTimes = async (req, res) => {
   }
 }
 
+const getAppointmentTypes = async (req, res) => {
+  try {
+    const conn = await createConnection(connData)
+    const [appointmentTypes] = await conn.execute('SELECT name FROM appointment_types')
+    await conn.end()
+    res.send(appointmentTypes)
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+
 export  {
   appointmentsTimes,
-  getStaffMems
+  getStaffMems,
+  getAppointmentTypes
 }

@@ -223,6 +223,10 @@ const createAppointment = async (req, res, next) => {
     if (!appointmentTypeId)
       return res.status(400).send({ error: 'Invalid Data' })
 
+    const result2 = await myValidator.isValidStmemAppointment(appointment_type, stmem_id)
+    if (!result2)
+      return res.status(400).send({ error: 'Invalid Stmem/appointment' })
+
     // send the appointmentType id to the controller
     req.appointmentTypeId = appointmentTypeId
     
@@ -368,6 +372,43 @@ const confirmAppointment = async (req, res, next) => {
     return res.status(400).send({ error: 'Bad URL!!' })
   next()
 }
+const RecCreateAppointment = async (req, res, next) => {
+
+  const { appointment_type, stmem_id, pet_id, user_name, date, hour } = req.body
+  if (!appointment_type || !stmem_id || !pet_id || !date || !hour)
+    return res.status(400).send({ error: 'missing data!!' })
+  if (!myValidator.isValidId(stmem_id) || !myValidator.isValidId(pet_id)) 
+    return res.status(400).send({ error: 'Invalid Data' })
+  if (!myValidator.isValidAppointmentDate(date))
+    return res.status(400).send({ error: 'No Available Dates on the date specified' })
+
+  try {
+    const userId = await myValidator.isValidUser(user_name)
+    if (!userId)
+      return res.status(400).send({ error: 'Invalid username ' })
+
+    const result = await myValidator.isOwnerPet(userId, pet_id)
+    if (!result)
+      return res.status(400).send({ error: 'Invalid pet/owner ' })
+
+    const appointmentTypeId = await myValidator.isValidAppointmentType(appointment_type)
+    if (!appointmentTypeId)
+      return res.status(400).send({ error: 'Invalid Data' })
+
+    const result2 = await myValidator.isValidStmemAppointment(appointment_type, stmem_id)
+    if (!result2)
+      return res.status(400).send({ error: 'Invalid Stmem/appointment' })
+
+    // send the appointmentType id to the controller
+    req.appointmentTypeId = appointmentTypeId
+    req.user_id = userId
+    
+  } catch (e) {
+
+    return res.status(500).send({ error: e.message })
+  }
+  next()
+}
 
 
 
@@ -391,6 +432,7 @@ export default {
   createRequest, 
   deleteRequest,
   transferOwnerShip,
-  confirmAppointment
+  confirmAppointment,
+  RecCreateAppointment
 
 }

@@ -9,6 +9,7 @@ import { pageLoadingContext } from '../../../shared/context/loading-context';
 import { authContext } from '../../../shared/context/auth-context';
 import Modal from '../../../utils/modal/Modal';
 import dateFormat from 'dateformat';
+import InputError from '../../../utils/formErrorMsg/InputError';
 const initialData = {
   isFetchingAppointments: true,
   appointments: null,
@@ -27,6 +28,17 @@ const initialData = {
   selectedAppointmentDelete: null,
   openDeleteModal: false,
 
+  createAppointmentTab: false,
+  isGettingAppointmentTypes: false,
+  appointmentTypes: [],
+  gettingAppointmentTypesFailure: '',
+
+
+  // appointment data
+  username: '',
+  appointmentType: '',
+
+
 }
 
 const AppointmentManagement = () => {
@@ -35,10 +47,6 @@ const AppointmentManagement = () => {
   const sendRequest = useFetch()
   const auth = useContext(authContext)
   const setPageIsLoading = useContext(pageLoadingContext).setPageIsLoading
-
-  const closeModal = () => {
-    dispatch({ type: 'closeDeleteModal' })
-  }
 
   useEffect(() => {
     let isMount = true
@@ -106,25 +114,55 @@ const AppointmentManagement = () => {
       isMount = false
     }
   }, [auth.token, dispatch, sendRequest, state.isDeleting, state.selectedAppointmentDelete])
+  useEffect(() => {
+    let isMount = true
+    const getAppointmentTypes = async () => {
+      try {
+        const appointmentTypes = await sendRequest(`http://localhost:5000/appointment/appointmenttypes`, 'GET', null, {
+          'Authorization': `Bearer ${auth.token}`
+        })
+        if (appointmentTypes && isMount)
+          dispatch({ type: 'successGetAppointmentTypes', data: appointmentTypes})
+      } catch (e) {
+        if (isMount)
+          dispatch({ type: 'failureGetAppointmentTypes', error: e.message })
+      }
+    }
+    if (state.isGettingAppointmentTypes)
+      getAppointmentTypes()
+    
+    
+    return () => {
+      isMount = false
+    }
+  }, [auth.token, dispatch, sendRequest, state.isGettingAppointmentTypes])
 
 
 
   useEffect(() => {
-    setPageIsLoading(state.isFetchingAppointments)
-  }, [setPageIsLoading, state.isFetchingAppointments])
+    setPageIsLoading(state.isFetchingAppointments || state.isGettingAppointmentTypes)
+  }, [setPageIsLoading, state.isFetchingAppointments, state.isGettingAppointmentTypes])
 
   useEffect(() => {
     if (state.confirmResult || state.deleteResult)
       window.location.reload()
   }, [state.confirmResult, state.deleteResult])
 
+  const closeModal = () => {
+    dispatch({ type: 'closeDeleteModal' })
+  }
+  const submitForm = async (event) => {
+    event.preventDefault()
+    dispatch({ type: 'validate' })
+  }
+
   return (
     <>
-      {(state.fetchAppointmentFailure || state.confirmFailure || state.deleteFailure) &&
+      {(state.fetchAppointmentFailure || state.confirmFailure || state.deleteFailure || state.gettingAppointmentTypesFailure) &&
         <Modal
           modalClass='error'
           header='Oops!!'
-          body={state.fetchAppointmentFailure || state.confirmFailure || state.deleteFailure}
+          body={state.fetchAppointmentFailure || state.confirmFailure || state.deleteFailure || state.gettingAppointmentTypesFailure}
           dispatch={dispatch}
 
         />}
@@ -138,20 +176,28 @@ const AppointmentManagement = () => {
           {state.openConfirmModal && <EditAppointmentStatus dispatch={dispatch} />}
         </div>
         <button
-          onClick={() => {
+          onClick={(e) => {
             if (state.amount === 'today')
               return
-            dispatch({ type: 'changeTab' })
+            dispatch({ type: 'changeTab', data: e.currentTarget.innerText.toLowerCase() })
           }}
           className={state.amount === 'today' ? 'query-button selected' : 'query-button'}>Today</button>
         <button
-          onClick={() => {
+          onClick={(e) => {
             if (state.amount === 'all')
               return
-            dispatch({ type: 'changeTab' })
+            dispatch({ type: 'changeTab', data: e.currentTarget.innerText.toLowerCase() })
           }}
           className={state.amount === 'all' ? 'query-button selected' : 'query-button'}>All</button>
-        <Table className="my-table with-query">
+        <button
+          onClick={() => {
+            if (state.createAppointmentTab === true)
+              return
+            dispatch({ type: 'createAppointmentEnter' })
+          }}
+          className={state.createAppointmentTab === true ? 'query-button selected' : 'query-button'}>New Appointment +</button>
+        {state.amount ?
+          <Table className="my-table with-query">
           <Thead>
             <Tr>
               <Th>
@@ -252,6 +298,46 @@ const AppointmentManagement = () => {
 
 
         </Table>
+        :
+        <form className="form-container flex-col gap-16p falign-center" action="/" method="POST"
+          onSubmit={(e) => submitForm(e)}>
+          <a className="logo-link" href="/#">
+            <img src="/media/imgs/favicon.png" alt="" className="logo" />
+          </a>
+
+          <div className="input-wrapper flex-row fjust-between">
+            <label className="half-label" htmlFor="username">username:*
+            </label>
+            <input type="text" name="username" id="username" onChange={(e) => { dispatch({ type: 'enterValue', field: 'username', value: e.currentTarget.value }) }} />
+          </div>
+          <div className="input-wrapper flex-row">
+            <select
+                onChange={(e) => dispatch({ type: 'enterValue', field: 'appointmentType', value: e.currentTarget.value })}
+                name="appointment_type"
+                id="appointment_type">
+                <option value="">Select appointment type</option>
+                {state.appointmentTypes && state.appointmentTypes.map((appointmentType, index) => {
+                  return <option key={index} value={appointmentType.name}>{appointmentType.name}</option>
+                })}
+              </select>
+          </div>
+          
+
+
+          {state.missingInput && <p style={{ color: 'red', textAlign: 'center', width: '70%', margin: 'auto' }}>Please Fill mandatory fields *</p>}
+          {state.responseError && <p style={{ color: 'red', textAlign: 'center', width: '70%', margin: 'auto' }}>{state.responseError}</p>}
+
+          <div className="button-wrapper flex-row gap-8p fjust-center">
+
+
+            <button type="submit" className={state.isLoading ? "btn-r btn-r-dark disabled" : "btn-r btn-r-dark"} disabled={state.isLoading}>
+              Sign up
+            </button>
+
+          </div>
+        </form>
+        }
+        
 
       </div>
     </>

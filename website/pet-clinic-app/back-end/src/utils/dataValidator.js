@@ -151,6 +151,54 @@ const myValidator = {
       throw e
     }
   },
+  async isValidStmemAppointment(appointment_type, stmem_id) {
+    try {
+      const conn = await createConnection(connData)
+      const [rows, fields] = await conn.execute('SELECT stmem_type FROM users WHERE id = ?', [stmem_id])
+      await conn.end()
+      if (!rows.length)
+        return false
+      switch(appointment_type) {
+        case 'Examination':
+          if (rows[0].stmem_type !== 'vet')
+            return false
+          break
+        case 'Training':
+          if (rows[0].stmem_type !== 'trainer')
+           return false
+          break
+        case 'Grooming':
+          if (rows[0].stmem_type !== 'groomer')
+            return false
+          break
+        case 'Adoption':
+          if (rows[0].stmem_type !== 'receptionist')
+            return false
+          break
+        default:
+         break
+      }
+      
+      // if the appointment_type is valid  
+      return true
+
+    }  catch(e) {
+      throw e
+    }
+  },
+  async isValidUser(username) {
+    try {
+      const conn = await createConnection(connData)
+      const [rows, fields] = await conn.execute('SELECT id FROM users WHERE username = ?', [username])
+      await conn.end()
+      if (!rows.length)
+        return false
+      
+      return rows[0].id
+    } catch (e) {
+      throw e
+    } 
+  },
   isValidAppStmem(appointment_type, stmem_id) {
     
   },

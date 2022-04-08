@@ -1,6 +1,11 @@
 import { useReducer } from 'react'
 const appointmentManagementReducer = (state, action) => {
   switch(action.type) {
+    case 'enterValue': 
+    return {
+      ...state,
+      [action.field]: action.value
+    }
     case 'successFetchAppointment':
       return {
         ...state,
@@ -24,8 +29,16 @@ const appointmentManagementReducer = (state, action) => {
     case 'changeTab': 
       return {
         ...state,
-        amount: state.amount === 'today' ? 'all' : 'today',
+        amount: action.data,
+        createAppointmentTab: false,
         isFetchingAppointments: true
+      }
+    case 'createAppointmentEnter': 
+      return {
+        ...state,
+        amount: '',
+        createAppointmentTab: true,
+        isGettingAppointmentTypes: true
       }
     case 'selectConfirmAppointment': 
       return {
@@ -75,6 +88,13 @@ const appointmentManagementReducer = (state, action) => {
         isDeleting: false,
         deleteFailure: '',
         deleteResult: action.data
+      }
+    case 'successGetAppointmentTypes': 
+      return {
+        ...state,
+        isGettingAppointmentTypes: false,
+        gettingAppointmentTypesFailure: '',
+        appointmentTypes: action.data
       }
     case 'confirmFailure': 
       return {
