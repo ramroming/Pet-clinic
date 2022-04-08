@@ -32,5 +32,23 @@
 
     }
 }
-
+.query-button {
+  padding: .5rem;
+  background-color: var(--clr-primary-mainBlue);
+  color: white;
+  transition: all ease .5s;
+  @include rounded-corners(.5rem, .5rem, 0rem, 0rem);
+  &:hover {
+    cursor: pointer;
+    background-color: var(--clr-primary-secondBlue);
+  }
+  &.selected {
+    background-color: var(--clr-primary-secondBlue);
+    color: black;
+    font-weight: bold;
+    &:hover {
+      cursor: default;
+    }
+  }
+}
 

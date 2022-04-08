@@ -2,7 +2,7 @@ import { compare } from 'bcrypt'
 import  jwt  from 'jsonwebtoken'
 
 // checking the user credentials when logging in
-const findUserByCredentials = async (conn, username, password) => {
+const find_user_by_credentials = async (conn, username, password) => {
   const [user] = await conn.execute('SELECT id, username, email, password, user_type, personal_info_id, status, stmem_type FROM users WHERE username = ?', [username])
   if (user.length === 0)
     throw new Error('Wrong username or password')
@@ -19,7 +19,7 @@ const findUserByCredentials = async (conn, username, password) => {
 }
 
 // creating a JWT
-const generateAuthToken = async (payload) => {
+const generate_auth_token = async (payload) => {
   const token = jwt.sign(payload, 'petappr&r', { expiresIn: '7 days' })
   return token
 
@@ -39,6 +39,6 @@ const generateAuthToken = async (payload) => {
 }
 
 export default {
-  findUserByCredentials,
-  generateAuthToken,
+  find_user_by_credentials,
+  generate_auth_token,
 }

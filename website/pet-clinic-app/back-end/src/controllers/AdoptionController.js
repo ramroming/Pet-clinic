@@ -3,7 +3,7 @@ import connData from '../database/pet-clinic-db.js'
 import myValidator from '../utils/dataValidator.js'
 import timeOperations from '../utils/timeOperations.js'
 
-const { calculatePetAge } = timeOperations
+const { calculate_pet_age } = timeOperations
 
 const getAdoptionAd = async (req, res) => {
  if (!req.params.id || !myValidator.isValidId(req.params.id))
@@ -43,7 +43,7 @@ const getAdoptionAd = async (req, res) => {
     
     const isRequestedByMe = await myValidator.nonExistentRequest(req.user.id, req.params.id)
 
-    adoptionAds[0].birth_date = calculatePetAge(adoptionAds[0].birth_date)
+    adoptionAds[0].birth_date = calculate_pet_age(adoptionAds[0].birth_date)
     adoptionAds[0].trainings = trainings
     adoptionAds[0].requested = isRequestedByMe
     res.send({adoptionAd: adoptionAds[0], comments})

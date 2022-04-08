@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5ef6452d-0841-44fc-8df2-0d0f70a9bf4a",
+		"_postman_id": "5cca0625-cd8e-4c0e-8fa4-4251f439513b",
 		"name": "Pet-clinic-app",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -64,7 +64,87 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"rami94\",\r\n \"password\": \"9=GUj?=?>Ftjw.f;\"\r\n}",
+					"raw": "{\r\n    \"username\": \"michael88\",\r\n \"password\": \"*rD3PyG?Ff-R!QLv\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Receptionist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {\r",
+							"    pm.environment.set('authToken', pm.response.json().token)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"sami99\",\r\n \"password\": \"2]Ct].CjUV.LFDjk\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {\r",
+							"    pm.environment.set('authToken', pm.response.json().token)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"adminBruce\",\r\n \"password\": \"dvF6(C3V(8.xPrmL\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -792,6 +872,62 @@
 						"me",
 						"requests",
 						"38"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReceptionistGetAppointments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/receptionist/appointments",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"receptionist",
+						"appointments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReceptionistDeleteAppointments",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/receptionist/appointments/50",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"receptionist",
+						"appointments",
+						"50"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReceptionistConfirmAppointment",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/receptionist/appointments/49",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"receptionist",
+						"appointments",
+						"49"
 					]
 				}
 			},

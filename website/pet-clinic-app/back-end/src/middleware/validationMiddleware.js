@@ -233,11 +233,7 @@ const createAppointment = async (req, res, next) => {
   next()
 }
 
-const deleteAppointment = async (req, res, next) => {
-  if (!req.params.id || !myValidator.isValidId(req.params.id))
-    return res.status(400).send({ error: 'Bad URL!!' })
-  next()
-}
+
 
 const createAdoptionAd = async (req, res, next) => {
   const { pet_id, story } = req.body
@@ -359,6 +355,19 @@ const getAdoptionAds = async (req, res, next) => {
   next()
 }
 
+// shared
+const deleteAppointment = async (req, res, next) => {
+  if (!req.params.id || !myValidator.isValidId(req.params.id))
+    return res.status(400).send({ error: 'Bad URL!!' })
+  next()
+}
+
+// receptionist realted
+const confirmAppointment = async (req, res, next) => {
+  if (!req.params.id || !myValidator.isValidId(req.params.id))
+    return res.status(400).send({ error: 'Bad URL!!' })
+  next()
+}
 
 
 
@@ -382,5 +391,6 @@ export default {
   createRequest, 
   deleteRequest,
   transferOwnerShip,
+  confirmAppointment
 
 }

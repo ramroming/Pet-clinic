@@ -10,11 +10,12 @@ import connData from '../database/pet-clinic-db.js'
 import authOperations from '../utils/authOperations.js'
 import timeOperations from '../utils/timeOperations.js'
 import petClinicRules from '../utils/petclinicrules.js'
-import { getWishList } from '../utils/adoptionOperations.js'
+import { get_wish_list } from '../utils/adoptionOperations.js'
+import { delete_appointments, get_appointments } from '../utils/appointmentOperations.js'
 
 const { MAX_ACTIVE_APPOINTMENTS, MAX_APPOINTMENTS_PER_DAY, MAX_PETS_PER_USER } = petClinicRules
-const { getAvailableTimes } = timeOperations
-const { findUserByCredentials, generateAuthToken } = authOperations
+const { get_available_times } = timeOperations
+const { find_user_by_credentials, generate_auth_token } = authOperations
 
 const signup = async (req, res) => {
   const { first_name, last_name, address, phone_number, username, email, password, user_type, stmem_type } = req.body
@@ -64,7 +65,7 @@ const signup = async (req, res) => {
       await conn.end()
 
       // creating the JWT 
-      const token = await generateAuthToken({userId: userID, userRole: stmem_type})
+      const token = await generate_auth_token({userId: userID, userRole: stmem_type})
 
       // if storing token to the database failed
       if (!token) {
@@ -108,8 +109,8 @@ const login = async (req, res) => {
     const conn = await createConnection(connData)
 
     try {
-      const user = await findUserByCredentials(conn, req.body.username, req.body.password)
-      const token = await generateAuthToken({userId: user.id, userRole: user.stmem_type})
+      const user = await find_user_by_credentials(conn, req.body.username, req.body.password)
+      const token = await generate_auth_token({userId: user.id, userRole: user.stmem_type})
       // if saving token to database failed
       if (!token) {
         return res.status(500).send({ error: 'couldnt save token to database' })
@@ -395,7 +396,7 @@ const createAppointment = async (req, res) => {
 
 
     // selected time was taken
-    const availableTimes = await getAvailableTimes(stmem_id, date)
+    const availableTimes = await get_available_times(stmem_id, date)
     if (!availableTimes.includes(parseInt(hour)))
       return res.status(400).send({ error: 'It looks like that the time you specified got taken please try a different time' })
 
@@ -416,25 +417,8 @@ const createAppointment = async (req, res) => {
 const getAppointments = async (req, res) => {
   try {
 
-    const conn = await createConnection(connData)
-    const compareTime = `${new Date().toISOString().split('T')[0]} ${new Date().toISOString().split('T')[1].split('.')[0]}`
-    await conn.execute('UPDATE appointments SET status = 0 WHERE date < ?', [compareTime])
-
-    const [appointments] = await conn.execute(`select  a.id, apt.name as appointment_type, a.status, a.date, per.first_name, per.last_name, p.name as pet_name
-    FROM appointments a 
-    JOIN pets p ON p.id = a.pet_id 
-    JOIN users s ON a.stmem_id = s.id
-    JOIN personal_info per ON s.personal_info_id = per.id
-    JOIN appointment_types apt ON a.appointment_type_id = apt.id
-    WHERE a.client_id = ?
-    ORDER BY a.status DESC`, [req.user.id])
-    const arrayToSend = appointments.map((appointment, index) => {
-      const newDate = dateFormat((appointment.date), 'isoUtcDateTime')
-      return { ...appointment, date: newDate }
-    })
-
-    await conn.end()
-    res.send(arrayToSend)
+    const appointments = await get_appointments('withUserId', req.user.id)
+    res.send(appointments)
 
   } catch (e) {
     res.status(500).send({ error: e.message })
@@ -443,11 +427,9 @@ const getAppointments = async (req, res) => {
 
 const deleteAppointments = async (req, res) => {
   try {
-    const conn = await createConnection(connData)
-    const [appointments] = await conn.execute(`DELETE FROM appointments WHERE id = ? AND client_id=? AND status=1`, [req.params.id, req.user.id])
-    await conn.end()
-    if (appointments.affectedRows === 0)
-      return res.status(400).send({ error: 'something bad has happened !!' })
+    const result = await delete_appointments('byUser', req.user.id, req.params.id)
+    if (!result)
+      return res.status(404).send({ error: 'Not Found !!' })
     res.send({ result: 'Your appointment has been canceled successfully' })
   } catch (e) {
     res.status(500).send({ error: e.message })
@@ -570,7 +552,7 @@ const getMyRequests = async (req, res) => {
 const createRequest = async (req, res) => {
   try {
     // getting the wishlist count
-    const requesters_count = await getWishList(req.params.ad_id)
+    const requesters_count = await get_wish_list(req.params.ad_id)
 
     const conn = await createConnection(connData)
     const [result] = await conn.execute('INSERT INTO adoption_requests (date, client_id, adoption_ad_id, status) VALUES (?, ?, ?, "pending")', [

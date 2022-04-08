@@ -48,7 +48,7 @@ const Appointment = () => {
           const activeAppointments = []
           const pastAppointments = []
           appointments.forEach(appointment => {
-            if(appointment.status === 1)
+            if(appointment.status === 1 && appointment.confirmed === 0)
               activeAppointments.push(appointment)
             else {
               pastAppointments.push(appointment)

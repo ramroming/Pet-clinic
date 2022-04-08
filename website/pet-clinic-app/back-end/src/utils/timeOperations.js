@@ -3,7 +3,7 @@ import { createConnection } from 'mysql2/promise'
 import connData from '../database/pet-clinic-db.js'
 
 const { CLINIC_TIME_ZONE_OFFSET, CLINIC_WORKING_HOURS, CLINIC_APPOINTMENT_GAP } = petClinicRules
-const convertToTurkishDate = (date, zero = false) => {
+const convert_to_turkish_date = (date, zero = false) => {
   if (!date) {
     const turkishDate = new Date(new Date().setUTCHours(new Date().getUTCHours() + CLINIC_TIME_ZONE_OFFSET))
     if (zero)
@@ -21,7 +21,7 @@ const convertToTurkishDate = (date, zero = false) => {
   return turkishDate
 }
 
-const getAvailableTimes = async (stmemId, userDate) => {
+const get_available_times = async (stmemId, userDate) => {
 
   // this will get the time in turkey
   const currentDate = new Date(new Date().setUTCHours(0, 0, 0, 0))
@@ -74,7 +74,7 @@ const getAvailableTimes = async (stmemId, userDate) => {
 
 
 }
-const calculatePetAge = (birth_date) => {
+const calculate_pet_age = (birth_date) => {
   const now = new Date()
   const ageInDays = (now.getTime() - birth_date.getTime())/(1000 * 3600 * 24)
   if (ageInDays >= 365)
@@ -87,8 +87,9 @@ const calculatePetAge = (birth_date) => {
     return `New Born`
 }
 
+
 export default {
-  getAvailableTimes,
-  convertToTurkishDate,
-  calculatePetAge
+  get_available_times,
+  convert_to_turkish_date,
+  calculate_pet_age,
 }

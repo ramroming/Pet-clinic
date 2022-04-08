@@ -5,7 +5,7 @@ import petClinicRules from '../utils/petclinicrules.js'
 
 
 const { CLINIC_WORKING_HOURS } = petClinicRules
-const { getAvailableTimes } = timeOperations
+const { get_available_times } = timeOperations
 // getting necessary data when making an appointment
 
 // getting staff members for a certian appointment type
@@ -43,7 +43,7 @@ const appointmentsTimes = async (req, res) => {
   const userDate = req.query.date
   const stmemId = req.query.stmem_id
   try {
-    const availableTimes = await getAvailableTimes(stmemId, userDate)
+    const availableTimes = await get_available_times(stmemId, userDate)
     res.send({availableTimes, CLINIC_WORKING_HOURS})
   } catch (e) {
     res.status(500).send({ error: e.message })

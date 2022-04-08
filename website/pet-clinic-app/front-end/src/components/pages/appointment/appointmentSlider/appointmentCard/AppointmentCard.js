@@ -18,12 +18,12 @@ const AppointmentCard = (props) => {
         initial='initial'
         animate='final'
         exit='exit'
-        className={props.card.status === 1 ? 'appointment-card appointment-active flex-col falign-start gap-16p' : 'appointment-card appointment-past flex-col falign-start gap-16p'}>
+        className={props.card.status === 1 && props.card.confirmed === 0 ? 'appointment-card appointment-active flex-col falign-start gap-16p' : 'appointment-card appointment-past flex-col falign-start gap-16p'}>
 
         {/* appointment type */}
         <div className="flex-row">
           <p>{props.card.appointment_type} / </p>
-          <p className="app-status"> {props.card.status === 1 ? 'Active' : 'Past'}</p>
+          <p className="app-status"> {props.card.status === 1 && props.card.confirmed === 0? 'Active' : 'Past'}</p>
         </div>
 
        
@@ -44,7 +44,7 @@ const AppointmentCard = (props) => {
           <i className="fas fa-paw"></i>
           <p>{props.card.pet_name}</p>
         </div>
-        {props.card.status === 1 ? <button 
+        {props.card.status === 1 && props.card.confirmed === 0? <button 
         onClick={(event)=> deleteAppointment(event)}
         apid={props.card.id} className="btn-rec-purple">Cancel</button> : ''}
 

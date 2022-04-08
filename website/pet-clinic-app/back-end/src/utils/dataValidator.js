@@ -6,7 +6,7 @@ import timeOperations from './timeOperations.js'
 
 const { CLINIC_TIME_ZONE_OFFSET, CLINIC_WORKING_HOURS } = petClinicRules
 const { isMobilePhone, isEmail, isStrongPassword, isDate } = validator
-const { calculatePetAge } = timeOperations
+const { calculate_pet_age } = timeOperations
 const myValidator = {
 
   
@@ -62,7 +62,7 @@ const myValidator = {
       if (!rows.length)
         return false
       
-      rows[0].birth_date = calculatePetAge(rows[0].birth_date)
+      rows[0].birth_date = calculate_pet_age(rows[0].birth_date)
       
       // if the user owns the pet
       return rows[0]
