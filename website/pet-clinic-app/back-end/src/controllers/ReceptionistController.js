@@ -6,7 +6,32 @@ import timeOperations from "../utils/timeOperations.js"
 const { MAX_ACTIVE_APPOINTMENTS, MAX_APPOINTMENTS_PER_DAY, MAX_PETS_PER_USER } = petClinicRules
 const { get_available_times } = timeOperations
 
+const getPetsByUserName = async (req, res) => {
+
+  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
+    return res.status(401).send({ error: 'Unauthorized!!' })
+
+  try {
+    const conn = await createConnection(connData)
+    const [user] = await conn.execute('SELECT id FROM users WHERE username=? AND user_type="client"',
+    [req.query.username ? req.query.username: ''])
+    if (!user.length) {
+      await conn.end()
+      return res.status(404).send({ error: 'User not found!' })
+    }
+    const [pets] = await conn.execute('SELECT id, name FROM pets WHERE owner_id = ? ', [user[0].id])
+    await conn.end()
+    res.send(pets)
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+
 const createAppointment = async (req, res) => {
+
+  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
+    return res.status(401).send({ error: 'Unauthorized!!' })
+
   const { stmem_id, pet_id, date, user_name, hour } = req.body
   const clientId = req.user_id
   try {
@@ -105,5 +130,6 @@ export {
   getAppointments,
   deleteAppointment,
   confirmAppointment,
-  createAppointment
+  createAppointment,
+  getPetsByUserName
 }

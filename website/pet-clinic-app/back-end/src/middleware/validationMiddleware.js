@@ -352,6 +352,7 @@ const appointmentsTimes = (req, res, next) => {
   next()
 }
 
+
 // Adoption related
 const getAdoptionAds = async (req, res, next) => {
   if (req.query.last_date && !validator.isISO8601(req.query.last_date))
@@ -409,6 +410,7 @@ const RecCreateAppointment = async (req, res, next) => {
   }
   next()
 }
+
 
 
 

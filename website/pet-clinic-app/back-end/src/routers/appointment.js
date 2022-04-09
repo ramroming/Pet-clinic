@@ -14,8 +14,11 @@ appointmentRouter.get('/appointment/staffmems', auth, validationMiddleware.getSt
 // getting available times on a specific date for a specific stmem
 appointmentRouter.get('/appointment/appointmentstimes', auth, validationMiddleware.appointmentsTimes, appointmentsTimes)
 
-// getting available times on a specific date for a specific stmem
+// get appointment types
 appointmentRouter.get('/appointment/appointmenttypes', auth, getAppointmentTypes)
+
+
+
 
 
 export default appointmentRouter

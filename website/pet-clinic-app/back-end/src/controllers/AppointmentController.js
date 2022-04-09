@@ -61,8 +61,9 @@ const getAppointmentTypes = async (req, res) => {
   }
 }
 
+
 export  {
   appointmentsTimes,
   getStaffMems,
-  getAppointmentTypes
+  getAppointmentTypes,
 }
