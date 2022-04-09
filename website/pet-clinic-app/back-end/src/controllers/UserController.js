@@ -138,6 +138,7 @@ const logout = async (req, res) => {
   res.status(200).send()
 }
 
+
 const registerPet = async (req, res) => {
   // this try is to detect database connection errors
   try {

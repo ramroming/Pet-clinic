@@ -11,6 +11,7 @@ const get_appointments = async (query = 'all', clientId) => {
     const compareTime1 = `${tempTime} ${new Date(tempTime).toISOString().split('T')[1].split('.')[0]}`
     const compareTime2 = `${tempTime} ${new Date(new Date(tempTime).setUTCHours(23)).toISOString().split('T')[1].split('.')[0]}`
     let appointments = []
+    let fees = []
     switch (query) {
       case 'all': {
         const [rows] = await conn.execute(`select  a.id, apt.name as appointment_type, a.status, a.date, a.confirmed, per.first_name AS stmem_first_name, per.last_name AS stmem_last_name, p.name as pet_name, per2.first_name AS owner_first_name, per2.last_name AS owner_last_name
@@ -19,7 +20,7 @@ const get_appointments = async (query = 'all', clientId) => {
         JOIN users s ON a.stmem_id = s.id
         JOIN personal_info per ON s.personal_info_id = per.id
         JOIN appointment_types apt ON a.appointment_type_id = apt.id
-        JOIN users s2 ON s2.id = p.owner_id
+        JOIN users s2 ON s2.id = a.client_id
         JOIN personal_info per2 ON per2.id = s2.personal_info_id
         ORDER BY a.date DESC`)
         appointments = rows
@@ -47,11 +48,13 @@ const get_appointments = async (query = 'all', clientId) => {
         JOIN users s ON a.stmem_id = s.id
         JOIN personal_info per ON s.personal_info_id = per.id
         JOIN appointment_types apt ON a.appointment_type_id = apt.id
-        JOIN users s2 ON s2.id = p.owner_id
+        JOIN users s2 ON s2.id = a.client_id
         JOIN personal_info per2 ON per2.id = s2.personal_info_id
         WHERE a.date >= ? AND a.date <= ?
         ORDER BY a.date DESC`, [compareTime1, compareTime2])
         appointments = rows
+        const [fee_result] = await conn.execute('SELECT appointment_type_id, value FROM fee_histories ORDER BY date DESC limit 4')
+        fees = fee_result
         break
       }
       default:
@@ -64,7 +67,7 @@ const get_appointments = async (query = 'all', clientId) => {
       return { ...appointment, date: newDate }
     })
 
-    return arrayToSend
+    return {arrayToSend, fees}
 
 
   } catch (e) {

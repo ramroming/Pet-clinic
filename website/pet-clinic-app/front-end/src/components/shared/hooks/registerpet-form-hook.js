@@ -25,7 +25,6 @@ const formReducer = (state, action) => {
             errorMsg: 'Image size is greater than 10Mb!'
           }
         }
-      console.log(action.value)
       return {
         ...state,
         [action.field]: {
@@ -47,6 +46,12 @@ const formReducer = (state, action) => {
           ...state,
           missingInput: true
         }
+      if (action.withUserName && !state.user_name.value)
+        return {
+          ...state,
+          missingInput: true
+        }
+        
       // incase of errors in the form
       if (state.photo.errorMsg)
         return {
@@ -62,6 +67,8 @@ const formReducer = (state, action) => {
       formData.append('breed_name', state.breed_name.value)
       formData.append('photo', state.photo.value)
       formData.append('colors', state.selectedColors.join(':'))
+      if(state.user_name.value)
+        formData.append('user_name', state.user_name.value)
       
       return {
         ...state,
@@ -102,7 +109,12 @@ const formReducer = (state, action) => {
     case 'getBreeds': {
       return {
         ...state,
-        isLoadingBreeds: true
+        isLoadingBreeds: true,
+        breeds: [],
+        breed_name: {
+          ...state.breed_name,
+          value: ''
+        }
       }
     }
     case 'getColors': {
@@ -145,6 +157,7 @@ const formReducer = (state, action) => {
         selectedColors: [...state.selectedColors, action.color]
       }
     }
+    
 
 
 

@@ -17,6 +17,7 @@ const minDate = dateFormat(today, 'isoDate')
 const initialData = {
   isFetchingAppointments: true,
   appointments: null,
+  fees: [],
   fetchAppointmentFailure: '',
   amount: 'today',
 

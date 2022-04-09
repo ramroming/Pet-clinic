@@ -229,6 +229,75 @@
 			"response": []
 		},
 		{
+			"name": "ReceptionistRegisterPet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "efwef",
+							"type": "default"
+						},
+						{
+							"key": "gender",
+							"value": "male",
+							"type": "default"
+						},
+						{
+							"key": "birth_date",
+							"value": "2020-01-01",
+							"type": "default"
+						},
+						{
+							"key": "pet_type",
+							"value": "cat",
+							"type": "default"
+						},
+						{
+							"key": "breed_name",
+							"value": "British Shorthair",
+							"type": "default"
+						},
+						{
+							"key": "photo",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "colors",
+							"value": "blue:green:red",
+							"type": "default"
+						},
+						{
+							"key": "user_name",
+							"value": "amalco",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/me/pets",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"pets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "createAppointment",
 			"request": {
 				"method": "POST",
@@ -461,11 +530,23 @@
 		},
 		{
 			"name": "getAppointmentsTimes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"appointment_type\": \"Grooming\",\r\n    \"stmem_id\": \"162\",\r\n    \"user_name\": \"pamela88\",\r\n    \"pet_id\": \"97\",\r\n    \"hour\": \"6\",\r\n    \"date\": \"2022-05-12\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{url}}/appointment/appointmentstimes?stmem_id=5&date=2022-03-12",
+					"raw": "{{url}}/appointment/appointmentstimes?stmem_id=164&date=2022-04-09",
 					"host": [
 						"{{url}}"
 					],
@@ -476,11 +557,11 @@
 					"query": [
 						{
 							"key": "stmem_id",
-							"value": "5"
+							"value": "164"
 						},
 						{
 							"key": "date",
-							"value": "2022-03-12"
+							"value": "2022-04-09"
 						}
 					]
 				}
@@ -619,6 +700,24 @@
 						"users",
 						"me",
 						"requests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAppointmentTypes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/appointment/appointmenttypes",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"appointment",
+						"appointmenttypes"
 					]
 				}
 			},
@@ -878,6 +977,33 @@
 			"response": []
 		},
 		{
+			"name": "ReceptionistCreateAppointment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"appointment_type\": \"Grooming\",\r\n    \"stmem_id\": \"162\",\r\n    \"user_name\": \"pamela88\",\r\n    \"pet_id\": \"97\",\r\n    \"hour\": \"6\",\r\n    \"date\": \"2022-05-12\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/receptionist/appointments",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"receptionist",
+						"appointments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "ReceptionistGetAppointments",
 			"request": {
 				"method": "GET",
@@ -890,6 +1016,30 @@
 					"path": [
 						"receptionist",
 						"appointments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReceptionistGetPetsByUserName",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/receptionist/pets?username=yaso",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"receptionist",
+						"pets"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "yaso"
+						}
 					]
 				}
 			},

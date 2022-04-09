@@ -31,7 +31,8 @@ const appointmentManagementReducer = (state, action) => {
       return {
         ...state,
         isFetchingAppointments: false,
-        appointments: action.data
+        appointments: action.data.arrayToSend,
+        fees: action.data.fees
       }
     case 'failure':
       return {

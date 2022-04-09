@@ -24,7 +24,8 @@ import AdoptionManagement from '../../pages/staffPanel/adoptionmanagement/Adopti
 import AdoptionPostsManagement from '../../pages/staffPanel/adoptionpostsmanagement/AdoptionPostsManagement';
 import PetTreatmentHistory from '../../pages/staffPanel/pettreatmenthistory/PetTreatmentHistory';
 import PetTrainingHistory from '../../pages/staffPanel/pettraininghistory/PetTrainingHistory';
-import Registration from '../../pages/staffPanel/registration/Registration'
+import RegisterClient from '../../pages/staffPanel/registration/RegisterClient'
+import RegisterPetRec from '../../pages/staffPanel/registration/RegisterPetRec'
 import ManageUsers from '../../pages/staffPanel/manageusers/ManageUsers'
 import ManagePets from '../../pages/staffPanel/managepets/ManagePets'
 import ManageProfits from '../../pages/staffPanel/manageProfits/ManageProfits'
@@ -119,10 +120,15 @@ const useRoutes = (authedUser, stmemType) => {
                   <>
                     <Route path='manageappointments'
                       element={authedUser ? <AppointmentManagement /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
-                    <Route path='registration'
-                      element={authedUser ? <Registration /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+                    
+                    <Route path='registerclient'
+                      element={authedUser ? <RegisterClient /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+                    <Route path='registerpet'
+                      element={authedUser ? <RegisterPetRec /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
                     <Route path='adoptionrequests'
                       element={authedUser ? <AdoptionManagement /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+                      <Route path='adoptionposts'
+                    element={authedUser ? <AdoptionPostsManagement /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
                   </>
 
                 }
@@ -152,8 +158,10 @@ const useRoutes = (authedUser, stmemType) => {
                     <Route path='pettraininghistory'
                       element={authedUser ? <PetTrainingHistory /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
-                    <Route path='registration'
-                      element={authedUser ? <Registration /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+                    <Route path='registerclient'
+                      element={authedUser ? <RegisterClient /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+                    <Route path='registerpet'
+                      element={authedUser ? <RegisterPetRec /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
                     <Route path='manageusers'
                       element={authedUser ? <ManageUsers /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>

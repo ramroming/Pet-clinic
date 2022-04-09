@@ -57,10 +57,15 @@ const StaffPanelSideNav = () => {
               isActive ? 'profile-option selected' : 'profile-option'
             }>Pet Training History</NavLink>
           <NavLink
-            to='/staffpanel/registration'
+            to='/staffpanel/registerclient'
             className={({ isActive }) =>
               isActive ? 'profile-option selected' : 'profile-option'
-            }>Registration</NavLink>
+            }>Register Client</NavLink>
+          <NavLink
+            to='/staffpanel/registerpet'
+            className={({ isActive }) =>
+              isActive ? 'profile-option selected' : 'profile-option'
+            }>Register Pet</NavLink>
           <NavLink
             to='/staffpanel/manageusers'
             className={({ isActive }) =>
@@ -86,15 +91,25 @@ const StaffPanelSideNav = () => {
               isActive ? 'profile-option selected' : 'profile-option'
             }>Manage Appointments</NavLink>
             <NavLink
-            to='/staffpanel/registration'
+            to='/staffpanel/registerclient'
             className={({ isActive }) =>
               isActive ? 'profile-option selected' : 'profile-option'
-            }>Registration</NavLink>
+            }>Register Client</NavLink>
+            <NavLink
+            to='/staffpanel/registerpet'
+            className={({ isActive }) =>
+              isActive ? 'profile-option selected' : 'profile-option'
+            }>Register Pet</NavLink>
             <NavLink
             to='/staffpanel/adoptionrequests'
             className={({ isActive }) =>
               isActive ? 'profile-option selected' : 'profile-option'
             }>Manage Adoption Requests</NavLink>
+            <NavLink
+            to='/staffpanel/adoptionposts'
+            className={({ isActive }) =>
+              isActive ? 'profile-option selected' : 'profile-option'
+            }>Manage Adoption Posts</NavLink>
             </>
           }
            { userRole === 'vet' && 

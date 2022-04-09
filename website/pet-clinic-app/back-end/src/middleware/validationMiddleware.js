@@ -140,6 +140,16 @@ const registerPet = async (req, res, next) => {
   catch(e) {
     return res.status(500).send({ error: e.message })
   }
+  if (req.body.user_name)
+    try {
+      const userId = await myValidator.isValidUser(req.body.user_name)
+      if (!userId)
+        return res.status(400).send({ error: 'Invalid username ' })
+      req.userId = userId
+      
+    } catch(e) {
+      return res.status(500).send({ error: e.message })
+    }
 
   next()
 }

@@ -3,7 +3,8 @@ import { createConnection } from "mysql2/promise"
 import connData from "../database/pet-clinic-db.js"
 import petClinicRules from "../utils/petclinicrules.js"
 import timeOperations from "../utils/timeOperations.js"
-const { MAX_ACTIVE_APPOINTMENTS, MAX_APPOINTMENTS_PER_DAY, MAX_PETS_PER_USER } = petClinicRules
+
+const { MAX_ACTIVE_APPOINTMENTS, MAX_APPOINTMENTS_PER_DAY, MAX_PETS_PER_USER, MAX_SHELTER_CAPACITY } = petClinicRules
 const { get_available_times } = timeOperations
 
 const getPetsByUserName = async (req, res) => {
@@ -27,6 +28,64 @@ const getPetsByUserName = async (req, res) => {
   }
 }
 
+const registerPetRec = async (req, res) => {
+
+  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
+    return res.status(401).send({ error: 'Unauthorized!!' })
+
+  if (!req.userId)
+    return res.status(400).send({ error: 'missing Data' })
+  // this try is to detect database connection errors
+  try {
+
+    // this try is to detected database violations and other errors when creating new pet
+    const conn = await createConnection(connData)
+    try {
+      const [rows1, fields1] = await conn.execute('SELECT * FROM pets WHERE owner_id = ?', [req.user.id])
+      if (rows1.length >= MAX_PETS_PER_USER) {
+        conn.end()
+        return res.status(403).send({ error: 'Max pet per user reached!' })
+      }
+      const { name, gender, birth_date, breed_name } = req.body
+
+
+
+      const photo = req.file ? await sharp(req.file.buffer).resize({ width: 350, height: 350 }).png().toBuffer() : null
+
+      const [rows2, fields2] = await conn.execute('INSERT INTO pets (name, gender, birth_date, breed_name, photo, owner_id) VALUES (?, ?, ?, ?, ?, ?)', [
+        name ? name : null,
+        gender ? gender : null,
+        birth_date ? birth_date : null,
+        breed_name ? breed_name : null,
+        photo,
+        req.userId
+      ])
+      req.body.colors.forEach(async color => {
+
+        await conn.execute('INSERT INTO color_records (pet_id, color_id) VALUES (?, ?)', [rows2.insertId, color.id])
+
+      });
+
+      // data to send back when registering a pet
+      const petData = {
+        id: rows2.insertId,
+        name: name ? name : null,
+        gender: gender ? gender : null,
+        birth_date: birth_date ? birth_date : null,
+        owner_id: req.userId
+      }
+      conn.end()
+
+      res.status(201).send(petData)
+    } catch (e) {
+      conn.end()
+      return res.status(400).send({ error: e.message })
+    }
+
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
 const createAppointment = async (req, res) => {
 
   if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
@@ -114,12 +173,43 @@ const confirmAppointment = async (req, res) => {
     const compareTime = `${new Date().toISOString().split('T')[0]} ${new Date().toISOString().split('T')[1].split('.')[0]}`
     const maxConfirmationTime = new Date(new Date(new Date().toISOString().split('T')[0]).setUTCHours(23))
     await conn.execute('UPDATE appointments SET status = 0 WHERE date < ?', [compareTime])
-    const [result] = await conn.execute(`UPDATE  appointments 
-    set confirmed= 1
-    WHERE id = ? AND confirmed = 0 AND status = 1 AND date < ?`, [req.params.id, maxConfirmationTime])
+    
+
+    // change owner from user to shelter
+    const [appointment] = await conn.execute('SELECT pet_id, client_id, appointment_type_id FROM appointments WHERE id = ?', [req.params.id])
+
+    if (appointment.length && appointment[0].appointment_type_id === 4){
+      
+      const [shelter] = await conn.execute('SELECT current_capacity FROM shelters')
+      if (shelter[0].current_capacity + 1 > MAX_SHELTER_CAPACITY){
+        await conn.end()
+        return res.status(403).send({ error: 'Max shelter capacity has been reached you cannot accept pet submission at the moment' })
+      }
+      
+      const [result] = await conn.execute(`UPDATE  appointments 
+      set confirmed= 1
+      WHERE id = ? AND confirmed = 0 AND status = 1 AND date < ?`, [req.params.id, maxConfirmationTime])
+      if (result.affectedRows === 0){
+        await conn.end()
+        return res.status(404).send({ error: 'Cannot confirm appointment due to a previous confirmation or late confirmation date' })
+      }
+      
+      const [result2] = await conn.execute(
+        `UPDATE  pets 
+        set owner_id= null,  pervious_owner= ?, shelter_id = 1
+        WHERE id = ?`, [appointment[0].client_id, appointment[0].pet_id])
+      const [result3] = await conn.execute(`UPDATE shelters SET current_capacity = ?`, [shelter[0].current_capacity + 1])
+    }
+    else {
+      const [result] = await conn.execute(`UPDATE  appointments 
+      set confirmed= 1
+      WHERE id = ? AND confirmed = 0 AND status = 1 AND date < ?`, [req.params.id, maxConfirmationTime])
+      if (result.affectedRows === 0) {
+        await conn.end()
+        return res.status(404).send({ error: 'Cannot confirm appointment due to a previous confirmation or late confirmation date' })
+      }
+    }
     await conn.end()
-    if (result.affectedRows === 0)
-      return res.status(404).send({ error: 'Cannot confirm appointment due to a previous confirmation or late confirmation date' })
     res.send({ result: 'appointment has been confirmed successfully' })
 
   } catch (e) {
@@ -131,5 +221,6 @@ export {
   deleteAppointment,
   confirmAppointment,
   createAppointment,
-  getPetsByUserName
+  getPetsByUserName,
+  registerPetRec
 }

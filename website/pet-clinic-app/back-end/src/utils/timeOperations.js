@@ -47,7 +47,7 @@ const get_available_times = async (stmemId, userDate) => {
       // if the user making an appointment in the same day but some are not available
       if (currentDate.getTime() === user_date.getTime()) {
         return (availableTimes.filter((time) => {
-          return (!unavailableTimes.includes(time) && currentTime.getUTCHours()  < time)
+          return (!unavailableTimes.includes(time) && currentTime.getUTCHours() + CLINIC_APPOINTMENT_GAP < time)
         }))
       }
       // if the user making an appointment in a future day but some are not available
