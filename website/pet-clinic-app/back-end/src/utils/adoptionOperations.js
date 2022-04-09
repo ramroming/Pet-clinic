@@ -1,7 +1,7 @@
 import { createConnection } from 'mysql2/promise'
 import connData from '../database/pet-clinic-db.js'
 
-const getWishList = async (adId) => {
+const get_wish_list = async (adId) => {
   try {
     const conn = await createConnection(connData)
     const [listCount] = await conn.execute('SELECT COUNT(date) as requesters_count FROM adoption_requests WHERE adoption_ad_id = ? AND status="pending"', [adId])
@@ -14,5 +14,5 @@ const getWishList = async (adId) => {
 }
 
 export {
-  getWishList
+  get_wish_list
 }

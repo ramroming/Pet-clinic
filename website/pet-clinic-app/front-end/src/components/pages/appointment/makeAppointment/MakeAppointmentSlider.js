@@ -321,7 +321,7 @@ const MakeAppointmentSlider = () => {
             initial='initial'
             animate='final'
             exit='exit' className="make-appointment-slider flex-col falign-center gap-24p">
-            <h1>What appointment do you want to make for your pet?</h1>
+            {<h1>What appointment do you want to make ?</h1>}
             <div className="appointment-types flex-row gap-32p fjust-center">
               <div id="Examination" className={appointment.appointment_type === 'Examination' ? "appointment-type flex-col gap-8p falign-center active " : "appointment-type flex-col gap-8p falign-center"}
                 onClick={(event) => selectOption(event)} >
@@ -365,7 +365,7 @@ const MakeAppointmentSlider = () => {
             initial="initial"
             animate="final"
             exit='exit' className="make-appointment-slider flex-col falign-center gap-24p">
-            <h1>Select Your Pet:</h1>
+            <h1>Select a Pet:</h1>
             <div className="appointment-types flex-row fjust-center gap-24p">
               {state && state.pets.length !== 0 && state.pets.map((pet, index) => {
                 return (

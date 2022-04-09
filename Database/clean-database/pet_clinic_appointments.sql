@@ -30,6 +30,7 @@ CREATE TABLE `appointments` (
   `appointment_type_id` int NOT NULL,
   `pet_id` int DEFAULT NULL,
   `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `confirmed` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`date`,`stmem_id`),
   UNIQUE KEY `id` (`id`),
   KEY `APPOINTMENTS_fk0` (`client_id`),
@@ -40,7 +41,7 @@ CREATE TABLE `appointments` (
   CONSTRAINT `APPOINTMENTS_fk1` FOREIGN KEY (`stmem_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `APPOINTMENTS_fk2` FOREIGN KEY (`appointment_type_id`) REFERENCES `appointment_types` (`id`),
   CONSTRAINT `APPOINTMENTS_fk3` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,6 +50,7 @@ CREATE TABLE `appointments` (
 
 LOCK TABLES `appointments` WRITE;
 /*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
+INSERT INTO `appointments` VALUES ('2022-04-06 14:00:00',171,162,0,3,96,47,0),('2022-04-07 14:00:00',166,163,0,2,110,48,1),('2022-04-08 11:00:00',166,163,0,2,110,46,0),('2022-04-08 14:00:00',166,163,0,2,110,53,0),('2022-04-08 15:00:00',171,161,0,1,94,49,0),('2022-04-16 07:00:00',171,162,1,3,96,50,0);
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -61,4 +63,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-22 15:35:28
+-- Dump completed on 2022-04-08 19:04:56
