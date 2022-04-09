@@ -15,7 +15,8 @@ const Footer = () => {
             </p>
 
             {/* second flex item */}
-            <p className="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, odio ullam quisquam necessitatibus est ad omnis, hic doloremque dolorem molestiae voluptates vel minus nihil vitae cum! At aspernatur deserunt nemo.</p>
+            <p className="content">In our clinic, we look after your pets with love and care, your pet's favorite place is going to be our clinic!
+                            forget about worrying that your pet is going to be stressed to visit the clinic, it will be a relaxing and fun experience!</p>
 
             {/* third flex item */}
 
@@ -32,7 +33,7 @@ const Footer = () => {
             {/* first item */}
             <p className="footer-title">Working Hours</p>
             {/* second item */}
-            <p className="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos dolor pariatur distinctio. Aut deleniti voluptas reiciendis mollitia, illum molestiae corporis?</p>
+            <p className="content">Our working hours during the week and the weekend:</p>
             {/* third item */}
             <div className="flex-col">
 
@@ -44,15 +45,15 @@ const Footer = () => {
 
               {/* second flex */}
               <div className="flex-row fjust-between">
-                <p className="content">Monday - Friday:</p>
-                <p className="content">9:00 - 17:00</p>
+                <p className="content">Saturday - Sunday:</p>
+                <p className="content">9:00 - 13:00</p>
               </div>
               {/* third flex */}
 
-              <div className="flex-row fjust-between">
-                <p className="content">Monday - Friday:</p>
-                <p className="content">9:00 - 17:00</p>
-              </div>
+              {/* <div className="flex-row fjust-between">
+                <p className="content">Sunday:</p>
+                <p className="content">9:00 - 11:00</p>
+              </div> */}
             </div>
           </div>
 
