@@ -44,7 +44,9 @@ const MyAdoptionPosts = () => {
       if (isMount)
         dispatch({ type: 'start' })
       try {
-        const myAdoptionAds = await sendRequest('http://localhost:5000/users/me/adoptionads/', 'GET', null, {
+        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `http://localhost:5000/receptionist/adoptionads` : 'http://localhost:5000/users/me/adoptionads/'}`
+
+        const myAdoptionAds = await sendRequest(URL, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (myAdoptionAds && isMount)
@@ -59,13 +61,15 @@ const MyAdoptionPosts = () => {
       setPageIsLoading(false)
       isMount = false
     }
-  }, [auth.token, dispatch, sendRequest, setPageIsLoading])
+  }, [auth.token, auth.userRole, dispatch, sendRequest, setPageIsLoading])
   useEffect(() => {
     let isMount = true
     const deletePost = async () => {
       try {
-
-        const result = await sendRequest(`http://localhost:5000/users/me/adoptionads/${state.postToDelete ? state.postToDelete : ''}`, 'DELETE', null, {
+        
+        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `http://localhost:5000/receptionist/adoptionads/${state.postToDelete ? state.postToDelete : ''}` : `http://localhost:5000/users/me/adoptionads/${state.postToDelete ? state.postToDelete : ''}`}`
+        console.log(URL)
+        const result = await sendRequest(URL, 'DELETE', null, {
           'Authorization': `Bearer ${auth.token}`,
         })
         if (result && isMount )
@@ -82,12 +86,13 @@ const MyAdoptionPosts = () => {
       setPageIsLoading(false)
       isMount = false
     }
-  }, [auth.token, dispatch, sendRequest, setPageIsLoading, state.isDeleting, state.postToDelete])
+  }, [auth.token, auth.userRole, dispatch, sendRequest, setPageIsLoading, state.isDeleting, state.postToDelete])
   useEffect(() => {
     let isMount = true
     const updatePost = async () => {
       try {
-        const updateResult = await sendRequest(`http://localhost:5000/users/me/adoptionads/${state.postToUpdate}`, 'PATCH', JSON.stringify({
+        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `http://localhost:5000/receptionist/adoptionads/${state.postToUpdate}` : `http://localhost:5000/users/me/adoptionads/${state.postToUpdate}`}`
+        const updateResult = await sendRequest(URL, 'PATCH', JSON.stringify({
           story: state.newStory.value
         }), {
           'Authorization': `Bearer ${auth.token}`,
@@ -109,7 +114,7 @@ const MyAdoptionPosts = () => {
       setPageIsLoading(false)
       isMount = false
     }
-  }, [dispatch, auth.token, sendRequest, state.isUpdating, state.newStory.value, setPageIsLoading, state.postToUpdate])
+  }, [dispatch, auth.token, auth.userRole, sendRequest, state.isUpdating, state.newStory.value, setPageIsLoading, state.postToUpdate])
 
 
   useEffect(() => {

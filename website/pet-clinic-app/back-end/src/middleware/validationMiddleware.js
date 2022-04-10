@@ -420,6 +420,61 @@ const RecCreateAppointment = async (req, res, next) => {
   }
   next()
 }
+const getShelterPet = async (req, res, next) => {
+  if (!req.params.id || !myValidator.isValidId(req.params.id))
+    return res.status(400).send({ error: 'Bad URL !!'})
+  try {
+    const result = await myValidator.isShelterPet(req.params.id)
+    if (!result)
+      return res.status(400).send({ error: 'invalid pet id'})
+    req.pet = result
+  } catch (e) {
+    return res.status(500).send({ error: e.message })
+  }
+  next()
+}
+const createAdoptionAdRec = async (req, res, next) => {
+  const { pet_id, story } = req.body
+  if (!pet_id || !story)
+    return res.status(400).send({ error: 'Missing Data!!' })
+  if (myValidator.is2TooLong(story) || !myValidator.isValidId(pet_id))
+    return res.status(400).send({ error: 'Invalid Data!! ' })
+  try {
+    const result = await myValidator.isShelterPet(pet_id)
+    if (!result)
+      return res.status(400).send({ error: 'invalid pet id'})
+    if (!result.photo)
+      return res.status(400).send({ error: 'You should upload a photo for your pet first to create a post!!'})
+
+    req.pet = result
+
+  } catch (e) {
+    return res.status(500).send({ error: e.message })
+  }
+  next()
+}
+const transferOwnerShipRec = async (req, res, next) => {
+  if (!req.params.new_owner_id || !req.params.pet_id || !req.params.ad_id || !myValidator.isValidId(req.params.pet_id) || !myValidator.isValidId(req.params.new_owner_id) || !myValidator.isValidId(req.params.ad_id))
+    return res.status(400).send({ error: 'Bad URL' })
+  try {
+    const result = await myValidator.isShelterPet(req.params.pet_id)
+    if (!result)
+      return res.status(400).send({ error: 'invalid pet id'})
+    const inAd = await myValidator.petInAdoptionAdFromShelter(req.params.pet_id, req.params.ad_id)
+    if (!inAd)
+      return res.status(400).send({ error: 'invalid pet/adoption_ad'})    
+  
+    const validUserId = await myValidator.isValidUserId(req.params.new_owner_id)
+    if (!validUserId)
+      return res.status(400).send({ error: 'invalid new ownerId'})    
+
+    next()
+
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+
 
 
 
@@ -445,6 +500,9 @@ export default {
   deleteRequest,
   transferOwnerShip,
   confirmAppointment,
-  RecCreateAppointment
+  RecCreateAppointment,
+  getShelterPet,
+  createAdoptionAdRec,
+  transferOwnerShipRec
 
 }

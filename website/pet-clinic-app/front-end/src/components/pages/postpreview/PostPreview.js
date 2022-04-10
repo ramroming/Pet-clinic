@@ -37,7 +37,8 @@ const PostReview = () => {
       if (isMount)
         dispatch({ type: 'start' })
       try {
-        const pet = await sendRequest(`http://localhost:5000/users/me/pets/${id}`, 'GET', null, {
+        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `http://localhost:5000/receptionist/shelterpet/${id}` : `http://localhost:5000/users/me/pets/${id}`}`
+        const pet = await sendRequest(URL, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (pet && isMount)
@@ -51,7 +52,7 @@ const PostReview = () => {
     return () => {
       isMount = false
     }
-  }, [auth.token, dispatch, id, sendRequest])
+  }, [auth.token, auth.userRole, dispatch, id, sendRequest])
 
   useEffect(() => {
     setPageIsLoading(state.isLoading)
@@ -64,7 +65,9 @@ const PostReview = () => {
       setPageIsLoading(state.isCreating)
     const createPost = async () => {
       try {
-        const result = await sendRequest('http://localhost:5000/users/me/adoptionads/', 'POST', JSON.stringify({
+        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `http://localhost:5000/receptionist/adoptionads` : `http://localhost:5000/users/me/adoptionads/`}`
+
+        const result = await sendRequest(URL, 'POST', JSON.stringify({
           pet_id: id,
           story: state.story.value
         }), {
@@ -85,7 +88,7 @@ const PostReview = () => {
       setPageIsLoading(false)
       isMount = false
     }
-  }, [state.isCreating, setPageIsLoading, auth.token, dispatch, id, sendRequest, state.story])
+  }, [state.isCreating, setPageIsLoading, auth.token, auth.userRole, dispatch, id, sendRequest, state.story])
 
   const createAd = () => {
     dispatch({ type: 'validate' })
@@ -112,11 +115,12 @@ const PostReview = () => {
 
         <p className="post-review-header">This is a preview of how your adoption ad would be viewed by others</p>
 
+        {!state.responseData.shelter_id && 
         <p className="post-review-header-small">
           The info here is retrieved from your pet's profile,
           you can edit the info from<Link className="link" target={'blank'} to="/myprofile/petinfo"> here </Link>:).<br />
           feel free to provide more details in the pet's story box!
-        </p>
+        </p>}
 
         {/* first main flex item ++ pet intro, info and photo ++ */}
         <div className="pet-basic-info-wrapper flex-col falign-center fjust-center gap-24p">
@@ -152,7 +156,7 @@ const PostReview = () => {
 
               <div className="flex-row gap-8p">
                 <label>Located At: </label>
-                <p>Owner house</p>
+                <p>{state.responseData.shelter_id ? 'The shelter' : 'Owner house'}</p>
               </div>
 
             </div>

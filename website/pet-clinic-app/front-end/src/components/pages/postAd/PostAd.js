@@ -54,7 +54,7 @@ const PostAd = () => {
   return (
     <div className="post-pet-container">
       <div className="post-pet-dark-container flex-col gap-24p falign-center">
-        <p className="select-pet">Select your pet that you want to put for adoption: </p>
+        <p className="select-pet">Select your pet that you want to put up for adoption: </p>
         {petsArr.isLoading &&
             <motion.div
               variants={itemMotion}
@@ -95,7 +95,7 @@ const PostAd = () => {
                   <Link
                   className="post-pet-button btn-rec-purple"
                   to={`/postpreview/${pet.id}`}
-                  >Put for adoption</Link>
+                  >Put up for adoption</Link>
                 </motion.div>
               )
             })

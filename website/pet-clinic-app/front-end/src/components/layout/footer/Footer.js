@@ -40,13 +40,13 @@ const Footer = () => {
               {/* first flex */}
               <div className="flex-row fjust-between">
                 <p className="content">Monday - Friday:</p>
-                <p className="content">9:00 - 17:00</p>
+                <p className="content">9:00 - 18:00</p>
               </div>
 
               {/* second flex */}
               <div className="flex-row fjust-between">
                 <p className="content">Saturday - Sunday:</p>
-                <p className="content">9:00 - 13:00</p>
+                <p className="content">9:00 - 18:00</p>
               </div>
               {/* third flex */}
 

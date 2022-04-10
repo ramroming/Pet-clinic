@@ -186,7 +186,7 @@ const AdoptionAd = () => {
 
               <div className="flex-row gap-8p">
                 <label>Located At: </label>
-                <p>Owner house</p>
+                <p>{state.responseData && state.responseData.adoptionAd.username ? 'Owner house' : 'Shelter' }</p>
               </div>
 
             </div>
@@ -196,12 +196,12 @@ const AdoptionAd = () => {
 
           {/* second mini flex */}
           <div className="flex-col gap-16p fjust-center falign-center pet-image-container">
-            <p>Posted By: <b>{state.responseData && state.responseData.adoptionAd.username}</b></p>
+            <p>Posted By: <b>{state.responseData && state.responseData.adoptionAd.username ? state.responseData.adoptionAd.username : 'Shelter'}</b></p>
             <p>On: <b>{state.responseData && dateFormat(state.responseData.adoptionAd.date, 'default')}</b></p>
             {state.responseData && state.responseData.adoptionAd.photo ?
               <>
                 <img src={URL.createObjectURL(new Blob([new Uint8Array(state.responseData.adoptionAd.photo.data)]))} alt="pet" />
-                {state.responseData.adoptionAd.owner_id !== auth.userId && !state.responseData.adoptionAd.requested &&<button 
+                {state.responseData.adoptionAd.owner_id !== auth.userId && !state.responseData.adoptionAd.requested && auth.userRole === null && <button 
                 onClick={() => dispatch({ type: 'checkModalEnter' })}
                 className="btn-rec adopt-btn">Adopt me!</button>}
                 
@@ -312,7 +312,9 @@ const AdoptionAd = () => {
                       <div key={index} className="single-comment-wrapper flex-col gap-8p">
 
                         {/* the username */}
-                        <div><i className="fas fa-user"></i>{state.responseData.adoptionAd.owner_id === comment.user_id ? 'Owner' : comment.username}</div>
+                        <div><i className="fas fa-user"></i>{state.responseData.adoptionAd.owner_id === comment.user_id ? 'Owner' :
+                        comment.user_type !== 'client' ? 'Shelter' :
+                        comment.username}</div>
                         <div><i className="fas fa-clock"></i>{dateFormat(comment.date, 'default')}</div>
                         {/* user's comment */}
                         <p>{comment.text}</p>

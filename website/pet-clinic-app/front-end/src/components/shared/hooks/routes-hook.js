@@ -25,6 +25,7 @@ import AdoptionPostsManagement from '../../pages/staffPanel/adoptionpostsmanagem
 import PetTreatmentHistory from '../../pages/staffPanel/pettreatmenthistory/PetTreatmentHistory';
 import PetTrainingHistory from '../../pages/staffPanel/pettraininghistory/PetTrainingHistory';
 import RegisterClient from '../../pages/staffPanel/registration/RegisterClient'
+import PutForAdoption from "../../pages/staffPanel/putforadoption/PutForAdoption";
 import RegisterPetRec from '../../pages/staffPanel/registration/RegisterPetRec'
 import ManageUsers from '../../pages/staffPanel/manageusers/ManageUsers'
 import ManagePets from '../../pages/staffPanel/managepets/ManagePets'
@@ -56,7 +57,6 @@ const useRoutes = (authedUser, stmemType) => {
               <Route path='stafflist'
                 element={<Stafflist />} > </Route>
 
-              {/* private routes */}
 
               <Route path='appointment'
                 element={authedUser ? <Appointment /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
@@ -108,6 +108,17 @@ const useRoutes = (authedUser, stmemType) => {
             </>
             :
             <>
+              {(stmemType === 'receptionist' || stmemType === 'admin') &&
+
+                <>
+                  <Route path='postpreview/:id'
+                    element={authedUser ? <PostPreview /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}> </Route>
+                  <Route path='adoptionad/:id'
+                    element={authedUser ? <AdoptionAd /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+                </>
+              }
+
+
               <Route path='staffpanel'
                 element={<StaffPanelSideNav />}>
                 <Route index
@@ -116,53 +127,37 @@ const useRoutes = (authedUser, stmemType) => {
                   element={authedUser ? <PersonalInfo /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
                 <Route path='account'
                   element={authedUser ? <Account /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
-                {stmemType === 'receptionist' &&
+                {(stmemType === 'receptionist' || stmemType === 'admin') &&
                   <>
                     <Route path='manageappointments'
                       element={authedUser ? <AppointmentManagement /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
-                    
+
                     <Route path='registerclient'
                       element={authedUser ? <RegisterClient /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
                     <Route path='registerpet'
                       element={authedUser ? <RegisterPetRec /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+                    <Route path='putforadoption'
+                      element={authedUser ? <PutForAdoption /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+
                     <Route path='adoptionrequests'
                       element={authedUser ? <AdoptionManagement /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
-                      <Route path='adoptionposts'
-                    element={authedUser ? <AdoptionPostsManagement /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+                    <Route path='adoptionposts'
+                      element={authedUser ? <AdoptionPostsManagement /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
                   </>
 
                 }
-                {stmemType === 'vet' &&
+                {(stmemType === 'vet' || stmemType === 'admin') &&
                   <Route path='pettreatmenthistory'
                     element={authedUser ? <PetTreatmentHistory /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
                 }
-                {stmemType === 'trainer' &&
+                {(stmemType === 'trainer' || stmemType === 'admin') &&
                   <Route path='pettraininghistory'
                     element={authedUser ? <PetTrainingHistory /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
                 }
                 {stmemType === 'admin' &&
                   <>
-                    <Route path='manageappointments'
-                      element={authedUser ? <AppointmentManagement /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
-
-                    <Route path='adoptionrequests'
-                      element={authedUser ? <AdoptionManagement /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
-
-                    <Route path='adoptionposts'
-                      element={authedUser ? <AdoptionPostsManagement /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
-
-                    <Route path='pettreatmenthistory'
-                      element={authedUser ? <PetTreatmentHistory /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
-
-                    <Route path='pettraininghistory'
-                      element={authedUser ? <PetTrainingHistory /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
-
-                    <Route path='registerclient'
-                      element={authedUser ? <RegisterClient /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
-                    <Route path='registerpet'
-                      element={authedUser ? <RegisterPetRec /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
-
+                    
                     <Route path='manageusers'
                       element={authedUser ? <ManageUsers /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
@@ -192,7 +187,7 @@ const useRoutes = (authedUser, stmemType) => {
       </>
     )
 
-    
+
 
   }
 

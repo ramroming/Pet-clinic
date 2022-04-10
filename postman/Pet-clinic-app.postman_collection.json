@@ -631,13 +631,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/adoptionads/10",
+					"raw": "{{url}}/adoptionads/75",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"adoptionads",
-						"10"
+						"75"
 					]
 				}
 			},
@@ -753,22 +753,21 @@
 			"response": []
 		},
 		{
-			"name": "TransferOwnerShip",
+			"name": "ReceptionistTransferOwnerShip",
 			"request": {
 				"method": "PATCH",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/users/me/pets/84/159/47",
+					"raw": "{{url}}/receptionist/pets/89/166/76",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"users",
-						"me",
+						"receptionist",
 						"pets",
-						"84",
-						"159",
-						"47"
+						"89",
+						"166",
+						"76"
 					]
 				}
 			},
@@ -977,6 +976,33 @@
 			"response": []
 		},
 		{
+			"name": "ReceptionistCreateAdoptionAd",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"pet_id\": 96,\r\n    \"story\": \"Im owned by the shelter too\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/receptionist/adoptionads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"receptionist",
+						"adoptionads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "ReceptionistCreateAppointment",
 			"request": {
 				"method": "POST",
@@ -990,24 +1016,6 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "{{url}}/receptionist/appointments",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"receptionist",
-						"appointments"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "ReceptionistGetAppointments",
-			"request": {
-				"method": "GET",
-				"header": [],
 				"url": {
 					"raw": "{{url}}/receptionist/appointments",
 					"host": [
@@ -1046,19 +1054,91 @@
 			"response": []
 		},
 		{
-			"name": "ReceptionistDeleteAppointments",
+			"name": "ReceptionistGetAppointments",
 			"request": {
-				"method": "DELETE",
+				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/receptionist/appointments/50",
+					"raw": "{{url}}/receptionist/appointments",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"receptionist",
-						"appointments",
-						"50"
+						"appointments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReceptionistGetShelterPets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/receptionist/shelterpets",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"receptionist",
+						"shelterpets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReceptionistGetShelterPet",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/receptionist/shelterpet/89",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"receptionist",
+						"shelterpet",
+						"89"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReceptionistGetAdoptionAds",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/receptionist/adoptionads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"receptionist",
+						"adoptionads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReceptionistGetShelterAdoptionRequests",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/receptionist/adoptionRequests",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"receptionist",
+						"adoptionRequests"
 					]
 				}
 			},
@@ -1078,6 +1158,94 @@
 						"receptionist",
 						"appointments",
 						"49"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReceptionistUpdatePetStory",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"story\": \"Hey there\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/receptionist/adoptionads/75",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"receptionist",
+						"adoptionads",
+						"75"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TransferOwnerShip Copy",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/me/pets/84/159/47",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"pets",
+						"84",
+						"159",
+						"47"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReceptionistDeleteAppointments",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/receptionist/appointments/50",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"receptionist",
+						"appointments",
+						"50"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReceptionistDeleteAdoptionAd",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/receptionist/adoptionads/23",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"receptionist",
+						"adoptionads",
+						"23"
 					]
 				}
 			},

@@ -3,9 +3,10 @@ import { createConnection } from "mysql2/promise"
 import connData from "../database/pet-clinic-db.js"
 import petClinicRules from "../utils/petclinicrules.js"
 import timeOperations from "../utils/timeOperations.js"
+import dateFormat from "dateformat"
 
 const { MAX_ACTIVE_APPOINTMENTS, MAX_APPOINTMENTS_PER_DAY, MAX_PETS_PER_USER, MAX_SHELTER_CAPACITY } = petClinicRules
-const { get_available_times } = timeOperations
+const { get_available_times, calculate_pet_age } = timeOperations
 
 const getPetsByUserName = async (req, res) => {
 
@@ -216,11 +217,197 @@ const confirmAppointment = async (req, res) => {
     res.status(500).send({ error: e.message })
   }
 }
+
+const getShelterPets = async (req, res) => {
+  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
+  return res.status(401).send({ error: 'Unauthorized!!' })
+  try {
+    const conn = await createConnection(connData)
+    const [shelterPets] = await conn.execute(`SELECT id, pets.name, type_name, gender, birth_date, breed_name FROM pets
+    JOIN breeds ON pets.breed_name = breeds.name
+     WHERE shelter_id = 1`)
+    const petsToSend = []
+    for( let i =0; i < shelterPets.length; i++){
+      const [ads] = await conn.execute('SELECT pet_id FROM adoption_ads WHERE pet_id = ? AND status=1', [shelterPets[i].id])
+      if(ads.length === 0){
+        shelterPets[i].birth_date = calculate_pet_age(shelterPets[i].birth_date)
+        petsToSend.push(shelterPets[i])
+      }
+    }
+    await conn.end()
+
+    res.send(petsToSend)
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+const getShelterPet = async (req, res) => {
+  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
+  return res.status(401).send({ error: 'Unauthorized!!' })
+  try {
+    const conn = await createConnection(connData)
+    const [trainings] = await conn.execute(`SELECT t.start_date, t.end_date, tt.name AS training, pi.first_name AS trainer_first_name, pi.last_name AS trainer_last_name FROM trainings t
+    JOIN training_types tt ON t.training_type_id = tt.id
+    JOIN users u ON t.trainer_id = u.id
+    JOIN personal_info pi ON pi.id = u.personal_info_id
+    WHERE t.pet_id = ?`, [req.params.id])
+    await conn.end()
+    req.pet.trainings = trainings
+    res.send(req.pet)
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+const createAdoptionAd = async (req, res) => {
+  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
+  return res.status(401).send({ error: 'Unauthorized!!' })
+// getting the pet type based on the pet breed to add it to the adoption post
+  try {
+    const conn = await createConnection(connData)
+    const [ads] = await conn.execute('SELECT id FROM adoption_ads WHERE pet_id = ? AND status=1', [req.body.pet_id])
+    if (ads.length !== 0)
+      return res.status(400).send({ error: 'It looks like you have already posted an ad for this pet, you may post again once your ad is removed from the site !!' })
+
+    const [result] = await conn.execute('SELECT type_name FROM breeds WHERE name = ? ', [req.pet.breed_name])
+    const [insertResult] = await conn.execute('INSERT INTO adoption_ads (date, ad_type, status, pet_id, shelter_id, story) VALUES (?, ?, 1, ?, 1, ?)', [dateFormat(new Date(), 'UTC: yyyy-mm-dd HH:MM:ss'), result[0].type_name, req.body.pet_id, req.body.story])
+    await conn.end()
+    return res.status(201).send({ response: 'Your Adoption ad Was posted Successfully ', ad_id: insertResult.insertId })
+  } catch (e) {
+    return res.status(500).send({ error: e.message })
+  }
+}
+const getShelterAdoptionAds = async (req, res) => {
+  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
+  return res.status(401).send({ error: 'Unauthorized!!' })
+
+  try {
+    const conn = await createConnection(connData)
+    const [adoptionAds] = await conn.execute('SELECT id, date, story, status FROM adoption_ads WHERE shelter_id = 1 ORDER BY date DESC')
+    await conn.end()
+    res.send(adoptionAds)
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+const updatePostStoryRec = async (req, res) => {
+  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
+  return res.status(401).send({ error: 'Unauthorized!!' })
+  try {
+    const conn = await createConnection(connData)
+    const [result] = await conn.execute('UPDATE adoption_ads SET story = ? WHERE shelter_id = 1 AND id = ? AND status=1 ', [req.body.story, req.params.ad_id])
+    if (result.affectedRows === 0)
+      return res.status(404).send()
+    res.send({ result: 'Adoption post story was updated successfully !!' })
+    await conn.end()
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+const deleteAdoptionAd = async (req, res) => {
+  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
+  return res.status(401).send({ error: 'Unauthorized!!' })
+  try {
+    const conn = await createConnection(connData)
+    const [result] = await conn.execute('DELETE FROM adoption_ads WHERE shelter_id = 1 AND id = ?  ', [req.params.ad_id])
+    await conn.end()
+    if (result.affectedRows === 0)
+      return res.status(404).send({ error: '404 not found' })
+    res.send({ result: 'Adoption ad was deleted successfully ' })
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+const getAdoptionRequests = async (req, res) => {
+  
+  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
+  return res.status(401).send({ error: 'Unauthorized!!' })
+  try {
+  
+    // get received requests
+    const conn2 = await createConnection(connData)
+    const [receivedRequests] = await conn2.execute(`select ar.id, ar.date, ar.client_id as requester_id, ar.adoption_ad_id, ar.status, aa.client_id as post_owner_id, p.id as pet_id, pi.first_name as requester_first_name, pi.last_name as requester_last_name, pi.phone_number as requester_phone_number FROM adoption_requests ar
+    JOIN adoption_ads aa ON ar.adoption_ad_id = aa.id
+    JOIN pets p ON p.id = aa.pet_id
+    JOIN users u ON u.id = ar.client_id
+    JOIN personal_info pi ON u.personal_info_id = pi.id
+    WHERE aa.shelter_id = 1 AND aa.status= 1
+    ORDER BY ar.adoption_ad_id , ar.date  desc`)
+    await conn2.end()
+    const finalReceived = []
+    let adoption_ad_requests = []
+    for (let i = 0; i < receivedRequests.length; i++) {
+      if (i === 0) {
+        adoption_ad_requests.push(receivedRequests[i])
+        if (i + 1 === receivedRequests.length)
+          finalReceived.push(adoption_ad_requests)
+        continue
+      }
+      if (receivedRequests[i - 1].adoption_ad_id === receivedRequests[i].adoption_ad_id) {
+        if (i + 1 === receivedRequests.length)
+          finalReceived.push(adoption_ad_requests)
+        adoption_ad_requests.push(receivedRequests[i])
+        continue
+      }
+      else {
+        finalReceived.push(adoption_ad_requests)
+        adoption_ad_requests = []
+        adoption_ad_requests.push(receivedRequests[i])
+        if (i + 1 === receivedRequests.length)
+          finalReceived.push(adoption_ad_requests)
+        continue
+      }
+
+
+    }
+    res.send({ sentRequests: [], finalReceived })
+
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+const transferOwnerShip = async (req, res) => {
+  try {
+    // disable the requested post
+    const conn = await createConnection(connData)
+    const [result] = await conn.execute(`UPDATE adoption_ads
+    SET status = 0
+    WHERE id= ? AND status = 1`, [req.params.ad_id])
+    await conn.end()
+
+    // accept the selected requester and reject all other requesters
+    const conn2 = await createConnection(connData)
+    const [result2] = await conn2.execute(`UPDATE adoption_requests
+    SET status = CASE WHEN client_id = ? THEN 'accepted' ELSE 'rejected' END
+    WHERE adoption_ad_id = ? AND status="pending"`, [req.params.new_owner_id, req.params.ad_id])
+    await conn2.end()
+
+    // transfer the pet for the old owner to the new owner
+    const conn3 = await createConnection(connData)
+    const [result3] = await conn3.execute(`UPDATE pets
+    SET shelter_id = null, pervious_owner = 1, owner_id = ?
+    WHERE id = ?`, [req.params.new_owner_id, req.params.pet_id])
+    await conn3.end()
+
+    res.send({ result: 'Your ownership has been successfully transfered to the selected requester ' })
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+  res.send()
+}
 export {
   getAppointments,
   deleteAppointment,
   confirmAppointment,
   createAppointment,
   getPetsByUserName,
-  registerPetRec
+  registerPetRec,
+  getShelterPets,
+  getShelterPet,
+  createAdoptionAd,
+  getShelterAdoptionAds,
+  updatePostStoryRec,
+  deleteAdoptionAd,
+  getAdoptionRequests,
+  transferOwnerShip
+
 }

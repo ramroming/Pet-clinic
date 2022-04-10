@@ -32,7 +32,7 @@ const initialData = {
 
 }
 
-const MyAdoptionRequests = () => {
+const MyAdoptionRequests = (props) => {
 
   const [openModal, setOpenModal] = useState(false)
   const [openStatusModal, setOpenStatusModal] = useState(false)
@@ -51,7 +51,9 @@ const MyAdoptionRequests = () => {
     let isMount = true
     const getMyAdoptionRequests = async () => {
       try {
-        const adoptionRequests = await sendRequest('http://localhost:5000/users/me/requests', 'GET', null, {
+        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `http://localhost:5000/receptionist/adoptionRequests` : `http://localhost:5000/users/me/requests`}`
+
+        const adoptionRequests = await sendRequest(URL, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (adoptionRequests && isMount)
@@ -66,7 +68,7 @@ const MyAdoptionRequests = () => {
       setPageIsLoading(false)
       isMount = false
     }
-  }, [auth.token, dispatch, sendRequest, setPageIsLoading])
+  }, [auth.token, auth.userRole, dispatch, sendRequest, setPageIsLoading])
 
   useEffect(() => {
     let isMount = true
@@ -97,7 +99,10 @@ const MyAdoptionRequests = () => {
     let isMount = true
     const transferOwner = async () => {
       try {
-        const result = await sendRequest(`http://localhost:5000/users/me/pets/${state.selectedPet && state.selectedPet}/${state.selectedNewOwner && state.selectedNewOwner}/${state.selectedAd && state.selectedAd}`, 'PATCH', null, {
+        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `http://localhost:5000/receptionist/pets/${state.selectedPet && state.selectedPet}/${state.selectedNewOwner && state.selectedNewOwner}/${state.selectedAd && state.selectedAd}` 
+        : `http://localhost:5000/users/me/pets/${state.selectedPet && state.selectedPet}/${state.selectedNewOwner && state.selectedNewOwner}/${state.selectedAd && state.selectedAd}`}`
+
+        const result = await sendRequest(URL, 'PATCH', null, {
           'Authorization': `Bearer ${auth.token}`,
         })
         if (result && isMount)
@@ -114,7 +119,7 @@ const MyAdoptionRequests = () => {
       setPageIsLoading(false)
       isMount = false
     }
-  }, [auth.token, dispatch, sendRequest, setPageIsLoading, state.isTransferingOwner, state.selectedAd, state.selectedPet, state.selectedNewOwner])
+  }, [auth.token, auth.userRole, dispatch, sendRequest, setPageIsLoading, state.isTransferingOwner, state.selectedAd, state.selectedPet, state.selectedNewOwner])
 
 
 
@@ -248,7 +253,9 @@ const MyAdoptionRequests = () => {
         <div className="flex-col falign-center fjust-center ">
           {openStatusModal && <EditAdoptionStatus closeModal={setOpenStatusModal} />}
         </div>
-        <h3>Sent Adoption Requests</h3>
+        {!props.onlyReceived &&
+          <>
+            <h3>Sent Adoption Requests</h3>
         <Table className="my-table">
 
           {state.responseData && state.responseData.sentRequests && state.responseData.sentRequests.length === 0 &&
@@ -296,7 +303,7 @@ const MyAdoptionRequests = () => {
                         {dateFormat(request.date, 'default')}
                       </Td>
                       <Td style={request.status === 'accepted' ? { color: 'green' } : request.status === 'rejected' ? { color: 'red' } : { color: 'black' }}>
-                        {request.status === 'accepted' ? 'Owner accepted your request': request.status === 'rejected' ? 'Pet got adopted by others': request.status}
+                        {request.status === 'accepted' ? 'Your adoption request got accepted ': request.status === 'rejected' ? 'Pet got adopted by others': request.status}
                       </Td>
 
                       {request.status === 'pending' ? 
@@ -330,6 +337,9 @@ const MyAdoptionRequests = () => {
           }
 
         </Table>
+          </>
+        }
+        
 
         <h3>Received Adoption Requests</h3>
 

@@ -71,6 +71,29 @@ const myValidator = {
       throw e
     }
   },
+  async isShelterPet(pet_id) {
+    try {
+      const conn = await createConnection(connData)
+      const [rows, fields] = await conn.execute(`SELECT p.name As pet_name, p.gender, p.birth_date, p.breed_name, p.shelter_id, GROUP_CONCAT(c.name) As colors, p.photo  FROM pets p
+      JOIN color_records cr ON cr.pet_id = p.id
+      JOIN colors c ON cr.color_id = c.id
+      WHERE shelter_id = 1 AND p.id = ?
+      group by p.name, p.gender, p.birth_date, p.breed_name, p.photo`, [pet_id])
+      await conn.end()
+
+      // if a user dosen't own the pet 
+      if (!rows.length)
+        return false
+      
+      rows[0].birth_date = calculate_pet_age(rows[0].birth_date)
+      
+      // if the user owns the pet
+      return rows[0]
+
+    }  catch(e) {
+      throw e
+    }
+  },
 
   // pet related validations
   isValidGender(gender) {
@@ -199,6 +222,19 @@ const myValidator = {
       throw e
     } 
   },
+  async isValidUserId(user_id) {
+    try {
+      const conn = await createConnection(connData)
+      const [rows, fields] = await conn.execute('SELECT id FROM users WHERE id = ?', [user_id])
+      await conn.end()
+      if (!rows.length)
+        return false
+      
+      return rows[0].id
+    } catch (e) {
+      throw e
+    } 
+  },
   isValidAppStmem(appointment_type, stmem_id) {
     
   },
@@ -215,7 +251,7 @@ const myValidator = {
     try {
       // check that is user requesting an already existing ad that doesn't belong to him
       const conn = await createConnection(connData)
-      const [result] = await conn.execute('SELECT id from adoption_ads WHERE client_id != ? AND id=? AND status = 1', [userId, adoptionId])
+      const [result] = await conn.execute('SELECT id from adoption_ads WHERE (client_id != ? OR isnull(client_id) ) AND id=? AND status = 1', [userId, adoptionId])
       await conn.end()
       if (!result.length  )
         return false
@@ -251,7 +287,20 @@ const myValidator = {
     } catch (e) {
       throw e
     }
-  }
+  },
+  async petInAdoptionAdFromShelter(petId, adoptionAdId) {
+    try {
+      const conn = await createConnection(connData)
+      const [result] = await conn.execute('SELECT id FROM adoption_ads WHERE status = 1 AND id = ? AND pet_id = ? AND shelter_id=1', [adoptionAdId, petId])
+      await conn.end()
+      if (!result.length)
+        return false
+
+      return true
+    } catch (e) {
+      throw e
+    }
+  },
   // async isMyRequest(userId, requestId) {
   //   try {
   //     const conn = await createConnection(connData)

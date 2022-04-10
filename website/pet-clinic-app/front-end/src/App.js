@@ -10,7 +10,7 @@ import { useState } from 'react';
 
 function App() {
 
-  const { token, login, logout, userId, authedUser, userRole } = useAuth()
+  const { token, login, logout, userId, authedUser, userRole } = useAuth(window)
   const [pageIsLoading, setPageIsLoading] = useState(false)
  
 

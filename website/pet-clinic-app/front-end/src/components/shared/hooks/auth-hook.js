@@ -28,7 +28,7 @@ const useAuth = () => {
     const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 6 )
     setTokenExpirationDate(tokenExpirationDate)
     localStorage.setItem('userData', JSON.stringify({ uid, token, role, expiration: tokenExpirationDate.toISOString() }))
-     
+
 
 
 
@@ -43,8 +43,6 @@ const useAuth = () => {
     setUserRole(null)
 
     localStorage.removeItem('userData')
-
-
 
   }, [])
 
@@ -86,7 +84,6 @@ const useAuth = () => {
     }
   }, [token, logout, tokenExpirationDate, location.state, location.pathname, redirector])
 
-  
 
   return { token, login, logout, userId, authedUser, userRole }
 }

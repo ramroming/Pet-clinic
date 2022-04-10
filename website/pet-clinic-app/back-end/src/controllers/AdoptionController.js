@@ -13,7 +13,7 @@ const getAdoptionAd = async (req, res) => {
     const conn = await createConnection(connData)
     const [adoptionAds] = await conn.execute(`SELECT ad.date, ad.story,p.owner_id, p.id AS pet_id, p.name as pet_name, p.gender, p.birth_date, p.breed_name, p.photo, u.username, group_concat(co.name) as colors FROM adoption_ads ad
     JOIN pets p ON ad.pet_id = p.id
-    JOIN users u ON p.owner_id = u.id
+    LEFT JOIN users u ON p.owner_id = u.id 
     JOIN color_records cr ON cr.pet_id = p.id
     JOIN colors co ON co.id = cr.color_id WHERE ad.id = ? AND ad.status=1
     GROUP BY ad.date, ad.story,p.owner_id, p.id , p.name , p.gender, p.birth_date, p.breed_name, u.username`, [req.params.id])
@@ -25,7 +25,7 @@ const getAdoptionAd = async (req, res) => {
 
     // getting the comments of an adoption ad
     const conn2 = await createConnection(connData)
-    const [comments] = await conn2.execute(`SELECT c.date, c.text, u.username, u.id AS user_id FROM comments c 
+    const [comments] = await conn2.execute(`SELECT c.date, c.text, u.username, u.id AS user_id, u.user_type FROM comments c 
     JOIN users u ON c.client_id = u.id
     JOIN adoption_ads aa ON aa.id = c.adoption_ad_id
     WHERE adoption_ad_id = ? AND aa.status = 1
