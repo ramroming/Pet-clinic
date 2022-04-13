@@ -43,11 +43,11 @@ const Appointment = () => {
           {
             'Authorization': `Bearer ${auth.token}`
           })
-        if (appointments){
+        if (appointments.arrayToSend){
 
           const activeAppointments = []
           const pastAppointments = []
-          appointments.forEach(appointment => {
+          appointments.arrayToSend.forEach(appointment => {
             if(appointment.status === 1 && appointment.confirmed === 0)
               activeAppointments.push(appointment)
             else {
