@@ -4,6 +4,7 @@ import connData from "../database/pet-clinic-db.js"
 import petClinicRules from "../utils/petclinicrules.js"
 import timeOperations from "../utils/timeOperations.js"
 import dateFormat from "dateformat"
+import sharp from "sharp"
 
 const { MAX_ACTIVE_APPOINTMENTS, MAX_APPOINTMENTS_PER_DAY, MAX_PETS_PER_USER, MAX_SHELTER_CAPACITY } = petClinicRules
 const { get_available_times, calculate_pet_age } = timeOperations
