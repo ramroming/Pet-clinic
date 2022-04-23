@@ -35,11 +35,11 @@ CREATE TABLE `adoption_ads` (
   KEY `ADOPTION_ADS_fk0` (`pet_id`),
   KEY `ADOPTION_ADS_fk1` (`shelter_id`),
   KEY `ADOPTION_ADS_fk2` (`client_id`),
-  CONSTRAINT `ADOPTION_ADS_fk0` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`),
+  CONSTRAINT `ADOPTION_ADS_fk0` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`) ON DELETE CASCADE,
   CONSTRAINT `ADOPTION_ADS_fk1` FOREIGN KEY (`shelter_id`) REFERENCES `shelters` (`id`),
   CONSTRAINT `ADOPTION_ADS_fk2` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`),
   CONSTRAINT `arc_adoption_ad` CHECK (((`shelter_id` is null) or (`client_id` is null)))
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-10 17:39:42
+-- Dump completed on 2022-04-23 17:17:31

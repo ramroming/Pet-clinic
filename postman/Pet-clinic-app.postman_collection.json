@@ -1214,6 +1214,65 @@
 			"response": []
 		},
 		{
+			"name": "ReceptionistUpdatePetData",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "rami",
+							"type": "default"
+						},
+						{
+							"key": "gender",
+							"value": "male",
+							"type": "default"
+						},
+						{
+							"key": "birth_date",
+							"value": "2023-11-07",
+							"type": "default"
+						},
+						{
+							"key": "breed_name",
+							"value": "Bulldog",
+							"type": "default"
+						},
+						{
+							"key": "pet_type",
+							"value": "dog",
+							"type": "default"
+						},
+						{
+							"key": "colors",
+							"value": "white",
+							"type": "default"
+						},
+						{
+							"key": "photo",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/receptionist/shelterpets/106",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"receptionist",
+						"shelterpets",
+						"106"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "ReceptionistDeleteAppointments",
 			"request": {
 				"method": "DELETE",
@@ -1246,6 +1305,25 @@
 						"receptionist",
 						"adoptionads",
 						"23"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReceptionistDeletePet",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/receptionist/shelterpets/122",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"receptionist",
+						"shelterpets",
+						"122"
 					]
 				}
 			},

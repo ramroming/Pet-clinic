@@ -32,7 +32,7 @@ CREATE TABLE `trainings` (
   KEY `TRAININGS_fk0` (`pet_id`),
   KEY `TRAININGS_fk1` (`trainer_id`),
   KEY `TRAININGS_fk2` (`training_type_id`),
-  CONSTRAINT `TRAININGS_fk0` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`),
+  CONSTRAINT `TRAININGS_fk0` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`) ON DELETE CASCADE,
   CONSTRAINT `TRAININGS_fk1` FOREIGN KEY (`trainer_id`) REFERENCES `users` (`id`),
   CONSTRAINT `TRAININGS_fk2` FOREIGN KEY (`training_type_id`) REFERENCES `training_types` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-10 17:39:43
+-- Dump completed on 2022-04-23 17:17:29
