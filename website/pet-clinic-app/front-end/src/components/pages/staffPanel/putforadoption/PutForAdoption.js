@@ -75,10 +75,10 @@ const PutForAdoption = () => {
                 Breed
               </Th>
               <Th>
-                Age
+                Gender
               </Th>
               <Th>
-                Gender
+                Age
               </Th>
 
             </Tr>
@@ -101,13 +101,13 @@ const PutForAdoption = () => {
                     {pet.gender}
                   </Td>
                   <Td>
-                    {pet.birth_date}
+                    {pet.age}
                   </Td>
                   <Td>
-                    <Link className="my-great-button" to={`/postpreview/${pet.id}`}
+                    {pet.hasPost ? <p style={{ color: 'green' }}>Already posted</p> : <Link className="my-great-button" to={`/postpreview/${pet.id}`}
                       target={'_blank'}>
                       Post an ad
-                    </Link>
+                    </Link>}
                   </Td>
 
                 </Tr>

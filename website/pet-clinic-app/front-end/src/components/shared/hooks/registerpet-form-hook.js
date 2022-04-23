@@ -67,7 +67,7 @@ const formReducer = (state, action) => {
       formData.append('breed_name', state.breed_name.value)
       formData.append('photo', state.photo.value)
       formData.append('colors', state.selectedColors.join(':'))
-      if(state.user_name.value)
+      if(state.user_name)
         formData.append('user_name', state.user_name.value)
       
       return {

@@ -2,7 +2,6 @@ import { useEffect, useContext } from "react"
 import InputError from "../../../utils/formErrorMsg/InputError"
 import useFetch from "../../../shared/hooks/fetch-hook"
 import useSignupForm from "../../../shared/hooks/signup-form-hook"
-import { authContext } from "../../../shared/context/auth-context"
 import { pageLoadingContext } from '../../../shared/context/loading-context';
 import Modal from '../../../utils/modal/Modal';
 
@@ -61,7 +60,6 @@ const RegisterClient = () => {
   const sendRequest = useFetch()
 
 
-  const auth = useContext(authContext)
 
   const setPageIsLoading = useContext(pageLoadingContext).setPageIsLoading
 
@@ -98,7 +96,7 @@ const RegisterClient = () => {
     if (state.isLoading) {
       fetchUser()
     }
-  }, [state.dataToSend, state.isLoading, sendRequest, auth, dispatch])
+  }, [state.dataToSend, state.isLoading, sendRequest, dispatch])
 
   useEffect(() => {
     setPageIsLoading(state.isLoading)

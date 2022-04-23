@@ -324,7 +324,7 @@ const PetInfo = () => {
 
                   </div>
                   <div className="input-wrapper flex-row">
-                    <label className="half-label" htmlFor="breed_name">Select Select Colors max 3:*
+                    <label className="half-label" htmlFor="breed_name">Select  Colors max 3:*
                     </label>
                     {state.colors && state.colors.length !== 0 && !state.isLoadingColors && state.selectedColors &&
                       state.colors.map((color, index) => {

@@ -33,7 +33,7 @@ const get_available_times = async (stmemId, userDate) => {
 
   try {
     const conn = await createConnection(connData)
-    const [appointments] = await conn.execute('SELECT * FROM appointments WHERE stmem_id= ? AND DATE(date)= ? AND status=1', [stmemId, userDate])
+    const [appointments] = await conn.execute('SELECT * FROM appointments WHERE (stmem_id= ? AND DATE(date)= ? AND (status=1 OR confirmed=1))', [stmemId, userDate])
     await conn.end()
 
     // if there are some unavailable times

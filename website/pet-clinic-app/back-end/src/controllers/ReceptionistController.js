@@ -11,13 +11,11 @@ const { get_available_times, calculate_pet_age } = timeOperations
 
 const getPetsByUserName = async (req, res) => {
 
-  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
-    return res.status(401).send({ error: 'Unauthorized!!' })
 
   try {
     const conn = await createConnection(connData)
     const [user] = await conn.execute('SELECT id FROM users WHERE username=? AND user_type="client"',
-    [req.query.username ? req.query.username: ''])
+      [req.query.username ? req.query.username : ''])
     if (!user.length) {
       await conn.end()
       return res.status(404).send({ error: 'User not found!' })
@@ -32,8 +30,6 @@ const getPetsByUserName = async (req, res) => {
 
 const registerPetRec = async (req, res) => {
 
-  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
-    return res.status(401).send({ error: 'Unauthorized!!' })
 
   if (!req.userId)
     return res.status(400).send({ error: 'missing Data' })
@@ -90,8 +86,6 @@ const registerPetRec = async (req, res) => {
 }
 const createAppointment = async (req, res) => {
 
-  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
-    return res.status(401).send({ error: 'Unauthorized!!' })
 
   const { stmem_id, pet_id, date, user_name, hour } = req.body
   const clientId = req.user_id
@@ -138,8 +132,6 @@ const createAppointment = async (req, res) => {
   }
 }
 const getAppointments = async (req, res) => {
-  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
-    return res.status(401).send({ error: 'Unauthorized!!' })
   try {
     const appointments = await get_appointments(req.query.amount)
     res.send(appointments)
@@ -148,63 +140,58 @@ const getAppointments = async (req, res) => {
   }
 }
 const deleteAppointment = async (req, res) => {
-  // only admin and receptionist can delete appointment
-  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
-    return res.status(401).send({ error: 'Unauthorized' })
 
-    try {
-      const result = await delete_appointments('byReceptionist', null, req.params.id)
-      if (!result)
-        return res.status(404).send({ error: 'Cannot cancel appointment due to a previous confirmation or late cancellation date' })
+  try {
+    const result = await delete_appointments('byReceptionist', null, req.params.id)
+    if (!result)
+      return res.status(404).send({ error: 'Cannot cancel appointment due to a previous confirmation or late cancellation date' })
 
-      res.send({ result: 'The appointment has been canceled successfully' })
-    } catch (e) {
-      res.status(500).send({ error: e.message })
-  
-    }
-  
+    res.send({ result: 'The appointment has been canceled successfully' })
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+
+  }
+
 }
 
 const confirmAppointment = async (req, res) => {
-
-  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
-    return res.status(401).send({ error: 'Unauthorized!!' })
   try {
 
     const conn = await createConnection(connData)
     const compareTime = `${new Date().toISOString().split('T')[0]} ${new Date().toISOString().split('T')[1].split('.')[0]}`
     const maxConfirmationTime = new Date(new Date(new Date().toISOString().split('T')[0]).setUTCHours(23))
     await conn.execute('UPDATE appointments SET status = 0 WHERE date < ?', [compareTime])
-    
+
 
     // change owner from user to shelter
     const [appointment] = await conn.execute('SELECT pet_id, client_id, appointment_type_id FROM appointments WHERE id = ?', [req.params.id])
 
-    if (appointment.length && appointment[0].appointment_type_id === 4){
-      
+    if (appointment.length && appointment[0].appointment_type_id === 4) {
+
       const [shelter] = await conn.execute('SELECT current_capacity FROM shelters')
-      if (shelter[0].current_capacity + 1 > MAX_SHELTER_CAPACITY){
+      if (shelter[0].current_capacity + 1 > MAX_SHELTER_CAPACITY) {
         await conn.end()
         return res.status(403).send({ error: 'Max shelter capacity has been reached you cannot accept pet submission at the moment' })
       }
-      
+
       const [result] = await conn.execute(`UPDATE  appointments 
-      set confirmed= 1
+      set confirmed= 1, status=0
       WHERE id = ? AND confirmed = 0 AND status = 1 AND date < ?`, [req.params.id, maxConfirmationTime])
-      if (result.affectedRows === 0){
+      if (result.affectedRows === 0) {
         await conn.end()
         return res.status(404).send({ error: 'Cannot confirm appointment due to a previous confirmation or late confirmation date' })
       }
-      
+
       const [result2] = await conn.execute(
         `UPDATE  pets 
         set owner_id= null,  pervious_owner= ?, shelter_id = 1
         WHERE id = ?`, [appointment[0].client_id, appointment[0].pet_id])
       const [result3] = await conn.execute(`UPDATE shelters SET current_capacity = ?`, [shelter[0].current_capacity + 1])
+      const [result4] = await conn.execute('UPDATE adoption_ads SET client_id=null, shelter_id=1 WHERE pet_id=?', [appointment[0].pet_id])
     }
     else {
       const [result] = await conn.execute(`UPDATE  appointments 
-      set confirmed= 1
+      set confirmed= 1, status=0
       WHERE id = ? AND confirmed = 0 AND status = 1 AND date < ?`, [req.params.id, maxConfirmationTime])
       if (result.affectedRows === 0) {
         await conn.end()
@@ -220,20 +207,18 @@ const confirmAppointment = async (req, res) => {
 }
 
 const getShelterPets = async (req, res) => {
-  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
-  return res.status(401).send({ error: 'Unauthorized!!' })
   try {
     const conn = await createConnection(connData)
-    const [shelterPets] = await conn.execute(`SELECT id, pets.name, type_name, gender, birth_date, breed_name FROM pets
+    const [shelterPets] = await conn.execute(`SELECT id, pets.name, type_name, gender, birth_date, breed_name, photo FROM pets
     JOIN breeds ON pets.breed_name = breeds.name
      WHERE shelter_id = 1`)
     const petsToSend = []
-    for( let i =0; i < shelterPets.length; i++){
+    for (let i = 0; i < shelterPets.length; i++) {
       const [ads] = await conn.execute('SELECT pet_id FROM adoption_ads WHERE pet_id = ? AND status=1', [shelterPets[i].id])
-      if(ads.length === 0){
-        shelterPets[i].birth_date = calculate_pet_age(shelterPets[i].birth_date)
-        petsToSend.push(shelterPets[i])
-      }
+      shelterPets[i].hasPost = !(ads.length === 0)
+      shelterPets[i].age = calculate_pet_age(shelterPets[i].birth_date)
+      petsToSend.push(shelterPets[i])
+
     }
     await conn.end()
 
@@ -243,8 +228,6 @@ const getShelterPets = async (req, res) => {
   }
 }
 const getShelterPet = async (req, res) => {
-  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
-  return res.status(401).send({ error: 'Unauthorized!!' })
   try {
     const conn = await createConnection(connData)
     const [trainings] = await conn.execute(`SELECT t.start_date, t.end_date, tt.name AS training, pi.first_name AS trainer_first_name, pi.last_name AS trainer_last_name FROM trainings t
@@ -260,9 +243,7 @@ const getShelterPet = async (req, res) => {
   }
 }
 const createAdoptionAd = async (req, res) => {
-  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
-  return res.status(401).send({ error: 'Unauthorized!!' })
-// getting the pet type based on the pet breed to add it to the adoption post
+  // getting the pet type based on the pet breed to add it to the adoption post
   try {
     const conn = await createConnection(connData)
     const [ads] = await conn.execute('SELECT id FROM adoption_ads WHERE pet_id = ? AND status=1', [req.body.pet_id])
@@ -278,8 +259,6 @@ const createAdoptionAd = async (req, res) => {
   }
 }
 const getShelterAdoptionAds = async (req, res) => {
-  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
-  return res.status(401).send({ error: 'Unauthorized!!' })
 
   try {
     const conn = await createConnection(connData)
@@ -291,8 +270,6 @@ const getShelterAdoptionAds = async (req, res) => {
   }
 }
 const updatePostStoryRec = async (req, res) => {
-  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
-  return res.status(401).send({ error: 'Unauthorized!!' })
   try {
     const conn = await createConnection(connData)
     const [result] = await conn.execute('UPDATE adoption_ads SET story = ? WHERE shelter_id = 1 AND id = ? AND status=1 ', [req.body.story, req.params.ad_id])
@@ -305,8 +282,6 @@ const updatePostStoryRec = async (req, res) => {
   }
 }
 const deleteAdoptionAd = async (req, res) => {
-  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
-  return res.status(401).send({ error: 'Unauthorized!!' })
   try {
     const conn = await createConnection(connData)
     const [result] = await conn.execute('DELETE FROM adoption_ads WHERE shelter_id = 1 AND id = ?  ', [req.params.ad_id])
@@ -319,11 +294,9 @@ const deleteAdoptionAd = async (req, res) => {
   }
 }
 const getAdoptionRequests = async (req, res) => {
-  
-  if (req.user.stmem_type !== 'admin' && req.user.stmem_type !== 'receptionist')
-  return res.status(401).send({ error: 'Unauthorized!!' })
+
   try {
-  
+
     // get received requests
     const conn2 = await createConnection(connData)
     const [receivedRequests] = await conn2.execute(`select ar.id, ar.date, ar.client_id as requester_id, ar.adoption_ad_id, ar.status, aa.client_id as post_owner_id, p.id as pet_id, pi.first_name as requester_first_name, pi.last_name as requester_last_name, pi.phone_number as requester_phone_number FROM adoption_requests ar
@@ -367,6 +340,7 @@ const getAdoptionRequests = async (req, res) => {
   }
 }
 const transferOwnerShip = async (req, res) => {
+
   try {
     // disable the requested post
     const conn = await createConnection(connData)
@@ -395,6 +369,79 @@ const transferOwnerShip = async (req, res) => {
   }
   res.send()
 }
+
+const recUpdatePet = async (req, res) => {
+
+  // this try is to detect database connection errors
+  try {
+
+    // this try is to detected database violations and other errors when creating new pet
+    const conn = await createConnection(connData)
+    try {
+
+      const { name, gender, birth_date, breed_name } = req.body
+
+
+
+      const photo = req.file ? await sharp(req.file.buffer).resize({ width: 350, height: 350 }).png().toBuffer() : null
+
+
+      if (photo) {
+        // updating with photo
+        const [rows2, fields2] = await conn.execute(`UPDATE  pets 
+      set name= ?, gender = ?, birth_date = ?, breed_name = ?, photo = ?
+      WHERE id = ?`, [
+          name ? name : null,
+          gender ? gender : null,
+          birth_date ? birth_date : null,
+          breed_name ? breed_name : null,
+          photo,
+          req.params.pet_id
+        ])
+      } else {
+        // updating without photo
+
+        const [rows2, fields2] = await conn.execute(`UPDATE  pets 
+      set name= ?, gender = ?, birth_date = ?, breed_name = ?
+      WHERE id = ?`, [
+          name ? name : null,
+          gender ? gender : null,
+          birth_date ? birth_date : null,
+          breed_name ? breed_name : null,
+          req.params.pet_id
+        ])
+      }
+      await conn.execute('DELETE FROM color_records WHERE pet_id = ?', [req.params.pet_id])
+
+      req.body.colors.forEach(async color => {
+
+        await conn.execute('INSERT INTO color_records (pet_id, color_id) VALUES (?, ?)', [req.params.pet_id, color.id])
+
+      });
+      conn.end()
+      res.status(200).send({ result: 'Pet data has been successfully updated' })
+    } catch (e) {
+      conn.end()
+      return res.status(400).send({ error: e.message })
+    }
+
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+
+}
+const deleteShelterPet = async (req, res) => {
+  try {
+    const conn = await createConnection(connData)
+    const [result] = await conn.execute('DELETE FROM pets WHERE id=? AND shelter_id=1', [req.params.pet_id])
+    await conn.end()
+    if (!result.affectedRows)
+      return res.status(404).send({ error: 'shelter pet not found' })
+    res.send({ result: 'Pet was deleted successfully '})
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
 export {
   getAppointments,
   deleteAppointment,
@@ -409,6 +456,8 @@ export {
   updatePostStoryRec,
   deleteAdoptionAd,
   getAdoptionRequests,
-  transferOwnerShip
+  transferOwnerShip,
+  recUpdatePet,
+  deleteShelterPet
 
 }

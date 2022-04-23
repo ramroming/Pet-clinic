@@ -189,9 +189,14 @@ const updatePet = async (req, res, next) => {
     if (!result.valid)
       return res.status(400).send({ error: 'invalid colors' })
     req.body.colors = result.colorWithId
-    const validPet = await myValidator.isOwnerPet(req.user.id, req.params.pet_id)
+    let validPet
+    if (req.user.stmem_type === 'receptionist' || req.user.stmem_type === 'admin') {
+       validPet = await myValidator.isShelterPet(req.params.pet_id)
+    } else {
+       validPet = await myValidator.isOwnerPet(req.user.id, req.params.pet_id)
+    }
     if (!validPet)
-      return res.status(400).send({ error: 'invalid pet/owner_id' })
+      return res.status(404).send({ error: 'not found' })
 
     
   }
@@ -426,7 +431,7 @@ const getShelterPet = async (req, res, next) => {
   try {
     const result = await myValidator.isShelterPet(req.params.id)
     if (!result)
-      return res.status(400).send({ error: 'invalid pet id'})
+      return res.status(404).send({ error: 'shelter pet not found'})
     req.pet = result
   } catch (e) {
     return res.status(500).send({ error: e.message })
@@ -442,7 +447,7 @@ const createAdoptionAdRec = async (req, res, next) => {
   try {
     const result = await myValidator.isShelterPet(pet_id)
     if (!result)
-      return res.status(400).send({ error: 'invalid pet id'})
+      return res.status(404).send({ error: 'shelter pet not found'})
     if (!result.photo)
       return res.status(400).send({ error: 'You should upload a photo for your pet first to create a post!!'})
 
@@ -459,7 +464,7 @@ const transferOwnerShipRec = async (req, res, next) => {
   try {
     const result = await myValidator.isShelterPet(req.params.pet_id)
     if (!result)
-      return res.status(400).send({ error: 'invalid pet id'})
+      return res.status(404).send({ error: 'shelter pet not found'})
     const inAd = await myValidator.petInAdoptionAdFromShelter(req.params.pet_id, req.params.ad_id)
     if (!inAd)
       return res.status(400).send({ error: 'invalid pet/adoption_ad'})    
@@ -474,7 +479,11 @@ const transferOwnerShipRec = async (req, res, next) => {
     res.status(500).send({ error: e.message })
   }
 }
-
+const deleteShelterPet = async (req, res, next) => {
+  if (!req.params.pet_id || !myValidator.isValidId(req.params.pet_id))
+    return res.status(400).send({ error: 'Bad pet id'})
+  next()
+}
 
 
 
@@ -503,6 +512,7 @@ export default {
   RecCreateAppointment,
   getShelterPet,
   createAdoptionAdRec,
-  transferOwnerShipRec
+  transferOwnerShipRec,
+  deleteShelterPet
 
 }

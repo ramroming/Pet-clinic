@@ -169,12 +169,7 @@
       }
   
     }
-    .mini-pet-photo{
-      width: 5rem;
-      height: 5rem;
-      @include rounded-corners(.8rem, .8rem, .8rem, .8rem);
-
-    }
+    
     &:hover {
       cursor: pointer;
       border-color: var(--clr-primary-secondBlue);
@@ -184,4 +179,9 @@
     }
   }
 }
+.mini-pet-photo{
+  width: 5rem;
+  height: 5rem;
+  @include rounded-corners(.8rem, .8rem, .8rem, .8rem);
 
+}

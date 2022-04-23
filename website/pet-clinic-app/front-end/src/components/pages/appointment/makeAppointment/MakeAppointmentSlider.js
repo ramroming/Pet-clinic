@@ -341,7 +341,7 @@ const MakeAppointmentSlider = () => {
               <div id="Adoption" className={appointment.appointment_type === 'Adoption' ? "appointment-type flex-col gap-8p falign-center active " : "appointment-type flex-col gap-8p falign-center"}
                 onClick={(event) => selectOption(event)}>
                 <img src="/media/imgs/pet-adoption.png" alt="" />
-                <p className='type'>Adoption</p>
+                <p style={{textAlign: 'center'}} className='type'>Pet Submission</p>
               </div>
             </div>
             <button

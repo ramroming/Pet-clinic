@@ -136,6 +136,9 @@ const useRoutes = (authedUser, stmemType) => {
                       element={authedUser ? <RegisterClient /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
                     <Route path='registerpet'
                       element={authedUser ? <RegisterPetRec /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+
+                    <Route path='managepets'
+                      element={authedUser ? <ManagePets /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
                     <Route path='putforadoption'
                       element={authedUser ? <PutForAdoption /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
@@ -157,12 +160,9 @@ const useRoutes = (authedUser, stmemType) => {
                 }
                 {stmemType === 'admin' &&
                   <>
-                    
+
                     <Route path='manageusers'
                       element={authedUser ? <ManageUsers /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
-
-                    <Route path='managepets'
-                      element={authedUser ? <ManagePets /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
                     <Route path='manageprofits'
                       element={authedUser ? <ManageProfits /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>

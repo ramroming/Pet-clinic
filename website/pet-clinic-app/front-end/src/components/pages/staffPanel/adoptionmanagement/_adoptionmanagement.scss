@@ -39,6 +39,9 @@ td {
         color:rgb(134, 74, 231);
         transition: all ease-in-out .3s;
     }
+    &.disabled{
+      color: grey;
+    }
    
 }
 

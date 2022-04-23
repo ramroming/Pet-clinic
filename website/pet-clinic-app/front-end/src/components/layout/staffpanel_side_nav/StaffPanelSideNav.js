@@ -123,6 +123,11 @@ const StaffPanelSideNav = () => {
                 className={({ isActive }) =>
                   isActive ? 'profile-option selected' : 'profile-option'
                 }>Manage Adoption Posts</NavLink>
+              <NavLink
+              to='/staffpanel/managepets'
+              className={({ isActive }) =>
+                isActive ? 'profile-option selected' : 'profile-option'
+              }>Manage Pets</NavLink>
             </>
           }
           {userRole === 'vet' &&
