@@ -382,7 +382,7 @@ const deleteAppointment = async (req, res, next) => {
   next()
 }
 
-// receptionist realted
+// receptionist related
 const confirmAppointment = async (req, res, next) => {
   if (!req.params.id || !myValidator.isValidId(req.params.id))
     return res.status(400).send({ error: 'Bad URL!!' })
@@ -486,6 +486,21 @@ const deleteShelterPet = async (req, res, next) => {
 }
 
 
+// admin related
+const adminChageRole = async (req, res, next) => {
+  const { newRole } = req.body
+  if (!req.params.user_id || !myValidator.isValidId(req.params.user_id) || (newRole && !myValidator.isStmemType(newRole)))
+    return res.status(400).send({ error: 'Invalid data' })
+  
+  next()
+}
+const adminDeleteUser = async (req, res, next) => {
+  if (!req.params.user_id || !myValidator.isValidId(req.params.user_id))
+    return res.status(400).send({ error: 'Invalid user_id' })
+  
+  next()
+}
+
 
 
 export default {
@@ -513,6 +528,8 @@ export default {
   getShelterPet,
   createAdoptionAdRec,
   transferOwnerShipRec,
-  deleteShelterPet
+  deleteShelterPet,
+  adminChageRole,
+  adminDeleteUser
 
 }

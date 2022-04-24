@@ -165,6 +165,46 @@
 			"response": []
 		},
 		{
+			"name": "Login Vet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {\r",
+							"    pm.environment.set('authToken', pm.response.json().token)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"reemo\",\r\n \"password\": \";:Cg+rTECSJy,6;u\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "registerPet",
 			"request": {
 				"method": "POST",
@@ -1324,6 +1364,89 @@
 						"receptionist",
 						"shelterpets",
 						"122"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AdminGetUsers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/admin/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AdminChangeRole",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"newRole\": \"vet\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/users/161",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"users",
+						"161"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AdminDeleteUsers",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/admin/users/333",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"users",
+						"333"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VetGetAppointments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/vet/appointments",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"vet",
+						"appointments"
 					]
 				}
 			},

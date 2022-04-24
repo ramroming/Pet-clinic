@@ -28,15 +28,18 @@ CREATE TABLE `treatments` (
   `pet_id` int NOT NULL,
   `case_id` int NOT NULL,
   `vaccine_id` int DEFAULT NULL,
+  `prescription_id` int DEFAULT NULL,
   PRIMARY KEY (`date`,`doctor_id`,`pet_id`),
   KEY `TREATMENTS_fk0` (`doctor_id`),
   KEY `TREATMENTS_fk1` (`pet_id`),
   KEY `TREATMENTS_fk2` (`case_id`),
   KEY `TREATMENTS_fk3` (`vaccine_id`),
+  KEY `TREATMENTS_fk4_idx` (`prescription_id`),
   CONSTRAINT `TREATMENTS_fk0` FOREIGN KEY (`doctor_id`) REFERENCES `users` (`id`),
   CONSTRAINT `TREATMENTS_fk1` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`) ON DELETE CASCADE,
   CONSTRAINT `TREATMENTS_fk2` FOREIGN KEY (`case_id`) REFERENCES `cases` (`id`),
-  CONSTRAINT `TREATMENTS_fk3` FOREIGN KEY (`vaccine_id`) REFERENCES `vaccines` (`id`)
+  CONSTRAINT `TREATMENTS_fk3` FOREIGN KEY (`vaccine_id`) REFERENCES `vaccines` (`id`),
+  CONSTRAINT `TREATMENTS_fk4` FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -58,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-23 17:17:30
+-- Dump completed on 2022-04-24 16:10:21

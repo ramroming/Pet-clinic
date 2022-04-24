@@ -9,7 +9,7 @@ const StaffPanelSideNav = () => {
   return (
     <div className="home-container myprofile-wrapper">
       <div className="myprofile-container flex-row">
-        <div className="bio-container flex-row gap-8p falign-center">
+        {/* <div className="bio-container flex-row gap-8p falign-center">
           <img className="avatar-photo" alt='avatar' src='/media/imgs/avatar.jpg' />
           <div className="bio-info flex-col gap-4p">
             <p className="user-name">
@@ -17,7 +17,7 @@ const StaffPanelSideNav = () => {
             </p>
             <p>Your professional panel</p>
           </div>
-        </div>
+        </div> */}
         <div className="profile-menu flex-col ">
           <NavLink
             to='/staffpanel/mypersonalinfo'
@@ -131,11 +131,18 @@ const StaffPanelSideNav = () => {
             </>
           }
           {userRole === 'vet' &&
-            <NavLink
+            <>
+              <NavLink
               to='/staffpanel/pettreatmenthistory'
               className={({ isActive }) =>
                 isActive ? 'profile-option selected' : 'profile-option'
               }>Pet Treatment History</NavLink>
+            <NavLink
+              to='/staffpanel/activeappointments'
+              className={({ isActive }) =>
+                isActive ? 'profile-option selected' : 'profile-option'
+              }>Active Appointments</NavLink>
+            </>
           }
           {userRole === 'trainer' &&
             <NavLink

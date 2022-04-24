@@ -37,7 +37,7 @@ CREATE TABLE `users` (
   KEY `USERS_fk0` (`personal_info_id`),
   CONSTRAINT `USERS_fk0` FOREIGN KEY (`personal_info_id`) REFERENCES `personal_info` (`id`) ON DELETE CASCADE,
   CONSTRAINT `users_subtypes` CHECK ((((`user_type` = _utf8mb4'client') and (`stmem_type` is null)) or ((`user_type` = _utf8mb4'stmem') and (`stmem_type` is not null))))
-) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=185 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-23 17:17:31
+-- Dump completed on 2022-04-24 16:10:21

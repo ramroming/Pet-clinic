@@ -26,7 +26,7 @@ CREATE TABLE `cases` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(150) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,7 +35,7 @@ CREATE TABLE `cases` (
 
 LOCK TABLES `cases` WRITE;
 /*!40000 ALTER TABLE `cases` DISABLE KEYS */;
-INSERT INTO `cases` VALUES (1,'vaccination'),(2,'spaying'),(3,'check-up');
+INSERT INTO `cases` VALUES (1,'vaccination'),(2,'spaying'),(3,'check-up'),(4,'Feline Immunodeficiency Virus'),(5,'Heartworm'),(6,'Rabies'),(7,'Ringworm'),(8,'Upper Respiratory Infections'),(9,'Worms'),(10,'Dental Disease'),(11,'Ear Infections'),(12,'Itchy skin'),(13,'Vomiting and Diarrhea'),(14,'Stiffness and Pain'),(15,'Urinary Tract Problems'),(16,'Obesity'),(17,'Parrot Wasting Syndrome'),(18,'Parrot Fever'),(19,'Psittacine Beak and Feather Disease'),(20,'Polyomavirus'),(21,'Candidiasis'),(22,'Giardiosis'),(23,'Goiters'),(24,'Pacheco\'s Disease');
 /*!40000 ALTER TABLE `cases` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -48,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-23 17:17:30
+-- Dump completed on 2022-04-24 16:10:22

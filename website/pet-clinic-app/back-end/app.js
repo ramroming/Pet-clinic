@@ -10,6 +10,8 @@ import petsRouter from './src/routers/pets.js'
 import appointmentRouter from './src/routers/appointment.js'
 import adoptionRouter from './src/routers/adoption.js'
 import receptionistRouter from './src/routers/receptionist.js'
+import adminRouter from './src/routers/admin.js'
+import vetRouter from './src/routers/vet.js'
 
 
 const app = express()
@@ -33,6 +35,8 @@ app.use(petsRouter)
 app.use(appointmentRouter)
 app.use(adoptionRouter)
 app.use(receptionistRouter)
+app.use(adminRouter)
+app.use(vetRouter)
 
 // not found url
 app.use('/*', (req, res) => {

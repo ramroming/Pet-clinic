@@ -30,6 +30,7 @@ import RegisterPetRec from '../../pages/staffPanel/registration/RegisterPetRec'
 import ManageUsers from '../../pages/staffPanel/manageusers/ManageUsers'
 import ManagePets from '../../pages/staffPanel/managepets/ManagePets'
 import ManageProfits from '../../pages/staffPanel/manageProfits/ManageProfits'
+import ActiveAppointments from "../../pages/staffPanel/activeappointments/ActiveAppointments";
 import Nav from "../../layout/nav/Nav";
 import Footer from "../../layout/footer/Footer";
 // A hook that contains the routing logic and it uses the authed user state to determine whether the user is allowed to navigate to private Routes
@@ -150,8 +151,12 @@ const useRoutes = (authedUser, stmemType) => {
 
                 }
                 {(stmemType === 'vet' || stmemType === 'admin') &&
+                  <>
                   <Route path='pettreatmenthistory'
                     element={authedUser ? <PetTreatmentHistory /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+                  <Route path='activeappointments'
+                    element={authedUser ? <ActiveAppointments /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+                  </>
                 }
                 {(stmemType === 'trainer' || stmemType === 'admin') &&
                   <Route path='pettraininghistory'
