@@ -7,8 +7,9 @@ import { authContext } from "../../../shared/context/auth-context";
 import { useEffect, useContext } from 'react'
 import { pageLoadingContext } from "../../../shared/context/loading-context";
 import useFetch from "../../../shared/hooks/fetch-hook";
+import { Link } from "react-router-dom";
 
-const initialData ={
+const initialData = {
   isGettingAppointments: true,
   gettingAppointmentsFailure: '',
   appointments: []
@@ -27,7 +28,7 @@ const ActiveAppointments = () => {
           'Authorization': `Bearer ${auth.token}`
         })
         if (isMount && appointments)
-          dispatch({ type: 'getAppointmentsSuccess', data: appointments})
+          dispatch({ type: 'getAppointmentsSuccess', data: appointments })
       } catch (e) {
         if (isMount)
           dispatch({ type: 'getAppointmentsFailure', error: e.message })
@@ -45,7 +46,7 @@ const ActiveAppointments = () => {
   }, [setPageIsLoading, state.isGettingAppointments])
 
   return (
-  
+
     <>
       {(state.gettingAppointmentsFailure) &&
         <Modal
@@ -54,14 +55,7 @@ const ActiveAppointments = () => {
           body={state.gettingAppointmentsFailure}
           dispatch={dispatch}
         />}
-      {/* {(state.updateResult || state.deletePetResult) &&
-        <Modal
-          modalClass='success'
-          header='Success!!'
-          body={state.updateResult || state.deletePetResult}
-          dispatch={dispatch}
-          refresh={true}
-        />} */}
+
       <h4>Active Appointments</h4>
       <div>
         <Table className="my-table">
@@ -93,6 +87,9 @@ const ActiveAppointments = () => {
               <Th>
                 Breed
               </Th>
+              <Th>
+
+              </Th>
 
             </Tr>
           </Thead>
@@ -104,10 +101,10 @@ const ActiveAppointments = () => {
               return (
                 <Tr key={index}>
                   <Td>
-                    {<p style={{ color: appointment.status === 1 ? 'darkgreen': 'darkred'}}>{dateFormat(appointment.date)}</p>}
+                    {<p style={{ color: appointment.status === 1 ? 'darkgreen' : 'darkred' }}>{dateFormat(appointment.date, "h:MM TT")}</p>}
                   </Td>
                   <Td>
-                    <p style={{ color: appointment.confirmed ? 'darkgreen' : 'darkmagenta'}}>{appointment.confirmed === 1 ? 'Yes' : 'No'}</p>
+                    <p style={{ color: appointment.confirmed ? 'darkgreen' : 'darkmagenta' }}>{appointment.confirmed === 1 ? 'Yes' : 'No'}</p>
                   </Td>
 
                   <Td>
@@ -127,6 +124,15 @@ const ActiveAppointments = () => {
                   </Td>
                   <Td>
                     {appointment.breed_name}
+                  </Td>
+                  <Td>
+                    {appointment.confirmed ? <Link
+                      to={`/staffpanel/pettreatmenthistory/${appointment.id}`}
+                      className="start-treatment"
+                    >
+                      Start Treatment<i className= "fa-regular fa-pen-to-square"></i>
+                    </Link> :
+                    <p style={{ color: 'darkgray' }}>Waiting confirmation</p>}
                   </Td>
 
                 </Tr>

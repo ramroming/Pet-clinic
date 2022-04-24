@@ -1,0 +1,14 @@
+@use '../../../abstracts/' as *;
+
+a.start-treatment {
+  transition: all ease .5s;
+  display: inline-block;
+  color: var(--clr-primary-mainBlue);
+
+  &:visited {
+    color: var(--clr-primary-mainBlue);
+  }
+  &:hover {
+    color: var(--clr-primary-mainPurple);
+  }
+}

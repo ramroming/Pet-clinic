@@ -6,10 +6,7 @@ const get_appointments = async (query = 'all', clientId) => {
   try {
     const conn = await createConnection(connData)
     const compareTime = `${new Date().toISOString().split('T')[0]} ${new Date().toISOString().split('T')[1].split('.')[0]}`
-    await conn.execute('UPDATE appointments SET status = 0 WHERE date < ?', [compareTime])
-    const tempTime = `${new Date().toISOString().split('T')[0]}`
-    const compareTime1 = `${tempTime} ${new Date(tempTime).toISOString().split('T')[1].split('.')[0]}`
-    const compareTime2 = `${tempTime} ${new Date(new Date(tempTime).setUTCHours(23)).toISOString().split('T')[1].split('.')[0]}`
+    await conn.execute('UPDATE appointments SET status = 0 WHERE date < ?', [compareTime])    
     let appointments = []
     let fees = []
     switch (query) {
@@ -56,6 +53,20 @@ const get_appointments = async (query = 'all', clientId) => {
         const [fee_result] = await conn.execute('SELECT appointment_type_id, value FROM fee_histories ORDER BY date DESC limit 4')
         fees = fee_result
         break
+      }
+      case 'forVet': {
+        const todayDate = new Date().toISOString().split('T')[0]
+        const [rows] = await conn.execute(`
+        SELECT a.id, a.date, a.status, a.confirmed, pi.first_name, pi.last_name, pi.phone_number, p.name as pet_name, p.breed_name, b.type_name as pet_type
+        FROM appointments a 
+        JOIN users u ON a.client_id = u.id
+        JOIN personal_info pi ON u.personal_info_id = pi.id
+        JOIN pets p ON a.pet_id = p.id
+        JOIN breeds b ON p.breed_name = b.name
+        WHERE a.stmem_id = ? AND DATE(a.date) = ?
+        ORDER BY a.date`, [clientId, todayDate])
+        appointments = rows
+
       }
       default:
         break

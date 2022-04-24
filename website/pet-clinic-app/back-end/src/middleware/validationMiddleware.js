@@ -501,6 +501,14 @@ const adminDeleteUser = async (req, res, next) => {
   next()
 }
 
+// vet Related
+const getPetTreatments = async (req, res, next) => {
+  if (!req.params.appointment_id || !myValidator.isValidId(req.params.appointment_id))
+    return res.status(400).send({ error: 'invalid appointment ID' })
+  
+  next()
+}
+
 
 
 export default {
@@ -530,6 +538,7 @@ export default {
   transferOwnerShipRec,
   deleteShelterPet,
   adminChageRole,
-  adminDeleteUser
+  adminDeleteUser,
+  getPetTreatments
 
 }
