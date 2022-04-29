@@ -3,12 +3,12 @@
 
 import React from 'react'
 
-const AddPetTreatment = ({setAddTreatment}) => {
+const AddPetTreatment = ({dispatch}) => {
   return (
     <div className="add-modal-background flex falign-center fjust-center">
             <div className="modal-container flex-col fgap-16p falign-center">
                 <div className="x-close"><button
-                    onClick={() => setAddTreatment(false)}>
+                    onClick={() => dispatch({type: 'addModal', data: false})}>
                     <i className="fa-solid fa-xmark"></i></button>
                     </div>
                 <div className="modal-title">

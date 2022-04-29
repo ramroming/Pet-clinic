@@ -152,7 +152,7 @@ const useRoutes = (authedUser, stmemType) => {
                 }
                 {(stmemType === 'vet' || stmemType === 'admin') &&
                   <>
-                  <Route path='pettreatmenthistory/:id'
+                  <Route path='pettreatmenthistory'
                     element={authedUser ? <PetTreatmentHistory /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
                   <Route path='activeappointments'
                     element={authedUser ? <ActiveAppointments /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>

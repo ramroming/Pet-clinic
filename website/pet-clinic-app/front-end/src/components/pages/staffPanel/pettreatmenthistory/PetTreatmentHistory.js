@@ -1,33 +1,73 @@
 
-import { useState } from 'react'
+import { useEffect, useContext } from 'react'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import UpdateTreatment from './UpdateTreatment';
 import AddPetTreatment from './AddPetTreatment';
+import { useLocation } from 'react-router-dom'
+import { authContext } from '../../../shared/context/auth-context';
+import { pageLoadingContext } from '../../../shared/context/loading-context';
+import useFetch from '../../../shared/hooks/fetch-hook';
+import useTreatmentHistory from '../../../shared/hooks/treatmenthistory-hook';
+import dateFormat from 'dateformat';
 
+const initialData = {
+  updateTreatmentModal: false,
+  addTreatmentModal: false,
+
+  isGettingTreatments: true,
+  treatments: null,
+  getTreatmentsFailure: '',
+
+}
 const PetTreatmentHistory = () => {
 
-  const [treatmentHistory, setTreatmentHistory] = useState(false)
-  const [openModal, setOpenModal] = useState(false)
-  const [addTreatment, setAddTreatment] = useState(false)
+  const location = useLocation()
+  const auth = useContext(authContext)
+  const setPageIsLoading = useContext(pageLoadingContext).setPageIsLoading
+  const sendRequest = useFetch()
+  const [state, dispatch] = useTreatmentHistory(initialData)
+
+  useEffect(() => {
+    let isMount = true
+    const getTreatments = async (appId) => {
+      try {
+        const treatments = await sendRequest(`http://localhost:5000/vet/treatments/${appId}`, 'GET', null, {
+          'Authorization': `Bearer ${auth.token}`
+        })
+        if (isMount && treatments)
+          dispatch({ type: 'getTreatmentsSuccess', data: treatments })
+      } catch (e) {
+        if (isMount)
+          dispatch({ type: 'getTreatmentsFailure', error: e.message })
+      }
+    }
+    if (location.state) {
+      console.log('fetching')
+      getTreatments(location.state.appId)
+    } else
+      dispatch({ type: 'getTreatmentsSuccess', data: null })
+
+    return () => {
+      setPageIsLoading(false)
+      isMount = false
+    }
+  }, [auth.token, dispatch, location.state, sendRequest, setPageIsLoading])
+
+  useEffect(() => {
+    setPageIsLoading(state.isGettingTreatments)
+  }, [setPageIsLoading, state.isGettingTreatments])
+
 
   return (
     <>
       <h4>Pet Treatment</h4>
       <div className="flex-col falign-center fjust-center">
         <div className="search-bar-container flex-row fjust-center falign-center gap-16p">
-          <label>Enter pet's id:</label>
-          <input className="search-bar" type="text" />
-          <button className="btn-sm"
-            onClick={() => {
-              setTreatmentHistory(true)
-            }}>
-            find
-          </button>
-          {treatmentHistory &&
+          {
             <button className="btn-sm"
               onClick={() => {
-                setAddTreatment(true)
+                dispatch({ type: "addModal", data: true })
               }}>
               Add treatment
             </button>
@@ -35,92 +75,91 @@ const PetTreatmentHistory = () => {
         </div>
 
         {
-          openModal &&
-          <UpdateTreatment setOpenModal={setOpenModal} />
+          state.updateTreatmentModal &&
+          <UpdateTreatment dispatch={ dispatch } />
 
         }
 
         {
-          addTreatment &&
-          <AddPetTreatment setAddTreatment={setAddTreatment} />
+          state.addTreatmentModal &&
+          <AddPetTreatment dispatch={dispatch} />
         }
 
-        {
-          treatmentHistory &&
-          <Table className="my-table">
-            <Thead>
-              <Tr>
-                <Th>
-                  Pet id
-                </Th>
-                <Th>
-                  Pet name
-                </Th>
-                <Th>
-                  owner
-                </Th>
-                <Th>
-                  date
-                </Th>
-                <Th>
-                  staff member
-                </Th>
-                <Th>
-                  case
-                </Th>
-                <Th>
-                  vaccine
-                </Th>
-                <Th>
-                  History
-                </Th>
 
-              </Tr>
-            </Thead>
-            <Tbody>
+        <Table className="my-table">
+          <Thead>
+            <Tr>
+              <Th>
+                Date
+              </Th>
+              <Th>
+                Pet name
+              </Th>
+              <Th>
+                Vet
+              </Th>
+              <Th>
+                Case
+              </Th>
+              <Th>
+                Vaccine
+              </Th>
+              <Th>
+                Prescription
+              </Th>
+              <Th>
+                Edit
+              </Th>
 
-              <Tr>
-                <Td>
-                  1234
-                </Td>
-                <Td>
-                  Mimo
-                </Td>
-                <Td>
-                  Rami Sadettin
-                </Td>
-                <Td>
-                  2021/0/2/18 1:07 PM
-                </Td>
-                <Td>
-                  Rami Sadettin
-                </Td>
-                <Td>
-                  check up
-                </Td>
-                <Td>
-                  none
-                </Td>
-                <Td>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {state.treatments && state.treatments.map((treatment, index) => {
+              return (
+                <Tr key={index}>
+                  <Td>
+                    {dateFormat(treatment.date)}
+                  </Td>
+                  <Td>
+                    {treatment.pet_name}
+                  </Td>
+                  <Td>
+                    {`${treatment.first_name} ${treatment.last_name}`}
+                  </Td>
+                  <Td>
+                    {treatment.case_name}
+                  </Td>
+                  <Td>
+                    {treatment.vaccine_name ? treatment.vaccine_name : '--'}
+                  </Td>
+
+                  <Td>
                   <button className="btn-sm"
-                    onClick={() => {
-                      setOpenModal(true)
-                    }}>
-                    Update
-                  </button>
+                      
+                      >
+                      Edit
+                    </button>
+                  </Td>
+                  <Td>
+                    <button className="btn-sm"
+                      onClick={() => {
+                        dispatch({ type: "updateModal", data: true })
+                      }}>
+                      Edit
+                    </button>
 
-                </Td>
+                  </Td>
 
-              </Tr>
-
-
-            </Tbody>
-
-
-          </Table>
+                </Tr>
+              )
+            })}
+          </Tbody>
 
 
-        }
+        </Table>
+
+
+
 
       </div>
     </>

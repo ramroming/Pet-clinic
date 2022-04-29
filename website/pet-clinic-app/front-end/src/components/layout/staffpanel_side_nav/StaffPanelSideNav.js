@@ -58,7 +58,7 @@ const StaffPanelSideNav = () => {
                   isActive ? 'profile-option selected' : 'profile-option'
                 }>Manage Pets</NavLink>
               <NavLink
-                to='/staffpanel/pettreatmenthistory/0'
+                to='/staffpanel/pettreatmenthistory'
                 className={({ isActive }) =>
                   isActive ? 'profile-option selected' : 'profile-option'
                 }>Pet Treatment</NavLink>
@@ -133,7 +133,7 @@ const StaffPanelSideNav = () => {
           {userRole === 'vet' &&
             <>
               <NavLink
-              to='/staffpanel/pettreatmenthistory/0'
+              to='/staffpanel/pettreatmenthistory'
               className={({ isActive }) =>
                 isActive ? 'profile-option selected' : 'profile-option'
               }>Pet Treatment</NavLink>

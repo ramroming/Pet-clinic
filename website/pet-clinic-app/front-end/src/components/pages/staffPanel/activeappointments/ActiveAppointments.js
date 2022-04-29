@@ -127,8 +127,9 @@ const ActiveAppointments = () => {
                   </Td>
                   <Td>
                     {appointment.confirmed ? <Link
-                      to={`/staffpanel/pettreatmenthistory/${appointment.id}`}
+                      to={`/staffpanel/pettreatmenthistory`}
                       className="start-treatment"
+                      state={{appId: appointment.id}}
                     >
                       Start Treatment<i className= "fa-regular fa-pen-to-square"></i>
                     </Link> :

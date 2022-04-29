@@ -1,12 +1,12 @@
 
 
-const UpdatetTeatment = ({setOpenModal}) => {
+const UpdatetTeatment = ({dispatch}) => {
 
   return (
     <div className="update-modal-background flex falign-center fjust-center">
             <div className="modal-container flex-col fgap-16p falign-center">
                 <div className="x-close"><button
-                    onClick={() => setOpenModal(false)}>
+                    onClick={() => dispatch({ type: 'updateModal', data: false})}>
                     <i className="fa-solid fa-xmark"></i></button>
                     </div>
                 <div className="modal-title">
