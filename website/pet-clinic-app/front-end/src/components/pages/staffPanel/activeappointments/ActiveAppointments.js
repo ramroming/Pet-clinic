@@ -129,7 +129,7 @@ const ActiveAppointments = () => {
                     {appointment.confirmed ? <Link
                       to={`/staffpanel/pettreatmenthistory`}
                       className="start-treatment"
-                      state={{appId: appointment.id}}
+                      state={{appId: appointment.id, petId: appointment.pet_id}}
                     >
                       Start Treatment<i className= "fa-regular fa-pen-to-square"></i>
                     </Link> :

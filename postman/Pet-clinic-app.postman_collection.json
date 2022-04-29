@@ -1451,6 +1451,70 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "vetAddTreatment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"date\": \"2022-01-01\",\r\n    \"petId\": 109,\r\n    \"caseId\": 3,\r\n    \"medDoses\": [{\r\n        \"medId\": 222,\r\n        \"dose\": 5\r\n    }],\r\n    \"appId\": 76,\r\n    \"vaccineId\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/vet/treatments",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"vet",
+						"treatments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VetGetTreatments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/vet/treatments/76",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"vet",
+						"treatments",
+						"76"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VetGetCaseMedVac",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/vet/casemedvac",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"vet",
+						"casemedvac"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {

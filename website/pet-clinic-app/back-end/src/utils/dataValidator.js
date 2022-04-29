@@ -301,17 +301,50 @@ const myValidator = {
       throw e
     }
   },
-  // async isMyRequest(userId, requestId) {
-  //   try {
-  //     const conn = await createConnection(connData)
-  //     const [result] = await conn.execute('SELECT date FROM adoption_requests WHERE client_id = ? AND adoption_ad_id = ?', [req.user.id, requestId])
-  //     await conn.end()
+  // vet related
 
-  //   } catch (e) {
-  //     throw e
-  //   }
-  // }
-  
+  isValidTreatmentDate(date) {
+    return validator.isISO8601(date, { strict: true, strictSeparator: true })
+  },
+  async isValidTreatmentAppointment(appId, petId) {
+    try {
+      const conn = await createConnection(connData)
+      const [result] = await conn.execute('SELECT id FROM appointments WHERE confirmed = 1 AND id = ? AND pet_id = ?', [appId, petId])
+      await conn.end()
+      if (!result.length)
+        return false
+
+      return true
+    } catch (e) {
+      throw e
+    }
+  },
+  async isValidCase(caseId) {
+    try {
+      const conn = await createConnection(connData)
+      const [result] = await conn.execute('SELECT id FROM cases WHERE id = ?', [caseId])
+      await conn.end()
+      if (!result.length)
+        return false
+
+      return true
+    } catch (e) {
+      throw e
+    }
+  },
+  async isValidVaccine(vaccineId) {
+    try {
+      const conn = await createConnection(connData)
+      const [result] = await conn.execute('SELECT id FROM vaccines WHERE id = ?', [vaccineId])
+      await conn.end()
+      if (!result.length)
+        return false
+
+      return true
+    } catch (e) {
+      throw e
+    }
+  }
 
 
 

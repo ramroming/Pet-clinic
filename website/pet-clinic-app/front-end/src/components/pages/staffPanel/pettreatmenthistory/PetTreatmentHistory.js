@@ -9,6 +9,7 @@ import { authContext } from '../../../shared/context/auth-context';
 import { pageLoadingContext } from '../../../shared/context/loading-context';
 import useFetch from '../../../shared/hooks/fetch-hook';
 import useTreatmentHistory from '../../../shared/hooks/treatmenthistory-hook';
+import Modal from '../../../utils/modal/Modal'
 import dateFormat from 'dateformat';
 
 const initialData = {
@@ -18,6 +19,25 @@ const initialData = {
   isGettingTreatments: true,
   treatments: null,
   getTreatmentsFailure: '',
+
+  presShowId: null,
+
+  isGettingMVC: true,
+  getMVCfailure: '',
+  vaccines: null,
+  medicines: null,
+  cases: null,
+
+  date: null,
+  petId: null,
+  caseId: '',
+  medDoses: [{
+    medId: '',
+    dose: ''
+  }],
+  appId: null,
+  vaccineId: '',
+
 
 }
 const PetTreatmentHistory = () => {
@@ -32,21 +52,36 @@ const PetTreatmentHistory = () => {
     let isMount = true
     const getTreatments = async (appId) => {
       try {
-        const treatments = await sendRequest(`http://localhost:5000/vet/treatments/${appId}`, 'GET', null, {
+        const response = await sendRequest(`http://localhost:5000/vet/treatments/${appId}`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
-        if (isMount && treatments)
+        if (isMount && response) {
+          const treatments = response.map((treatment) => {
+            const dose_med = []
+            if (!treatment.vaccine_name) {
+              let doses = treatment.doses.split(',')
+              let meds = treatment.med_names.split(',')
+              for (let i = 0; i < doses.length; i++)
+                dose_med.push({ med: meds[i], dose: doses[i] })
+              return {
+                ...treatment,
+                dose_med
+              }
+            } else
+              return treatment
+          })
           dispatch({ type: 'getTreatmentsSuccess', data: treatments })
+          dispatch({ type: 'prepareAddTreatment', data: {petId: location.state.petId, appId: location.state.appId}})
+        }
       } catch (e) {
         if (isMount)
           dispatch({ type: 'getTreatmentsFailure', error: e.message })
       }
     }
     if (location.state) {
-      console.log('fetching')
       getTreatments(location.state.appId)
     } else
-      dispatch({ type: 'getTreatmentsSuccess', data: null })
+      dispatch({ type: 'getReset' })
 
     return () => {
       setPageIsLoading(false)
@@ -55,14 +90,48 @@ const PetTreatmentHistory = () => {
   }, [auth.token, dispatch, location.state, sendRequest, setPageIsLoading])
 
   useEffect(() => {
-    setPageIsLoading(state.isGettingTreatments)
-  }, [setPageIsLoading, state.isGettingTreatments])
+    let isMount = true
+    const getMVC = async () => {
+      try {
+        const response = await sendRequest(`http://localhost:5000/vet/casemedvac`, 'GET', null, {
+          'Authorization': `Bearer ${auth.token}`
+        })
+        if (isMount && response) {
+          dispatch({ type: 'getMVCsuccess', data: response })
+        }
+      } catch (e) {
+        if (isMount)
+          dispatch({ type: 'getMVCfailure', error: e.message })
+      }
+    }
+    if (location.state) {
+      getMVC(location.state.appId)
+    } else {
+      dispatch({ type: 'getReset'})
+    }
+
+    return () => {
+      setPageIsLoading(false)
+      isMount = false
+    }
+  }, [auth.token, dispatch, location.state, sendRequest, setPageIsLoading])
+
+  useEffect(() => {
+    setPageIsLoading(state.isGettingTreatments || state.isGettingMVC)
+  }, [setPageIsLoading, state.isGettingTreatments, state.isGettingMVC])
 
 
   return (
     <>
+      {(state.getTreatmentsFailure || state.getMVCfailure) &&
+        <Modal
+          modalClass='error'
+          header='Oops!!'
+          body={state.getTreatmentsFailure || state.getMVCfailure}
+          dispatch={dispatch}
+        />}
       <h4>Pet Treatment</h4>
-      <div className="flex-col falign-center fjust-center">
+      {location.state ? <div className="flex-col falign-center fjust-center">
         <div className="search-bar-container flex-row fjust-center falign-center gap-16p">
           {
             <button className="btn-sm"
@@ -76,13 +145,13 @@ const PetTreatmentHistory = () => {
 
         {
           state.updateTreatmentModal &&
-          <UpdateTreatment dispatch={ dispatch } />
+          <UpdateTreatment dispatch={dispatch} />
 
         }
 
         {
           state.addTreatmentModal &&
-          <AddPetTreatment dispatch={dispatch} />
+          <AddPetTreatment dispatch={dispatch} state={state} />
         }
 
 
@@ -133,12 +202,37 @@ const PetTreatmentHistory = () => {
                     {treatment.vaccine_name ? treatment.vaccine_name : '--'}
                   </Td>
 
-                  <Td>
-                  <button className="btn-sm"
-                      
-                      >
-                      Edit
-                    </button>
+                  <Td className="prescription-td">
+                    {
+                      !treatment.vaccine_name ?
+                        <button className="btn-sm show-prescription"
+                          onMouseEnter={() => {
+                            dispatch({ type: 'showMiniModal', data: treatment.id })
+                          }}
+                          onMouseLeave={() => {
+                            dispatch({ type: 'hideMiniModal' })
+                          }}
+                          onClick={() => {
+                            dispatch({ type: 'showMiniModalClick', data: treatment.id })
+                          }}
+                        >
+                          Show
+                          {state.presShowId === treatment.id && <div className="mini-modal flex-column gap-8p">
+                            {
+                              treatment.dose_med.map((doseMed, index) => {
+                                return (
+                                  <p key={index}>
+                                    {`Med: ${doseMed.med}, Dose: ${doseMed.dose} a day`}
+                                  </p>
+                                )
+                              })
+                            }
+                          </div>}
+                        </button>
+                        :
+                        "--"
+                    }
+
                   </Td>
                   <Td>
                     <button className="btn-sm"
@@ -161,7 +255,9 @@ const PetTreatmentHistory = () => {
 
 
 
-      </div>
+      </div> :
+        <p>No active appointment is selected at the moment you can select an active appointment from 'Active Appointments' tab to start the treatment</p>
+      }
     </>
   )
 }

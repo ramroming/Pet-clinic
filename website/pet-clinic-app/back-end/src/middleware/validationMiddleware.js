@@ -508,6 +508,38 @@ const getPetTreatments = async (req, res, next) => {
   
   next()
 }
+const addTreatment = async (req, res, next) => {
+  const { date, petId, caseId, medDoses, appId, vaccineId } = req.body
+  if (!date || !petId || !caseId || !medDoses || !Array.isArray(medDoses) || !appId || !myValidator.isValidId(petId) || !myValidator.isValidId(caseId) || !myValidator.isValidId(appId))
+    return res.status(400).send({ error: "invalid data"})
+  if (!myValidator.isValidTreatmentDate(date))
+    return res.status(400).send({ error: "Invalid treatment date"})
+  try {
+    const allowedTreatment = await myValidator.isValidTreatmentAppointment(appId, petId)
+    if (!allowedTreatment)
+      return res.status(400).send({ error: 'Cant add a treatment for this appointment and pet please make sure that the appointment id is valid the pet is already registered '})
+    const validCaseId = await myValidator.isValidCase(caseId)
+    if (!validCaseId)
+      return res.status(400).send({ error: 'Invalid Case Id !!' })
+
+    if (caseId === 1) {
+      const validVaccine = await myValidator.isValidVaccine(vaccineId)
+      if (!vaccineId || !myValidator.isValidId(vaccineId) || !validVaccine)
+        return res.status(400).send({ error: 'Invalid vaccineId'})
+    }
+    else {
+      if (vaccineId)
+        return res.status(400).send({ error: 'invalid vaccine/case '})
+      if (!medDoses.length)
+        return res.status(400).send({ error: 'you must provide med_dose data '})
+
+    }
+    next()
+  } catch (e) {
+     res.status(500).send({ error: e.message })
+  }
+
+}
 
 
 
@@ -539,6 +571,7 @@ export default {
   deleteShelterPet,
   adminChageRole,
   adminDeleteUser,
-  getPetTreatments
+  getPetTreatments,
+  addTreatment
 
 }

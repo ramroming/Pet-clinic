@@ -16,31 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `medicine_prescriptions`
+-- Table structure for table `medicine_treatments`
 --
 
-DROP TABLE IF EXISTS `medicine_prescriptions`;
+DROP TABLE IF EXISTS `medicine_treatments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `medicine_prescriptions` (
-  `prescription_id` int NOT NULL,
+CREATE TABLE `medicine_treatments` (
   `medicine_id` int NOT NULL,
+  `treatment_id` int NOT NULL,
   `dose` int NOT NULL,
-  PRIMARY KEY (`prescription_id`,`medicine_id`),
-  KEY `MEDICINE_PRESCRIPTIONS_fk1` (`medicine_id`),
-  CONSTRAINT `MEDICINE_PRESCRIPTIONS_fk0` FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions` (`id`),
-  CONSTRAINT `MEDICINE_PRESCRIPTIONS_fk1` FOREIGN KEY (`medicine_id`) REFERENCES `medicines` (`id`)
+  PRIMARY KEY (`medicine_id`,`treatment_id`),
+  KEY `FK_1_idx` (`treatment_id`),
+  CONSTRAINT `FK_0` FOREIGN KEY (`medicine_id`) REFERENCES `medicines` (`id`),
+  CONSTRAINT `FK_1` FOREIGN KEY (`treatment_id`) REFERENCES `treatments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `medicine_prescriptions`
+-- Dumping data for table `medicine_treatments`
 --
 
-LOCK TABLES `medicine_prescriptions` WRITE;
-/*!40000 ALTER TABLE `medicine_prescriptions` DISABLE KEYS */;
-INSERT INTO `medicine_prescriptions` VALUES (1,1,2),(1,2,3);
-/*!40000 ALTER TABLE `medicine_prescriptions` ENABLE KEYS */;
+LOCK TABLES `medicine_treatments` WRITE;
+/*!40000 ALTER TABLE `medicine_treatments` DISABLE KEYS */;
+INSERT INTO `medicine_treatments` VALUES (1,2,2),(3,2,3),(4,3,3),(5,3,4);
+/*!40000 ALTER TABLE `medicine_treatments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-24 16:10:21
+-- Dump completed on 2022-04-29 19:12:14

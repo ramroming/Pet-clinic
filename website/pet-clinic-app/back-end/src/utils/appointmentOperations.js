@@ -57,7 +57,7 @@ const get_appointments = async (query = 'all', clientId) => {
       case 'forVet': {
         const todayDate = new Date().toISOString().split('T')[0]
         const [rows] = await conn.execute(`
-        SELECT a.id, a.date, a.status, a.confirmed, a.pet_id, pi.first_name, pi.last_name, pi.phone_number, p.name as pet_name, p.breed_name, b.type_name as pet_type
+        SELECT a.id, a.date, a.status, a.confirmed, a.pet_id, pi.first_name, pi.last_name, pi.phone_number, p.name as pet_name, p.breed_name, p.id as pet_id, b.type_name as pet_type
         FROM appointments a 
         JOIN users u ON a.client_id = u.id
         JOIN personal_info pi ON u.personal_info_id = pi.id

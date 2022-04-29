@@ -24,17 +24,8 @@ DROP TABLE IF EXISTS `prescriptions`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prescriptions` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `code` varchar(150) NOT NULL,
-  `treatment_date` datetime DEFAULT NULL,
-  `doctor_id` int DEFAULT NULL,
-  `pet_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `PRESCRIPTIONS_fk0` (`treatment_date`),
-  KEY `PRESCRIPTIONS_fk1` (`doctor_id`),
-  KEY `PRESCRIPTIONS_fk2` (`pet_id`),
-  CONSTRAINT `PRESCRIPTIONS_fk0` FOREIGN KEY (`treatment_date`) REFERENCES `treatments` (`date`) ON DELETE CASCADE,
-  CONSTRAINT `PRESCRIPTIONS_fk1` FOREIGN KEY (`doctor_id`) REFERENCES `treatments` (`doctor_id`) ON DELETE CASCADE,
-  CONSTRAINT `PRESCRIPTIONS_fk2` FOREIGN KEY (`pet_id`) REFERENCES `treatments` (`pet_id`) ON DELETE CASCADE
+  `notes` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -44,7 +35,7 @@ CREATE TABLE `prescriptions` (
 
 LOCK TABLES `prescriptions` WRITE;
 /*!40000 ALTER TABLE `prescriptions` DISABLE KEYS */;
-INSERT INTO `prescriptions` VALUES (1,'500200',NULL,NULL,NULL);
+INSERT INTO `prescriptions` VALUES (1,'after meals only');
 /*!40000 ALTER TABLE `prescriptions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-24 16:10:23
+-- Dump completed on 2022-04-29 19:12:16

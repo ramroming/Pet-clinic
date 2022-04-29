@@ -23,24 +23,22 @@ DROP TABLE IF EXISTS `treatments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `treatments` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `date` datetime NOT NULL,
   `doctor_id` int NOT NULL,
   `pet_id` int NOT NULL,
   `case_id` int NOT NULL,
   `vaccine_id` int DEFAULT NULL,
-  `prescription_id` int DEFAULT NULL,
-  PRIMARY KEY (`date`,`doctor_id`,`pet_id`),
+  PRIMARY KEY (`id`,`date`,`doctor_id`,`pet_id`),
   KEY `TREATMENTS_fk0` (`doctor_id`),
   KEY `TREATMENTS_fk1` (`pet_id`),
   KEY `TREATMENTS_fk2` (`case_id`),
   KEY `TREATMENTS_fk3` (`vaccine_id`),
-  KEY `TREATMENTS_fk4_idx` (`prescription_id`),
   CONSTRAINT `TREATMENTS_fk0` FOREIGN KEY (`doctor_id`) REFERENCES `users` (`id`),
   CONSTRAINT `TREATMENTS_fk1` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`) ON DELETE CASCADE,
   CONSTRAINT `TREATMENTS_fk2` FOREIGN KEY (`case_id`) REFERENCES `cases` (`id`),
-  CONSTRAINT `TREATMENTS_fk3` FOREIGN KEY (`vaccine_id`) REFERENCES `vaccines` (`id`),
-  CONSTRAINT `TREATMENTS_fk4` FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `TREATMENTS_fk3` FOREIGN KEY (`vaccine_id`) REFERENCES `vaccines` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,6 +47,7 @@ CREATE TABLE `treatments` (
 
 LOCK TABLES `treatments` WRITE;
 /*!40000 ALTER TABLE `treatments` DISABLE KEYS */;
+INSERT INTO `treatments` VALUES (1,'2019-01-01 11:00:00',161,109,1,3),(2,'2020-01-01 12:00:00',161,109,8,NULL),(3,'2021-01-01 13:00:00',161,109,15,NULL);
 /*!40000 ALTER TABLE `treatments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -61,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-24 16:10:21
+-- Dump completed on 2022-04-29 19:12:14
