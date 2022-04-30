@@ -25,20 +25,20 @@ DROP TABLE IF EXISTS `treatments`;
 CREATE TABLE `treatments` (
   `id` int NOT NULL AUTO_INCREMENT,
   `date` datetime NOT NULL,
-  `doctor_id` int NOT NULL,
+  `doctor_id` int DEFAULT NULL,
   `pet_id` int NOT NULL,
   `case_id` int NOT NULL,
   `vaccine_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`,`date`,`doctor_id`,`pet_id`),
-  KEY `TREATMENTS_fk0` (`doctor_id`),
+  PRIMARY KEY (`id`,`date`,`pet_id`),
   KEY `TREATMENTS_fk1` (`pet_id`),
   KEY `TREATMENTS_fk2` (`case_id`),
   KEY `TREATMENTS_fk3` (`vaccine_id`),
-  CONSTRAINT `TREATMENTS_fk0` FOREIGN KEY (`doctor_id`) REFERENCES `users` (`id`),
+  KEY `TREATMENTS_fk0_idx` (`doctor_id`),
+  CONSTRAINT `TREATMENTS_fk0` FOREIGN KEY (`doctor_id`) REFERENCES `users` (`id`) ON DELETE SET NULL,
   CONSTRAINT `TREATMENTS_fk1` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`) ON DELETE CASCADE,
   CONSTRAINT `TREATMENTS_fk2` FOREIGN KEY (`case_id`) REFERENCES `cases` (`id`),
   CONSTRAINT `TREATMENTS_fk3` FOREIGN KEY (`vaccine_id`) REFERENCES `vaccines` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +47,7 @@ CREATE TABLE `treatments` (
 
 LOCK TABLES `treatments` WRITE;
 /*!40000 ALTER TABLE `treatments` DISABLE KEYS */;
-INSERT INTO `treatments` VALUES (1,'2019-01-01 11:00:00',161,109,1,3),(2,'2020-01-01 12:00:00',161,109,8,NULL),(3,'2021-01-01 13:00:00',161,109,15,NULL);
+INSERT INTO `treatments` VALUES (1,'2019-01-01 11:00:00',161,109,1,3),(2,'2020-01-01 12:00:00',161,109,8,NULL),(3,'2021-01-01 13:00:00',161,109,15,NULL),(16,'2022-04-30 09:29:02',161,96,1,3),(17,'2022-04-30 09:30:00',161,96,11,NULL),(19,'2022-04-30 10:49:25',186,96,15,NULL),(22,'2022-04-30 12:45:13',186,96,1,2),(23,'2022-04-30 12:58:48',186,95,7,NULL),(24,'2022-04-30 13:02:01',161,95,1,2);
 /*!40000 ALTER TABLE `treatments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -60,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-29 19:12:14
+-- Dump completed on 2022-04-30 16:05:16

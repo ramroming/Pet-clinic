@@ -430,7 +430,7 @@ const deleteAppointments = async (req, res) => {
   try {
     const result = await delete_appointments('byUser', req.user.id, req.params.id)
     if (!result)
-      return res.status(404).send({ error: 'Not Found !!' })
+      return res.status(404).send({ error: 'Appointment cannot be cancelled !!' })
     res.send({ result: 'Your appointment has been canceled successfully' })
   } catch (e) {
     res.status(500).send({ error: e.message })

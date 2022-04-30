@@ -30,18 +30,28 @@ const initialData = {
 
   date: null,
   petId: null,
-  caseId: '',
+  caseId: 0,
   medDoses: [{
-    medId: '',
-    dose: ''
+    medId: 0,
+    dose: 1
   }],
   appId: null,
-  vaccineId: '',
+  vaccineId: 0,
+  treatmentId: 0,
+
+  missingInput: false,
+  isSavingTreatment: false,
+  savingTreatmentResult: '',
+  savingTreatmentFailure: '',
+
+  isUpdatingTreatment: false,
+  updateTreatmentResult: '',
+  updateTreatmentFailure: ''
+
 
 
 }
 const PetTreatmentHistory = () => {
-
   const location = useLocation()
   const auth = useContext(authContext)
   const setPageIsLoading = useContext(pageLoadingContext).setPageIsLoading
@@ -61,8 +71,9 @@ const PetTreatmentHistory = () => {
             if (!treatment.vaccine_name) {
               let doses = treatment.doses.split(',')
               let meds = treatment.med_names.split(',')
+              let medIds = treatment.med_ids.split(',')
               for (let i = 0; i < doses.length; i++)
-                dose_med.push({ med: meds[i], dose: doses[i] })
+                dose_med.push({ med: meds[i], medId: medIds[i], dose: doses[i] })
               return {
                 ...treatment,
                 dose_med
@@ -71,7 +82,7 @@ const PetTreatmentHistory = () => {
               return treatment
           })
           dispatch({ type: 'getTreatmentsSuccess', data: treatments })
-          dispatch({ type: 'prepareAddTreatment', data: {petId: location.state.petId, appId: location.state.appId}})
+          dispatch({ type: 'prepareAddTreatment', data: { petId: location.state.petId, appId: location.state.appId } })
         }
       } catch (e) {
         if (isMount)
@@ -105,9 +116,9 @@ const PetTreatmentHistory = () => {
       }
     }
     if (location.state) {
-      getMVC(location.state.appId)
+      getMVC()
     } else {
-      dispatch({ type: 'getReset'})
+      dispatch({ type: 'getReset' })
     }
 
     return () => {
@@ -117,17 +128,92 @@ const PetTreatmentHistory = () => {
   }, [auth.token, dispatch, location.state, sendRequest, setPageIsLoading])
 
   useEffect(() => {
-    setPageIsLoading(state.isGettingTreatments || state.isGettingMVC)
-  }, [setPageIsLoading, state.isGettingTreatments, state.isGettingMVC])
+    let isMount = true
+    const saveTreatment = async () => {
+      try {
+        const response = await sendRequest(`http://localhost:5000/vet/treatments`, 'POST', JSON.stringify({
+          date: dateFormat(new Date(), "UTC:yyyy-mm-dd HH:MM:ss"),
+          petId: state.petId,
+          caseId: state.caseId,
+          medDoses: state.medDoses,
+          appId: state.appId,
+          vaccineId: state.vaccineId
+        }), {
+          'Authorization': `Bearer ${auth.token}`,
+          'Content-Type': 'application/json'
+        })
+        if (isMount && response) {
+          dispatch({ type: 'saveTreatmentSuccess', data: response })
+        }
+      } catch (e) {
+        if (isMount)
+          dispatch({ type: 'saveTreatmentFailure', error: e.message })
+      }
+    }
+    
+    if (state.isSavingTreatment)
+      saveTreatment()
+  
+
+    return () => {
+      setPageIsLoading(false)
+      isMount = false
+    }
+  }, [auth.token, dispatch, state.appId, state.caseId, state.isSavingTreatment, state.medDoses, state.petId, state.vaccineId, sendRequest, setPageIsLoading])
+
+  useEffect(() => {
+    let isMount = true
+    const updateTreatment = async () => {
+      try {
+        const response = await sendRequest(`http://localhost:5000/vet/treatments`, 'PATCH', JSON.stringify({
+          treatmentId: state.treatmentId,
+          petId: state.petId,
+          caseId: state.caseId,
+          medDoses: state.medDoses,
+          appId: state.appId,
+          vaccineId: state.vaccineId
+        }), {
+          'Authorization': `Bearer ${auth.token}`,
+          'Content-Type': 'application/json'
+        })
+        if (isMount && response) {
+          dispatch({ type: 'updateTreatmentSuccess', data: response })
+        }
+      } catch (e) {
+        if (isMount)
+          dispatch({ type: 'updateTreatmentFailure', error: e.message })
+      }
+    }
+    
+    if (state.isUpdatingTreatment)
+      updateTreatment()
+  
+
+    return () => {
+      setPageIsLoading(false)
+      isMount = false
+    }
+  }, [auth.token, dispatch, state.appId, state.caseId, state.isUpdatingTreatment, state.treatmentId, state.medDoses, state.petId, state.vaccineId, sendRequest, setPageIsLoading])
+
+  useEffect(() => {
+    setPageIsLoading(state.isGettingTreatments || state.isGettingMVC || state.isSavingTreatment || state.isUpdatingTreatment)
+  }, [setPageIsLoading, state.isGettingTreatments, state.isGettingMVC, state.isSavingTreatment, state.isUpdatingTreatment])
 
 
   return (
     <>
-      {(state.getTreatmentsFailure || state.getMVCfailure) &&
+      {(state.savingTreatmentResult || state.updateTreatmentResult) && <Modal
+        modalClass='success'
+        header='Success!!'
+        body={state.savingTreatmentResult || state.updateTreatmentResult}
+        dispatch={dispatch}
+        refresh={true}
+      />}
+      {(state.getTreatmentsFailure || state.getMVCfailure || state.savingTreatmentFailure || state.updateTreatmentFailure) &&
         <Modal
           modalClass='error'
           header='Oops!!'
-          body={state.getTreatmentsFailure || state.getMVCfailure}
+          body={state.getTreatmentsFailure || state.getMVCfailure || state.savingTreatmentFailure || state.updateTreatmentFailure}
           dispatch={dispatch}
         />}
       <h4>Pet Treatment</h4>
@@ -145,7 +231,7 @@ const PetTreatmentHistory = () => {
 
         {
           state.updateTreatmentModal &&
-          <UpdateTreatment dispatch={dispatch} />
+          <UpdateTreatment dispatch={dispatch} state={state} />
 
         }
 
@@ -159,7 +245,7 @@ const PetTreatmentHistory = () => {
           <Thead>
             <Tr>
               <Th>
-                Date
+                Date Modified
               </Th>
               <Th>
                 Pet name
@@ -193,7 +279,7 @@ const PetTreatmentHistory = () => {
                     {treatment.pet_name}
                   </Td>
                   <Td>
-                    {`${treatment.first_name} ${treatment.last_name}`}
+                    {`${treatment.first_name ? treatment.first_name : '-'} ${treatment.last_name ? treatment.last_name : '-'}`}
                   </Td>
                   <Td>
                     {treatment.case_name}
@@ -235,9 +321,12 @@ const PetTreatmentHistory = () => {
 
                   </Td>
                   <Td>
-                    <button className="btn-sm"
+                    <button 
+                    disabled={treatment.doctor_id !== auth.userId || !treatment.doctor_id}
+                    className="btn-sm"
                       onClick={() => {
-                        dispatch({ type: "updateModal", data: true })
+                        console.log(treatment)
+                        dispatch({ type: "updateModal", data: true, trObj: treatment, treatmentId: treatment.id })
                       }}>
                       Edit
                     </button>

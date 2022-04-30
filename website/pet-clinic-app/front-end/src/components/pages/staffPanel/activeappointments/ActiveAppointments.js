@@ -131,7 +131,7 @@ const ActiveAppointments = () => {
                       className="start-treatment"
                       state={{appId: appointment.id, petId: appointment.pet_id}}
                     >
-                      Start Treatment<i className= "fa-regular fa-pen-to-square"></i>
+                      Treatment<i className= "fa-regular fa-pen-to-square"></i>
                     </Link> :
                     <p style={{ color: 'darkgray' }}>Waiting confirmation</p>}
                   </Td>

@@ -26,7 +26,7 @@ CREATE TABLE `medicines` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(150) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,7 +35,7 @@ CREATE TABLE `medicines` (
 
 LOCK TABLES `medicines` WRITE;
 /*!40000 ALTER TABLE `medicines` DISABLE KEYS */;
-INSERT INTO `medicines` VALUES (1,'panadol'),(2,'desmont'),(3,'lustral'),(4,'provien'),(5,'catnip');
+INSERT INTO `medicines` VALUES (1,'panadol'),(2,'desmont'),(3,'lustral'),(4,'provien'),(5,'catnip'),(6,'acepromazine '),(7,'benazepril '),(8,'carprofen '),(9,'deracoxib'),(10,'enalapril'),(11,'fipronil'),(12,'gabapentin'),(13,'levamisole');
 /*!40000 ALTER TABLE `medicines` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -48,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-29 19:12:13
+-- Dump completed on 2022-04-30 16:05:15

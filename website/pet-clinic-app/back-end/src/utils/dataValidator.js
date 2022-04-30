@@ -304,12 +304,12 @@ const myValidator = {
   // vet related
 
   isValidTreatmentDate(date) {
-    return validator.isISO8601(date, { strict: true, strictSeparator: true })
+    return validator.isISO8601(date)
   },
-  async isValidTreatmentAppointment(appId, petId) {
+  async isValidTreatmentAppointment(appId, petId, vet_id) {
     try {
       const conn = await createConnection(connData)
-      const [result] = await conn.execute('SELECT id FROM appointments WHERE confirmed = 1 AND id = ? AND pet_id = ?', [appId, petId])
+      const [result] = await conn.execute('SELECT id FROM appointments WHERE confirmed = 1 AND id = ? AND pet_id = ? AND stmem_id = ?', [appId, petId, vet_id])
       await conn.end()
       if (!result.length)
         return false
@@ -344,6 +344,19 @@ const myValidator = {
     } catch (e) {
       throw e
     }
+  },
+  async isValidTreatmentOwner(treatment_id, vet_id) {
+    try {
+      const conn = await createConnection(connData)
+      const [result] = await conn.execute('SELECT id FROM treatments WHERE id =? AND doctor_id=?', [treatment_id, vet_id])
+      await conn.end()
+      if (!result.length)
+        return false
+
+      return true
+    } catch (e) {
+      throw e
+    } 
   }
 
 

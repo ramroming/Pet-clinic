@@ -32,7 +32,7 @@ CREATE TABLE `comments` (
   KEY `COMMENTS_fk0` (`adoption_ad_id`),
   KEY `COMMENTS_fk1` (`client_id`),
   CONSTRAINT `COMMENTS_fk0` FOREIGN KEY (`adoption_ad_id`) REFERENCES `adoption_ads` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `COMMENTS_fk1` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`)
+  CONSTRAINT `COMMENTS_fk1` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-29 19:12:14
+-- Dump completed on 2022-04-30 16:05:15

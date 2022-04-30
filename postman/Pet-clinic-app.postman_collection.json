@@ -1453,6 +1453,25 @@
 			"response": []
 		},
 		{
+			"name": "VetGetTreatments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/vet/treatments/76",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"vet",
+						"treatments",
+						"76"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "vetAddTreatment",
 			"request": {
 				"method": "POST",
@@ -1480,19 +1499,27 @@
 			"response": []
 		},
 		{
-			"name": "VetGetTreatments",
+			"name": "vetUpdateTreatment",
 			"request": {
-				"method": "GET",
+				"method": "PATCH",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"treatmentId\": 19,\r\n    \"petId\": 109,\r\n    \"caseId\": 1,\r\n    \"medDoses\": [{\r\n        \"medId\": 4,\r\n        \"dose\": 5\r\n    }],\r\n    \"appId\": 76,\r\n    \"vaccineId\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{url}}/vet/treatments/76",
+					"raw": "{{url}}/vet/treatments",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"vet",
-						"treatments",
-						"76"
+						"treatments"
 					]
 				}
 			},

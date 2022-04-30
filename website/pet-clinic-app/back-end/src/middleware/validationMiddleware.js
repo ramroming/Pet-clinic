@@ -515,9 +515,9 @@ const addTreatment = async (req, res, next) => {
   if (!myValidator.isValidTreatmentDate(date))
     return res.status(400).send({ error: "Invalid treatment date"})
   try {
-    const allowedTreatment = await myValidator.isValidTreatmentAppointment(appId, petId)
+    const allowedTreatment = await myValidator.isValidTreatmentAppointment(appId, petId, req.user.id)
     if (!allowedTreatment)
-      return res.status(400).send({ error: 'Cant add a treatment for this appointment and pet please make sure that the appointment id is valid the pet is already registered '})
+      return res.status(400).send({ error: 'Cant add or modify treatment for this pet  please make sure that the appointment for this pet is valid and confirmed and the pet is already registered '})
     const validCaseId = await myValidator.isValidCase(caseId)
     if (!validCaseId)
       return res.status(400).send({ error: 'Invalid Case Id !!' })
@@ -539,6 +539,38 @@ const addTreatment = async (req, res, next) => {
      res.status(500).send({ error: e.message })
   }
 
+}
+const updateTreatment = async (req, res, next) => {
+  const { petId, caseId, medDoses, appId, vaccineId, treatmentId } = req.body
+  if ( !petId || !caseId || !medDoses || !treatmentId || !Array.isArray(medDoses) || !appId || !myValidator.isValidId(petId) || !myValidator.isValidId(caseId) || !myValidator.isValidId(appId) || !myValidator.isValidId(treatmentId))
+    return res.status(400).send({ error: "invalid data"})
+  try {
+    const myTreatment = await myValidator.isValidTreatmentOwner(treatmentId, req.user.id)
+    if (!myTreatment)
+      return res.status(404).send({ error: 'treatment not found' })
+    const allowedTreatment = await myValidator.isValidTreatmentAppointment(appId, petId, req.user.id)
+    if (!allowedTreatment)
+      return res.status(400).send({ error: 'Cant add or modify treatment for this pet  please make sure that the appointment for this pet is valid and confirmed and the pet is already registered '})
+    const validCaseId = await myValidator.isValidCase(caseId)
+    if (!validCaseId)
+      return res.status(400).send({ error: 'Invalid Case Id !!' })
+
+    if (caseId === 1) {
+      const validVaccine = await myValidator.isValidVaccine(vaccineId)
+      if (!vaccineId || !myValidator.isValidId(vaccineId) || !validVaccine)
+        return res.status(400).send({ error: 'Invalid vaccineId'})
+    }
+    else {
+      if (vaccineId)
+        return res.status(400).send({ error: 'invalid vaccine/case '})
+      if (!medDoses.length)
+        return res.status(400).send({ error: 'you must provide med_dose data '})
+
+    }
+    next()
+  } catch (e) {
+     res.status(500).send({ error: e.message })
+  }
 }
 
 
@@ -572,6 +604,7 @@ export default {
   adminChageRole,
   adminDeleteUser,
   getPetTreatments,
-  addTreatment
+  addTreatment,
+  updateTreatment
 
 }
