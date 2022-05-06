@@ -5,7 +5,7 @@ import { get_appointments } from "../utils/appointmentOperations.js"
 const getActiveAppointments = async (req, res) => {
   const todayDate = new Date().toISOString().split('T')[0]
   try {
-    const { arrayToSend } = await get_appointments('forVet', req.user.id)
+    const { arrayToSend } = await get_appointments('forStmem', req.user.id)
     res.send(arrayToSend)
   } catch (e) {
     res.status(500).send({ error: e.message })
@@ -63,7 +63,7 @@ const addTreatment = async (req, res) => {
 }
 
 const updateTreatment = async (req, res) => {
-  const { caseId, medDoses, vaccineId, treatmentId } = req.body
+  const { caseId, medDoses, vaccineId, treatmentId, petId } = req.body
   try {
     const conn = await createConnection(connData)
     if (caseId !== 1) {
@@ -89,7 +89,7 @@ const updateTreatment = async (req, res) => {
     }
 
 
-    const [result] = await conn.execute(`UPDATE treatments set  case_id = ?, vaccine_id =? WHERE id=?`, [ caseId, vaccineId ? vaccineId : null, treatmentId])
+    const [result] = await conn.execute(`UPDATE treatments set  case_id = ?, vaccine_id =? WHERE id=? AND pet_id=?`, [ caseId, vaccineId ? vaccineId : null, treatmentId, petId])
     if (!result.affectedRows) {
       await conn.end()
       return res.status(404).send({ error: 'treatment not found !!' })

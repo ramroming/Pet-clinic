@@ -85,6 +85,86 @@
 			"response": []
 		},
 		{
+			"name": "Login Trainer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {\r",
+							"    pm.environment.set('authToken', pm.response.json().token)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"bashhal\",\r\n \"password\": \"5@`E2u$1{F;:9GJ]\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Groomer Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {\r",
+							"    pm.environment.set('authToken', pm.response.json().token)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"rami94\",\r\n \"password\": \"&Q{j.Ky8#yhs;TCh\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Login Receptionist",
 			"event": [
 				{
@@ -1435,43 +1515,6 @@
 			"response": []
 		},
 		{
-			"name": "VetGetAppointments",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/vet/appointments",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"vet",
-						"appointments"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "VetGetTreatments",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/vet/treatments/76",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"vet",
-						"treatments",
-						"76"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "vetAddTreatment",
 			"request": {
 				"method": "POST",
@@ -1493,6 +1536,61 @@
 					"path": [
 						"vet",
 						"treatments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VetGetAppointments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/vet/appointments",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"vet",
+						"appointments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VetGetTreatments Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/vet/treatments/76",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"vet",
+						"treatments",
+						"76"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VetGetCaseMedVac",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/vet/casemedvac",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"vet",
+						"casemedvac"
 					]
 				}
 			},
@@ -1526,18 +1624,91 @@
 			"response": []
 		},
 		{
-			"name": "VetGetCaseMedVac",
+			"name": "TrainerAddTraining",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"startDate\": \"2022-04-01\",\r\n    \"endDate\": \"2022-05-01\",\r\n    \"petId\": 126,\r\n    \"appId\": 86,\r\n    \"trainingTypeId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{url}}/vet/casemedvac",
+					"raw": "{{url}}/trainer/trainings",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"vet",
-						"casemedvac"
+						"trainer",
+						"trainings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TrainerGetTrainings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/trainer/trainings/86",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"trainer",
+						"trainings",
+						"86"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TrainerGetTrainingTypes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/trainer/trainingtypes",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"trainer",
+						"trainingtypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TrainerUpdateTraining",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"startDate\": \"2022-11-01\",\r\n    \"endDate\": \"2022-12-01\", \r\n    \"appId\": 86,\r\n    \"petId\": 126,\r\n    \"trainingId\": 2,\r\n    \"trainingTypeId\": 2 \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/trainer/trainings",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"trainer",
+						"trainings"
 					]
 				}
 			},

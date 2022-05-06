@@ -61,8 +61,8 @@ const ActiveAppointments = () => {
         <Table className="my-table">
           <Thead>
             <Tr>
-              <Th>
-                Date
+              <Th>  
+                Time
               </Th>
               <Th>
                 confirmed
@@ -125,16 +125,19 @@ const ActiveAppointments = () => {
                   <Td>
                     {appointment.breed_name}
                   </Td>
-                  <Td>
-                    {appointment.confirmed ? <Link
-                      to={`/staffpanel/pettreatmenthistory`}
-                      className="start-treatment"
-                      state={{appId: appointment.id, petId: appointment.pet_id}}
-                    >
-                      Treatment<i className= "fa-regular fa-pen-to-square"></i>
-                    </Link> :
-                    <p style={{ color: 'darkgray' }}>Waiting confirmation</p>}
-                  </Td>
+                  {auth.userRole !== 'groomer' &&
+                    <Td>
+                      {appointment.confirmed ? <Link
+                        to={`/staffpanel/${appointment.appointment_type_id === 1 ? 'pettreatmenthistory': 'pettraininghistory'}`}
+                        className="start-treatment"
+                        state={{ appId: appointment.id, petId: appointment.pet_id }}
+                      >
+                        {appointment.appointment_type_id === 1 ? 'Start Treatment' : 'Start Training'}<i className="fa-regular fa-pen-to-square"></i>
+                      </Link> :
+                        <p style={{ color: 'darkgray' }}>Waiting confirmation</p>}
+                    </Td>
+                  }
+
 
                 </Tr>
               )

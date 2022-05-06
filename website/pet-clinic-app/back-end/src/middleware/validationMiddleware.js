@@ -512,10 +512,10 @@ const addTreatment = async (req, res, next) => {
   const { date, petId, caseId, medDoses, appId, vaccineId } = req.body
   if (!date || !petId || !caseId || !medDoses || !Array.isArray(medDoses) || !appId || !myValidator.isValidId(petId) || !myValidator.isValidId(caseId) || !myValidator.isValidId(appId))
     return res.status(400).send({ error: "invalid data"})
-  if (!myValidator.isValidTreatmentDate(date))
+  if (!myValidator.isValidDate(date))
     return res.status(400).send({ error: "Invalid treatment date"})
   try {
-    const allowedTreatment = await myValidator.isValidTreatmentAppointment(appId, petId, req.user.id)
+    const allowedTreatment = await myValidator.isValidAppointment(appId, petId, req.user.id)
     if (!allowedTreatment)
       return res.status(400).send({ error: 'Cant add or modify treatment for this pet  please make sure that the appointment for this pet is valid and confirmed and the pet is already registered '})
     const validCaseId = await myValidator.isValidCase(caseId)
@@ -548,7 +548,7 @@ const updateTreatment = async (req, res, next) => {
     const myTreatment = await myValidator.isValidTreatmentOwner(treatmentId, req.user.id)
     if (!myTreatment)
       return res.status(404).send({ error: 'treatment not found' })
-    const allowedTreatment = await myValidator.isValidTreatmentAppointment(appId, petId, req.user.id)
+    const allowedTreatment = await myValidator.isValidAppointment(appId, petId, req.user.id)
     if (!allowedTreatment)
       return res.status(400).send({ error: 'Cant add or modify treatment for this pet  please make sure that the appointment for this pet is valid and confirmed and the pet is already registered '})
     const validCaseId = await myValidator.isValidCase(caseId)
@@ -573,6 +573,54 @@ const updateTreatment = async (req, res, next) => {
   }
 }
 
+// trainer related
+const getPetTrainings = async (req, res, next) => {
+  if (!req.params.appointment_id || !myValidator.isValidId(req.params.appointment_id))
+    return res.status(400).send({ error: 'invalid pet ID' })
+  
+  next()
+}
+const addTraining = async (req, res, next) => {
+  const { startDate, endDate, petId, appId, trainingTypeId } = req.body
+  if (!startDate || !endDate || !petId  || !appId || !myValidator.isValidId(petId)  || !myValidator.isValidId(appId) || !myValidator.isValidId(trainingTypeId))
+    return res.status(400).send({ error: "invalid data"})
+  if (!myValidator.isValidDate(startDate) || !myValidator.isValidDate(endDate) || startDate >= endDate)
+    return res.status(400).send({ error: "Invalid  dates"})
+  try {
+    const validTrainingType = await myValidator.isValidTrainingType(trainingTypeId)
+    if (!validTrainingType)
+      return res.status(400).send({ error: 'Invalid training_type id' })
+    const allowed = await myValidator.isValidAppointment(appId, petId, req.user.id)
+    if (!allowed)
+      return res.status(400).send({ error: 'Cant add or modify training for this pet  please make sure that the appointment for this pet is valid and confirmed and the pet is already registered '})
+
+    next()
+  } catch (e) {
+     res.status(500).send({ error: e.message })
+  }
+}
+
+const updateTraining = async (req, res, next) => {
+  const { startDate, endDate, appId, petId, trainingId, trainingTypeId } = req.body
+  if ( !startDate || !endDate || !trainingId || !trainingTypeId || !petId || !appId || !myValidator.isValidId(petId) || !myValidator.isValidId(appId) || !myValidator.isValidId(trainingId) || !myValidator.isValidId(trainingTypeId) || !myValidator.isValidDate(startDate) || !myValidator.isValidDate(endDate))
+    return res.status(400).send({ error: "invalid data"})
+  if (startDate >= endDate)
+    return res.status(400).send({ error: 'invalid dates' })
+  try {
+    const validTrainingType = await myValidator.isValidTrainingType(trainingTypeId)
+    if (!validTrainingType)
+      return res.status(400).send({ error: 'Invalid training_type id' })
+    const myTraining = await myValidator.isValidTrainingOwner(trainingId, req.user.id)
+    if (!myTraining)
+      return res.status(404).send({ error: 'Training not found' })
+    const allowed = await myValidator.isValidAppointment(appId, petId, req.user.id)
+    if (!allowed)
+      return res.status(400).send({ error: 'Cant  modify training for this pet  please make sure that the appointment for this pet is valid and confirmed and the pet is already registered '})
+    next()
+  } catch (e) {
+     res.status(500).send({ error: e.message })
+  }
+}
 
 
 export default {
@@ -605,6 +653,9 @@ export default {
   adminDeleteUser,
   getPetTreatments,
   addTreatment,
-  updateTreatment
+  updateTreatment,
+  getPetTrainings,
+  addTraining,
+  updateTraining
 
 }

@@ -124,32 +124,47 @@ const StaffPanelSideNav = () => {
                   isActive ? 'profile-option selected' : 'profile-option'
                 }>Manage Adoption Posts</NavLink>
               <NavLink
-              to='/staffpanel/managepets'
-              className={({ isActive }) =>
-                isActive ? 'profile-option selected' : 'profile-option'
-              }>Manage Pets</NavLink>
+                to='/staffpanel/managepets'
+                className={({ isActive }) =>
+                  isActive ? 'profile-option selected' : 'profile-option'
+                }>Manage Pets</NavLink>
             </>
           }
           {userRole === 'vet' &&
             <>
               <NavLink
-              to='/staffpanel/pettreatmenthistory'
-              className={({ isActive }) =>
-                isActive ? 'profile-option selected' : 'profile-option'
-              }>Pet Treatment</NavLink>
+                to='/staffpanel/activeappointments'
+                className={({ isActive }) =>
+                  isActive ? 'profile-option selected' : 'profile-option'
+                }>Active Appointments</NavLink>
+              <NavLink
+                to='/staffpanel/pettreatmenthistory'
+                className={({ isActive }) =>
+                  isActive ? 'profile-option selected' : 'profile-option'
+                }>Pet Treatment</NavLink>
+            </>
+          }
+          {userRole === 'trainer' &&
+            <>
+              <NavLink
+                to='/staffpanel/activeappointments'
+                className={({ isActive }) =>
+                  isActive ? 'profile-option selected' : 'profile-option'
+                }>Active Appointments</NavLink>
+              <NavLink
+                to='/staffpanel/pettraininghistory'
+                className={({ isActive }) =>
+                  isActive ? 'profile-option selected' : 'profile-option'
+                }>Pet Training History</NavLink>
+            </>
+
+          }
+          {userRole === 'groomer' &&
             <NavLink
               to='/staffpanel/activeappointments'
               className={({ isActive }) =>
                 isActive ? 'profile-option selected' : 'profile-option'
               }>Active Appointments</NavLink>
-            </>
-          }
-          {userRole === 'trainer' &&
-            <NavLink
-              to='/staffpanel/pettraininghistory'
-              className={({ isActive }) =>
-                isActive ? 'profile-option selected' : 'profile-option'
-              }>Pet Training History</NavLink>
           }
 
 

@@ -32,7 +32,7 @@ CREATE TABLE `adoption_requests` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `ADOPTION_REQUESTS_fk1` (`adoption_ad_id`),
   CONSTRAINT `ADOPTION_REQUESTS_fk0` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `adoption_requests` (
 
 LOCK TABLES `adoption_requests` WRITE;
 /*!40000 ALTER TABLE `adoption_requests` DISABLE KEYS */;
-INSERT INTO `adoption_requests` VALUES (22,'2022-04-10 13:37:43',166,76,'accepted'),(18,'2022-03-22 12:11:00',170,49,'rejected'),(19,'2022-04-10 13:12:14',171,74,'pending'),(20,'2022-04-10 13:18:38',172,74,'pending'),(24,'2022-04-10 14:18:00',172,76,'rejected'),(23,'2022-04-10 13:41:36',172,77,'accepted'),(17,'2022-03-22 12:07:28',173,49,'accepted');
+INSERT INTO `adoption_requests` VALUES (22,'2022-04-10 13:37:43',166,76,'accepted'),(18,'2022-03-22 12:11:00',170,49,'rejected'),(19,'2022-04-10 13:12:14',171,74,'pending'),(20,'2022-04-10 13:18:38',172,74,'pending'),(24,'2022-04-10 14:18:00',172,76,'rejected'),(23,'2022-04-10 13:41:36',172,77,'accepted'),(27,'2022-05-06 08:06:02',172,83,'accepted'),(17,'2022-03-22 12:07:28',173,49,'accepted');
 /*!40000 ALTER TABLE `adoption_requests` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-30 16:05:16
+-- Dump completed on 2022-05-06 20:46:18

@@ -152,16 +152,24 @@ const useRoutes = (authedUser, stmemType) => {
                 }
                 {(stmemType === 'vet' || stmemType === 'admin') &&
                   <>
-                  <Route path='pettreatmenthistory'
-                    element={authedUser ? <PetTreatmentHistory /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
-                  <Route path='activeappointments'
-                    element={authedUser ? <ActiveAppointments /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+                    <Route path='pettreatmenthistory'
+                      element={authedUser ? <PetTreatmentHistory /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+                    <Route path='activeappointments'
+                      element={authedUser ? <ActiveAppointments /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
                   </>
                 }
                 {(stmemType === 'trainer' || stmemType === 'admin') &&
-                  <Route path='pettraininghistory'
-                    element={authedUser ? <PetTrainingHistory /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
 
+                  <>
+                    <Route path='pettraininghistory'
+                      element={authedUser ? <PetTrainingHistory /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+                    <Route path='activeappointments'
+                      element={authedUser ? <ActiveAppointments /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
+                  </>
+                }
+                {(stmemType === 'groomer' || stmemType === 'admin') &&
+                  <Route path='activeappointments'
+                  element={authedUser ? <ActiveAppointments /> : <Navigate to='/login' state={{ redirectTo: location.pathname }} />}></Route>
                 }
                 {stmemType === 'admin' &&
                   <>

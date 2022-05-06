@@ -22,7 +22,7 @@ const treatmentHistoryReducer = (state, action) => {
           missingInput: false,
           updateTreatmentModal: action.data,
           addTreatmentModal: false,
-          medDoses: action.trObj.dose_med,
+          medDoses: action.trObj.dose_med ? action.trObj.dose_med : [{ medId: 0, dose: 1 }],
           caseId: action.trObj.case_id,
           vaccineId: action.trObj.vaccine_id ? action.trObj.vaccine_id : 0,
           treatmentId: action.treatmentId
@@ -101,6 +101,13 @@ const treatmentHistoryReducer = (state, action) => {
 
       }
     case 'enterValue':
+      if (action.field === 'caseId')
+        return {
+          ...state,
+          vaccineId: 0,
+          [action.field]: parseInt(action.data)
+  
+        }
       return {
         ...state,
         [action.field]: parseInt(action.data)

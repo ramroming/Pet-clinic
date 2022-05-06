@@ -303,10 +303,10 @@ const myValidator = {
   },
   // vet related
 
-  isValidTreatmentDate(date) {
+  isValidDate(date) {
     return validator.isISO8601(date)
   },
-  async isValidTreatmentAppointment(appId, petId, vet_id) {
+  async isValidAppointment(appId, petId, vet_id) {
     try {
       const conn = await createConnection(connData)
       const [result] = await conn.execute('SELECT id FROM appointments WHERE confirmed = 1 AND id = ? AND pet_id = ? AND stmem_id = ?', [appId, petId, vet_id])
@@ -357,7 +357,34 @@ const myValidator = {
     } catch (e) {
       throw e
     } 
-  }
+  },
+  // trainer related
+  async isValidTrainingType(trainingTypeId) {
+    try {
+      const conn = await createConnection(connData)
+      const [result] = await conn.execute('SELECT id FROM training_types WHERE id = ?', [trainingTypeId])
+      await conn.end()
+      if (!result.length)
+        return false
+
+      return true
+    } catch (e) {
+      throw e
+    }
+  },
+  async isValidTrainingOwner(training_id, trainer_id) {
+    try {
+      const conn = await createConnection(connData)
+      const [result] = await conn.execute('SELECT id FROM trainings WHERE id =? AND trainer_id=?', [training_id, trainer_id])
+      await conn.end()
+      if (!result.length)
+        return false
+
+      return true
+    } catch (e) {
+      throw e
+    } 
+  },
 
 
 

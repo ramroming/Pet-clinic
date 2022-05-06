@@ -39,7 +39,7 @@ CREATE TABLE `medicine_treatments` (
 
 LOCK TABLES `medicine_treatments` WRITE;
 /*!40000 ALTER TABLE `medicine_treatments` DISABLE KEYS */;
-INSERT INTO `medicine_treatments` VALUES (1,2,2),(2,17,2),(2,19,2),(2,23,2),(3,2,3),(4,3,3),(5,3,4),(5,17,2),(5,23,3);
+INSERT INTO `medicine_treatments` VALUES (1,2,2),(1,27,1),(2,17,2),(2,19,2),(2,23,2),(2,28,1),(3,2,3),(3,28,1),(4,3,3),(5,3,4),(5,17,2),(5,23,3);
 /*!40000 ALTER TABLE `medicine_treatments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-30 16:05:14
+-- Dump completed on 2022-05-06 20:46:17
