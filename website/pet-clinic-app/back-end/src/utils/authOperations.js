@@ -20,7 +20,7 @@ const find_user_by_credentials = async (conn, username, password) => {
 
 // creating a JWT
 const generate_auth_token = async (payload) => {
-  const token = jwt.sign(payload, 'petappr&r', { expiresIn: '7 days' })
+  const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: '7 days' })
   return token
 
   // try {

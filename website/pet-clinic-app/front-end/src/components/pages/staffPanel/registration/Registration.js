@@ -128,7 +128,7 @@
 //     const fetchUser = async () => {
 //       try {
 //         const parsedData = await sendRequest(
-//           'http://localhost:5000/users',
+//           '${process.env.REACT_APP_BACKEND_URL}users',
 //           'POST', JSON.stringify(state.dataToSend),
 //           {
 //             'Content-Type': 'application/json'
@@ -166,7 +166,7 @@
 //     const getBreeds = async () => {
 //       try {
 
-//         const parsedData = await sendRequest2(`http://localhost:5000/pets/breeds?pet_type=${state2.pet_type.value}`, 'GET', null, {
+//         const parsedData = await sendRequest2(`${process.env.REACT_APP_BACKEND_URL}pets/breeds?pet_type=${state2.pet_type.value}`, 'GET', null, {
 //           'Authorization': `Bearer ${auth.token}`
 //         })
 //         if (parsedData && isMount)
@@ -194,7 +194,7 @@
 //     const getColors = async () => {
 //       try {
 
-//         const parsedData = await sendRequest2(`http://localhost:5000/pets/colors`, 'GET', null, {
+//         const parsedData = await sendRequest2(`${process.env.REACT_APP_BACKEND_URL}pets/colors`, 'GET', null, {
 //           'Authorization': `Bearer ${auth.token}`
 //         })
 //         if (parsedData && isMount)
@@ -220,7 +220,7 @@
 //     const registerPet = async () => {
 
 //       try {
-//         const parsedData = await sendRequest2(`http://localhost:5000/users/me/pets/`, 'POST', state2.dataToSend, {
+//         const parsedData = await sendRequest2(`${process.env.REACT_APP_BACKEND_URL}users/me/pets/`, 'POST', state2.dataToSend, {
 //           'Authorization': `Bearer ${auth.token}`
 //         })
 //         if (parsedData && isMount) {

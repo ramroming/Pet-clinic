@@ -59,7 +59,7 @@ const AdoptionAds = () => {
   const getAdoptionAds = useCallback(async (lastPost, ad_type, breed_name, gender, selectedColors = [], newRender) => {
     try {
       
-      const adoptionAds = await sendRequest(`http://localhost:5000/adoptionads?last_date=${lastPost ? lastPost : ''}&ad_type=${ad_type ? ad_type : ''}&breed_name=${breed_name ? breed_name : ''}&gender=${gender ? gender : ''}&colors=${selectedColors.length ? selectedColors.join(',') : ''}`, 'GET', null, {
+      const adoptionAds = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}adoptionads?last_date=${lastPost ? lastPost : ''}&ad_type=${ad_type ? ad_type : ''}&breed_name=${breed_name ? breed_name : ''}&gender=${gender ? gender : ''}&colors=${selectedColors.length ? selectedColors.join(',') : ''}`, 'GET', null, {
         'Authorization': `Bearer ${auth.token}`
       })
       if (adoptionAds.result.length === 0)
@@ -153,7 +153,7 @@ const AdoptionAds = () => {
 
     const getColors = async () => {
       try {
-        const colors = await sendRequest(`http://localhost:5000/pets/colors`, 'GET', null, {
+        const colors = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}pets/colors`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (colors && isMount)

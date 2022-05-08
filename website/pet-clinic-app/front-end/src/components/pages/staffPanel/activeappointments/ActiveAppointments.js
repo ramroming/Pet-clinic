@@ -24,7 +24,7 @@ const ActiveAppointments = () => {
     let isMount = true
     const getAppointments = async () => {
       try {
-        const appointments = await sendRequest('http://localhost:5000/vet/appointments', 'GET', null, {
+        const appointments = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}vet/appointments`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (isMount && appointments)

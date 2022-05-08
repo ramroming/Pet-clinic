@@ -63,7 +63,7 @@ const MakeAppointmentSlider = () => {
     let isMount = true
     const getTimes = async () => {
       try {
-        const result = await sendRequest(`http://localhost:5000/appointment/appointmentstimes?stmem_id=${appointment.stmem_id}&date=${appointment.date}`, 'GET', null, {
+        const result = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}appointment/appointmentstimes?stmem_id=${appointment.stmem_id}&date=${appointment.date}`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`,
 
         })
@@ -96,7 +96,7 @@ const MakeAppointmentSlider = () => {
     let isMount = true
     const getPets = async () => {
       try {
-        const pets = await sendRequest('http://localhost:5000/users/me/pets', 'GET', null,
+        const pets = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}users/me/pets`, 'GET', null,
           {
             'Authorization': `Bearer ${auth.token}`
           }
@@ -111,7 +111,7 @@ const MakeAppointmentSlider = () => {
     }
     const getSt = async () => {
       try {
-        const stmems = await sendRequest(`http://localhost:5000/appointment/staffmems?appointment_type=${appointment.appointment_type}`, 'GET', null,
+        const stmems = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}appointment/staffmems?appointment_type=${appointment.appointment_type}`, 'GET', null,
           {
             'Authorization': `Bearer ${auth.token}`
           }
@@ -251,7 +251,7 @@ const MakeAppointmentSlider = () => {
 
         }
         try {
-          const result = await sendRequest('http://localhost:5000/users/me/appointments', 'POST', JSON.stringify(dataToSend), {
+          const result = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}users/me/appointments`, 'POST', JSON.stringify(dataToSend), {
             'Authorization': `Bearer ${auth.token}`,
             'Content-Type': 'application/json'
           })

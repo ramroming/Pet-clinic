@@ -42,7 +42,7 @@ const AdoptionAd = () => {
     const getAdoptionAd = async () => {
       dispatch({ type: 'start' })
       try {
-        const adoptionAd = await sendRequest(`http://localhost:5000/adoptionads/${id}`, 'GET', null, {
+        const adoptionAd = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}adoptionads/${id}`, 'GET', null, {
 
           'Authorization': `Bearer ${auth.token}`
         })
@@ -74,7 +74,7 @@ const AdoptionAd = () => {
     if(state.isCommenting) {
       const submitComment = async () => {
         try {
-          const result = await sendRequest('http://localhost:5000/users/me/comments/', 'POST', JSON.stringify({
+          const result = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}users/me/comments/`, 'POST', JSON.stringify({
             ad_id: id,
             comment: state.comment.value
           }), {
@@ -102,7 +102,7 @@ const AdoptionAd = () => {
     let isMount = true
     const adoptPet = async () => {
       try {
-        const adopting = await sendRequest(`http://localhost:5000/users/me/requests/${id}`, 'POST', null, {
+        const adopting = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}users/me/requests/${id}`, 'POST', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (adopting && isMount)

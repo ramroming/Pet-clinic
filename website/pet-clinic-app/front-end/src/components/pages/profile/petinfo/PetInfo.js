@@ -74,7 +74,7 @@ const PetInfo = () => {
     let isMount = true
     const getPet = async () => {
       try {
-        const petData = await sendRequest('http://localhost:5000/users/me/pets/', 'GET', null, {
+        const petData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}users/me/pets/`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (isMount && petData)
@@ -95,7 +95,7 @@ const PetInfo = () => {
     const getBreeds = async () => {
       try {
 
-        const parsedData = await sendRequest(`http://localhost:5000/pets/breeds?pet_type=${state.pet_type}`, 'GET', null, {
+        const parsedData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}pets/breeds?pet_type=${state.pet_type}`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (parsedData && isMount)
@@ -123,7 +123,7 @@ const PetInfo = () => {
     const getColors = async () => {
       try {
 
-        const parsedData = await sendRequest(`http://localhost:5000/pets/colors`, 'GET', null, {
+        const parsedData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}pets/colors`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (parsedData && isMount)
@@ -147,7 +147,7 @@ const PetInfo = () => {
     let isMount = true
     const updateData = async () => {
       try {
-        const updateResult = await sendRequest(`http://localhost:5000/users/me/pet/${state.selectedPet && state.selectedPet.id}`, 'PATCH', state.dataToUpdate, {
+        const updateResult = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}users/me/pet/${state.selectedPet && state.selectedPet.id}`, 'PATCH', state.dataToUpdate, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (isMount && updateResult)

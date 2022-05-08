@@ -29,7 +29,7 @@ const PostAd = () => {
     
     const getPets = async () => {
       try {
-        const pets = await sendRequest('http://localhost:5000/users/me/pets/', 'GET', null, {
+        const pets = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}users/me/pets/`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (pets && isMount) {

@@ -62,7 +62,7 @@ const PetTreatmentHistory = () => {
     let isMount = true
     const getTreatments = async (appId) => {
       try {
-        const response = await sendRequest(`http://localhost:5000/vet/treatments/${appId}`, 'GET', null, {
+        const response = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}vet/treatments/${appId}`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (isMount && response) {
@@ -104,7 +104,7 @@ const PetTreatmentHistory = () => {
     let isMount = true
     const getMVC = async () => {
       try {
-        const response = await sendRequest(`http://localhost:5000/vet/casemedvac`, 'GET', null, {
+        const response = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}vet/casemedvac`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (isMount && response) {
@@ -131,7 +131,7 @@ const PetTreatmentHistory = () => {
     let isMount = true
     const saveTreatment = async () => {
       try {
-        const response = await sendRequest(`http://localhost:5000/vet/treatments`, 'POST', JSON.stringify({
+        const response = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}vet/treatments`, 'POST', JSON.stringify({
           date: dateFormat(new Date(), "UTC:yyyy-mm-dd HH:MM:ss"),
           petId: state.petId,
           caseId: state.caseId,
@@ -165,7 +165,7 @@ const PetTreatmentHistory = () => {
     let isMount = true
     const updateTreatment = async () => {
       try {
-        const response = await sendRequest(`http://localhost:5000/vet/treatments`, 'PATCH', JSON.stringify({
+        const response = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}vet/treatments`, 'PATCH', JSON.stringify({
           treatmentId: state.treatmentId,
           petId: state.petId,
           caseId: state.caseId,

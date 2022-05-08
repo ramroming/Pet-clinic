@@ -80,7 +80,7 @@ const ManagePets = () => {
     let isMount = true
     const fetchPets = async () => {
       try {
-        const pets = await sendRequest('http://localhost:5000/receptionist/shelterpets', 'GET', null, {
+        const pets = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}receptionist/shelterpets`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (pets && isMount)
@@ -106,7 +106,7 @@ const ManagePets = () => {
     const getBreeds = async () => {
       try {
 
-        const parsedData = await sendRequest(`http://localhost:5000/pets/breeds?pet_type=${state.pet_type}`, 'GET', null, {
+        const parsedData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}pets/breeds?pet_type=${state.pet_type}`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (parsedData && isMount) {
@@ -136,7 +136,7 @@ const ManagePets = () => {
     const getColors = async () => {
       try {
 
-        const parsedData = await sendRequest(`http://localhost:5000/pets/colors`, 'GET', null, {
+        const parsedData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}pets/colors`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (parsedData && isMount)
@@ -160,7 +160,7 @@ const ManagePets = () => {
     let isMount = true
     const updateData = async () => {
       try {
-        const updateResult = await sendRequest(`http://localhost:5000/receptionist/shelterpets/${state.selectedPet && state.selectedPet.id}`, 'PATCH', state.dataToUpdate, {
+        const updateResult = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}receptionist/shelterpets/${state.selectedPet && state.selectedPet.id}`, 'PATCH', state.dataToUpdate, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (isMount && updateResult)
@@ -193,7 +193,7 @@ const ManagePets = () => {
     let isMount = true
     const deletePet = async () => {
       try {
-        const result = await sendRequest(`http://localhost:5000/receptionist/shelterpets/${state.petToDelete && state.petToDelete}`, 'DELETE', null, {
+        const result = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}receptionist/shelterpets/${state.petToDelete && state.petToDelete}`, 'DELETE', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (isMount && result)

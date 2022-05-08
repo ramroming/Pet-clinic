@@ -49,7 +49,7 @@ const ManageUsers = () => {
     let isMount = true
     const getUsers = async () => {
       try {
-        const users = await sendRequest('http://localhost:5000/admin/users', 'GET', null, {
+        const users = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}admin/users`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (users && isMount)
@@ -70,7 +70,7 @@ const ManageUsers = () => {
     let isMount = true
     const updateRole = async () => {
       try {
-        const response = await sendRequest(`http://localhost:5000/admin/users/${state.userToChange}`, 'PATCH', JSON.stringify({
+        const response = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}admin/users/${state.userToChange}`, 'PATCH', JSON.stringify({
           newRole: state.newRole
         }), {
           'Authorization': `Bearer ${auth.token}`,
@@ -95,7 +95,7 @@ const ManageUsers = () => {
     let isMount = true
     const deleteUser = async () => {
       try {
-        const response = await sendRequest(`http://localhost:5000/admin/users/${state.userToDelete}`, 'DELETE', null, {
+        const response = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}admin/users/${state.userToDelete}`, 'DELETE', null, {
           'Authorization': `Bearer ${auth.token}`,
         })
         if (response && isMount)

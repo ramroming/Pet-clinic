@@ -59,7 +59,7 @@ const PetTrainingHistory = () => {
     let isMount = true
     const getTrainings = async (appId) => {
       try {
-        const response = await sendRequest(`http://localhost:5000/trainer/trainings/${appId}`, 'GET', null, {
+        const response = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}trainer/trainings/${appId}`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (isMount && response) {
@@ -86,7 +86,7 @@ const PetTrainingHistory = () => {
     let isMount = true
     const getTrainingTypes = async () => {
       try {
-        const response = await sendRequest(`http://localhost:5000/trainer/trainingtypes`, 'GET', null, {
+        const response = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}trainer/trainingtypes`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (isMount && response) {
@@ -112,7 +112,7 @@ const PetTrainingHistory = () => {
     let isMount = true
     const saveTraining = async () => {
       try {
-        const response = await sendRequest(`http://localhost:5000/trainer/trainings`, 'POST', JSON.stringify({
+        const response = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}trainer/trainings`, 'POST', JSON.stringify({
           startDate: state.startDate,
           endDate: state.endDate,
           petId: state.petId,
@@ -145,7 +145,7 @@ const PetTrainingHistory = () => {
     let isMount = true
     const updateTraining = async () => {
       try {
-        const response = await sendRequest(`http://localhost:5000/trainer/trainings`, 'PATCH', JSON.stringify({
+        const response = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}trainer/trainings`, 'PATCH', JSON.stringify({
           startDate: state.startDate,
           endDate: state.endDate,
           trainingId: state.trainingId,

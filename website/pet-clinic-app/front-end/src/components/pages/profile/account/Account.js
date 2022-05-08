@@ -43,7 +43,7 @@ const Account = () => {
     let isMount = true
     const getMyData = async () => {
       try {
-        const myData = await sendRequest('http://localhost:5000/users/me', 'GET', null, {
+        const myData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}users/me`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (isMount && myData)
@@ -64,7 +64,7 @@ const Account = () => {
     let isMount = true
     const updateData = async () => {
       try {
-        const updateResult = await sendRequest('http://localhost:5000/users/me/account', 'PATCH', JSON.stringify(state.dataToUpdate), {
+        const updateResult = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}users/me/account`, 'PATCH', JSON.stringify(state.dataToUpdate), {
 
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${auth.token}`

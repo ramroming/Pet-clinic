@@ -46,8 +46,9 @@ const Login = () => {
     let isMount = true
     const fetchUser = async () => {
       try {
+        console.log(process.env.REACT_APP_BACKEND_URL)
         const parsedData = await sendRequest(
-          'http://localhost:5000/users/login',
+          `${process.env.REACT_APP_BACKEND_URL}users/login`,
           'POST',
          JSON.stringify(state.dataToSend),
          {

@@ -23,7 +23,7 @@ const PutForAdoption = () => {
     let isMount = true
     const getShelterPets = async () => {
       try {
-        const shelterPets = await sendRequest(`http://localhost:5000/receptionist/shelterpets`, 'GET', null, {
+        const shelterPets = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}receptionist/shelterpets`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (shelterPets && isMount)

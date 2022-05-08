@@ -37,7 +37,7 @@ const PostReview = () => {
       if (isMount)
         dispatch({ type: 'start' })
       try {
-        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `http://localhost:5000/receptionist/shelterpet/${id}` : `http://localhost:5000/users/me/pets/${id}`}`
+        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `${process.env.REACT_APP_BACKEND_URL}receptionist/shelterpet/${id}` : `${process.env.REACT_APP_BACKEND_URL}users/me/pets/${id}`}`
         const pet = await sendRequest(URL, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
@@ -65,7 +65,7 @@ const PostReview = () => {
       setPageIsLoading(state.isCreating)
     const createPost = async () => {
       try {
-        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `http://localhost:5000/receptionist/adoptionads` : `http://localhost:5000/users/me/adoptionads/`}`
+        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `${process.env.REACT_APP_BACKEND_URL}receptionist/adoptionads` : `${process.env.REACT_APP_BACKEND_URL}users/me/adoptionads/`}`
 
         const result = await sendRequest(URL, 'POST', JSON.stringify({
           pet_id: id,

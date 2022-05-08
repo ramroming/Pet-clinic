@@ -48,7 +48,7 @@ const PersonalInfo = () => {
     let isMount = true
     const getMyData = async () => {
       try {
-        const myData = await sendRequest('http://localhost:5000/users/me', 'GET', null, {
+        const myData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}users/me`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (isMount && myData)
@@ -69,7 +69,7 @@ const PersonalInfo = () => {
     let isMount = true
     const updateData = async () => {
       try {
-        const updateResult = await sendRequest('http://localhost:5000/users/me', 'PATCH', state.dataToUpdate, {
+        const updateResult = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}users/me`, 'PATCH', state.dataToUpdate, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (isMount && updateResult)

@@ -73,7 +73,7 @@ const RegisterPetRec = () => {
     const getBreeds = async () => {
       try {
 
-        const parsedData = await sendRequest(`http://localhost:5000/pets/breeds?pet_type=${state.pet_type.value}`, 'GET', null, {
+        const parsedData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}pets/breeds?pet_type=${state.pet_type.value}`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (parsedData && isMount)
@@ -101,7 +101,7 @@ const RegisterPetRec = () => {
     const getColors = async () => {
       try {
 
-        const parsedData = await sendRequest(`http://localhost:5000/pets/colors`, 'GET', null, {
+        const parsedData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}pets/colors`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (parsedData && isMount)
@@ -127,7 +127,7 @@ const RegisterPetRec = () => {
     const registerPet = async () => {
 
       try {
-        const parsedData = await sendRequest(`http://localhost:5000/receptionist/pets/`, 'POST', state.dataToSend, {
+        const parsedData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}receptionist/pets/`, 'POST', state.dataToSend, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (parsedData && isMount) {

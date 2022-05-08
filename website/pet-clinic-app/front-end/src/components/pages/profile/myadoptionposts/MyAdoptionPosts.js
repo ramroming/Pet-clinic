@@ -44,7 +44,7 @@ const MyAdoptionPosts = () => {
       if (isMount)
         dispatch({ type: 'start' })
       try {
-        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `http://localhost:5000/receptionist/adoptionads` : 'http://localhost:5000/users/me/adoptionads/'}`
+        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `${process.env.REACT_APP_BACKEND_URL}receptionist/adoptionads` : `${process.env.REACT_APP_BACKEND_URL}users/me/adoptionads/`}`
 
         const myAdoptionAds = await sendRequest(URL, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
@@ -67,7 +67,7 @@ const MyAdoptionPosts = () => {
     const deletePost = async () => {
       try {
         
-        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `http://localhost:5000/receptionist/adoptionads/${state.postToDelete ? state.postToDelete : ''}` : `http://localhost:5000/users/me/adoptionads/${state.postToDelete ? state.postToDelete : ''}`}`
+        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `${process.env.REACT_APP_BACKEND_URL}receptionist/adoptionads/${state.postToDelete ? state.postToDelete : ''}` : `${process.env.REACT_APP_BACKEND_URL}users/me/adoptionads/${state.postToDelete ? state.postToDelete : ''}`}`
         console.log(URL)
         const result = await sendRequest(URL, 'DELETE', null, {
           'Authorization': `Bearer ${auth.token}`,
@@ -91,7 +91,7 @@ const MyAdoptionPosts = () => {
     let isMount = true
     const updatePost = async () => {
       try {
-        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `http://localhost:5000/receptionist/adoptionads/${state.postToUpdate}` : `http://localhost:5000/users/me/adoptionads/${state.postToUpdate}`}`
+        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `${process.env.REACT_APP_BACKEND_URL}receptionist/adoptionads/${state.postToUpdate}` : `${process.env.REACT_APP_BACKEND_URL}users/me/adoptionads/${state.postToUpdate}`}`
         const updateResult = await sendRequest(URL, 'PATCH', JSON.stringify({
           story: state.newStory.value
         }), {

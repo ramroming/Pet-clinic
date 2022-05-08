@@ -51,7 +51,7 @@ const MyAdoptionRequests = (props) => {
     let isMount = true
     const getMyAdoptionRequests = async () => {
       try {
-        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `http://localhost:5000/receptionist/adoptionRequests` : `http://localhost:5000/users/me/requests`}`
+        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `${process.env.REACT_APP_BACKEND_URL}receptionist/adoptionRequests` : `${process.env.REACT_APP_BACKEND_URL}users/me/requests`}`
 
         const adoptionRequests = await sendRequest(URL, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
@@ -75,7 +75,7 @@ const MyAdoptionRequests = (props) => {
     const deleteRequest = async () => {
       try {
 
-        const result = await sendRequest(`http://localhost:5000/users/me/requests/${state.requestToDelete ? state.requestToDelete : ''}`, 'DELETE', null, {
+        const result = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}users/me/requests/${state.requestToDelete ? state.requestToDelete : ''}`, 'DELETE', null, {
           'Authorization': `Bearer ${auth.token}`,
         })
         if (result && isMount)
@@ -99,8 +99,8 @@ const MyAdoptionRequests = (props) => {
     let isMount = true
     const transferOwner = async () => {
       try {
-        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `http://localhost:5000/receptionist/pets/${state.selectedPet && state.selectedPet}/${state.selectedNewOwner && state.selectedNewOwner}/${state.selectedAd && state.selectedAd}` 
-        : `http://localhost:5000/users/me/pets/${state.selectedPet && state.selectedPet}/${state.selectedNewOwner && state.selectedNewOwner}/${state.selectedAd && state.selectedAd}`}`
+        const URL = `${(auth.userRole === 'receptionist' || auth.userRole === 'admin') ? `${process.env.REACT_APP_BACKEND_URL}receptionist/pets/${state.selectedPet && state.selectedPet}/${state.selectedNewOwner && state.selectedNewOwner}/${state.selectedAd && state.selectedAd}` 
+        : `${process.env.REACT_APP_BACKEND_URL}users/me/pets/${state.selectedPet && state.selectedPet}/${state.selectedNewOwner && state.selectedNewOwner}/${state.selectedAd && state.selectedAd}`}`
 
         const result = await sendRequest(URL, 'PATCH', null, {
           'Authorization': `Bearer ${auth.token}`,

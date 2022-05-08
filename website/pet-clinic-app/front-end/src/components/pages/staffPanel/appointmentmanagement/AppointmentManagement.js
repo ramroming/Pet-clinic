@@ -78,7 +78,7 @@ const AppointmentManagement = () => {
     let isMount = true
     const fetchAppointments = async () => {
       try {
-        const appointments = await sendRequest(`http://localhost:5000/receptionist/appointments?amount=${state.amount}`, 'GET', null, {
+        const appointments = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}receptionist/appointments?amount=${state.amount}`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (appointments && isMount)
@@ -100,7 +100,7 @@ const AppointmentManagement = () => {
     let isMount = true
     const confirmAppointment = async () => {
       try {
-        const data = await sendRequest(`http://localhost:5000/receptionist/appointments/${state.selectedAppointment}`, 'PATCH', null, {
+        const data = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}receptionist/appointments/${state.selectedAppointment}`, 'PATCH', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (data && isMount)
@@ -122,7 +122,7 @@ const AppointmentManagement = () => {
     let isMount = true
     const deleteAppointment = async () => {
       try {
-        const data = await sendRequest(`http://localhost:5000/receptionist/appointments/${state.selectedAppointmentDelete}`, 'DELETE', null, {
+        const data = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}receptionist/appointments/${state.selectedAppointmentDelete}`, 'DELETE', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (data && isMount)
@@ -144,7 +144,7 @@ const AppointmentManagement = () => {
     let isMount = true
     const getAppointmentTypes = async () => {
       try {
-        const appointmentTypes = await sendRequest(`http://localhost:5000/appointment/appointmenttypes`, 'GET', null, {
+        const appointmentTypes = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}appointment/appointmenttypes`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (appointmentTypes && isMount)
@@ -167,7 +167,7 @@ const AppointmentManagement = () => {
     let isMount = true
     const getPets = async () => {
       try {
-        const pets = await sendRequest(`http://localhost:5000/receptionist/pets?username=${state.user_name}`, 'GET', null, {
+        const pets = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}receptionist/pets?username=${state.user_name}`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (pets && isMount)
@@ -190,7 +190,7 @@ const AppointmentManagement = () => {
     let isMount = true
     const getStmems = async () => {
       try {
-        const stmems = await sendRequest(`http://localhost:5000/appointment/staffmems?appointment_type=${state.appointment_type}`, 'GET', null, {
+        const stmems = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}appointment/staffmems?appointment_type=${state.appointment_type}`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (stmems && isMount)
@@ -214,7 +214,7 @@ const AppointmentManagement = () => {
     let isMount = true
     const getHours = async () => {
       try {
-        const times = await sendRequest(`http://localhost:5000/appointment/appointmentstimes?stmem_id=${state.stmem_id}&date=${state.date}`, 'GET', null, {
+        const times = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}appointment/appointmentstimes?stmem_id=${state.stmem_id}&date=${state.date}`, 'GET', null, {
           'Authorization': `Bearer ${auth.token}`
         })
         if (times && isMount)
@@ -238,7 +238,7 @@ const AppointmentManagement = () => {
     let isMount = true
     const createAppointment = async () => {
       try {
-        const result = await sendRequest(`http://localhost:5000/receptionist/appointments`, 'POST', JSON.stringify({
+        const result = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}receptionist/appointments`, 'POST', JSON.stringify({
           appointment_type: state.appointment_type,
           stmem_id: state.stmem_id,
           pet_id: state.pet_id,

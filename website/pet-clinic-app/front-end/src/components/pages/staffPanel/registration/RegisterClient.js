@@ -79,7 +79,7 @@ const RegisterClient = () => {
     const fetchUser = async () => {
       try {
         const parsedData = await sendRequest(
-          'http://localhost:5000/users',
+          `${process.env.REACT_APP_BACKEND_URL}users`,
           'POST', JSON.stringify(state.dataToSend),
           {
             'Content-Type': 'application/json'
