@@ -17,18 +17,18 @@ import trainerRouter from './src/routers/trainer.js'
 
 const app = express()
 
-const PORT = 5000
+const PORT = process.env.PORT || 5000
 
 // This will parse the incomming JSON data into javascript objects
 app.use(json())
 
 // this will fix the CORS Error
 app.use(cors())
-app.use((req, res, next) => {
-  setTimeout(() => {
-    next()
-  }, 1000)
-})
+// app.use((req, res, next) => {
+//   setTimeout(() => {
+//     next()
+//   }, 1000)
+// })
 
 // Using the Routers
 app.use(usersRouter)
