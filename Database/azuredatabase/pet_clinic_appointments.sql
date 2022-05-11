@@ -1,0 +1,67 @@
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
+--
+-- Host: pet-clinic-app.mysql.database.azure.com    Database: pet_clinic
+-- ------------------------------------------------------
+-- Server version	5.7.37-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `appointments`
+--
+
+DROP TABLE IF EXISTS `appointments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `appointments` (
+  `date` datetime NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `stmem_id` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `appointment_type_id` int(11) NOT NULL,
+  `pet_id` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `confirmed` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`date`,`stmem_id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `APPOINTMENTS_fk0` (`client_id`),
+  KEY `APPOINTMENTS_fk1` (`stmem_id`),
+  KEY `APPOINTMENTS_fk2` (`appointment_type_id`),
+  KEY `APPOINTMENTS_fk3` (`pet_id`),
+  KEY `id_2` (`id`),
+  CONSTRAINT `APPOINTMENTS_fk0` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `APPOINTMENTS_fk1` FOREIGN KEY (`stmem_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `APPOINTMENTS_fk2` FOREIGN KEY (`appointment_type_id`) REFERENCES `appointment_types` (`id`),
+  CONSTRAINT `APPOINTMENTS_fk3` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `appointments`
+--
+
+LOCK TABLES `appointments` WRITE;
+/*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
+INSERT INTO `appointments` VALUES ('2022-04-06 14:00:00',171,162,0,3,96,47,0),('2022-04-07 14:00:00',166,163,0,2,110,48,1),('2022-04-08 11:00:00',166,163,0,2,110,46,0),('2022-04-08 14:00:00',166,163,0,2,110,53,0),('2022-04-08 15:00:00',171,161,0,1,94,49,0),('2022-04-09 15:00:00',171,164,0,4,96,66,1),('2022-04-24 14:00:00',172,161,0,1,96,72,1),('2022-04-24 15:00:00',166,161,0,1,109,74,0),('2022-04-25 06:00:00',172,161,0,1,96,73,0),('2022-04-25 07:00:00',166,161,0,1,109,75,0),('2022-04-29 10:00:00',166,161,0,1,109,76,1),('2022-04-29 11:00:00',172,161,0,1,96,77,0),('2022-04-30 10:00:00',172,161,0,1,96,78,1),('2022-04-30 14:00:00',171,161,0,1,95,82,1),('2022-04-30 14:00:00',172,186,0,1,96,80,1),('2022-04-30 15:00:00',171,186,0,1,95,81,1),('2022-05-06 12:00:00',171,186,0,1,94,85,1),('2022-05-06 13:00:00',172,163,0,2,126,86,1),('2022-05-06 14:00:00',171,162,0,3,94,83,1),('2022-05-06 15:00:00',166,162,0,3,109,84,0);
+/*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-05-11  2:08:20

@@ -28,16 +28,17 @@ CREATE TABLE `trainings` (
   `trainer_id` int NOT NULL,
   `training_type_id` int NOT NULL,
   `end_date` datetime DEFAULT NULL,
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`start_date`,`pet_id`,`trainer_id`,`training_type_id`),
   UNIQUE KEY `id` (`id`),
   KEY `TRAININGS_fk0` (`pet_id`),
   KEY `TRAININGS_fk1` (`trainer_id`),
   KEY `TRAININGS_fk2` (`training_type_id`),
+  KEY `id_2` (`id`),
   CONSTRAINT `TRAININGS_fk0` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`) ON DELETE CASCADE,
   CONSTRAINT `TRAININGS_fk1` FOREIGN KEY (`trainer_id`) REFERENCES `users` (`id`),
   CONSTRAINT `TRAININGS_fk2` FOREIGN KEY (`training_type_id`) REFERENCES `training_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-06 20:46:19
+-- Dump completed on 2022-05-11  2:09:15

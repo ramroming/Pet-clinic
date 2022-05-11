@@ -32,7 +32,7 @@ CREATE TABLE `ratings` (
   KEY `RATINGS_fk1` (`stmem_id`),
   CONSTRAINT `RATINGS_fk0` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`),
   CONSTRAINT `RATINGS_fk1` FOREIGN KEY (`stmem_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-06 20:46:18
+-- Dump completed on 2022-05-11  2:09:16

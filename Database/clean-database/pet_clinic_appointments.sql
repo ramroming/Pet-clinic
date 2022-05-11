@@ -29,7 +29,7 @@ CREATE TABLE `appointments` (
   `status` tinyint(1) NOT NULL,
   `appointment_type_id` int NOT NULL,
   `pet_id` int DEFAULT NULL,
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `confirmed` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`date`,`stmem_id`),
   UNIQUE KEY `id` (`id`),
@@ -37,11 +37,12 @@ CREATE TABLE `appointments` (
   KEY `APPOINTMENTS_fk1` (`stmem_id`),
   KEY `APPOINTMENTS_fk2` (`appointment_type_id`),
   KEY `APPOINTMENTS_fk3` (`pet_id`),
+  KEY `id_2` (`id`),
   CONSTRAINT `APPOINTMENTS_fk0` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `APPOINTMENTS_fk1` FOREIGN KEY (`stmem_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `APPOINTMENTS_fk2` FOREIGN KEY (`appointment_type_id`) REFERENCES `appointment_types` (`id`),
   CONSTRAINT `APPOINTMENTS_fk3` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,4 +64,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-06 20:46:16
+-- Dump completed on 2022-05-11  2:09:14

@@ -23,16 +23,16 @@ DROP TABLE IF EXISTS `adoption_requests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `adoption_requests` (
-  `id` int NOT NULL AUTO_INCREMENT,
   `date` datetime NOT NULL,
   `client_id` int NOT NULL,
   `adoption_ad_id` int NOT NULL,
-  `status` varchar(15) NOT NULL,
+  `status` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`client_id`,`adoption_ad_id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `ADOPTION_REQUESTS_fk1` (`adoption_ad_id`),
+  KEY `id` (`id`),
   CONSTRAINT `ADOPTION_REQUESTS_fk0` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `adoption_requests` (
 
 LOCK TABLES `adoption_requests` WRITE;
 /*!40000 ALTER TABLE `adoption_requests` DISABLE KEYS */;
-INSERT INTO `adoption_requests` VALUES (22,'2022-04-10 13:37:43',166,76,'accepted'),(18,'2022-03-22 12:11:00',170,49,'rejected'),(19,'2022-04-10 13:12:14',171,74,'pending'),(20,'2022-04-10 13:18:38',172,74,'pending'),(24,'2022-04-10 14:18:00',172,76,'rejected'),(23,'2022-04-10 13:41:36',172,77,'accepted'),(27,'2022-05-06 08:06:02',172,83,'accepted'),(17,'2022-03-22 12:07:28',173,49,'accepted');
+INSERT INTO `adoption_requests` VALUES ('2022-04-10 13:37:43',166,76,'accepted',1),('2022-03-22 12:11:00',170,49,'rejected',2),('2022-04-10 13:12:14',171,74,'pending',3),('2022-04-10 13:18:38',172,74,'pending',4),('2022-04-10 14:18:00',172,76,'rejected',5),('2022-04-10 13:41:36',172,77,'accepted',6),('2022-05-06 08:06:02',172,83,'accepted',7),('2022-03-22 12:07:28',173,49,'accepted',8);
 /*!40000 ALTER TABLE `adoption_requests` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-06 20:46:18
+-- Dump completed on 2022-05-11  2:09:16

@@ -25,12 +25,12 @@ DROP TABLE IF EXISTS `adoption_ads`;
 CREATE TABLE `adoption_ads` (
   `id` int NOT NULL AUTO_INCREMENT,
   `date` datetime NOT NULL,
-  `ad_type` varchar(150) NOT NULL,
+  `ad_type` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `status` tinyint(1) NOT NULL,
   `pet_id` int NOT NULL,
   `shelter_id` int DEFAULT NULL,
   `client_id` int DEFAULT NULL,
-  `story` varchar(500) NOT NULL,
+  `story` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `ADOPTION_ADS_fk0` (`pet_id`),
   KEY `ADOPTION_ADS_fk1` (`shelter_id`),
@@ -39,7 +39,7 @@ CREATE TABLE `adoption_ads` (
   CONSTRAINT `ADOPTION_ADS_fk1` FOREIGN KEY (`shelter_id`) REFERENCES `shelters` (`id`),
   CONSTRAINT `ADOPTION_ADS_fk2` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `arc_adoption_ad` CHECK (((`shelter_id` is null) or (`client_id` is null)))
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-06 20:46:17
+-- Dump completed on 2022-05-11  2:09:17

@@ -30,7 +30,7 @@ CREATE TABLE `medicine_treatments` (
   KEY `FK_1_idx` (`treatment_id`),
   CONSTRAINT `FK_0` FOREIGN KEY (`medicine_id`) REFERENCES `medicines` (`id`),
   CONSTRAINT `FK_1` FOREIGN KEY (`treatment_id`) REFERENCES `treatments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-06 20:46:17
+-- Dump completed on 2022-05-11  2:09:15
