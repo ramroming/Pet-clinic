@@ -139,7 +139,7 @@ const AdoptionAd = () => {
           header=''
           body={
             <>
-              <p>You are about to send an adoption request to the pet owner. Your first name, last name and your phone number will be sent to the pet owner as well so that he can contact you as soon as possible are you sure you want to proceed ?</p>
+              <p style={{ maxHeight: 'none' }}>You are about to send an adoption request to the pet owner. Your first name, last name and your phone number will be sent to the pet owner as well so that he can contact you as soon as possible are you sure you want to proceed ?</p>
             </>
           }
           dispatch={dispatch}

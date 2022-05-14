@@ -1,6 +1,7 @@
 @use '../../abstracts/' as *;
 
 .post-pet-container {
+  min-height: 100vh;
   background-image: linear-gradient(120deg, var(--clr-primary-secondBlue) , var(--clr-primary-secondPurple));
   padding: 6rem 0 3rem 0;
   @include break-point('medium', 'up') {

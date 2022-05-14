@@ -16,6 +16,7 @@
     font-size: 1.25rem;
     color: rgb(216, 216, 216);
     text-align: center;
+    margin-top: 3rem;
 
     @include break-point("medium", "up") {
       font-size: 2rem;

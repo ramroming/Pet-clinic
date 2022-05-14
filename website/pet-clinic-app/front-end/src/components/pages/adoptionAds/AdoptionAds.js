@@ -29,7 +29,7 @@ const initialData = {
   selectedColors: [],
   noMore: false,
   responseError: '',
-  ad_type: '',
+  post_type: '',
   breed_name: '',
   gender: '',
   lastPost: ''
@@ -56,10 +56,10 @@ const AdoptionAds = () => {
 
 
 
-  const getAdoptionAds = useCallback(async (lastPost, ad_type, breed_name, gender, selectedColors = [], newRender) => {
+  const getAdoptionAds = useCallback(async (lastPost, post_type, breed_name, gender, selectedColors = [], newRender) => {
     try {
       
-      const adoptionAds = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}adoptionads?last_date=${lastPost ? lastPost : ''}&ad_type=${ad_type ? ad_type : ''}&breed_name=${breed_name ? breed_name : ''}&gender=${gender ? gender : ''}&colors=${selectedColors.length ? selectedColors.join(',') : ''}`, 'GET', null, {
+      const adoptionAds = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}adoptionposts?last_date=${lastPost ? lastPost : ''}&post_type=${post_type ? post_type : ''}&breed_name=${breed_name ? breed_name : ''}&gender=${gender ? gender : ''}&colors=${selectedColors.length ? selectedColors.join(',') : ''}`, 'GET', null, {
         'Authorization': `Bearer ${auth.token}`
       })
       if (adoptionAds.result.length === 0)
@@ -95,9 +95,9 @@ const AdoptionAds = () => {
     if (firstRender.current) {
       return
     }
-    getAdoptionAds(null, postState.ad_type, postState.breed_name, postState.gender, postState.selectedColors, true)
+    getAdoptionAds(null, postState.post_type, postState.breed_name, postState.gender, postState.selectedColors, true)
   },
-    [postState.ad_type, postState.breed_name, postState.gender, postState.selectedColors, getAdoptionAds])
+    [postState.post_type, postState.breed_name, postState.gender, postState.selectedColors, getAdoptionAds])
 
 
 
@@ -126,7 +126,7 @@ const AdoptionAds = () => {
     }
   }, [postState.getMore, dispatch])
   //fetch from the database as the button gets pressed and update the posts array
-  // useWhatChanged([postState.getMore, observeLast, getAdoptionAds,postState.lastPost, postState.ad_type, postState.breed_name, postState.gender])
+  // useWhatChanged([postState.getMore, observeLast, getAdoptionAds,postState.lastPost, postState.post_type, postState.breed_name, postState.gender])
   useEffect(() => {
     isMountedEffect.current = true
 
@@ -134,7 +134,7 @@ const AdoptionAds = () => {
       observeLast()
     if (!firstRender.current) {
       if (postState.getMore) {
-        getAdoptionAds(postState.lastPost, postState.ad_type, postState.breed_name, postState.gender, postState.selectedColors)
+        getAdoptionAds(postState.lastPost, postState.post_type, postState.breed_name, postState.gender, postState.selectedColors)
       }
     }
     else {
@@ -143,7 +143,7 @@ const AdoptionAds = () => {
     return () => {
       isMountedEffect.current = false
     }
-  }, [postState.noMore, postState.getMore, observeLast, getAdoptionAds, postState.lastPost, postState.ad_type, postState.breed_name, postState.gender, postState.selectedColors, postState.posts])
+  }, [postState.noMore, postState.getMore, observeLast, getAdoptionAds, postState.lastPost, postState.post_type, postState.breed_name, postState.gender, postState.selectedColors, postState.posts])
 
   // getting pets colors from the database
   useEffect(() => {
@@ -211,7 +211,7 @@ const AdoptionAds = () => {
                 disabled={postState.isLoading}
                 onChange={
                   (e) => {
-                    dispatch({ type: 'enterValue', field: 'ad_type', value: e.currentTarget.value })
+                    dispatch({ type: 'enterValue', field: 'post_type', value: e.currentTarget.value })
                   }}
                 name="pet-type" id="pet-type"
                 defaultValue={''}
@@ -229,7 +229,7 @@ const AdoptionAds = () => {
                 Breed:
               </label>
               <select
-                disabled={postState.isLoading || !postState.ad_type}
+                disabled={postState.isLoading || !postState.post_type}
                 onChange={
                   (e) => {
                     dispatch({ type: 'enterValue', field: 'breed_name', value: e.currentTarget.value })
@@ -340,7 +340,7 @@ const AdoptionAds = () => {
                       ref={lastPost}  //marking the last post
                       className="adoption-post gap-8p flex-col falign-center ">
                       <img src={URL.createObjectURL(new Blob([new Uint8Array(post.photo.data)]))} alt="" className="post-image" />
-                      <p><span>{post.ad_type} - </span><span>{post.breed}</span></p>
+                      <p><span>{post.post_type} - </span><span>{post.breed}</span></p>
                       <p className="pTitle">{post.breed_name}</p>
                       <p><i className="fa fa-clock"></i>&nbsp;{dateFormat(post.date, 'default')}</p>
                       <button className="btn-rec-blue">
@@ -361,7 +361,7 @@ const AdoptionAds = () => {
                       target={'_blank'}
                       className="adoption-post gap-8p flex-col falign-center ">
                       <img src={URL.createObjectURL(new Blob([new Uint8Array(post.photo.data)]))} alt="" className="post-image" />
-                      <p><span>{post.ad_type}  </span><span>{post.breed}</span></p>
+                      <p><span>{post.post_type}  </span><span>{post.breed}</span></p>
                       <p className="pTitle">{post.breed_name}</p>
                       <p><i className="fa fa-clock"></i>&nbsp;{dateFormat(post.date, 'default')}</p>
                       <button

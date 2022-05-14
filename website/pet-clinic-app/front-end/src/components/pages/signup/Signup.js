@@ -4,6 +4,7 @@ import useFetch from "../../shared/hooks/fetch-hook"
 import useSignupForm from "../../shared/hooks/signup-form-hook"
 import { authContext } from "../../shared/context/auth-context"
 import { pageLoadingContext } from "../../shared/context/loading-context"
+import { Link } from 'react-router-dom'
 // import {
 //   useWhatChanged,
 //   setUseWhatChange,
@@ -210,7 +211,10 @@ const Signup = () => {
               Sign up
             </button>
 
-            <a href="/#" className="btn-r btn-r-purple">Already a member?</a>
+            <Link
+            to='/login'
+            className='btn-r btn-r-purple'
+            >Already a member?</Link>
 
           </div>
         </form>

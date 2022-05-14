@@ -6,7 +6,7 @@ const adoptionAds = (state, action) => {
 
     // ***************** Forms input validations *************************
     case 'enterValue': {
-      if (action.field === 'ad_type')
+      if (action.field === 'post_type')
         return {
           ...state,
           posts: [],
