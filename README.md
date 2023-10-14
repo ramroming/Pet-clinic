@@ -1,1 +1,1 @@
-our senior project "pet clinic"
+Pet clinic full stack web app
